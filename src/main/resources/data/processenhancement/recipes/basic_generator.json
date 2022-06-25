@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "processenhancement",
+  "pattern": [
+    "scs",
+    "cfc",
+    "srs"
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:copper_ingot"
+    },
+    "f": {
+      "item": "minecraft:furnace"
+    },
+    "s": {
+      "item": "minecraft:cobblestone"
+    },
+    "r": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "processenhancement:basic_generator"
+  }
+}
