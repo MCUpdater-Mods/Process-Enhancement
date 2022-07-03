@@ -1,8 +1,8 @@
-package com.mcupdater.procenhance.blocks.basic_generator;
+package com.mcupdater.procenhance.blocks.furnace;
 
 import com.mcupdater.mculib.capabilities.PowerTrackingMenu;
-import com.mcupdater.mculib.inventory.BucketSlot;
-import com.mcupdater.mculib.inventory.FuelSlot;
+import com.mcupdater.mculib.inventory.MachineInputSlot;
+import com.mcupdater.mculib.inventory.MachineOutputSlot;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
@@ -12,32 +12,29 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class BasicGeneratorMenu extends PowerTrackingMenu {
-    private final BasicGeneratorEntity localBlockEntity;
+public class ElectricFurnaceMenu extends PowerTrackingMenu {
+    private final ElectricFurnaceEntity localBlockEntity;
     private final Player player;
     private final IItemHandler playerInventory;
     private final ContainerData data;
 
-    public BasicGeneratorMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data) {
-        super(Registration.BASICGENERATOR_MENU.get(), windowId);
-        this.localBlockEntity = level.getBlockEntity(blockPos) instanceof BasicGeneratorEntity ? (BasicGeneratorEntity) level.getBlockEntity(blockPos) : null;
+    public ElectricFurnaceMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data) {
+        super(Registration.FURNACE_MENU.get(), windowId);
+        this.localBlockEntity = level.getBlockEntity(blockPos) instanceof ElectricFurnaceEntity ? (ElectricFurnaceEntity) level.getBlockEntity(blockPos) : null;
         this.tileEntity = this.localBlockEntity;
         this.player = player;
         this.playerInventory = new InvWrapper(inventory);
         this.data = data;
 
         if (this.localBlockEntity != null) {
-            this.localBlockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-                addSlot(new FuelSlot(h, 0, 81, 56));
-                addSlot(new BucketSlot(h, 1, 105, 56));
-            });
+            addSlot(new MachineInputSlot(this.localBlockEntity, new InvWrapper(this.localBlockEntity), 0, 62, 37));
+            addSlot(new MachineOutputSlot(this.localBlockEntity, new InvWrapper(this.localBlockEntity), 1, 98, 37));
         }
-        layoutPlayerInventorySlots(8, 84);
+        layoutPlayerInventorySlots(8,84);
         trackPower();
         addDataSlots(data);
     }
@@ -70,7 +67,7 @@ public class BasicGeneratorMenu extends PowerTrackingMenu {
 
     @Override
     public boolean stillValid(Player playerIn) {
-        return stillValid(ContainerLevelAccess.create(localBlockEntity.getLevel(), localBlockEntity.getBlockPos()), player, Registration.BASICGENERATOR_BLOCK.get());
+        return stillValid(ContainerLevelAccess.create(localBlockEntity.getLevel(), localBlockEntity.getBlockPos()), player, Registration.FURNACE_BLOCK.get());
     }
 
     @Override
@@ -80,7 +77,7 @@ public class BasicGeneratorMenu extends PowerTrackingMenu {
         if (slot != null && slot.hasItem()) {
             ItemStack stackInSlot = slot.getItem();
             itemstack = stackInSlot.copy();
-            if (index == 0 || index == 1) { // Fuel slot (0) or bucket output slot (1)
+            if (index == 0 || index == 1) { // Input slot (0) or Output slot (1)
                 if (!this.moveItemStackTo(stackInSlot, 2,38, true)) {
                     return ItemStack.EMPTY;
                 }
@@ -113,19 +110,19 @@ public class BasicGeneratorMenu extends PowerTrackingMenu {
         return itemstack;
     }
 
-    public BasicGeneratorEntity getBlockEntity() {
+    public ElectricFurnaceEntity getBlockEntity() {
         return localBlockEntity;
     }
 
-    public boolean isFueled() {
+    public boolean isWorking() {
         return this.data.get(0) > 0;
     }
 
-    public int getBurnProgress() {
-        int maxBurn = this.data.get(1);
-        if (maxBurn == 0) {
-            maxBurn = 200;
+    public int getWorkProgress() {
+        int maxWork = this.data.get(1);
+        if (maxWork == 0) {
+            maxWork = 200;
         }
-        return this.data.get(0) * 13 / maxBurn;
+        return this.data.get(0) * 18 / maxWork;
     }
 }

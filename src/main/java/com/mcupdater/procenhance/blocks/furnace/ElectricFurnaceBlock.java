@@ -1,4 +1,4 @@
-package com.mcupdater.procenhance.blocks.basic_generator;
+package com.mcupdater.procenhance.blocks.furnace;
 
 import com.mcupdater.mculib.block.MachineBlock;
 import net.minecraft.core.BlockPos;
@@ -20,23 +20,23 @@ import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-public class BasicGeneratorBlock extends MachineBlock {
-    public BasicGeneratorBlock() {
+public class ElectricFurnaceBlock extends MachineBlock {
+    public ElectricFurnaceBlock() {
         super(Properties.of(Material.STONE).sound(SoundType.STONE).strength(5.0f));
     }
 
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new BasicGeneratorEntity(blockPos, blockState);
+        return new ElectricFurnaceEntity(blockPos, blockState);
     }
 
     @Override
     @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult trace) {
         if (!level.isClientSide) {
-            BlockEntity blockEntity =level.getBlockEntity(pos);
-            if (blockEntity instanceof BasicGeneratorEntity) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof ElectricFurnaceEntity) {
                 NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) blockEntity, pos);
             } else {
                 return InteractionResult.FAIL;
@@ -51,8 +51,8 @@ public class BasicGeneratorBlock extends MachineBlock {
         if (oldState.getBlock() != newState.getBlock()) {
             BlockEntity blockEntity = level.getBlockEntity(blockPos);
 
-            if (blockEntity instanceof BasicGeneratorEntity) {
-                Containers.dropContents(level, blockPos, (BasicGeneratorEntity) blockEntity);
+            if (blockEntity instanceof ElectricFurnaceEntity) {
+                Containers.dropContents(level, blockPos, (ElectricFurnaceEntity) blockEntity);
                 level.updateNeighbourForOutputSignal(blockPos, this);
             }
             super.onRemove(oldState, level, blockPos, newState, flag);
@@ -60,10 +60,10 @@ public class BasicGeneratorBlock extends MachineBlock {
     }
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type){
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {
         return (lvl, pos, state, entity) -> {
-            if (entity instanceof BasicGeneratorEntity generator) {
-                generator.tick();
+            if (entity instanceof ElectricFurnaceEntity furnace) {
+                furnace.tick();
             }
         };
     }

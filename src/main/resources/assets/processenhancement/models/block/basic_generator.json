@@ -3,9 +3,9 @@
 	"textures": {
 		"frame": "minecraft:block/cobblestone",
 		"corner": "minecraft:block/cobblestone",
-		"face": "minecraft:block/stone",
+		"face": "minecraft:block/copper_block",
 		"inset": "minecraft:block/black_concrete",
-		"overlay": "processenhancement:blocks/basic_generator",
+		"overlay": "processenhancement:block/basic_generator",
 		"particle": "minecraft:block/cobblestone"
 	}
 }

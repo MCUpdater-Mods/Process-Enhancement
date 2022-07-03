@@ -1,8 +1,12 @@
 package com.mcupdater.procenhance.setup;
 
+import com.mcupdater.mculib.setup.ModSetup;
 import com.mcupdater.procenhance.blocks.basic_generator.BasicGeneratorBlock;
 import com.mcupdater.procenhance.blocks.basic_generator.BasicGeneratorEntity;
 import com.mcupdater.procenhance.blocks.basic_generator.BasicGeneratorMenu;
+import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceBlock;
+import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceEntity;
+import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
@@ -32,7 +36,7 @@ public class Registration {
     }
 
     public static final RegistryObject<BasicGeneratorBlock> BASICGENERATOR_BLOCK = BLOCKS.register("basic_generator", BasicGeneratorBlock::new);
-    public static final RegistryObject<Item> BASICGENERATOR_BLOCKITEM = ITEMS.register("basic_generator", () -> new BlockItem(BASICGENERATOR_BLOCK.get(), new Item.Properties().tab(ModSetup.ITEM_GROUP)));
+    public static final RegistryObject<Item> BASICGENERATOR_BLOCKITEM = ITEMS.register("basic_generator", () -> new BlockItem(BASICGENERATOR_BLOCK.get(), new Item.Properties().tab(ModSetup.MCULIB_ITEM_GROUP)));
     public static final RegistryObject<BlockEntityType<BasicGeneratorEntity>> BASICGENERATOR_BLOCKENTITY = TILES.register("basic_generator", () -> BlockEntityType.Builder.of(BasicGeneratorEntity::new, BASICGENERATOR_BLOCK.get()).build(null));
     public static final RegistryObject<MenuType<BasicGeneratorMenu>> BASICGENERATOR_MENU = CONTAINERS.register("basic_generator", () -> IForgeMenuType.create((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
@@ -41,4 +45,13 @@ public class Registration {
         return new BasicGeneratorMenu(windowId, world, pos, inv, inv.player, blockEntity.data);
     }));
 
+    public static final RegistryObject<ElectricFurnaceBlock> FURNACE_BLOCK = BLOCKS.register("electric_furnace", ElectricFurnaceBlock::new);
+    public static final RegistryObject<Item> FURNACE_BLOCKITEM = ITEMS.register("electric_furnace", () -> new BlockItem(FURNACE_BLOCK.get(), new Item.Properties().tab(ModSetup.MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<ElectricFurnaceEntity>> FURNACE_BLOCKENTITY = TILES.register("electric_furnace", () -> BlockEntityType.Builder.of(ElectricFurnaceEntity::new, FURNACE_BLOCK.get()).build(null));
+    public static final RegistryObject<MenuType<ElectricFurnaceMenu>> FURNACE_MENU = CONTAINERS.register("electric_furnace", () -> IForgeMenuType.create((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        Level world = inv.player.level;
+        ElectricFurnaceEntity blockEntity = (ElectricFurnaceEntity) world.getBlockEntity(pos);
+        return new ElectricFurnaceMenu(windowId, world, pos, inv, inv.player, blockEntity.data);
+    }));
 }

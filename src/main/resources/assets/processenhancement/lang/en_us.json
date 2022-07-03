@@ -1,5 +1,6 @@
 {
     "block.processenhancement.basic_generator": "Basic Generator",
     "message.energy": "Energy:",
-    "itemGroup.processenhancement": "Process Enhancement"
+    "itemGroup.processenhancement": "Process Enhancement",
+    "block.processenhancement.electric_furnace": "Electric Furnace"
 }

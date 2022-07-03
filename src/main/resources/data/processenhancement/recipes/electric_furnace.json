@@ -2,9 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "group": "processenhancement",
   "pattern": [
-    "scs",
-    "cfc",
-    "scs"
+    "csc",
+    "sfs",
+    "csc"
   ],
   "key": {
     "c": {
@@ -14,10 +14,10 @@
       "item": "minecraft:furnace"
     },
     "s": {
-      "item": "minecraft:cobblestone"
+      "item": "minecraft:stone"
     }
   },
   "result": {
-    "item": "processenhancement:basic_generator"
+    "item": "processenhancement:electric_furnace"
   }
 }
