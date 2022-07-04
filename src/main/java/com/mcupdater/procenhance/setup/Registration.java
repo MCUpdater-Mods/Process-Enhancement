@@ -7,6 +7,9 @@ import com.mcupdater.procenhance.blocks.basic_generator.BasicGeneratorMenu;
 import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceBlock;
 import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceEntity;
 import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceMenu;
+import com.mcupdater.procenhance.blocks.sawmill.SawmillBlock;
+import com.mcupdater.procenhance.blocks.sawmill.SawmillEntity;
+import com.mcupdater.procenhance.blocks.sawmill.SawmillMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
@@ -53,5 +56,15 @@ public class Registration {
         Level world = inv.player.level;
         ElectricFurnaceEntity blockEntity = (ElectricFurnaceEntity) world.getBlockEntity(pos);
         return new ElectricFurnaceMenu(windowId, world, pos, inv, inv.player, blockEntity.data);
+    }));
+
+    public static final RegistryObject<SawmillBlock> SAWMILL_BLOCK = BLOCKS.register("sawmill", SawmillBlock::new);
+    public static final RegistryObject<Item> SAWMILL_BLOCKITEM = ITEMS.register("sawmill", () -> new BlockItem(SAWMILL_BLOCK.get(), new Item.Properties().tab(ModSetup.MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<SawmillEntity>> SAWMILL_BLOCKENTITY = TILES.register("sawmill", () -> BlockEntityType.Builder.of(SawmillEntity::new, SAWMILL_BLOCK.get()).build(null));
+    public static final RegistryObject<MenuType<SawmillMenu>> SAWMILL_MENU = CONTAINERS.register("sawmill", () -> IForgeMenuType.create((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        Level world = inv.player.level;
+        SawmillEntity blockEntity = (SawmillEntity) world.getBlockEntity(pos);
+        return new SawmillMenu(windowId, world, pos, inv, inv.player, blockEntity.data);
     }));
 }
