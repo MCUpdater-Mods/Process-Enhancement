@@ -1,6 +1,7 @@
 package com.mcupdater.procenhance.blocks.sawmill;
 
 import com.mcupdater.mculib.block.MachineBlockEntity;
+import com.mcupdater.procenhance.recipe.SawmillRecipe;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -35,7 +36,7 @@ public class SawmillEntity extends MachineBlockEntity implements WorldlyContaine
 
     protected NonNullList<ItemStack> itemStorage = NonNullList.withSize(2, ItemStack.EMPTY);
     private final LazyOptional<IItemHandlerModifiable>[] itemHandler = SidedInvWrapper.create(this, Direction.values());
-    private AbstractCookingRecipe currentRecipe = null;
+    private SawmillRecipe currentRecipe = null;
 
 
     public ContainerData data = new ContainerData() {
@@ -69,18 +70,18 @@ public class SawmillEntity extends MachineBlockEntity implements WorldlyContaine
     };
 
     public SawmillEntity(BlockPos blockPos, BlockState blockState) {
-        super(SAWMILL_BLOCKENTITY.get(), blockPos, blockState, 20000, Integer.MAX_VALUE, ReceiveMode.ACCEPTS, SendMode.SHARE, Config.FURNACE_ENERGY_PER_TICK.get());
+        super(SAWMILL_BLOCKENTITY.get(), blockPos, blockState, 20000, Integer.MAX_VALUE, ReceiveMode.ACCEPTS, SendMode.SHARE, Config.SAWMILL_ENERGY_PER_TICK.get());
     }
 
     @Override
     protected boolean performWork() {
         ItemStack inputStack = this.itemStorage.get(0);
         if (!inputStack.isEmpty()) {
-            Recipe<?> recipe = this.level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, this, this.level).orElse(null);
+            Recipe<?> recipe = this.level.getRecipeManager().getRecipeFor(SawmillRecipe.Type.INSTANCE, this, this.level).orElse(null);
             if (this.currentRecipe == null || !this.currentRecipe.equals(recipe)) {
                 if (recipe != null) {
-                    this.currentRecipe = (AbstractCookingRecipe) recipe;
-                    this.workTotal = this.currentRecipe.getCookingTime();
+                    this.currentRecipe = (SawmillRecipe) recipe;
+                    this.workTotal = this.currentRecipe.getProcessTime();
                 }
                 this.workProgress = 0;
             }
@@ -89,7 +90,7 @@ public class SawmillEntity extends MachineBlockEntity implements WorldlyContaine
             this.currentRecipe = null;
         }
         ItemStack outputSlot = this.itemStorage.get(1);
-        if (this.currentRecipe != null && this.energyStorage.getEnergyStored() >= Config.FURNACE_ENERGY_PER_TICK.get() && (outputSlot.isEmpty() || (outputSlot.sameItem(currentRecipe.getResultItem()) && outputSlot.getCount() < outputSlot.getMaxStackSize()))) {
+        if (this.currentRecipe != null && (outputSlot.isEmpty() || (outputSlot.sameItem(currentRecipe.getResultItem()) && outputSlot.getCount() < outputSlot.getMaxStackSize() - (currentRecipe.getResultItem().getCount() - 1)))) {
             this.workProgress++;
             if (this.workProgress >= this.workTotal) {
                 ItemStack result = this.currentRecipe.assemble(this);

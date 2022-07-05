@@ -67,7 +67,7 @@ public class SawmillMenu extends PowerTrackingMenu {
 
     @Override
     public boolean stillValid(Player playerIn) {
-        return stillValid(ContainerLevelAccess.create(localBlockEntity.getLevel(), localBlockEntity.getBlockPos()), player, Registration.FURNACE_BLOCK.get());
+        return stillValid(ContainerLevelAccess.create(localBlockEntity.getLevel(), localBlockEntity.getBlockPos()), player, Registration.SAWMILL_BLOCK.get());
     }
 
     @Override
