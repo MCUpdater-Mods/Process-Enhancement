@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "facing=north": { "model": "processenhancement:block/basic_generator" },
-    "facing=south": { "model": "processenhancement:block/basic_generator", "y": 180 },
-    "facing=west":  { "model": "processenhancement:block/basic_generator", "y": 270 },
-    "facing=east":  { "model": "processenhancement:block/basic_generator", "y": 90 }
-  }
-}

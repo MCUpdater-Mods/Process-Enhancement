@@ -3,5 +3,10 @@
     "message.energy": "Energy:",
     "itemGroup.processenhancement": "Process Enhancement",
     "block.processenhancement.electric_furnace": "Electric Furnace",
-    "block.processenhancement.sawmill": "Sawmill"
+    "block.processenhancement.sawmill": "Sawmill",
+    "block.processenhancement.grinder": "Grinder",
+    "gui.recipebook.toggleRecipes.sawmill": "Showing Sawmill",
+    "item.processenhancement.iron_dust": "Iron Dust",
+    "item.processenhancement.gold_dust": "Gold Dust",
+    "item.processenhancement.copper_dust": "Copper Dust"
 }

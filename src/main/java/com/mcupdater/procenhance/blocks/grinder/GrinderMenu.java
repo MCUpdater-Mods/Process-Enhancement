@@ -1,31 +1,30 @@
-package com.mcupdater.procenhance.blocks.sawmill;
+package com.mcupdater.procenhance.blocks.grinder;
 
 import com.mcupdater.mculib.capabilities.PowerTrackingMenu;
 import com.mcupdater.mculib.inventory.MachineInputSlot;
 import com.mcupdater.mculib.inventory.MachineOutputSlot;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.StackedContents;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class SawmillMenu extends PowerTrackingMenu {
-    private final SawmillEntity localBlockEntity;
+public class GrinderMenu extends PowerTrackingMenu {
+    private final GrinderEntity localBlockEntity;
     private final Player player;
     private final IItemHandler playerInventory;
     private final ContainerData data;
 
-    public SawmillMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data) {
-        super(Registration.SAWMILL_MENU.get(), windowId);
-        this.localBlockEntity = level.getBlockEntity(blockPos) instanceof SawmillEntity ? (SawmillEntity) level.getBlockEntity(blockPos) : null;
+    public GrinderMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data) {
+        super(Registration.GRINDER_MENU.get(), windowId);
+        this.localBlockEntity = level.getBlockEntity(blockPos) instanceof GrinderEntity ? (GrinderEntity) level.getBlockEntity(blockPos) : null;
         this.tileEntity = this.localBlockEntity;
         this.player = player;
         this.playerInventory = new InvWrapper(inventory);
@@ -68,7 +67,7 @@ public class SawmillMenu extends PowerTrackingMenu {
 
     @Override
     public boolean stillValid(Player playerIn) {
-        return stillValid(ContainerLevelAccess.create(localBlockEntity.getLevel(), localBlockEntity.getBlockPos()), player, Registration.SAWMILL_BLOCK.get());
+        return stillValid(ContainerLevelAccess.create(localBlockEntity.getLevel(), localBlockEntity.getBlockPos()), player, Registration.GRINDER_BLOCK.get());
     }
 
     @Override
@@ -111,7 +110,7 @@ public class SawmillMenu extends PowerTrackingMenu {
         return itemstack;
     }
 
-    public SawmillEntity getBlockEntity() {
+    public GrinderEntity getBlockEntity() {
         return localBlockEntity;
     }
 
@@ -126,5 +125,4 @@ public class SawmillMenu extends PowerTrackingMenu {
         }
         return this.data.get(0) * 18 / maxWork;
     }
-
 }

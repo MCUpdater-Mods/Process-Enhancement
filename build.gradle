@@ -19,6 +19,7 @@ group = 'com.mcupdater.procenhance' // http://maven.apache.org/guides/mini/guide
 archivesBaseName = "${mod_name}-${mc_version}"
 
 processResources {
+    duplicatesStrategy = DuplicatesStrategy.WARN
     exclude '**/*.xcf'
     from(sourceSets.main.resources.srcDirs) {
         include 'META-INF/mods.toml'

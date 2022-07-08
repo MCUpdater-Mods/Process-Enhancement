@@ -1,7 +1,7 @@
-package com.mcupdater.procenhance.blocks.sawmill;
+package com.mcupdater.procenhance.blocks.grinder;
 
 import com.mcupdater.mculib.block.MachineBlockEntity;
-import com.mcupdater.procenhance.recipe.SawmillRecipe;
+import com.mcupdater.procenhance.recipe.GrinderRecipe;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -9,6 +9,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
@@ -17,36 +18,35 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-import static com.mcupdater.procenhance.setup.Registration.SAWMILL_BLOCKENTITY;
+import static com.mcupdater.procenhance.setup.Registration.GRINDER_BLOCKENTITY;
 
-public class SawmillEntity extends MachineBlockEntity implements WorldlyContainer, MenuProvider {
-
+public class GrinderEntity extends MachineBlockEntity implements WorldlyContainer, MenuProvider {
     protected NonNullList<ItemStack> itemStorage = NonNullList.withSize(2, ItemStack.EMPTY);
     private final LazyOptional<IItemHandlerModifiable>[] itemHandler = SidedInvWrapper.create(this, Direction.values());
-    private SawmillRecipe currentRecipe = null;
-
+    private GrinderRecipe currentRecipe = null;
 
     public ContainerData data = new ContainerData() {
         @Override
         public int get(int index) {
             switch (index) {
                 case 0:
-                    return SawmillEntity.this.workProgress;
+                    return GrinderEntity.this.workProgress;
                 case 1:
-                    return SawmillEntity.this.workTotal;
+                    return GrinderEntity.this.workTotal;
                 default:
                     return 0;
             }
@@ -56,10 +56,10 @@ public class SawmillEntity extends MachineBlockEntity implements WorldlyContaine
         public void set(int index, int newValue) {
             switch (index) {
                 case 0:
-                    SawmillEntity.this.workProgress = newValue;
+                    GrinderEntity.this.workProgress = newValue;
                     break;
                 case 1:
-                    SawmillEntity.this.workTotal = newValue;
+                    GrinderEntity.this.workTotal = newValue;
             }
         }
 
@@ -69,18 +69,18 @@ public class SawmillEntity extends MachineBlockEntity implements WorldlyContaine
         }
     };
 
-    public SawmillEntity(BlockPos blockPos, BlockState blockState) {
-        super(SAWMILL_BLOCKENTITY.get(), blockPos, blockState, 20000, Integer.MAX_VALUE, ReceiveMode.ACCEPTS, SendMode.SHARE, Config.SAWMILL_ENERGY_PER_TICK.get());
+    public GrinderEntity(BlockPos blockPos, BlockState blockState) {
+        super(GRINDER_BLOCKENTITY.get(), blockPos, blockState, 20000, Integer.MAX_VALUE, ReceiveMode.ACCEPTS, SendMode.SHARE, Config.GRINDER_ENERGY_PER_TICK.get());
     }
 
     @Override
     protected boolean performWork() {
         ItemStack inputStack = this.itemStorage.get(0);
         if (!inputStack.isEmpty()) {
-            Recipe<?> recipe = this.level.getRecipeManager().getRecipeFor(SawmillRecipe.Type.INSTANCE, this, this.level).orElse(null);
+            Recipe<?> recipe = this.level.getRecipeManager().getRecipeFor(GrinderRecipe.Type.INSTANCE, this, this.level).orElse(null);
             if (this.currentRecipe == null || !this.currentRecipe.equals(recipe)) {
                 if (recipe != null) {
-                    this.currentRecipe = (SawmillRecipe) recipe;
+                    this.currentRecipe = (GrinderRecipe) recipe;
                     this.workTotal = this.currentRecipe.getProcessTime();
                 }
                 this.workProgress = 0;
@@ -89,15 +89,19 @@ public class SawmillEntity extends MachineBlockEntity implements WorldlyContaine
             this.currentRecipe = null;
         }
         ItemStack outputSlot = this.itemStorage.get(1);
-        if (this.currentRecipe != null && (outputSlot.isEmpty() || (outputSlot.sameItem(currentRecipe.getResultItem()) && outputSlot.getCount() < outputSlot.getMaxStackSize() - (currentRecipe.getResultItem().getCount() - 1)))) {
+        if (this.currentRecipe != null && outputSlot.isEmpty()) {
             this.workProgress++;
             if (this.workProgress >= this.workTotal) {
-                ItemStack result = this.currentRecipe.assemble(this);
-                if (outputSlot.isEmpty()) {
-                    this.itemStorage.set(1, result.copy());
-                } else if (outputSlot.is(result.getItem())) {
-                    outputSlot.grow(result.getCount());
+                List<ItemStack> prizeList = new ArrayList<>();
+                for (Tuple<ItemStack,Integer> tuple : this.currentRecipe.getOutputs()) {
+                    ItemStack potentialPrize = tuple.getA();
+                    for (int i = 0; i < tuple.getB(); i++) {
+                        prizeList.add(potentialPrize);
+                    }
                 }
+                Collections.shuffle(prizeList);
+                ItemStack prize = prizeList.get(this.level.getRandom().nextInt(prizeList.size()));
+                this.itemStorage.set(1, prize.copy());
                 this.workProgress = 0;
                 this.itemStorage.get(0).shrink(1);
                 this.storedXP += this.currentRecipe.getExperience();
@@ -120,9 +124,9 @@ public class SawmillEntity extends MachineBlockEntity implements WorldlyContaine
         super.saveAdditional(compound);
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
         if (cap.equals(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)) {
             return itemHandler[side != null ? side.ordinal() : 0].cast();
         }
@@ -130,6 +134,7 @@ public class SawmillEntity extends MachineBlockEntity implements WorldlyContaine
     }
 
     // WorldlyContainer methods
+
     @Override
     public int getContainerSize() {
         return this.itemStorage.size();
@@ -173,7 +178,7 @@ public class SawmillEntity extends MachineBlockEntity implements WorldlyContaine
         if (this.level.getBlockEntity(this.worldPosition) != this) {
             return false;
         } else {
-            return player.distanceToSqr((double)this.worldPosition.getX() + 0.5D, (double)this.worldPosition.getY() + 0.5D, (double)this.worldPosition.getZ() + 0.5D) <= 64.0D;
+            return player.distanceToSqr((double)this.worldPosition.getX() + 0.5, (double) this.worldPosition.getY() + 0.5D, (double) this.worldPosition.getZ() + 0.5D) <= 64.0D;
         }
     }
 
@@ -212,12 +217,12 @@ public class SawmillEntity extends MachineBlockEntity implements WorldlyContaine
     // MenuProvider methods
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("block.processenhancement.sawmill");
+        return new TranslatableComponent("block.processenhancement.grinder");
     }
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
-        return new SawmillMenu(windowId, this.level, this.worldPosition, inventory, player, this.data);
+        return new GrinderMenu(windowId, this.level, this.worldPosition, inventory, player, this.data);
     }
 }

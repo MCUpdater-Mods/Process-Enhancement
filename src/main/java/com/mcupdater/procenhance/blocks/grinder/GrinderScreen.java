@@ -1,21 +1,18 @@
-package com.mcupdater.procenhance.blocks.sawmill;
+package com.mcupdater.procenhance.blocks.grinder;
 
 import com.mcupdater.mculib.gui.WidgetPower;
 import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
-import net.minecraft.client.gui.screens.recipebook.RecipeUpdateListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class SawmillScreen extends AbstractContainerScreen<SawmillMenu> {
+public class GrinderScreen extends AbstractContainerScreen<GrinderMenu> {
+    private static final ResourceLocation GUI = new ResourceLocation(ProcessEnhancement.MODID,"textures/gui/machine.png");
 
-    private static final ResourceLocation GUI = new ResourceLocation(ProcessEnhancement.MODID, "textures/gui/machine.png");
-
-    public SawmillScreen(SawmillMenu menu, Inventory inventory, Component name) {
+    public GrinderScreen(GrinderMenu menu, Inventory inventory, Component name) {
         super(menu, inventory, name);
     }
 
@@ -45,4 +42,3 @@ public class SawmillScreen extends AbstractContainerScreen<SawmillMenu> {
         }
     }
 }
-
