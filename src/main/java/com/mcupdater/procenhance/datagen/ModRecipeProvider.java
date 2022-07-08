@@ -1,16 +1,13 @@
 package com.mcupdater.procenhance.datagen;
 
-import com.google.common.collect.ImmutableList;
 import com.mcupdater.procenhance.datagen.custom.GrinderRecipeBuilder;
 import com.mcupdater.procenhance.datagen.custom.SawmillRecipeBuilder;
 import com.mcupdater.procenhance.setup.Registration;
-import net.minecraft.core.NonNullList;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -20,8 +17,9 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import static com.mcupdater.procenhance.setup.Registration.*;
@@ -32,7 +30,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     }
 
     @Override
-    protected void buildCraftingRecipes(Consumer<FinishedRecipe> finishedRecipeConsumer) {
+    protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> finishedRecipeConsumer) {
         machineRecipe(finishedRecipeConsumer,Registration.BASICGENERATOR_BLOCK.get(), Ingredient.of(Blocks.COBBLESTONE), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Blocks.FURNACE));
         machineRecipe(finishedRecipeConsumer,Registration.FURNACE_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Blocks.STONE), Ingredient.of(Blocks.FURNACE));
         machineRecipe(finishedRecipeConsumer,Registration.SAWMILL_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(ItemTags.PLANKS), Ingredient.of(Items.IRON_AXE));
@@ -105,7 +103,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     }
 
     private void cookOre(Consumer<FinishedRecipe> finishedRecipeConsumer, Item input, Item output, float experience) {
-        SimpleCookingRecipeBuilder.cooking(Ingredient.of(input),output,experience,200,RecipeSerializer.SMELTING_RECIPE).unlockedBy("has_" + input.getRegistryName().getPath(), has(input)).save(finishedRecipeConsumer, output.getRegistryName().getPath() + "_from_smelting_" + input.getRegistryName().getPath());
+        SimpleCookingRecipeBuilder.cooking(Ingredient.of(input),output,experience,200,RecipeSerializer.SMELTING_RECIPE).unlockedBy("has_" + Objects.requireNonNull(input.getRegistryName()).getPath(), has(input)).save(finishedRecipeConsumer, Objects.requireNonNull(output.getRegistryName()).getPath() + "_from_smelting_" + input.getRegistryName().getPath());
         SimpleCookingRecipeBuilder.cooking(Ingredient.of(input),output,experience,100,RecipeSerializer.BLASTING_RECIPE).unlockedBy("has_" + input.getRegistryName().getPath(), has(input)).save(finishedRecipeConsumer, output.getRegistryName().getPath() + "_from_blasting_" + input.getRegistryName().getPath());
     }
 
