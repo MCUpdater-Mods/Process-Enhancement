@@ -1,6 +1,6 @@
 package com.mcupdater.procenhance.blocks.sawmill;
 
-import com.mcupdater.mculib.block.MachineBlock;
+import com.mcupdater.mculib.block.AbstractMachineBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
@@ -17,17 +17,18 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-public class SawmillBlock extends MachineBlock {
+public class SawmillBlock extends AbstractMachineBlock {
     public SawmillBlock() {
         super(Properties.of(Material.STONE).sound(SoundType.STONE).strength(5.0f));
     }
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+    public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
         return new SawmillEntity(blockPos, blockState);
     }
 

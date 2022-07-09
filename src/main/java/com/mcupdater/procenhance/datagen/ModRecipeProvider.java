@@ -58,6 +58,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         grinder("gravel",Ingredient.of(Blocks.GRAVEL), 200, 0.01f)
                 .addOutput(new ItemStack(Blocks.DIRT,1), 40)
                 .addOutput(new ItemStack(Blocks.SAND,1), 40)
+                .addOutput(new ItemStack(Items.FLINT, 1), 20)
                 .addOutput(new ItemStack(Items.COAL, 1), 10)
                 .addOutput(new ItemStack(IRON_DUST.get(), 1), 10)
                 .addOutput(new ItemStack(COPPER_DUST.get(),1),10)
@@ -96,10 +97,38 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .addOutput(new ItemStack(COPPER_DUST.get(), 5), 18)
                 .addOutput(new ItemStack(COPPER_DUST.get(), 6), 2)
                 .save(finishedRecipeConsumer);
+        grinder_single("dandelion", Ingredient.of(Items.DANDELION), new ItemStack(Items.YELLOW_DYE,3), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("poppy", Ingredient.of(Items.POPPY), new ItemStack(Items.RED_DYE,3), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("blue_orchid", Ingredient.of(Items.BLUE_ORCHID), new ItemStack(Items.LIGHT_BLUE_DYE,3), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("allium", Ingredient.of(Items.ALLIUM), new ItemStack(Items.MAGENTA_DYE,3), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("azure_bluet", Ingredient.of(Items.AZURE_BLUET), new ItemStack(Items.LIGHT_GRAY_DYE,3), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("red_tulip", Ingredient.of(Items.RED_TULIP), new ItemStack(Items.RED_DYE,3), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("orange_tulip", Ingredient.of(Items.ORANGE_TULIP), new ItemStack(Items.ORANGE_DYE,3), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("white_tulip", Ingredient.of(Items.WHITE_TULIP), new ItemStack(Items.LIGHT_GRAY_DYE,3), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("pink_tulip", Ingredient.of(Items.PINK_TULIP), new ItemStack(Items.PINK_DYE,3), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("oxeye_daisy", Ingredient.of(Items.OXEYE_DAISY), new ItemStack(Items.LIGHT_GRAY_DYE,3), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("cornflower", Ingredient.of(Items.CORNFLOWER), new ItemStack(Items.BLUE_DYE,3), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("lily_of_the_valley", Ingredient.of(Items.LILY_OF_THE_VALLEY), new ItemStack(Items.WHITE_DYE,3), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("wither_rose", Ingredient.of(Items.WITHER_ROSE), new ItemStack(Items.BLACK_DYE,3), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("sunflower", Ingredient.of(Items.SUNFLOWER), new ItemStack(Items.YELLOW_DYE,6), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("lilac", Ingredient.of(Items.LILAC), new ItemStack(Items.MAGENTA_DYE,6), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("rose_bush", Ingredient.of(Items.ROSE_BUSH), new ItemStack(Items.RED_DYE,6), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("peony", Ingredient.of(Items.PEONY), new ItemStack(Items.PINK_DYE,6), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("cocoa_beans", Ingredient.of(Items.COCOA_BEANS), new ItemStack(Items.BROWN_DYE,3), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("bone", Ingredient.of(Items.BONE), new ItemStack(Items.BONE_MEAL,6), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("blaze_rod", Ingredient.of(Items.BLAZE_ROD), new ItemStack(Items.BLAZE_POWDER,4), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("flint", Ingredient.of(Items.FLINT), new ItemStack(Items.GUNPOWDER,1), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("wool", Ingredient.of(ItemTags.WOOL), new ItemStack(Items.STRING,4), 100, 0.01f, finishedRecipeConsumer);
 
         cookOre(finishedRecipeConsumer, IRON_DUST.get(), Items.IRON_INGOT, 0.7f);
         cookOre(finishedRecipeConsumer, COPPER_DUST.get(), Items.COPPER_INGOT, 0.7f);
         cookOre(finishedRecipeConsumer, GOLD_DUST.get(), Items.GOLD_INGOT, 1.0f);
+    }
+
+    private void grinder_single(String recipeName, Ingredient input, ItemStack output, int processTime, float experience, Consumer<FinishedRecipe> finishedRecipeConsumer) {
+        grinder(recipeName,input,processTime,experience)
+                .addOutput(output,1)
+                .save(finishedRecipeConsumer);
     }
 
     private void cookOre(Consumer<FinishedRecipe> finishedRecipeConsumer, Item input, Item output, float experience) {

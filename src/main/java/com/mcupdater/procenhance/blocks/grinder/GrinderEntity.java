@@ -1,6 +1,6 @@
 package com.mcupdater.procenhance.blocks.grinder;
 
-import com.mcupdater.mculib.block.MachineBlockEntity;
+import com.mcupdater.mculib.block.AbstractMachineBlockEntity;
 import com.mcupdater.procenhance.recipe.GrinderRecipe;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
@@ -11,8 +11,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -34,7 +32,7 @@ import java.util.List;
 
 import static com.mcupdater.procenhance.setup.Registration.GRINDER_BLOCKENTITY;
 
-public class GrinderEntity extends MachineBlockEntity implements WorldlyContainer, MenuProvider {
+public class GrinderEntity extends AbstractMachineBlockEntity {
     protected NonNullList<ItemStack> itemStorage = NonNullList.withSize(2, ItemStack.EMPTY);
     private final LazyOptional<IItemHandlerModifiable>[] itemHandler = SidedInvWrapper.create(this, Direction.values());
     private GrinderRecipe currentRecipe = null;

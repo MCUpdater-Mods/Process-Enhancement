@@ -1,6 +1,6 @@
 package com.mcupdater.procenhance.blocks.grinder;
 
-import com.mcupdater.mculib.block.MachineBlock;
+import com.mcupdater.mculib.block.AbstractMachineBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
@@ -9,7 +9,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -20,7 +19,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
-public class GrinderBlock extends MachineBlock {
+public class GrinderBlock extends AbstractMachineBlock {
 
     public GrinderBlock() {
         super(Properties.of(Material.METAL).sound(SoundType.METAL).strength(10.0f));

@@ -1,6 +1,6 @@
 package com.mcupdater.procenhance.blocks.furnace;
 
-import com.mcupdater.mculib.block.MachineBlock;
+import com.mcupdater.mculib.block.AbstractMachineBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
@@ -20,7 +20,7 @@ import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-public class ElectricFurnaceBlock extends MachineBlock {
+public class ElectricFurnaceBlock extends AbstractMachineBlock {
     public ElectricFurnaceBlock() {
         super(Properties.of(Material.STONE).sound(SoundType.STONE).strength(5.0f));
     }

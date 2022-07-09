@@ -1,6 +1,6 @@
 package com.mcupdater.procenhance.blocks.furnace;
 
-import com.mcupdater.mculib.block.MachineBlockEntity;
+import com.mcupdater.mculib.block.AbstractMachineBlockEntity;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -31,7 +31,7 @@ import javax.annotation.Nullable;
 
 import static com.mcupdater.procenhance.setup.Registration.FURNACE_BLOCKENTITY;
 
-public class ElectricFurnaceEntity extends MachineBlockEntity implements WorldlyContainer, MenuProvider {
+public class ElectricFurnaceEntity extends AbstractMachineBlockEntity {
 
     protected NonNullList<ItemStack> itemStorage = NonNullList.withSize(2, ItemStack.EMPTY);
     private final LazyOptional<IItemHandlerModifiable>[] itemHandler = SidedInvWrapper.create(this, Direction.values());
