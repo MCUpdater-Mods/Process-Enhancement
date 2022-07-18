@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "processenhancement:block/grinder"
+    },
+    "facing=south": {
+      "model": "processenhancement:block/grinder",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "processenhancement:block/grinder",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "processenhancement:block/grinder",
+      "y": 90
+    }
+  }
+}

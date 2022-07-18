@@ -1,5 +1,6 @@
 package com.mcupdater.procenhance.setup;
 
+import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.mculib.setup.ModSetup;
 import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.blocks.basic_generator.BasicGeneratorBlock;
@@ -17,6 +18,8 @@ import com.mcupdater.procenhance.blocks.sawmill.SawmillMenu;
 import com.mcupdater.procenhance.recipe.GrinderRecipe;
 import com.mcupdater.procenhance.recipe.SawmillRecipe;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -29,6 +32,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.HashMap;
 
 import static com.mcupdater.mculib.setup.ModSetup.MCULIB_ITEM_GROUP;
 import static com.mcupdater.procenhance.ProcessEnhancement.MODID;
@@ -65,7 +70,7 @@ public class Registration {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.level;
         ElectricFurnaceEntity blockEntity = (ElectricFurnaceEntity) world.getBlockEntity(pos);
-        return new ElectricFurnaceMenu(windowId, world, pos, inv, inv.player, blockEntity.data);
+        return new ElectricFurnaceMenu(windowId, world, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
     }));
 
     public static final RegistryObject<SawmillBlock> SAWMILL_BLOCK = MACHINES.register("sawmill", SawmillBlock::new);
@@ -75,7 +80,7 @@ public class Registration {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.level;
         SawmillEntity blockEntity = (SawmillEntity) world.getBlockEntity(pos);
-        return new SawmillMenu(windowId, world, pos, inv, inv.player, blockEntity.data);
+        return new SawmillMenu(windowId, world, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
     }));
     public static final RegistryObject<RecipeSerializer<SawmillRecipe>> SAWMILL_SERIALIZER = RECIPE_SERIALIZERS.register("sawmill",() -> SawmillRecipe.Serializer.INSTANCE);
 
@@ -86,7 +91,7 @@ public class Registration {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.level;
         GrinderEntity blockEntity = (GrinderEntity) world.getBlockEntity(pos);
-        return new GrinderMenu(windowId, world, pos, inv, inv.player, blockEntity.data);
+        return new GrinderMenu(windowId, world, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
     })));
     public static final RegistryObject<RecipeSerializer<GrinderRecipe>> GRINDER_SERIALIZER = RECIPE_SERIALIZERS.register("grinder", () -> GrinderRecipe.Serializer.INSTANCE);
 

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "processenhancement:block/sawmill"
+    },
+    "facing=south": {
+      "model": "processenhancement:block/sawmill",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "processenhancement:block/sawmill",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "processenhancement:block/sawmill",
+      "y": 90
+    }
+  }
+}

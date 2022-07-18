@@ -1,0 +1,19 @@
+{
+  "type": "processenhancement:grinder",
+  "ingredients": [
+    {
+      "item": "minecraft:blue_orchid"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "item": "minecraft:light_blue_dye",
+        "count": 3
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 50,
+  "experience": 0.0
+}

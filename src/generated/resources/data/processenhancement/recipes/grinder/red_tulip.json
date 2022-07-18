@@ -1,0 +1,19 @@
+{
+  "type": "processenhancement:grinder",
+  "ingredients": [
+    {
+      "item": "minecraft:red_tulip"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "item": "minecraft:red_dye",
+        "count": 3
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 50,
+  "experience": 0.0
+}

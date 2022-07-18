@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CFC",
+    "F#F",
+    "CFC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:cobblestone"
+    },
+    "F": {
+      "item": "minecraft:copper_ingot"
+    },
+    "#": {
+      "item": "minecraft:furnace"
+    }
+  },
+  "result": {
+    "item": "processenhancement:basic_generator"
+  }
+}

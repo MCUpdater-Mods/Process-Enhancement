@@ -32,10 +32,8 @@ public class BasicGeneratorMenu extends PowerTrackingMenu {
         this.data = data;
 
         if (this.localBlockEntity != null) {
-            this.localBlockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-                addSlot(new FuelSlot(h, 0, 81, 56));
-                addSlot(new BucketSlot(h, 1, 105, 56));
-            });
+            addSlot(new FuelSlot(new InvWrapper(this.localBlockEntity), 0, 81, 56));
+            addSlot(new BucketSlot(new InvWrapper(this.localBlockEntity), 1, 105, 56));
         }
         layoutPlayerInventorySlots(8, 84);
         trackPower();

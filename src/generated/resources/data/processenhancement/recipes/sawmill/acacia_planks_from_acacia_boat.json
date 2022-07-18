@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "item": "minecraft:acacia_boat"
+    }
+  ],
+  "result": {
+    "item": "minecraft:acacia_planks",
+    "count": 5
+  },
+  "processTime": 200,
+  "experience": 0.0
+}

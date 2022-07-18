@@ -34,20 +34,6 @@ public class SawmillBlock extends AbstractMachineBlock {
 
     @Override
     @SuppressWarnings("deprecation")
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult trace) {
-        if (!level.isClientSide) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof SawmillEntity) {
-                NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) blockEntity, pos);
-            } else {
-                return InteractionResult.FAIL;
-            }
-        }
-        return InteractionResult.SUCCESS;
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
     public void onRemove(BlockState oldState, Level level, BlockPos blockPos, BlockState newState, boolean flag) {
         if (oldState.getBlock() != newState.getBlock()) {
             BlockEntity blockEntity = level.getBlockEntity(blockPos);

@@ -33,7 +33,7 @@ import static com.mcupdater.procenhance.setup.Registration.BASICGENERATOR_BLOCKE
 public class BasicGeneratorEntity extends PoweredBlockEntity implements WorldlyContainer, MenuProvider {
     protected NonNullList<ItemStack> itemStorage = NonNullList.withSize(2, ItemStack.EMPTY);
     private final LazyOptional<IItemHandlerModifiable>[] itemHandler = SidedInvWrapper.create(this, Direction.values());
-
+    private Component name;
     int burnCurrent;
     int burnTotal;
     public ContainerData data = new ContainerData() {
@@ -108,6 +108,9 @@ public class BasicGeneratorEntity extends PoweredBlockEntity implements WorldlyC
         this.itemStorage = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         this.burnTotal = compound.getInt("burnTotal");
         this.burnCurrent = compound.getInt("burnCurrent");
+        if (compound.contains("CustomName", 8)) {
+            this.name = Component.Serializer.fromJson(compound.getString("CustomName"));
+        }
         ContainerHelper.loadAllItems(compound, this.itemStorage);
     }
 
@@ -116,6 +119,9 @@ public class BasicGeneratorEntity extends PoweredBlockEntity implements WorldlyC
         compound.putInt("burnTotal", this.burnTotal);
         compound.putInt("burnCurrent", this.burnCurrent);
         ContainerHelper.saveAllItems(compound, this.itemStorage);
+        if (this.name != null) {
+            compound.putString("CustomName", Component.Serializer.toJson(this.name));
+        }
         super.saveAdditional(compound);
     }
 
@@ -211,12 +217,16 @@ public class BasicGeneratorEntity extends PoweredBlockEntity implements WorldlyC
     // MenuProvider methods
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("block.processenhancement.basic_generator");
+        return this.name != null ? this.name : new TranslatableComponent("block.processenhancement.basic_generator");
     }
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
         return new BasicGeneratorMenu(windowId, this.level, this.worldPosition, inventory, player, this.data);
+    }
+
+    public void setCustomName(Component hoverName) {
+        this.name = hoverName;
     }
 }

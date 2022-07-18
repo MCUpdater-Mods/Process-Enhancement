@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "item": "minecraft:birch_boat"
+    }
+  ],
+  "result": {
+    "item": "minecraft:birch_planks",
+    "count": 5
+  },
+  "processTime": 200,
+  "experience": 0.0
+}

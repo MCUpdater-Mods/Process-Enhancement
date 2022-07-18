@@ -1,0 +1,19 @@
+{
+  "type": "processenhancement:grinder",
+  "ingredients": [
+    {
+      "tag": "minecraft:wool"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "item": "minecraft:string",
+        "count": 4
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 100,
+  "experience": 0.01
+}

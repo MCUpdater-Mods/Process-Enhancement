@@ -1,0 +1,18 @@
+{
+  "type": "processenhancement:grinder",
+  "ingredients": [
+    {
+      "item": "minecraft:cobblestone"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "item": "minecraft:gravel"
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 200,
+  "experience": 0.01
+}

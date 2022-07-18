@@ -1,6 +1,7 @@
 package com.mcupdater.procenhance.blocks.sawmill;
 
 import com.mcupdater.mculib.block.AbstractMachineBlockEntity;
+import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.procenhance.recipe.SawmillRecipe;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
@@ -207,13 +208,13 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
 
     // MenuProvider methods
     @Override
-    public Component getDisplayName() {
+    public Component getDefaultName() {
         return new TranslatableComponent("block.processenhancement.sawmill");
     }
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
-        return new SawmillMenu(windowId, this.level, this.worldPosition, inventory, player, this.data);
+        return new SawmillMenu(windowId, this.level, this.worldPosition, inventory, player, this.data, DataHelper.getAdjacentNames(this.level, this.worldPosition));
     }
 }

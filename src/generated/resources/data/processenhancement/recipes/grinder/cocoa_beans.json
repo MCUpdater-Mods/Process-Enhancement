@@ -1,0 +1,19 @@
+{
+  "type": "processenhancement:grinder",
+  "ingredients": [
+    {
+      "item": "minecraft:cocoa_beans"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "item": "minecraft:brown_dye",
+        "count": 3
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 50,
+  "experience": 0.0
+}

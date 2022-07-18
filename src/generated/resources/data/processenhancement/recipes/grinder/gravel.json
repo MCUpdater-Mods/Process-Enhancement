@@ -1,0 +1,72 @@
+{
+  "type": "processenhancement:grinder",
+  "ingredients": [
+    {
+      "item": "minecraft:gravel"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "item": "minecraft:dirt"
+      },
+      "weight": 40
+    },
+    {
+      "stack": {
+        "item": "minecraft:sand"
+      },
+      "weight": 40
+    },
+    {
+      "stack": {
+        "item": "minecraft:flint"
+      },
+      "weight": 20
+    },
+    {
+      "stack": {
+        "item": "minecraft:coal"
+      },
+      "weight": 10
+    },
+    {
+      "stack": {
+        "item": "processenhancement:iron_dust"
+      },
+      "weight": 10
+    },
+    {
+      "stack": {
+        "item": "processenhancement:copper_dust"
+      },
+      "weight": 10
+    },
+    {
+      "stack": {
+        "item": "processenhancement:gold_dust"
+      },
+      "weight": 8
+    },
+    {
+      "stack": {
+        "item": "minecraft:redstone"
+      },
+      "weight": 8
+    },
+    {
+      "stack": {
+        "item": "minecraft:glowstone_dust"
+      },
+      "weight": 6
+    },
+    {
+      "stack": {
+        "item": "minecraft:diamond"
+      },
+      "weight": 2
+    }
+  ],
+  "processTime": 200,
+  "experience": 0.01
+}

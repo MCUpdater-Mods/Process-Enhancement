@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "tag": "minecraft:birch_logs"
+    }
+  ],
+  "result": {
+    "item": "minecraft:birch_planks",
+    "count": 6
+  },
+  "processTime": 200,
+  "experience": 0.05
+}

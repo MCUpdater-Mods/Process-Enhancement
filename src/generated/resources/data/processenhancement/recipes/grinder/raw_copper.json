@@ -1,0 +1,25 @@
+{
+  "type": "processenhancement:grinder",
+  "ingredients": [
+    {
+      "item": "minecraft:raw_copper"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "item": "processenhancement:copper_dust"
+      },
+      "weight": 2
+    },
+    {
+      "stack": {
+        "item": "processenhancement:copper_dust",
+        "count": 2
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 200,
+  "experience": 0.05
+}

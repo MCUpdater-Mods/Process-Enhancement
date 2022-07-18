@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "item": "minecraft:oak_boat"
+    }
+  ],
+  "result": {
+    "item": "minecraft:oak_planks",
+    "count": 5
+  },
+  "processTime": 200,
+  "experience": 0.0
+}

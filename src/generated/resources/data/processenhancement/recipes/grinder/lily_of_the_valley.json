@@ -1,0 +1,19 @@
+{
+  "type": "processenhancement:grinder",
+  "ingredients": [
+    {
+      "item": "minecraft:lily_of_the_valley"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "item": "minecraft:white_dye",
+        "count": 3
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 50,
+  "experience": 0.0
+}

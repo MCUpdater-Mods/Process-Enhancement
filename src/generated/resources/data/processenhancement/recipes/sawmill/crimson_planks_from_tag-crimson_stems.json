@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "tag": "minecraft:crimson_stems"
+    }
+  ],
+  "result": {
+    "item": "minecraft:crimson_planks",
+    "count": 6
+  },
+  "processTime": 200,
+  "experience": 0.05
+}

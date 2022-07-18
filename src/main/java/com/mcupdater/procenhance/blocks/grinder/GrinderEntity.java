@@ -1,6 +1,7 @@
 package com.mcupdater.procenhance.blocks.grinder;
 
 import com.mcupdater.mculib.block.AbstractMachineBlockEntity;
+import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.procenhance.recipe.GrinderRecipe;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
@@ -214,13 +215,13 @@ public class GrinderEntity extends AbstractMachineBlockEntity {
 
     // MenuProvider methods
     @Override
-    public Component getDisplayName() {
+    public Component getDefaultName() {
         return new TranslatableComponent("block.processenhancement.grinder");
     }
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
-        return new GrinderMenu(windowId, this.level, this.worldPosition, inventory, player, this.data);
+        return new GrinderMenu(windowId, this.level, this.worldPosition, inventory, player, this.data, DataHelper.getAdjacentNames(this.level, this.worldPosition));
     }
 }

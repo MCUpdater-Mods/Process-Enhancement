@@ -1,6 +1,7 @@
 package com.mcupdater.procenhance.blocks.furnace;
 
 import com.mcupdater.mculib.block.AbstractMachineBlockEntity;
+import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -9,8 +10,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -211,13 +210,13 @@ public class ElectricFurnaceEntity extends AbstractMachineBlockEntity {
 
     // MenuProvider methods
     @Override
-    public Component getDisplayName() {
+    public Component getDefaultName() {
         return new TranslatableComponent("block.processenhancement.electric_furnace");
     }
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
-        return new ElectricFurnaceMenu(windowId, this.level, this.worldPosition, inventory, player, this.data);
+        return new ElectricFurnaceMenu(windowId, this.level, this.worldPosition, inventory, player, this.data, DataHelper.getAdjacentNames(this.level, this.worldPosition));
     }
 }

@@ -1,0 +1,25 @@
+{
+  "type": "processenhancement:grinder",
+  "ingredients": [
+    {
+      "item": "minecraft:raw_gold"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "item": "processenhancement:gold_dust"
+      },
+      "weight": 2
+    },
+    {
+      "stack": {
+        "item": "processenhancement:gold_dust",
+        "count": 2
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 200,
+  "experience": 0.05
+}

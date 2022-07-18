@@ -1,7 +1,9 @@
 package com.mcupdater.procenhance.blocks.grinder;
 
 import com.mcupdater.mculib.block.AbstractMachineBlock;
+import com.mcupdater.procenhance.ProcessEnhancement;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -29,19 +31,6 @@ public class GrinderBlock extends AbstractMachineBlock {
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         return new GrinderEntity(blockPos, blockState);
-    }
-
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult trace) {
-        if (!level.isClientSide) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof GrinderEntity) {
-                NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) blockEntity, pos);
-            } else {
-                return InteractionResult.FAIL;
-            }
-        }
-        return InteractionResult.SUCCESS;
     }
 
     @Override
