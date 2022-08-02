@@ -36,7 +36,6 @@ public class ElectricFurnaceEntity extends AbstractMachineBlockEntity {
     private final LazyOptional<IItemHandlerModifiable>[] itemHandler = SidedInvWrapper.create(this, Direction.values());
     private AbstractCookingRecipe currentRecipe = null;
 
-
     public ContainerData data = new ContainerData() {
         @Override
         public int get(int index) {
@@ -219,4 +218,5 @@ public class ElectricFurnaceEntity extends AbstractMachineBlockEntity {
     public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
         return new ElectricFurnaceMenu(windowId, this.level, this.worldPosition, inventory, player, this.data, DataHelper.getAdjacentNames(this.level, this.worldPosition));
     }
+
 }

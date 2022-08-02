@@ -79,24 +79,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .addOutput(new ItemStack(COPPER_DUST.get(), 1), 2)
                 .addOutput(new ItemStack(COPPER_DUST.get(), 2), 1)
                 .save(finishedRecipeConsumer);
-        grinder("iron_ore", Ingredient.of(ItemTags.IRON_ORES),200,0.05f)
-                .addOutput(new ItemStack(IRON_DUST.get(), 3), 55)
-                .addOutput(new ItemStack(IRON_DUST.get(), 4), 25)
-                .addOutput(new ItemStack(IRON_DUST.get(), 5), 18)
-                .addOutput(new ItemStack(IRON_DUST.get(), 6), 2)
-                .save(finishedRecipeConsumer);
-        grinder("gold_ore", Ingredient.of(ItemTags.GOLD_ORES),200,0.05f)
-                .addOutput(new ItemStack(GOLD_DUST.get(), 3), 55)
-                .addOutput(new ItemStack(GOLD_DUST.get(), 4), 25)
-                .addOutput(new ItemStack(GOLD_DUST.get(), 5), 18)
-                .addOutput(new ItemStack(GOLD_DUST.get(), 6), 2)
-                .save(finishedRecipeConsumer);
-        grinder("copper_ore", Ingredient.of(ItemTags.COPPER_ORES),200,0.05f)
-                .addOutput(new ItemStack(COPPER_DUST.get(), 3), 55)
-                .addOutput(new ItemStack(COPPER_DUST.get(), 4), 25)
-                .addOutput(new ItemStack(COPPER_DUST.get(), 5), 18)
-                .addOutput(new ItemStack(COPPER_DUST.get(), 6), 2)
-                .save(finishedRecipeConsumer);
+        grinder_oreblock("iron_ore", Ingredient.of(ItemTags.IRON_ORES),200,0.05f, IRON_DUST.get(), finishedRecipeConsumer);
+        grinder_oreblock("gold_ore", Ingredient.of(ItemTags.GOLD_ORES),200,0.05f, GOLD_DUST.get(), finishedRecipeConsumer);
+        grinder_oreblock("copper_ore", Ingredient.of(ItemTags.COPPER_ORES),200,0.05f, COPPER_DUST.get(), finishedRecipeConsumer);
+        grinder_oreblock("coal_ore", Ingredient.of(ItemTags.COAL_ORES), 200, 0.05f, Items.COAL, finishedRecipeConsumer);
+        grinder_oreblock("redstone_ore", Ingredient.of(ItemTags.REDSTONE_ORES), 200, 0.05f, Items.REDSTONE, finishedRecipeConsumer);
+        grinder_oreblock("lapis_ore", Ingredient.of(ItemTags.LAPIS_ORES), 200, 0.05f, Items.LAPIS_LAZULI, finishedRecipeConsumer);
+        grinder_oreblock("diamond_ore", Ingredient.of(ItemTags.DIAMOND_ORES), 200, 0.05f, Items.DIAMOND, finishedRecipeConsumer);
+        grinder_oreblock("emerald_ore", Ingredient.of(ItemTags.EMERALD_ORES), 200, 0.05f, Items.EMERALD, finishedRecipeConsumer);
         grinder_single("dandelion", Ingredient.of(Items.DANDELION), new ItemStack(Items.YELLOW_DYE,3), 50,0.0f, finishedRecipeConsumer);
         grinder_single("poppy", Ingredient.of(Items.POPPY), new ItemStack(Items.RED_DYE,3), 50,0.0f, finishedRecipeConsumer);
         grinder_single("blue_orchid", Ingredient.of(Items.BLUE_ORCHID), new ItemStack(Items.LIGHT_BLUE_DYE,3), 50,0.0f, finishedRecipeConsumer);
@@ -115,6 +105,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         grinder_single("rose_bush", Ingredient.of(Items.ROSE_BUSH), new ItemStack(Items.RED_DYE,6), 50,0.0f, finishedRecipeConsumer);
         grinder_single("peony", Ingredient.of(Items.PEONY), new ItemStack(Items.PINK_DYE,6), 50,0.0f, finishedRecipeConsumer);
         grinder_single("cocoa_beans", Ingredient.of(Items.COCOA_BEANS), new ItemStack(Items.BROWN_DYE,3), 50,0.0f, finishedRecipeConsumer);
+        grinder_single("ink_sac", Ingredient.of(Items.INK_SAC), new ItemStack(Items.BLACK_DYE, 3), 50, 0.0f, finishedRecipeConsumer);
+        grinder_single("lapis_lazuli", Ingredient.of(Items.LAPIS_LAZULI), new ItemStack(Items.BLUE_DYE, 3), 50, 0.0f, finishedRecipeConsumer);
         grinder_single("bone", Ingredient.of(Items.BONE), new ItemStack(Items.BONE_MEAL,6), 50,0.0f, finishedRecipeConsumer);
         grinder_single("blaze_rod", Ingredient.of(Items.BLAZE_ROD), new ItemStack(Items.BLAZE_POWDER,4), 50,0.0f, finishedRecipeConsumer);
         grinder_single("flint", Ingredient.of(Items.FLINT), new ItemStack(Items.GUNPOWDER,1), 50,0.0f, finishedRecipeConsumer);
@@ -123,6 +115,15 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         cookOre(finishedRecipeConsumer, IRON_DUST.get(), Items.IRON_INGOT, 0.7f);
         cookOre(finishedRecipeConsumer, COPPER_DUST.get(), Items.COPPER_INGOT, 0.7f);
         cookOre(finishedRecipeConsumer, GOLD_DUST.get(), Items.GOLD_INGOT, 1.0f);
+    }
+
+    private void grinder_oreblock(String recipeName, Ingredient input, int processTime, float experience, Item output, Consumer<FinishedRecipe> finishedRecipeConsumer) {
+        grinder(recipeName, input, processTime, experience)
+                .addOutput(new ItemStack(output, 3), 55)
+                .addOutput(new ItemStack(output, 4), 25)
+                .addOutput(new ItemStack(output, 5), 18)
+                .addOutput(new ItemStack(output, 6), 2)
+                .save(finishedRecipeConsumer);
     }
 
     private void grinder_single(String recipeName, Ingredient input, ItemStack output, int processTime, float experience, Consumer<FinishedRecipe> finishedRecipeConsumer) {

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "processenhancement:basic_generator",
+    "processenhancement:electric_furnace",
+    "processenhancement:sawmill",
+    "processenhancement:grinder"
+  ]
+}

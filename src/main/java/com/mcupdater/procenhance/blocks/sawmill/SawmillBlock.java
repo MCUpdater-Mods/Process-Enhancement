@@ -50,7 +50,7 @@ public class SawmillBlock extends AbstractMachineBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {
         return (lvl, pos, state, entity) -> {
             if (entity instanceof SawmillEntity sawmill) {
-                sawmill.tick();
+                sawmill.tick(lvl, pos, state);
             }
         };
     }

@@ -1,17 +1,32 @@
 {
   "variants": {
-    "facing=north": {
+    "facing=north,lit=false": {
       "model": "processenhancement:block/electric_furnace"
     },
-    "facing=south": {
+    "facing=south,lit=false": {
       "model": "processenhancement:block/electric_furnace",
       "y": 180
     },
-    "facing=west": {
+    "facing=west,lit=false": {
       "model": "processenhancement:block/electric_furnace",
       "y": 270
     },
-    "facing=east": {
+    "facing=east,lit=false": {
+      "model": "processenhancement:block/electric_furnace",
+      "y": 90
+    },
+    "facing=north,lit=true": {
+      "model": "processenhancement:block/electric_furnace"
+    },
+    "facing=south,lit=true": {
+      "model": "processenhancement:block/electric_furnace",
+      "y": 180
+    },
+    "facing=west,lit=true": {
+      "model": "processenhancement:block/electric_furnace",
+      "y": 270
+    },
+    "facing=east,lit=true": {
       "model": "processenhancement:block/electric_furnace",
       "y": 90
     }

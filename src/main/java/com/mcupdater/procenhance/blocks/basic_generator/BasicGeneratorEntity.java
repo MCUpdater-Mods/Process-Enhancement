@@ -1,5 +1,6 @@
 package com.mcupdater.procenhance.blocks.basic_generator;
 
+import com.mcupdater.mculib.block.AbstractMachineBlock;
 import com.mcupdater.mculib.capabilities.PoweredBlockEntity;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
@@ -17,6 +18,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
@@ -70,13 +72,23 @@ public class BasicGeneratorEntity extends PoweredBlockEntity implements WorldlyC
         super(BASICGENERATOR_BLOCKENTITY.get(), blockPos, blockState, 200000, Integer.MAX_VALUE, ReceiveMode.NO_RECEIVE, SendMode.SEND_ALL );
     }
 
-    @Override
-    public void tick() {
-        if (!level.isClientSide) {
+    public void tick(Level pLevel, BlockPos pPos, BlockState pBlockState) {
+        if (!this.level.isClientSide) {
             if (this.burnCurrent > 0) {
                 int added = this.energyStorage.receiveEnergy(Config.BASIC_GENERATOR_PER_TICK.get(), false);
                 if (added > 0) {
                     --this.burnCurrent;
+                    boolean currentState = pBlockState.getValue((AbstractMachineBlock.ACTIVE));
+                    if (!currentState) {
+                        pBlockState = pBlockState.setValue(AbstractMachineBlock.ACTIVE, true);
+                        pLevel.setBlock(pPos, pBlockState, 3);
+                    }
+                } else {
+                    boolean currentState = pBlockState.getValue((AbstractMachineBlock.ACTIVE));
+                    if (currentState) {
+                        pBlockState = pBlockState.setValue(AbstractMachineBlock.ACTIVE, false);
+                        pLevel.setBlock(pPos, pBlockState, 3);
+                    }
                 }
             }
             if (this.burnCurrent == 0 && !this.itemStorage.get(0).isEmpty()) {
