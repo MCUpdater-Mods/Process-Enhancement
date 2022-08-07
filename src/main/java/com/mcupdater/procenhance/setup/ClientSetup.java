@@ -1,6 +1,7 @@
 package com.mcupdater.procenhance.setup;
 
 import com.mcupdater.procenhance.blocks.basic_capacitor.BasicCapacitorScreen;
+import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorScreen;
 import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceScreen;
 import com.mcupdater.procenhance.blocks.basic_generator.BasicGeneratorScreen;
 import com.mcupdater.procenhance.blocks.grinder.GrinderMenu;
@@ -19,6 +20,7 @@ public class ClientSetup {
             ItemBlockRenderTypes.setRenderLayer(machine.get(), RenderType.cutoutMipped());
         }
 
+        MenuScreens.register(Registration.CRUDEGENERATOR_MENU.get(), CrudeGeneratorScreen::new);
         MenuScreens.register(Registration.BASICGENERATOR_MENU.get(), BasicGeneratorScreen::new);
         MenuScreens.register(Registration.BASICCAPACITOR_MENU.get(), BasicCapacitorScreen::new);
         MenuScreens.register(Registration.FURNACE_MENU.get(), ElectricFurnaceScreen::new);

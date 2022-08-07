@@ -9,6 +9,9 @@ import com.mcupdater.procenhance.blocks.basic_capacitor.BasicCapacitorMenu;
 import com.mcupdater.procenhance.blocks.basic_generator.BasicGeneratorBlock;
 import com.mcupdater.procenhance.blocks.basic_generator.BasicGeneratorEntity;
 import com.mcupdater.procenhance.blocks.basic_generator.BasicGeneratorMenu;
+import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorBlock;
+import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorEntity;
+import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorMenu;
 import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceBlock;
 import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceEntity;
 import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceMenu;
@@ -55,6 +58,14 @@ public class Registration {
         CONTAINERS.register(modEventBus);
         RECIPE_SERIALIZERS.register(modEventBus);
     }
+    public static final RegistryObject<CrudeGeneratorBlock> CRUDEGENERATOR_BLOCK = MACHINES.register("crude_generator", CrudeGeneratorBlock::new);
+    public static final RegistryObject<Item> CRUDEGENERATOR_BLOCKITEM = ITEMS.register("crude_generator", () -> new BlockItem(CRUDEGENERATOR_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<CrudeGeneratorEntity>> CRUDEGENERATOR_BLOCKENTITY = BLOCK_ENTITIES.register("crude_generator", () -> BlockEntityType.Builder.of(CrudeGeneratorEntity::new, CRUDEGENERATOR_BLOCK.get()).build(null));
+    public static final RegistryObject<MenuType<CrudeGeneratorMenu>> CRUDEGENERATOR_MENU = CONTAINERS.register("crude_generator", () -> IForgeMenuType.create((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        Level world = inv.player.level;
+        return new CrudeGeneratorMenu(windowId, world, pos, inv, inv.player);
+    }));
 
     public static final RegistryObject<BasicGeneratorBlock> BASICGENERATOR_BLOCK = MACHINES.register("basic_generator", BasicGeneratorBlock::new);
     public static final RegistryObject<Item> BASICGENERATOR_BLOCKITEM = ITEMS.register("basic_generator", () -> new BlockItem(BASICGENERATOR_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));

@@ -74,7 +74,6 @@ public class BasicCapacitorEntity extends PoweredBlockEntity implements WorldlyC
             compound.putString("CustomName", Component.Serializer.toJson(this.name));
         }
         super.saveAdditional(compound);
-        ProcessEnhancement.LOGGER.debug("saveAdditional - " + compound.getAsString());
     }
 
     @NotNull

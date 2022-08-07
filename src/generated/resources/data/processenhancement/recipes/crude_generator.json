@@ -3,23 +3,20 @@
   "pattern": [
     "CFC",
     "F#F",
-    "CRC"
+    "CFC"
   ],
   "key": {
     "C": {
       "item": "minecraft:copper_ingot"
     },
     "F": {
-      "item": "minecraft:brick"
+      "item": "minecraft:cobblestone"
     },
     "#": {
-      "item": "minecraft:furnace"
-    },
-    "R": {
-      "item": "minecraft:redstone"
+      "item": "minecraft:stick"
     }
   },
   "result": {
-    "item": "processenhancement:basic_generator"
+    "item": "processenhancement:crude_generator"
   }
 }

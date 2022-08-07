@@ -23,6 +23,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
+        machine(Registration.CRUDEGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.COBBLESTONE, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
         machine(Registration.BASICGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.BRICKS, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
         machine(Registration.FURNACE_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.STONE, new ResourceLocation(ProcessEnhancement.MODID, "block/electric_furnace"));
         machine(Registration.SAWMILL_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.OAK_PLANKS, new ResourceLocation(ProcessEnhancement.MODID, "block/sawmill"));

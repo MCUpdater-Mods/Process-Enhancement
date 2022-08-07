@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "processenhancement:crude_generator",
     "processenhancement:basic_generator",
     "processenhancement:basic_capacitor",
     "processenhancement:electric_furnace",
