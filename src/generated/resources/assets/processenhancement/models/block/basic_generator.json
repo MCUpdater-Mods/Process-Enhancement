@@ -1,11 +1,11 @@
 {
   "parent": "mculib:block/machine",
   "textures": {
-    "frame": "minecraft:block/cobblestone",
-    "corner": "minecraft:block/cobblestone",
-    "face": "minecraft:block/copper_block",
+    "frame": "minecraft:block/copper_block",
+    "corner": "minecraft:block/copper_block",
+    "face": "minecraft:block/bricks",
     "inset": "minecraft:block/black_concrete",
-    "overlay": "processenhancement:block/basic_generator",
-    "particle": "minecraft:block/cobblestone"
+    "overlay": "processenhancement:block/generator",
+    "particle": "minecraft:block/copper_block"
   }
 }

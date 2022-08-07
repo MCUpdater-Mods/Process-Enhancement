@@ -1,6 +1,7 @@
 package com.mcupdater.procenhance.blocks.furnace;
 
 import com.mcupdater.mculib.block.AbstractMachineBlock;
+import com.mcupdater.mculib.setup.Registration;
 import com.mcupdater.procenhance.blocks.basic_generator.BasicGeneratorEntity;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
@@ -44,6 +45,7 @@ public class ElectricFurnaceBlock extends AbstractMachineBlock {
             double x = (double) pPos.getX() + 0.5D;
             double y = (double) pPos.getY();
             double z = (double) pPos.getZ() + 0.5D;
+            pLevel.playLocalSound(x, y, z, Registration.MACHINE_HUM.get(), SoundSource.BLOCKS, 1.0F, 1.0F, false);
             if (pRandom.nextDouble() < 0.1D) {
                 pLevel.playLocalSound(x, y, z, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
             }

@@ -35,6 +35,11 @@ public class SawmillRecipe implements Recipe<SawmillEntity> {
     }
 
     @Override
+    public NonNullList<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    @Override
     public ItemStack assemble(SawmillEntity container) {
         return result;
     }

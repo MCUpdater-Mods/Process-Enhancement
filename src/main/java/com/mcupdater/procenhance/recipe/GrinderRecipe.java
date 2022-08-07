@@ -35,6 +35,11 @@ public class GrinderRecipe implements Recipe<GrinderEntity> {
     }
 
     @Override
+    public NonNullList<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    @Override
     public ItemStack assemble(GrinderEntity p_44001_) {
         return ItemStack.EMPTY;
     }

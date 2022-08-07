@@ -1,6 +1,8 @@
 package com.mcupdater.procenhance.blocks.grinder;
 
+import com.mcupdater.mculib.MCULib;
 import com.mcupdater.mculib.block.AbstractMachineBlock;
+import com.mcupdater.mculib.setup.Registration;
 import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceEntity;
 import com.mcupdater.procenhance.setup.Config;
@@ -47,9 +49,7 @@ public class GrinderBlock extends AbstractMachineBlock {
             double x = (double) pPos.getX() + 0.5D;
             double y = (double) pPos.getY();
             double z = (double) pPos.getZ() + 0.5D;
-            if (pRandom.nextDouble() < 0.2D) {
-                pLevel.playLocalSound(x, y, z, SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
-            }
+            pLevel.playLocalSound(x, y, z, Registration.MACHINE_HUM.get(), SoundSource.BLOCKS, 1.0F, 1.0F, false);
 
             Direction direction = pState.getValue(FACING);
             Direction.Axis axis = direction.getAxis();

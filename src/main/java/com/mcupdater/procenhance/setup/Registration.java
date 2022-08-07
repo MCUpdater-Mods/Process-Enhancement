@@ -3,6 +3,9 @@ package com.mcupdater.procenhance.setup;
 import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.mculib.setup.ModSetup;
 import com.mcupdater.procenhance.ProcessEnhancement;
+import com.mcupdater.procenhance.blocks.basic_capacitor.BasicCapacitorBlock;
+import com.mcupdater.procenhance.blocks.basic_capacitor.BasicCapacitorEntity;
+import com.mcupdater.procenhance.blocks.basic_capacitor.BasicCapacitorMenu;
 import com.mcupdater.procenhance.blocks.basic_generator.BasicGeneratorBlock;
 import com.mcupdater.procenhance.blocks.basic_generator.BasicGeneratorEntity;
 import com.mcupdater.procenhance.blocks.basic_generator.BasicGeneratorMenu;
@@ -63,6 +66,15 @@ public class Registration {
         return new BasicGeneratorMenu(windowId, world, pos, inv, inv.player, blockEntity.data);
     }));
 
+    public static final RegistryObject<BasicCapacitorBlock> BASICCAPACITOR_BLOCK = MACHINES.register("basic_capacitor", BasicCapacitorBlock::new);
+    public static final RegistryObject<Item> BASICCAPACITOR_BLOCKITEM = ITEMS.register("basic_capacitor", () -> new BlockItem(BASICCAPACITOR_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<BasicCapacitorEntity>> BASICCAPACITOR_BLOCKENTITY = BLOCK_ENTITIES.register("basic_capacitor", () -> BlockEntityType.Builder.of(BasicCapacitorEntity::new, BASICCAPACITOR_BLOCK.get()).build(null));
+    public static final RegistryObject<MenuType<BasicCapacitorMenu>> BASICCAPACITOR_MENU = CONTAINERS.register("basic_capacitor", () -> IForgeMenuType.create(((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        Level level = inv.player.level;
+        return new BasicCapacitorMenu(windowId, level, pos, inv, inv.player);
+    })));
+
     public static final RegistryObject<ElectricFurnaceBlock> FURNACE_BLOCK = MACHINES.register("electric_furnace", ElectricFurnaceBlock::new);
     public static final RegistryObject<Item> FURNACE_BLOCKITEM = ITEMS.register("electric_furnace", () -> new BlockItem(FURNACE_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<BlockEntityType<ElectricFurnaceEntity>> FURNACE_BLOCKENTITY = BLOCK_ENTITIES.register("electric_furnace", () -> BlockEntityType.Builder.of(ElectricFurnaceEntity::new, FURNACE_BLOCK.get()).build(null));
@@ -98,5 +110,6 @@ public class Registration {
     public static final RegistryObject<Item> IRON_DUST = ITEMS.register("iron_dust", () -> new Item(new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<Item> GOLD_DUST = ITEMS.register("gold_dust", () -> new Item(new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<Item> COPPER_DUST = ITEMS.register("copper_dust", () -> new Item(new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<Item> CAPACITOR = ITEMS.register("capacitor", () -> new Item(new Item.Properties().tab(MCULIB_ITEM_GROUP)));
 
 }

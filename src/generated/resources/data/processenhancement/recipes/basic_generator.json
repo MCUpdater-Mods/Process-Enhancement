@@ -7,10 +7,10 @@
   ],
   "key": {
     "C": {
-      "item": "minecraft:cobblestone"
+      "item": "minecraft:copper_ingot"
     },
     "F": {
-      "item": "minecraft:copper_ingot"
+      "item": "minecraft:brick"
     },
     "#": {
       "item": "minecraft:furnace"

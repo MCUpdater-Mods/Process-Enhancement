@@ -31,7 +31,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
     @Override
     protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> finishedRecipeConsumer) {
-        machineRecipe(finishedRecipeConsumer,Registration.BASICGENERATOR_BLOCK.get(), Ingredient.of(Blocks.COBBLESTONE), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Blocks.FURNACE));
+        machineRecipe(finishedRecipeConsumer,Registration.BASICGENERATOR_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.BRICK), Ingredient.of(Blocks.FURNACE));
         machineRecipe(finishedRecipeConsumer,Registration.FURNACE_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Blocks.STONE), Ingredient.of(Blocks.FURNACE));
         machineRecipe(finishedRecipeConsumer,Registration.SAWMILL_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(ItemTags.PLANKS), Ingredient.of(Items.IRON_AXE));
         machineRecipe(finishedRecipeConsumer,Registration.GRINDER_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.STONECUTTER));
@@ -115,6 +115,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         cookOre(finishedRecipeConsumer, IRON_DUST.get(), Items.IRON_INGOT, 0.7f);
         cookOre(finishedRecipeConsumer, COPPER_DUST.get(), Items.COPPER_INGOT, 0.7f);
         cookOre(finishedRecipeConsumer, GOLD_DUST.get(), Items.GOLD_INGOT, 1.0f);
+
+        ShapedRecipeBuilder.shaped(CAPACITOR.get()).define('C',Ingredient.of(Items.COPPER_INGOT)).define('P',Ingredient.of(Items.PAPER)).pattern("CCC").pattern("PPP").pattern("CCC").unlockedBy("automatic", has(Items.COPPER_INGOT)).save(finishedRecipeConsumer);
     }
 
     private void grinder_oreblock(String recipeName, Ingredient input, int processTime, float experience, Item output, Consumer<FinishedRecipe> finishedRecipeConsumer) {
