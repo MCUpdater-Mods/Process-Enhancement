@@ -29,7 +29,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         machine(Registration.GRINDER_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/grinder"));
 
         horizontalBlock(Registration.BASICCAPACITOR_BLOCK.get(), (blockState -> {
-            return models().getBuilder(Registration.BASICCAPACITOR_BLOCK.get().getRegistryName().getPath() + blockState.getValue(BasicCapacitorBlock.CHARGE_LEVEL))
+            int charge = blockState.getValue(BasicCapacitorBlock.CHARGE_LEVEL);
+            return models().getBuilder(Registration.BASICCAPACITOR_BLOCK.get().getRegistryName().getPath() + (charge > 0 ? Integer.toString(charge) : ""))
                     .parent(new ModelFile.UncheckedModelFile("mculib:block/machine"))
                     .texture("frame", blockTexture(Blocks.COPPER_BLOCK))
                     .texture("corner", blockTexture(Blocks.COPPER_BLOCK))

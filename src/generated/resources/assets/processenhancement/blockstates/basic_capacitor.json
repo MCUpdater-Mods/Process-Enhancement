@@ -1,0 +1,154 @@
+{
+  "variants": {
+    "charge=0,facing=north,lit=false": {
+      "model": "processenhancement:block/basic_capacitor"
+    },
+    "charge=1,facing=north,lit=false": {
+      "model": "processenhancement:block/basic_capacitor1"
+    },
+    "charge=2,facing=north,lit=false": {
+      "model": "processenhancement:block/basic_capacitor2"
+    },
+    "charge=3,facing=north,lit=false": {
+      "model": "processenhancement:block/basic_capacitor3"
+    },
+    "charge=4,facing=north,lit=false": {
+      "model": "processenhancement:block/basic_capacitor4"
+    },
+    "charge=0,facing=south,lit=false": {
+      "model": "processenhancement:block/basic_capacitor",
+      "y": 180
+    },
+    "charge=1,facing=south,lit=false": {
+      "model": "processenhancement:block/basic_capacitor1",
+      "y": 180
+    },
+    "charge=2,facing=south,lit=false": {
+      "model": "processenhancement:block/basic_capacitor2",
+      "y": 180
+    },
+    "charge=3,facing=south,lit=false": {
+      "model": "processenhancement:block/basic_capacitor3",
+      "y": 180
+    },
+    "charge=4,facing=south,lit=false": {
+      "model": "processenhancement:block/basic_capacitor4",
+      "y": 180
+    },
+    "charge=0,facing=west,lit=false": {
+      "model": "processenhancement:block/basic_capacitor",
+      "y": 270
+    },
+    "charge=1,facing=west,lit=false": {
+      "model": "processenhancement:block/basic_capacitor1",
+      "y": 270
+    },
+    "charge=2,facing=west,lit=false": {
+      "model": "processenhancement:block/basic_capacitor2",
+      "y": 270
+    },
+    "charge=3,facing=west,lit=false": {
+      "model": "processenhancement:block/basic_capacitor3",
+      "y": 270
+    },
+    "charge=4,facing=west,lit=false": {
+      "model": "processenhancement:block/basic_capacitor4",
+      "y": 270
+    },
+    "charge=0,facing=east,lit=false": {
+      "model": "processenhancement:block/basic_capacitor",
+      "y": 90
+    },
+    "charge=1,facing=east,lit=false": {
+      "model": "processenhancement:block/basic_capacitor1",
+      "y": 90
+    },
+    "charge=2,facing=east,lit=false": {
+      "model": "processenhancement:block/basic_capacitor2",
+      "y": 90
+    },
+    "charge=3,facing=east,lit=false": {
+      "model": "processenhancement:block/basic_capacitor3",
+      "y": 90
+    },
+    "charge=4,facing=east,lit=false": {
+      "model": "processenhancement:block/basic_capacitor4",
+      "y": 90
+    },
+    "charge=0,facing=north,lit=true": {
+      "model": "processenhancement:block/basic_capacitor"
+    },
+    "charge=1,facing=north,lit=true": {
+      "model": "processenhancement:block/basic_capacitor1"
+    },
+    "charge=2,facing=north,lit=true": {
+      "model": "processenhancement:block/basic_capacitor2"
+    },
+    "charge=3,facing=north,lit=true": {
+      "model": "processenhancement:block/basic_capacitor3"
+    },
+    "charge=4,facing=north,lit=true": {
+      "model": "processenhancement:block/basic_capacitor4"
+    },
+    "charge=0,facing=south,lit=true": {
+      "model": "processenhancement:block/basic_capacitor",
+      "y": 180
+    },
+    "charge=1,facing=south,lit=true": {
+      "model": "processenhancement:block/basic_capacitor1",
+      "y": 180
+    },
+    "charge=2,facing=south,lit=true": {
+      "model": "processenhancement:block/basic_capacitor2",
+      "y": 180
+    },
+    "charge=3,facing=south,lit=true": {
+      "model": "processenhancement:block/basic_capacitor3",
+      "y": 180
+    },
+    "charge=4,facing=south,lit=true": {
+      "model": "processenhancement:block/basic_capacitor4",
+      "y": 180
+    },
+    "charge=0,facing=west,lit=true": {
+      "model": "processenhancement:block/basic_capacitor",
+      "y": 270
+    },
+    "charge=1,facing=west,lit=true": {
+      "model": "processenhancement:block/basic_capacitor1",
+      "y": 270
+    },
+    "charge=2,facing=west,lit=true": {
+      "model": "processenhancement:block/basic_capacitor2",
+      "y": 270
+    },
+    "charge=3,facing=west,lit=true": {
+      "model": "processenhancement:block/basic_capacitor3",
+      "y": 270
+    },
+    "charge=4,facing=west,lit=true": {
+      "model": "processenhancement:block/basic_capacitor4",
+      "y": 270
+    },
+    "charge=0,facing=east,lit=true": {
+      "model": "processenhancement:block/basic_capacitor",
+      "y": 90
+    },
+    "charge=1,facing=east,lit=true": {
+      "model": "processenhancement:block/basic_capacitor1",
+      "y": 90
+    },
+    "charge=2,facing=east,lit=true": {
+      "model": "processenhancement:block/basic_capacitor2",
+      "y": 90
+    },
+    "charge=3,facing=east,lit=true": {
+      "model": "processenhancement:block/basic_capacitor3",
+      "y": 90
+    },
+    "charge=4,facing=east,lit=true": {
+      "model": "processenhancement:block/basic_capacitor4",
+      "y": 90
+    }
+  }
+}

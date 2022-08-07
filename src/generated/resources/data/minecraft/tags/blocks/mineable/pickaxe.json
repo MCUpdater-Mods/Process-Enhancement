@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "processenhancement:basic_generator",
+    "processenhancement:basic_capacitor",
     "processenhancement:electric_furnace",
     "processenhancement:sawmill",
     "processenhancement:grinder"

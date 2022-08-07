@@ -90,6 +90,12 @@ public class BasicGeneratorEntity extends PoweredBlockEntity implements WorldlyC
                         pLevel.setBlock(pPos, pBlockState, 3);
                     }
                 }
+            } else {
+                boolean currentState = pBlockState.getValue((AbstractMachineBlock.ACTIVE));
+                if (currentState) {
+                    pBlockState = pBlockState.setValue(AbstractMachineBlock.ACTIVE, false);
+                    pLevel.setBlock(pPos, pBlockState, 3);
+                }
             }
             if (this.burnCurrent == 0 && !this.itemStorage.get(0).isEmpty()) {
                 int newBurnTime = ForgeHooks.getBurnTime(this.itemStorage.get(0), RecipeType.SMELTING);

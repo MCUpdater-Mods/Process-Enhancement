@@ -1,12 +1,14 @@
 package com.mcupdater.procenhance.blocks.basic_capacitor;
 
 import com.mcupdater.mculib.capabilities.PoweredBlockEntity;
+import com.mcupdater.procenhance.ProcessEnhancement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
@@ -45,7 +47,7 @@ public class BasicCapacitorEntity extends PoweredBlockEntity implements WorldlyC
 
 
             // Update BlockState
-            int powerLevel = (this.energyStorage.getEnergyStored() / this.energyStorage.getMaxEnergyStored()) * 4;
+            int powerLevel = (int) Mth.ceil(((double)this.energyStorage.getEnergyStored() / (double)this.energyStorage.getMaxEnergyStored()) * 4.0d);
             int currentState = pBlockState.getValue(BasicCapacitorBlock.CHARGE_LEVEL);
             if (powerLevel != currentState) {
                 pBlockState = pBlockState.setValue(BasicCapacitorBlock.CHARGE_LEVEL, powerLevel);
@@ -72,6 +74,7 @@ public class BasicCapacitorEntity extends PoweredBlockEntity implements WorldlyC
             compound.putString("CustomName", Component.Serializer.toJson(this.name));
         }
         super.saveAdditional(compound);
+        ProcessEnhancement.LOGGER.debug("saveAdditional - " + compound.getAsString());
     }
 
     @NotNull
