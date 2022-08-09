@@ -1,12 +1,10 @@
-package com.mcupdater.procenhance.blocks.basic_capacitor;
+package com.mcupdater.procenhance.blocks.basic_battery;
 
 import com.mcupdater.mculib.capabilities.PowerTrackingMenu;
-import com.mcupdater.mculib.inventory.MachineInputSlot;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -15,14 +13,14 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class BasicCapacitorMenu extends PowerTrackingMenu {
-    private final BasicCapacitorEntity localBlockEntity;
+public class BasicBatteryMenu extends PowerTrackingMenu {
+    private final BasicBatteryEntity localBlockEntity;
     private final Player player;
     private final IItemHandler playerInventory;
 
-    public BasicCapacitorMenu(int pContainerId, Level level, BlockPos worldPosition, Inventory pPlayerInventory, Player pPlayer) {
-        super(Registration.BASICCAPACITOR_MENU.get(), pContainerId);
-        this.localBlockEntity = level.getBlockEntity(worldPosition) instanceof BasicCapacitorEntity ? (BasicCapacitorEntity) level.getBlockEntity(worldPosition) : null;
+    public BasicBatteryMenu(int pContainerId, Level level, BlockPos worldPosition, Inventory pPlayerInventory, Player pPlayer) {
+        super(Registration.BASICBATTERY_MENU.get(), pContainerId);
+        this.localBlockEntity = level.getBlockEntity(worldPosition) instanceof BasicBatteryEntity ? (BasicBatteryEntity) level.getBlockEntity(worldPosition) : null;
         this.tileEntity = this.localBlockEntity;
         this.player = pPlayer;
         this.playerInventory = new InvWrapper(pPlayerInventory);
@@ -62,7 +60,7 @@ public class BasicCapacitorMenu extends PowerTrackingMenu {
 
     @Override
     public boolean stillValid(Player pPlayer) {
-        return stillValid(ContainerLevelAccess.create(localBlockEntity.getLevel(), localBlockEntity.getBlockPos()), player, Registration.BASICCAPACITOR_BLOCK.get());
+        return stillValid(ContainerLevelAccess.create(localBlockEntity.getLevel(), localBlockEntity.getBlockPos()), player, Registration.BASICBATTERY_BLOCK.get());
     }
 
     @Override

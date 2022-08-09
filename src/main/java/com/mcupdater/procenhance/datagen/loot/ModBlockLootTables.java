@@ -5,6 +5,9 @@ import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ModBlockLootTables extends BlockLoot {
 
     @Override
@@ -16,6 +19,8 @@ public class ModBlockLootTables extends BlockLoot {
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
-        return Registration.MACHINES.getEntries().stream().map(RegistryObject::get)::iterator;
+        List<Block> knownBlocks = new ArrayList<>();
+        Registration.MACHINES.getEntries().forEach(entry -> knownBlocks.add(entry.get()));
+        return knownBlocks;
     }
 }

@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "processenhancement:basic_capacitor"
+          "name": "processenhancement:basic_battery"
         }
       ],
       "conditions": [

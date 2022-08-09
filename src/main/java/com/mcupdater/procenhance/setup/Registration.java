@@ -1,14 +1,15 @@
 package com.mcupdater.procenhance.setup;
 
 import com.mcupdater.mculib.helpers.DataHelper;
-import com.mcupdater.mculib.setup.ModSetup;
 import com.mcupdater.procenhance.ProcessEnhancement;
-import com.mcupdater.procenhance.blocks.basic_capacitor.BasicCapacitorBlock;
-import com.mcupdater.procenhance.blocks.basic_capacitor.BasicCapacitorEntity;
-import com.mcupdater.procenhance.blocks.basic_capacitor.BasicCapacitorMenu;
+import com.mcupdater.procenhance.blocks.basic_battery.BasicBatteryBlock;
+import com.mcupdater.procenhance.blocks.basic_battery.BasicBatteryEntity;
+import com.mcupdater.procenhance.blocks.basic_battery.BasicBatteryMenu;
 import com.mcupdater.procenhance.blocks.basic_generator.BasicGeneratorBlock;
 import com.mcupdater.procenhance.blocks.basic_generator.BasicGeneratorEntity;
 import com.mcupdater.procenhance.blocks.basic_generator.BasicGeneratorMenu;
+import com.mcupdater.procenhance.blocks.copper_wire.CopperWireBlock;
+import com.mcupdater.procenhance.blocks.copper_wire.CopperWireEntity;
 import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorBlock;
 import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorEntity;
 import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorMenu;
@@ -24,8 +25,6 @@ import com.mcupdater.procenhance.blocks.sawmill.SawmillMenu;
 import com.mcupdater.procenhance.recipe.GrinderRecipe;
 import com.mcupdater.procenhance.recipe.SawmillRecipe;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -39,13 +38,12 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.HashMap;
-
 import static com.mcupdater.mculib.setup.ModSetup.MCULIB_ITEM_GROUP;
 import static com.mcupdater.procenhance.ProcessEnhancement.MODID;
 
 public class Registration {
     public static final DeferredRegister<Block> MACHINES = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, MODID);
     public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MODID);
@@ -53,6 +51,7 @@ public class Registration {
 
     public static void init(IEventBus modEventBus) {
         MACHINES.register(modEventBus);
+        BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         BLOCK_ENTITIES.register(modEventBus);
         CONTAINERS.register(modEventBus);
@@ -77,13 +76,13 @@ public class Registration {
         return new BasicGeneratorMenu(windowId, world, pos, inv, inv.player, blockEntity.data);
     }));
 
-    public static final RegistryObject<BasicCapacitorBlock> BASICCAPACITOR_BLOCK = MACHINES.register("basic_capacitor", BasicCapacitorBlock::new);
-    public static final RegistryObject<Item> BASICCAPACITOR_BLOCKITEM = ITEMS.register("basic_capacitor", () -> new BlockItem(BASICCAPACITOR_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
-    public static final RegistryObject<BlockEntityType<BasicCapacitorEntity>> BASICCAPACITOR_BLOCKENTITY = BLOCK_ENTITIES.register("basic_capacitor", () -> BlockEntityType.Builder.of(BasicCapacitorEntity::new, BASICCAPACITOR_BLOCK.get()).build(null));
-    public static final RegistryObject<MenuType<BasicCapacitorMenu>> BASICCAPACITOR_MENU = CONTAINERS.register("basic_capacitor", () -> IForgeMenuType.create(((windowId, inv, data) -> {
+    public static final RegistryObject<BasicBatteryBlock> BASICBATTERY_BLOCK = MACHINES.register("basic_battery", BasicBatteryBlock::new);
+    public static final RegistryObject<Item> BASICBATTERY_BLOCKITEM = ITEMS.register("basic_battery", () -> new BlockItem(BASICBATTERY_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<BasicBatteryEntity>> BASICBATTERY_BLOCKENTITY = BLOCK_ENTITIES.register("basic_battery", () -> BlockEntityType.Builder.of(BasicBatteryEntity::new, BASICBATTERY_BLOCK.get()).build(null) );
+    public static final RegistryObject<MenuType<BasicBatteryMenu>> BASICBATTERY_MENU = CONTAINERS.register("basic_battery", () -> IForgeMenuType.create(((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level level = inv.player.level;
-        return new BasicCapacitorMenu(windowId, level, pos, inv, inv.player);
+        return new BasicBatteryMenu(windowId, level, pos, inv, inv.player);
     })));
 
     public static final RegistryObject<ElectricFurnaceBlock> FURNACE_BLOCK = MACHINES.register("electric_furnace", ElectricFurnaceBlock::new);
@@ -117,6 +116,10 @@ public class Registration {
         return new GrinderMenu(windowId, world, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
     })));
     public static final RegistryObject<RecipeSerializer<GrinderRecipe>> GRINDER_SERIALIZER = RECIPE_SERIALIZERS.register("grinder", () -> GrinderRecipe.Serializer.INSTANCE);
+
+    public static final RegistryObject<CopperWireBlock> COPPERWIRE_BLOCK = BLOCKS.register("copper_wire", CopperWireBlock::new);
+    public static final RegistryObject<Item> COPPERWIRE_BLOCKITEM = ITEMS.register("copper_wire", () -> new BlockItem(COPPERWIRE_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<CopperWireEntity>> COPPERWIRE_BLOCKENTITY = BLOCK_ENTITIES.register("copper_wire", ()-> BlockEntityType.Builder.of(CopperWireEntity::new, COPPERWIRE_BLOCK.get()).build(null));
 
     public static final RegistryObject<Item> IRON_DUST = ITEMS.register("iron_dust", () -> new Item(new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<Item> GOLD_DUST = ITEMS.register("gold_dust", () -> new Item(new Item.Properties().tab(MCULIB_ITEM_GROUP)));

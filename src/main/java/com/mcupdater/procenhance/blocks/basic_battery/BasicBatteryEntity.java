@@ -1,7 +1,6 @@
-package com.mcupdater.procenhance.blocks.basic_capacitor;
+package com.mcupdater.procenhance.blocks.basic_battery;
 
 import com.mcupdater.mculib.capabilities.PoweredBlockEntity;
-import com.mcupdater.procenhance.ProcessEnhancement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -19,42 +18,54 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static com.mcupdater.procenhance.setup.Registration.BASICCAPACITOR_BLOCKENTITY;
+import static com.mcupdater.procenhance.setup.Registration.BASICBATTERY_BLOCKENTITY;
 
-public class BasicCapacitorEntity extends PoweredBlockEntity implements WorldlyContainer, MenuProvider {
+public class BasicBatteryEntity extends PoweredBlockEntity implements WorldlyContainer, MenuProvider {
     protected NonNullList<ItemStack> itemStorage = NonNullList.withSize(1, ItemStack.EMPTY);
     private final LazyOptional<IItemHandlerModifiable>[] itemHandler = SidedInvWrapper.create(this, Direction.values());
     private Component name;
     public ContainerData data = new SimpleContainerData(0);
 
-    public BasicCapacitorEntity(BlockPos pPos, BlockState pState) {
-        super(BASICCAPACITOR_BLOCKENTITY.get(), pPos, pState, 250000, 2000, ReceiveMode.NOT_SHARED, SendMode.SEND_ALL);
+    public BasicBatteryEntity(BlockPos pPos, BlockState pState) {
+        super(BASICBATTERY_BLOCKENTITY.get(), pPos, pState, 500000, 2000, ReceiveMode.NOT_SHARED, SendMode.SEND_ALL);
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pBlockState) {
         if (!this.level.isClientSide) {
             // Charge item in slot
-
-
+            if (!this.itemStorage.get(0).isEmpty()) {
+                chargeItem(this.itemStorage.get(0));
+            }
             // Update BlockState
-            int powerLevel = (int) Mth.ceil(((double)this.energyStorage.getEnergyStored() / (double)this.energyStorage.getMaxEnergyStored()) * 4.0d);
-            int currentState = pBlockState.getValue(BasicCapacitorBlock.CHARGE_LEVEL);
+            int powerLevel = (int) Math.round(((double)this.energyStorage.getEnergyStored() / (double)this.energyStorage.getMaxEnergyStored()) * 4.0d);
+            int currentState = pBlockState.getValue(BasicBatteryBlock.CHARGE_LEVEL);
             if (powerLevel != currentState) {
-                pBlockState = pBlockState.setValue(BasicCapacitorBlock.CHARGE_LEVEL, powerLevel);
+                pBlockState = pBlockState.setValue(BasicBatteryBlock.CHARGE_LEVEL, powerLevel);
                 pLevel.setBlock(pPos, pBlockState, 3);
             }
         }
         super.tick();
+    }
+
+    private void chargeItem(ItemStack itemStack) {
+        if (itemStack.getCapability(CapabilityEnergy.ENERGY).isPresent()) {
+            IEnergyStorage itemEnergyHandler = itemStack.getCapability(CapabilityEnergy.ENERGY).resolve().get();
+            if (itemEnergyHandler.canReceive()) {
+                int energyTransferred = itemEnergyHandler.receiveEnergy(Math.min(2000,energyStorage.getEnergyStored()),false);
+                energyStorage.extractEnergy(energyTransferred,false);
+            }
+        }
     }
 
     @Override
@@ -88,7 +99,7 @@ public class BasicCapacitorEntity extends PoweredBlockEntity implements WorldlyC
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new BasicCapacitorMenu(pContainerId, this.level, this.worldPosition, pPlayerInventory, pPlayer);
+        return new BasicBatteryMenu(pContainerId, this.level, this.worldPosition, pPlayerInventory, pPlayer);
     }
 
     @Override
@@ -102,8 +113,18 @@ public class BasicCapacitorEntity extends PoweredBlockEntity implements WorldlyC
     }
 
     @Override
+    public boolean canPlaceItem(int pIndex, ItemStack pStack) {
+        return pStack.getCapability(CapabilityEnergy.ENERGY).isPresent();
+    }
+
+    @Override
     public boolean canTakeItemThroughFace(int pIndex, ItemStack pStack, Direction pDirection) {
-        return false;
+        if (!pStack.getCapability(CapabilityEnergy.ENERGY).isPresent()) {
+            return true;
+        } else {
+            IEnergyStorage itemEnergyHandler = pStack.getCapability(CapabilityEnergy.ENERGY).resolve().get();
+            return itemEnergyHandler.getEnergyStored() == itemEnergyHandler.getMaxEnergyStored() || !itemEnergyHandler.canReceive();
+        }
     }
 
     @Override
@@ -164,6 +185,6 @@ public class BasicCapacitorEntity extends PoweredBlockEntity implements WorldlyC
 
     @Override
     public Component getDisplayName() {
-        return this.name != null ? this.name : new TranslatableComponent("block.processenhancement.basic_capacitor");
+        return this.name != null ? this.name : new TranslatableComponent("block.processenhancement.basic_battery");
     }
 }

@@ -1,10 +1,9 @@
 package com.mcupdater.procenhance.setup;
 
-import com.mcupdater.procenhance.blocks.basic_capacitor.BasicCapacitorScreen;
+import com.mcupdater.procenhance.blocks.basic_battery.BasicBatteryScreen;
 import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorScreen;
 import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceScreen;
 import com.mcupdater.procenhance.blocks.basic_generator.BasicGeneratorScreen;
-import com.mcupdater.procenhance.blocks.grinder.GrinderMenu;
 import com.mcupdater.procenhance.blocks.grinder.GrinderScreen;
 import com.mcupdater.procenhance.blocks.sawmill.SawmillScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -19,10 +18,11 @@ public class ClientSetup {
         for (RegistryObject<Block> machine : Registration.MACHINES.getEntries()) {
             ItemBlockRenderTypes.setRenderLayer(machine.get(), RenderType.cutoutMipped());
         }
+        ItemBlockRenderTypes.setRenderLayer(Registration.COPPERWIRE_BLOCK.get(), RenderType.cutout());
 
         MenuScreens.register(Registration.CRUDEGENERATOR_MENU.get(), CrudeGeneratorScreen::new);
         MenuScreens.register(Registration.BASICGENERATOR_MENU.get(), BasicGeneratorScreen::new);
-        MenuScreens.register(Registration.BASICCAPACITOR_MENU.get(), BasicCapacitorScreen::new);
+        MenuScreens.register(Registration.BASICBATTERY_MENU.get(), BasicBatteryScreen::new);
         MenuScreens.register(Registration.FURNACE_MENU.get(), ElectricFurnaceScreen::new);
         MenuScreens.register(Registration.SAWMILL_MENU.get(), SawmillScreen::new);
         MenuScreens.register(Registration.GRINDER_MENU.get(), GrinderScreen::new);

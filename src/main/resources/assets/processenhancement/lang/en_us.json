@@ -9,5 +9,6 @@
     "item.processenhancement.gold_dust": "Gold Dust",
     "item.processenhancement.copper_dust": "Copper Dust",
     "item.processenhancement.capacitor": "Capacitor",
-    "block.processenhancement.basic_capacitor": "Basic Capacitor"
+    "block.processenhancement.basic_battery": "Basic Battery",
+    "block.processenhancement.copper_wire": "Copper Wire"
 }

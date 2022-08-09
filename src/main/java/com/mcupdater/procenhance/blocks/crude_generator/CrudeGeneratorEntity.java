@@ -2,7 +2,6 @@ package com.mcupdater.procenhance.blocks.crude_generator;
 
 import com.mcupdater.mculib.block.AbstractMachineBlock;
 import com.mcupdater.mculib.capabilities.PoweredBlockEntity;
-import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

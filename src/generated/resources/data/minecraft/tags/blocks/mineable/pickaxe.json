@@ -3,7 +3,7 @@
   "values": [
     "processenhancement:crude_generator",
     "processenhancement:basic_generator",
-    "processenhancement:basic_capacitor",
+    "processenhancement:basic_battery",
     "processenhancement:electric_furnace",
     "processenhancement:sawmill",
     "processenhancement:grinder"

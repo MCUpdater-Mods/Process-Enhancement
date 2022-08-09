@@ -1,7 +1,7 @@
 package com.mcupdater.procenhance.datagen;
 
 import com.mcupdater.procenhance.ProcessEnhancement;
-import com.mcupdater.procenhance.blocks.basic_capacitor.BasicCapacitorBlock;
+import com.mcupdater.procenhance.blocks.basic_battery.BasicBatteryBlock;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -29,15 +29,15 @@ public class ModBlockStateProvider extends BlockStateProvider {
         machine(Registration.SAWMILL_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.OAK_PLANKS, new ResourceLocation(ProcessEnhancement.MODID, "block/sawmill"));
         machine(Registration.GRINDER_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/grinder"));
 
-        horizontalBlock(Registration.BASICCAPACITOR_BLOCK.get(), (blockState -> {
-            int charge = blockState.getValue(BasicCapacitorBlock.CHARGE_LEVEL);
-            return models().getBuilder(Registration.BASICCAPACITOR_BLOCK.get().getRegistryName().getPath() + (charge > 0 ? Integer.toString(charge) : ""))
+        horizontalBlock(Registration.BASICBATTERY_BLOCK.get(), (blockState -> {
+            int charge = blockState.getValue(BasicBatteryBlock.CHARGE_LEVEL);
+            return models().getBuilder(Registration.BASICBATTERY_BLOCK.get().getRegistryName().getPath() + (charge > 0 ? Integer.toString(charge) : ""))
                     .parent(new ModelFile.UncheckedModelFile("mculib:block/machine"))
                     .texture("frame", blockTexture(Blocks.COPPER_BLOCK))
                     .texture("corner", blockTexture(Blocks.COPPER_BLOCK))
                     .texture("face",blockTexture(Blocks.IRON_BLOCK))
                     .texture("inset", blockTexture(Blocks.BLACK_CONCRETE))
-                    .texture("overlay", new ResourceLocation(ProcessEnhancement.MODID, "block/capacitor" + blockState.getValue(BasicCapacitorBlock.CHARGE_LEVEL)))
+                    .texture("overlay", new ResourceLocation(ProcessEnhancement.MODID, "block/battery" + blockState.getValue(BasicBatteryBlock.CHARGE_LEVEL)))
                     .texture("particle", blockTexture(Blocks.COPPER_BLOCK));
         }));
     }

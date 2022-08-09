@@ -1,4 +1,4 @@
-package com.mcupdater.procenhance.blocks.basic_capacitor;
+package com.mcupdater.procenhance.blocks.basic_battery;
 
 import com.mcupdater.mculib.gui.WidgetPower;
 import com.mcupdater.procenhance.ProcessEnhancement;
@@ -9,10 +9,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class BasicCapacitorScreen extends AbstractContainerScreen<BasicCapacitorMenu> {
+public class BasicBatteryScreen extends AbstractContainerScreen<BasicBatteryMenu> {
 
-    private static final ResourceLocation GUI = new ResourceLocation(ProcessEnhancement.MODID, "textures/gui/capacitor.png");
-    public BasicCapacitorScreen(BasicCapacitorMenu pMenu, Inventory pInventory, Component pName) {
+    private static final ResourceLocation GUI = new ResourceLocation(ProcessEnhancement.MODID, "textures/gui/battery.png");
+    public BasicBatteryScreen(BasicBatteryMenu pMenu, Inventory pInventory, Component pName) {
         super(pMenu, pInventory, pName);
     }
 

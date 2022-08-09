@@ -1,0 +1,23 @@
+{
+	"credit": "Made with Blockbench",
+	"ambientocclusion": true,
+	"textures": {
+		"body": "minecraft:block/copper_block",
+		"particle": "minecraft:block/copper_block"
+	},
+	"elements": [
+		{
+			"from": [7, 7, 0],
+			"to": [9, 9, 7],
+			"color": 4,
+			"faces": {
+				"north": {"uv": [7, 7, 9, 9], "texture": "#body"},
+				"east": {"uv": [9, 7, 16, 9], "texture": "#body"},
+				"south": {"uv": [7, 7, 9, 9], "texture": "#body"},
+				"west": {"uv": [0, 7, 7, 9], "texture": "#body"},
+				"up": {"uv": [7, 0, 9, 7], "texture": "#body"},
+				"down": {"uv": [7, 9, 9, 16], "texture": "#body"}
+			}
+		}
+	]
+}
