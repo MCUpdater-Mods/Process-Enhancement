@@ -6,6 +6,7 @@
     "processenhancement:basic_battery",
     "processenhancement:electric_furnace",
     "processenhancement:sawmill",
-    "processenhancement:grinder"
+    "processenhancement:grinder",
+    "processenhancement:copper_wire"
   ]
 }

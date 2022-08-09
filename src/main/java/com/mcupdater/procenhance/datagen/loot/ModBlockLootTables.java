@@ -15,12 +15,16 @@ public class ModBlockLootTables extends BlockLoot {
         for (RegistryObject<Block> entry : Registration.MACHINES.getEntries()){
             dropSelf(entry.get());
         }
+        for (RegistryObject<Block> entry : Registration.BLOCKS.getEntries()){
+            dropSelf(entry.get());
+        }
     }
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
         List<Block> knownBlocks = new ArrayList<>();
         Registration.MACHINES.getEntries().forEach(entry -> knownBlocks.add(entry.get()));
+        Registration.BLOCKS.getEntries().forEach(entry -> knownBlocks.add(entry.get()));
         return knownBlocks;
     }
 }
