@@ -56,6 +56,12 @@
     },
     {
       "stack": {
+        "item": "minecraft:lapis_lazuli"
+      },
+      "weight": 8
+    },
+    {
+      "stack": {
         "item": "minecraft:glowstone_dust"
       },
       "weight": 6

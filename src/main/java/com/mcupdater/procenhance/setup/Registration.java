@@ -63,7 +63,7 @@ public class Registration {
     public static final RegistryObject<MenuType<CrudeGeneratorMenu>> CRUDEGENERATOR_MENU = CONTAINERS.register("crude_generator", () -> IForgeMenuType.create((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.level;
-        return new CrudeGeneratorMenu(windowId, world, pos, inv, inv.player);
+        return new CrudeGeneratorMenu(windowId, world, pos, inv, inv.player, DataHelper.readDirectionMap(data));
     }));
 
     public static final RegistryObject<BasicGeneratorBlock> BASICGENERATOR_BLOCK = MACHINES.register("basic_generator", BasicGeneratorBlock::new);
@@ -73,7 +73,7 @@ public class Registration {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.level;
         BasicGeneratorEntity blockEntity = (BasicGeneratorEntity) world.getBlockEntity(pos);
-        return new BasicGeneratorMenu(windowId, world, pos, inv, inv.player, blockEntity.data);
+        return new BasicGeneratorMenu(windowId, world, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
     }));
 
     public static final RegistryObject<BasicBatteryBlock> BASICBATTERY_BLOCK = MACHINES.register("basic_battery", BasicBatteryBlock::new);
@@ -82,7 +82,7 @@ public class Registration {
     public static final RegistryObject<MenuType<BasicBatteryMenu>> BASICBATTERY_MENU = CONTAINERS.register("basic_battery", () -> IForgeMenuType.create(((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level level = inv.player.level;
-        return new BasicBatteryMenu(windowId, level, pos, inv, inv.player);
+        return new BasicBatteryMenu(windowId, level, pos, inv, inv.player, DataHelper.readDirectionMap(data));
     })));
 
     public static final RegistryObject<ElectricFurnaceBlock> FURNACE_BLOCK = MACHINES.register("electric_furnace", ElectricFurnaceBlock::new);

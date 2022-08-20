@@ -1,9 +1,11 @@
 package com.mcupdater.procenhance.blocks.basic_generator;
 
 import com.mcupdater.mculib.block.AbstractMachineBlock;
+import com.mcupdater.mculib.helpers.DataHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -25,6 +27,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
+import java.util.Map;
 import java.util.Random;
 
 public class BasicGeneratorBlock extends AbstractMachineBlock {
@@ -40,11 +43,15 @@ public class BasicGeneratorBlock extends AbstractMachineBlock {
 
     @Override
     @SuppressWarnings("deprecation")
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult trace) {
-        if (!level.isClientSide) {
-            BlockEntity blockEntity =level.getBlockEntity(pos);
+    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+        if (!pLevel.isClientSide) {
+            BlockEntity blockEntity =pLevel.getBlockEntity(pPos);
             if (blockEntity instanceof BasicGeneratorEntity) {
-                NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) blockEntity, pos);
+                Map<Direction, Component> adjacentNames = DataHelper.getAdjacentNames(pLevel, pPos);
+                NetworkHooks.openGui((ServerPlayer)pPlayer, (MenuProvider)blockEntity, (buf) -> {
+                    buf.writeBlockPos(pPos);
+                    DataHelper.writeDirectionMap(buf, adjacentNames);
+                });
             } else {
                 return InteractionResult.FAIL;
             }

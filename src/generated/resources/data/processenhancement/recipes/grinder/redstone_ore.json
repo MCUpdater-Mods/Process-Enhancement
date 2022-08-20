@@ -9,28 +9,28 @@
     {
       "stack": {
         "item": "minecraft:redstone",
-        "count": 3
+        "count": 9
       },
       "weight": 55
     },
     {
       "stack": {
         "item": "minecraft:redstone",
-        "count": 4
+        "count": 12
       },
       "weight": 25
     },
     {
       "stack": {
         "item": "minecraft:redstone",
-        "count": 5
+        "count": 15
       },
       "weight": 18
     },
     {
       "stack": {
         "item": "minecraft:redstone",
-        "count": 6
+        "count": 18
       },
       "weight": 2
     }

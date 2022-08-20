@@ -2,6 +2,7 @@ package com.mcupdater.procenhance.blocks.basic_generator;
 
 import com.mcupdater.mculib.block.AbstractMachineBlock;
 import com.mcupdater.mculib.capabilities.PoweredBlockEntity;
+import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -75,7 +76,7 @@ public class BasicGeneratorEntity extends PoweredBlockEntity implements WorldlyC
     public void tick(Level pLevel, BlockPos pPos, BlockState pBlockState) {
         if (!this.level.isClientSide) {
             if (this.burnCurrent > 0) {
-                int added = this.energyStorage.receiveEnergy(Config.BASIC_GENERATOR_PER_TICK.get(), false);
+                int added = this.energyStorage.getInternalHandler().receiveEnergy(Config.BASIC_GENERATOR_PER_TICK.get(), false);
                 if (added > 0) {
                     --this.burnCurrent;
                     boolean currentState = pBlockState.getValue((AbstractMachineBlock.ACTIVE));
@@ -241,7 +242,7 @@ public class BasicGeneratorEntity extends PoweredBlockEntity implements WorldlyC
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
-        return new BasicGeneratorMenu(windowId, this.level, this.worldPosition, inventory, player, this.data);
+        return new BasicGeneratorMenu(windowId, this.level, this.worldPosition, inventory, player, this.data, DataHelper.getAdjacentNames(this.level, this.worldPosition));
     }
 
     public void setCustomName(Component hoverName) {

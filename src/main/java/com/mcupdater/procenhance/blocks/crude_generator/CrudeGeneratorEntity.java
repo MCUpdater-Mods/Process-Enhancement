@@ -2,6 +2,7 @@ package com.mcupdater.procenhance.blocks.crude_generator;
 
 import com.mcupdater.mculib.block.AbstractMachineBlock;
 import com.mcupdater.mculib.capabilities.PoweredBlockEntity;
+import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -34,7 +35,7 @@ public class CrudeGeneratorEntity extends PoweredBlockEntity implements MenuProv
         if (!this.level.isClientSide) {
             Block blockBelow = this.level.getBlockState(this.worldPosition.below()).getBlock();
             if (validSources.contains(blockBelow)) {
-                int added = this.energyStorage.receiveEnergy(Config.CRUDE_GENERATOR_PER_TICK.get(), false);
+                int added = this.energyStorage.getInternalHandler().receiveEnergy(Config.CRUDE_GENERATOR_PER_TICK.get(), false);
                 if (added > 0) {
                     boolean currentState = pBlockState.getValue((AbstractMachineBlock.ACTIVE));
                     if (!currentState) {
@@ -84,7 +85,7 @@ public class CrudeGeneratorEntity extends PoweredBlockEntity implements MenuProv
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
-        return new CrudeGeneratorMenu(windowId, this.level, this.worldPosition, inventory, player);
+        return new CrudeGeneratorMenu(windowId, this.level, this.worldPosition, inventory, player, DataHelper.getAdjacentNames(this.level, this.worldPosition));
     }
 
     public void setCustomName(Component hoverName) {

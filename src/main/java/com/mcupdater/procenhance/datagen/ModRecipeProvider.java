@@ -66,6 +66,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .addOutput(new ItemStack(COPPER_DUST.get(),1),10)
                 .addOutput(new ItemStack(GOLD_DUST.get(), 1), 8)
                 .addOutput(new ItemStack(Items.REDSTONE, 1), 8)
+                .addOutput(new ItemStack(Items.LAPIS_LAZULI, 1), 8)
                 .addOutput(new ItemStack(Items.GLOWSTONE_DUST, 1), 6)
                 .addOutput(new ItemStack(Items.DIAMOND, 1), 2)
                 .save(finishedRecipeConsumer);
@@ -81,14 +82,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .addOutput(new ItemStack(COPPER_DUST.get(), 1), 2)
                 .addOutput(new ItemStack(COPPER_DUST.get(), 2), 1)
                 .save(finishedRecipeConsumer);
-        grinder_oreblock("iron_ore", Ingredient.of(ItemTags.IRON_ORES),200,0.05f, IRON_DUST.get(), finishedRecipeConsumer);
-        grinder_oreblock("gold_ore", Ingredient.of(ItemTags.GOLD_ORES),200,0.05f, GOLD_DUST.get(), finishedRecipeConsumer);
-        grinder_oreblock("copper_ore", Ingredient.of(ItemTags.COPPER_ORES),200,0.05f, COPPER_DUST.get(), finishedRecipeConsumer);
-        grinder_oreblock("coal_ore", Ingredient.of(ItemTags.COAL_ORES), 200, 0.05f, Items.COAL, finishedRecipeConsumer);
-        grinder_oreblock("redstone_ore", Ingredient.of(ItemTags.REDSTONE_ORES), 200, 0.05f, Items.REDSTONE, finishedRecipeConsumer);
-        grinder_oreblock("lapis_ore", Ingredient.of(ItemTags.LAPIS_ORES), 200, 0.05f, Items.LAPIS_LAZULI, finishedRecipeConsumer);
-        grinder_oreblock("diamond_ore", Ingredient.of(ItemTags.DIAMOND_ORES), 200, 0.05f, Items.DIAMOND, finishedRecipeConsumer);
-        grinder_oreblock("emerald_ore", Ingredient.of(ItemTags.EMERALD_ORES), 200, 0.05f, Items.EMERALD, finishedRecipeConsumer);
+        grinder_oreblock("iron_ore", Ingredient.of(ItemTags.IRON_ORES),1, 200,0.05f, IRON_DUST.get(), finishedRecipeConsumer);
+        grinder_oreblock("gold_ore", Ingredient.of(ItemTags.GOLD_ORES),1, 200,0.05f, GOLD_DUST.get(), finishedRecipeConsumer);
+        grinder_oreblock("copper_ore", Ingredient.of(ItemTags.COPPER_ORES),2, 200,0.05f, COPPER_DUST.get(), finishedRecipeConsumer);
+        grinder_oreblock("coal_ore", Ingredient.of(ItemTags.COAL_ORES), 1, 200, 0.05f, Items.COAL, finishedRecipeConsumer);
+        grinder_oreblock("redstone_ore", Ingredient.of(ItemTags.REDSTONE_ORES), 3, 200, 0.05f, Items.REDSTONE, finishedRecipeConsumer);
+        grinder_oreblock("lapis_ore", Ingredient.of(ItemTags.LAPIS_ORES), 4, 200, 0.05f, Items.LAPIS_LAZULI, finishedRecipeConsumer);
+        grinder_oreblock("diamond_ore", Ingredient.of(ItemTags.DIAMOND_ORES), 1, 200, 0.05f, Items.DIAMOND, finishedRecipeConsumer);
+        grinder_oreblock("emerald_ore", Ingredient.of(ItemTags.EMERALD_ORES), 1, 200, 0.05f, Items.EMERALD, finishedRecipeConsumer);
         grinder_single("dandelion", Ingredient.of(Items.DANDELION), new ItemStack(Items.YELLOW_DYE,3), 50,0.0f, finishedRecipeConsumer);
         grinder_single("poppy", Ingredient.of(Items.POPPY), new ItemStack(Items.RED_DYE,3), 50,0.0f, finishedRecipeConsumer);
         grinder_single("blue_orchid", Ingredient.of(Items.BLUE_ORCHID), new ItemStack(Items.LIGHT_BLUE_DYE,3), 50,0.0f, finishedRecipeConsumer);
@@ -122,12 +123,12 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapedRecipeBuilder.shaped(COPPERWIRE_BLOCKITEM.get(),16).define('C', Ingredient.of(Items.COPPER_INGOT)).pattern("CCC").unlockedBy("automatic",has(Items.COPPER_INGOT)).save(finishedRecipeConsumer);
     }
 
-    private void grinder_oreblock(String recipeName, Ingredient input, int processTime, float experience, Item output, Consumer<FinishedRecipe> finishedRecipeConsumer) {
+    private void grinder_oreblock(String recipeName, Ingredient input, int multiplier, int processTime, float experience, Item output, Consumer<FinishedRecipe> finishedRecipeConsumer) {
         grinder(recipeName, input, processTime, experience)
-                .addOutput(new ItemStack(output, 3), 55)
-                .addOutput(new ItemStack(output, 4), 25)
-                .addOutput(new ItemStack(output, 5), 18)
-                .addOutput(new ItemStack(output, 6), 2)
+                .addOutput(new ItemStack(output, 3 * multiplier), 55)
+                .addOutput(new ItemStack(output, 4 * multiplier), 25)
+                .addOutput(new ItemStack(output, 5 * multiplier), 18)
+                .addOutput(new ItemStack(output, 6 * multiplier), 2)
                 .save(finishedRecipeConsumer);
     }
 

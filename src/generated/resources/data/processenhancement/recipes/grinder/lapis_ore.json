@@ -9,28 +9,28 @@
     {
       "stack": {
         "item": "minecraft:lapis_lazuli",
-        "count": 3
+        "count": 12
       },
       "weight": 55
     },
     {
       "stack": {
         "item": "minecraft:lapis_lazuli",
-        "count": 4
+        "count": 16
       },
       "weight": 25
     },
     {
       "stack": {
         "item": "minecraft:lapis_lazuli",
-        "count": 5
+        "count": 20
       },
       "weight": 18
     },
     {
       "stack": {
         "item": "minecraft:lapis_lazuli",
-        "count": 6
+        "count": 24
       },
       "weight": 2
     }

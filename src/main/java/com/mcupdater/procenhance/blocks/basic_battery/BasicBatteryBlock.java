@@ -1,8 +1,10 @@
 package com.mcupdater.procenhance.blocks.basic_battery;
 
 import com.mcupdater.mculib.block.AbstractMachineBlock;
+import com.mcupdater.mculib.helpers.DataHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -24,6 +26,8 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Map;
 
 public class BasicBatteryBlock extends AbstractMachineBlock {
     public static final IntegerProperty CHARGE_LEVEL = IntegerProperty.create("charge",0,4);
@@ -55,7 +59,11 @@ public class BasicBatteryBlock extends AbstractMachineBlock {
         if (!pLevel.isClientSide) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
             if (blockEntity instanceof BasicBatteryEntity) {
-                NetworkHooks.openGui((ServerPlayer) pPlayer, (MenuProvider) blockEntity, pPos);
+                Map<Direction, Component> adjacentNames = DataHelper.getAdjacentNames(pLevel, pPos);
+                NetworkHooks.openGui((ServerPlayer)pPlayer, (MenuProvider)blockEntity, (buf) -> {
+                    buf.writeBlockPos(pPos);
+                    DataHelper.writeDirectionMap(buf, adjacentNames);
+                });
             } else {
                 return InteractionResult.FAIL;
             }

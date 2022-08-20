@@ -1,13 +1,13 @@
 package com.mcupdater.procenhance.blocks.basic_battery;
 
 import com.mcupdater.mculib.capabilities.PoweredBlockEntity;
+import com.mcupdater.mculib.helpers.DataHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.util.Mth;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
@@ -38,7 +38,7 @@ public class BasicBatteryEntity extends PoweredBlockEntity implements WorldlyCon
     public ContainerData data = new SimpleContainerData(0);
 
     public BasicBatteryEntity(BlockPos pPos, BlockState pState) {
-        super(BASICBATTERY_BLOCKENTITY.get(), pPos, pState, 500000, 2000, ReceiveMode.NOT_SHARED, SendMode.SEND_ALL);
+        super(BASICBATTERY_BLOCKENTITY.get(), pPos, pState, 500000, 10000, ReceiveMode.NOT_SHARED, SendMode.SEND_ALL);
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pBlockState) {
@@ -48,7 +48,7 @@ public class BasicBatteryEntity extends PoweredBlockEntity implements WorldlyCon
                 chargeItem(this.itemStorage.get(0));
             }
             // Update BlockState
-            int powerLevel = (int) Math.round(((double)this.energyStorage.getEnergyStored() / (double)this.energyStorage.getMaxEnergyStored()) * 4.0d);
+            int powerLevel = (int) Math.round(((double)this.energyStorage.getStoredEnergy() / (double)this.energyStorage.getCapacity()) * 4.0d);
             int currentState = pBlockState.getValue(BasicBatteryBlock.CHARGE_LEVEL);
             if (powerLevel != currentState) {
                 pBlockState = pBlockState.setValue(BasicBatteryBlock.CHARGE_LEVEL, powerLevel);
@@ -62,8 +62,8 @@ public class BasicBatteryEntity extends PoweredBlockEntity implements WorldlyCon
         if (itemStack.getCapability(CapabilityEnergy.ENERGY).isPresent()) {
             IEnergyStorage itemEnergyHandler = itemStack.getCapability(CapabilityEnergy.ENERGY).resolve().get();
             if (itemEnergyHandler.canReceive()) {
-                int energyTransferred = itemEnergyHandler.receiveEnergy(Math.min(2000,energyStorage.getEnergyStored()),false);
-                energyStorage.extractEnergy(energyTransferred,false);
+                int energyTransferred = itemEnergyHandler.receiveEnergy(Math.min(2000,energyStorage.getInternalHandler().getEnergyStored()),false);
+                energyStorage.getInternalHandler().extractEnergy(energyTransferred,false);
             }
         }
     }
@@ -99,7 +99,7 @@ public class BasicBatteryEntity extends PoweredBlockEntity implements WorldlyCon
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new BasicBatteryMenu(pContainerId, this.level, this.worldPosition, pPlayerInventory, pPlayer);
+        return new BasicBatteryMenu(pContainerId, this.level, this.worldPosition, pPlayerInventory, pPlayer, DataHelper.getAdjacentNames(this.level, this.worldPosition));
     }
 
     @Override

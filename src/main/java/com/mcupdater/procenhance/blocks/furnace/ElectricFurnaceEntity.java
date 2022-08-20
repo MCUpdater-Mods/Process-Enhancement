@@ -87,7 +87,7 @@ public class ElectricFurnaceEntity extends AbstractMachineBlockEntity {
             this.currentRecipe = null;
         }
         ItemStack outputSlot = this.itemStorage.get(1);
-        if (this.currentRecipe != null && this.energyStorage.getEnergyStored() >= Config.FURNACE_ENERGY_PER_TICK.get() && (outputSlot.isEmpty() || (outputSlot.sameItem(currentRecipe.getResultItem()) && outputSlot.getCount() < outputSlot.getMaxStackSize()))) {
+        if (this.currentRecipe != null && this.energyStorage.getStoredEnergy() >= Config.FURNACE_ENERGY_PER_TICK.get() && (outputSlot.isEmpty() || (outputSlot.sameItem(currentRecipe.getResultItem()) && outputSlot.getCount() < outputSlot.getMaxStackSize()))) {
             this.workProgress++;
             if (this.workProgress >= this.workTotal) {
                 ItemStack result = this.currentRecipe.assemble(this);

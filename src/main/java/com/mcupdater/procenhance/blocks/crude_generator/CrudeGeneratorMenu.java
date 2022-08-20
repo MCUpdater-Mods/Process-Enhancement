@@ -1,28 +1,33 @@
 package com.mcupdater.procenhance.blocks.crude_generator;
 
+import com.mcupdater.mculib.block.IConfigurableMenu;
 import com.mcupdater.mculib.capabilities.PowerTrackingMenu;
-import com.mcupdater.mculib.inventory.BucketSlot;
-import com.mcupdater.mculib.inventory.FuelSlot;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class CrudeGeneratorMenu extends PowerTrackingMenu {
+import java.util.Map;
+
+public class CrudeGeneratorMenu extends PowerTrackingMenu implements IConfigurableMenu {
     private final CrudeGeneratorEntity localBlockEntity;
     private final Player player;
     private final IItemHandler playerInventory;
+    private final Map<Direction, Component> adjacentNames;
 
-    public CrudeGeneratorMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player) {
+    public CrudeGeneratorMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, Map<Direction, Component> adjacentNames) {
         super(Registration.CRUDEGENERATOR_MENU.get(), windowId);
+        this.adjacentNames = adjacentNames;
         this.localBlockEntity = level.getBlockEntity(blockPos) instanceof CrudeGeneratorEntity ? (CrudeGeneratorEntity) level.getBlockEntity(blockPos) : null;
         this.tileEntity = this.localBlockEntity;
         this.player = player;
@@ -94,8 +99,14 @@ public class CrudeGeneratorMenu extends PowerTrackingMenu {
         return itemstack;
     }
 
-    public CrudeGeneratorEntity getBlockEntity() {
-        return localBlockEntity;
+    @Override
+    public BlockEntity getBlockEntity() {
+        return this.localBlockEntity;
+    }
+
+    @Override
+    public Component getSideName(Direction direction) {
+        return this.adjacentNames.get(direction);
     }
 
 }

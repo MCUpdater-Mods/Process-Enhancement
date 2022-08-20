@@ -1,25 +1,33 @@
 package com.mcupdater.procenhance.blocks.basic_battery;
 
+import com.mcupdater.mculib.block.IConfigurableMenu;
 import com.mcupdater.mculib.capabilities.PowerTrackingMenu;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class BasicBatteryMenu extends PowerTrackingMenu {
+import java.util.Map;
+
+public class BasicBatteryMenu extends PowerTrackingMenu implements IConfigurableMenu {
     private final BasicBatteryEntity localBlockEntity;
     private final Player player;
     private final IItemHandler playerInventory;
+    private final Map<Direction, Component> adjacentNames;
 
-    public BasicBatteryMenu(int pContainerId, Level level, BlockPos worldPosition, Inventory pPlayerInventory, Player pPlayer) {
+    public BasicBatteryMenu(int pContainerId, Level level, BlockPos worldPosition, Inventory pPlayerInventory, Player pPlayer, Map<Direction, Component> adjacentNames) {
         super(Registration.BASICBATTERY_MENU.get(), pContainerId);
+        this.adjacentNames = adjacentNames;
         this.localBlockEntity = level.getBlockEntity(worldPosition) instanceof BasicBatteryEntity ? (BasicBatteryEntity) level.getBlockEntity(worldPosition) : null;
         this.tileEntity = this.localBlockEntity;
         this.player = pPlayer;
@@ -101,5 +109,15 @@ public class BasicBatteryMenu extends PowerTrackingMenu {
             slot.onTake(pPlayer, stackInSlot);
         }
         return itemStack;
+    }
+
+    @Override
+    public BlockEntity getBlockEntity() {
+        return this.localBlockEntity;
+    }
+
+    @Override
+    public Component getSideName(Direction direction) {
+        return this.adjacentNames.get(direction);
     }
 }
