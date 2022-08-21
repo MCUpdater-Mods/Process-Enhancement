@@ -1,0 +1,13 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "tag": "minecraft:warped_stems"
+    }
+  ],
+  "result": {
+    "item": "minecraft:stripped_warped_stem"
+  },
+  "processTime": 16,
+  "experience": 0.01
+}

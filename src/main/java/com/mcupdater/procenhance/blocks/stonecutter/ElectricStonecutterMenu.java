@@ -22,21 +22,21 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.StonecutterRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.wrapper.InvWrapper;
-import org.apache.commons.compress.utils.Lists;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 public class ElectricStonecutterMenu extends AbstractMachineMenu<ElectricStonecutterEntity> {
-    private List<StonecutterRecipe> recipes = Lists.newArrayList();
+    private List<StonecutterRecipe> recipes = new ArrayList<>();
     private Slot phantomSlot;
 
     Runnable slotUpdateListener = () -> {};
     DataSlot selectedRecipeIndexData = new DataSlot() {
         @Override
         public int get() {
-            int slotNum = ElectricStonecutterMenu.this.machineEntity.getCurrentRecipe() != null ? recipes.indexOf(recipes.stream().filter(recipe -> recipe.getId().equals(ElectricStonecutterMenu.this.machineEntity.getCurrentRecipe().getId())).findFirst().get()) : -1;
+            int slotNum = ElectricStonecutterMenu.this.machineEntity.getCurrentRecipe() != null ? recipes.indexOf(recipes.stream().filter(recipe -> recipe.getId().equals(ElectricStonecutterMenu.this.machineEntity.getCurrentRecipe().getId())).findFirst().orElse(null)) : -1;
             return slotNum;
         }
 
@@ -48,7 +48,7 @@ public class ElectricStonecutterMenu extends AbstractMachineMenu<ElectricStonecu
             } else {
                 recipeId = new ResourceLocation(ProcessEnhancement.MODID,"invalid_recipe");
             }
-            ChannelRegistration.RECIPE_CHANGE.sendToServer(new RecipeChangeStonecutterPacket(ElectricStonecutterMenu.this.machineEntity.getBlockPos(),recipeId));
+            ChannelRegistration.STONECUTTER_RECIPE_CHANGE.sendToServer(new RecipeChangeStonecutterPacket(ElectricStonecutterMenu.this.machineEntity.getBlockPos(), recipeId));
         }
     };
 

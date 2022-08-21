@@ -1,0 +1,13 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "tag": "minecraft:acacia_logs"
+    }
+  ],
+  "result": {
+    "item": "minecraft:stripped_acacia_log"
+  },
+  "processTime": 16,
+  "experience": 0.01
+}

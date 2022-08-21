@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "tag": "minecraft:acacia_logs"
+    }
+  ],
+  "result": {
+    "item": "minecraft:acacia_fence",
+    "count": 4
+  },
+  "processTime": 32,
+  "experience": 0.05
+}

@@ -1,0 +1,13 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "tag": "minecraft:jungle_logs"
+    }
+  ],
+  "result": {
+    "item": "minecraft:stripped_jungle_log"
+  },
+  "processTime": 16,
+  "experience": 0.01
+}

@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "tag": "minecraft:dark_oak_logs"
+    }
+  ],
+  "result": {
+    "item": "minecraft:dark_oak_trapdoor",
+    "count": 2
+  },
+  "processTime": 32,
+  "experience": 0.05
+}

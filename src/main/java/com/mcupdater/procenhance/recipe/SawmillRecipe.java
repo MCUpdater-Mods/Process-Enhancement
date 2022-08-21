@@ -31,7 +31,7 @@ public class SawmillRecipe implements Recipe<SawmillEntity> {
 
     @Override
     public boolean matches(SawmillEntity container, Level level) {
-        return ingredients.get(0).test(container.getItem(0));
+        return ingredients.get(0).test(container.getItem(2)); // match to phantom slot
     }
 
     @Override

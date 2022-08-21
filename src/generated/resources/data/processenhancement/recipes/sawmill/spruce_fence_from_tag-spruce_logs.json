@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "tag": "minecraft:spruce_logs"
+    }
+  ],
+  "result": {
+    "item": "minecraft:spruce_fence",
+    "count": 4
+  },
+  "processTime": 32,
+  "experience": 0.05
+}

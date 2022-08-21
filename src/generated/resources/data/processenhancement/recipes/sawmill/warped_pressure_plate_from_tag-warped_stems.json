@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "tag": "minecraft:warped_stems"
+    }
+  ],
+  "result": {
+    "item": "minecraft:warped_pressure_plate",
+    "count": 3
+  },
+  "processTime": 32,
+  "experience": 0.05
+}

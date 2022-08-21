@@ -6,16 +6,13 @@ import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.network.ChannelRegistration;
 import com.mcupdater.procenhance.network.RecipeChangeStonecutterPacket;
 import com.mcupdater.procenhance.setup.Config;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -31,13 +28,11 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
-import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.function.Supplier;
+import java.util.Arrays;
 
 import static com.mcupdater.procenhance.setup.Registration.STONECUTTER_ENTITY;
 
@@ -154,7 +149,7 @@ public class ElectricStonecutterEntity extends AbstractMachineBlockEntity {
             this.recipeId = null;
         }
         if (!level.isClientSide()) {
-            ChannelRegistration.RECIPE_CHANGE.send(PacketDistributor.ALL.noArg(), new RecipeChangeStonecutterPacket(this.worldPosition, this.currentRecipe.getId()));
+            ChannelRegistration.STONECUTTER_RECIPE_CHANGE.send(PacketDistributor.ALL.noArg(), new RecipeChangeStonecutterPacket(this.worldPosition, this.currentRecipe.getId()));
             //ChannelRegistration.RECIPE_CHANGE.sendToServer(new RecipeChangeStonecutterPacket(this.worldPosition,this.currentRecipe.getId()));
         }
     }
@@ -211,7 +206,7 @@ public class ElectricStonecutterEntity extends AbstractMachineBlockEntity {
     public boolean canPlaceItem(int pIndex, ItemStack pStack) {
         switch (pIndex) {
             case 0:
-                return this.currentRecipe != null && pStack.sameItem(this.currentRecipe.getIngredients().get(0).getItems()[0]); // Source slot
+                return this.currentRecipe != null && Arrays.stream(this.currentRecipe.getIngredients().get(0).getItems()).anyMatch(validStack -> validStack.sameItem(pStack)); // Source slot
             case 1:
                 return false; // Destination slot
             default:
@@ -250,7 +245,7 @@ public class ElectricStonecutterEntity extends AbstractMachineBlockEntity {
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        ChannelRegistration.RECIPE_CHANGE.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), 16.0d, this.level.dimension())), new RecipeChangeStonecutterPacket(this.worldPosition, this.currentRecipe.getId()));
+        ChannelRegistration.STONECUTTER_RECIPE_CHANGE.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), 16.0d, this.level.dimension())), new RecipeChangeStonecutterPacket(this.worldPosition, (this.currentRecipe != null ? this.currentRecipe.getId() : new ResourceLocation(ProcessEnhancement.MODID, "invalid_recipe"))));
         return new ElectricStonecutterMenu(pContainerId, this.level, this.worldPosition, pPlayerInventory, pPlayer, this.data, DataHelper.getAdjacentNames(this.level, this.worldPosition));
     }
 }

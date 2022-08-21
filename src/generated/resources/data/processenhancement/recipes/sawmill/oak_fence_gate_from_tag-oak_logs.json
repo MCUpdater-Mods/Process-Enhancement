@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "tag": "minecraft:oak_logs"
+    }
+  ],
+  "result": {
+    "item": "minecraft:oak_fence_gate",
+    "count": 2
+  },
+  "processTime": 32,
+  "experience": 0.05
+}

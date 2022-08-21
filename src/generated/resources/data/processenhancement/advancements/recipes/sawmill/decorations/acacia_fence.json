@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "minecraft:acacia_fence"
+    ]
+  },
+  "criteria": {
+    "has_sawmill": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "processenhancement:sawmill"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "minecraft:acacia_fence"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sawmill",
+      "has_the_recipe"
+    ]
+  ]
+}

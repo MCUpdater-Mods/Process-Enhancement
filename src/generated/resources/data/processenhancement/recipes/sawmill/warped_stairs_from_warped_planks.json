@@ -1,0 +1,13 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "item": "minecraft:warped_planks"
+    }
+  ],
+  "result": {
+    "item": "minecraft:warped_stairs"
+  },
+  "processTime": 32,
+  "experience": 0.05
+}

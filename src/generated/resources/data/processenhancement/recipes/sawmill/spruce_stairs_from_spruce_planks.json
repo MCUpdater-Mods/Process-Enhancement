@@ -1,0 +1,13 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "item": "minecraft:spruce_planks"
+    }
+  ],
+  "result": {
+    "item": "minecraft:spruce_stairs"
+  },
+  "processTime": 32,
+  "experience": 0.05
+}

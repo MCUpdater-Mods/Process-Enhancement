@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "minecraft:stripped_spruce_wood"
+    ]
+  },
+  "criteria": {
+    "has_sawmill": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "processenhancement:sawmill"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "minecraft:stripped_spruce_wood"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sawmill",
+      "has_the_recipe"
+    ]
+  ]
+}

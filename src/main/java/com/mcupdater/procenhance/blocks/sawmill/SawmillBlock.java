@@ -12,6 +12,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -63,7 +64,8 @@ public class SawmillBlock extends AbstractMachineBlock {
         if (oldState.getBlock() != newState.getBlock()) {
             BlockEntity blockEntity = level.getBlockEntity(blockPos);
 
-            if (blockEntity instanceof SawmillEntity) {
+            if (blockEntity instanceof SawmillEntity machineEntity) {
+                machineEntity.itemStorage.set(2, ItemStack.EMPTY); // Clear phantom slot before dropping contents
                 Containers.dropContents(level, blockPos, (SawmillEntity) blockEntity);
                 level.updateNeighbourForOutputSignal(blockPos, this);
             }

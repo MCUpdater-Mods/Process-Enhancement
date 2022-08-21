@@ -2,6 +2,10 @@ package com.mcupdater.procenhance.blocks.sawmill;
 
 import com.mcupdater.mculib.block.AbstractMachineBlockEntity;
 import com.mcupdater.mculib.helpers.DataHelper;
+import com.mcupdater.procenhance.ProcessEnhancement;
+import com.mcupdater.procenhance.network.ChannelRegistration;
+import com.mcupdater.procenhance.network.RecipeChangeSawmillPacket;
+import com.mcupdater.procenhance.network.RecipeChangeStonecutterPacket;
 import com.mcupdater.procenhance.recipe.SawmillRecipe;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
@@ -10,6 +14,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -17,23 +22,28 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
+import net.minecraftforge.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import java.util.Arrays;
 
 import static com.mcupdater.procenhance.setup.Registration.SAWMILL_BLOCKENTITY;
 
 public class SawmillEntity extends AbstractMachineBlockEntity {
 
-    protected NonNullList<ItemStack> itemStorage = NonNullList.withSize(2, ItemStack.EMPTY);
+    protected NonNullList<ItemStack> itemStorage = NonNullList.withSize(3, ItemStack.EMPTY);
     private final LazyOptional<IItemHandlerModifiable>[] itemHandler = SidedInvWrapper.create(this, Direction.values());
     private SawmillRecipe currentRecipe = null;
+    private ResourceLocation recipeId = null;
 
 
     public ContainerData data = new ContainerData() {
@@ -71,22 +81,23 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
     }
 
     @Override
-    protected boolean performWork() {
-        ItemStack inputStack = this.itemStorage.get(0);
-        if (!inputStack.isEmpty()) {
-            Recipe<?> recipe = this.level.getRecipeManager().getRecipeFor(SawmillRecipe.Type.INSTANCE, this, this.level).orElse(null);
-            if (this.currentRecipe == null || !this.currentRecipe.equals(recipe)) {
-                if (recipe != null) {
-                    this.currentRecipe = (SawmillRecipe) recipe;
-                    this.workTotal = this.currentRecipe.getProcessTime();
-                }
-                this.workProgress = 0;
+    public void tick(Level pLevel, BlockPos pPos, BlockState pBlockState) {
+        if (this.level != null) {
+            if (this.currentRecipe == null && this.recipeId != null) {
+                this.setCurrentRecipe(this.level.getRecipeManager().getAllRecipesFor(SawmillRecipe.Type.INSTANCE).stream().filter(recipe -> recipe.getId().equals(this.recipeId)).findFirst().get());
             }
-        } else {
-            this.currentRecipe = null;
         }
+        super.tick(pLevel, pPos, pBlockState);
+    }
+
+    @Override
+    protected boolean performWork() {
+        if (this.currentRecipe == null) {
+            return false;
+        }
+        ItemStack inputSlot = this.itemStorage.get(0);
         ItemStack outputSlot = this.itemStorage.get(1);
-        if (this.currentRecipe != null && (outputSlot.isEmpty() || (outputSlot.sameItem(currentRecipe.getResultItem()) && outputSlot.getCount() < outputSlot.getMaxStackSize() - (currentRecipe.getResultItem().getCount() - 1)))) {
+        if (this.energyStorage.getStoredEnergy() >= Config.SAWMILL_ENERGY_PER_TICK.get() && (outputSlot.isEmpty() || (outputSlot.sameItem(currentRecipe.getResultItem()) && outputSlot.getCount() <= outputSlot.getMaxStackSize() - (currentRecipe.getResultItem().getCount()))) && !inputSlot.isEmpty()) {
             this.workProgress++;
             if (this.workProgress >= this.workTotal) {
                 ItemStack result = this.currentRecipe.assemble(this);
@@ -109,10 +120,16 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
         super.load(compound);
         this.itemStorage = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         ContainerHelper.loadAllItems(compound, this.itemStorage);
+        if (compound.contains("recipeId")) {
+            recipeId = new ResourceLocation(compound.getString("recipeId"));
+        }
     }
 
     @Override
     public void saveAdditional(CompoundTag compound) {
+        if (this.currentRecipe != null) {
+            compound.putString("recipeId", this.currentRecipe.getId().toString());
+        }
         ContainerHelper.saveAllItems(compound,this.itemStorage);
         super.saveAdditional(compound);
     }
@@ -124,6 +141,22 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
             return itemHandler[side != null ? side.ordinal() : 0].cast();
         }
         return super.getCapability(cap, side);
+    }
+
+    public void setCurrentRecipe(SawmillRecipe newRecipe) {
+        this.currentRecipe = newRecipe;
+        if (newRecipe != null) {
+            this.recipeId = newRecipe.getId();
+        } else {
+            this.recipeId = null;
+        }
+        if (!level.isClientSide()) {
+            ChannelRegistration.SAWMILL_RECIPE_CHANGE.send(PacketDistributor.ALL.noArg(), new RecipeChangeSawmillPacket(this.worldPosition, this.currentRecipe.getId()));
+        }
+    }
+
+    public SawmillRecipe getCurrentRecipe() {
+        return this.currentRecipe;
     }
 
     // WorldlyContainer methods
@@ -178,7 +211,7 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
     public boolean canPlaceItem(int index, ItemStack stack) {
         switch (index) {
             case 0:
-                return true; // Source slot
+                return this.currentRecipe != null && Arrays.stream(this.currentRecipe.getIngredients().get(0).getItems()).anyMatch(validStack -> validStack.sameItem(stack)); // Source slot
             case 1:
                 return false; // Destination slot
             default:
@@ -193,7 +226,7 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
 
     @Override
     public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, @Nullable Direction direction) {
-        return index == 0 && this.canPlaceItem(index, itemStackIn);
+        return this.canPlaceItem(index, itemStackIn);
     }
 
     @Override
@@ -215,6 +248,7 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
+        ChannelRegistration.SAWMILL_RECIPE_CHANGE.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), 16.0d, this.level.dimension())), new RecipeChangeSawmillPacket(this.worldPosition, (this.currentRecipe != null ? this.currentRecipe.getId() : new ResourceLocation(ProcessEnhancement.MODID, "invalid_recipe"))));
         return new SawmillMenu(windowId, this.level, this.worldPosition, inventory, player, this.data, DataHelper.getAdjacentNames(this.level, this.worldPosition));
     }
 }

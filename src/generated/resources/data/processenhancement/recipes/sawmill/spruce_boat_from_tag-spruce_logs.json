@@ -1,0 +1,13 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "tag": "minecraft:spruce_logs"
+    }
+  ],
+  "result": {
+    "item": "minecraft:spruce_boat"
+  },
+  "processTime": 32,
+  "experience": 0.05
+}

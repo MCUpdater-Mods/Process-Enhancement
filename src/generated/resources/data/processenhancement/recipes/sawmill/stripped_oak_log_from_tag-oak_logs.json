@@ -1,0 +1,13 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "tag": "minecraft:oak_logs"
+    }
+  ],
+  "result": {
+    "item": "minecraft:stripped_oak_log"
+  },
+  "processTime": 16,
+  "experience": 0.01
+}

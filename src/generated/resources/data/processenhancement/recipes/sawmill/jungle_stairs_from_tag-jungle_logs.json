@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "tag": "minecraft:jungle_logs"
+    }
+  ],
+  "result": {
+    "item": "minecraft:jungle_stairs",
+    "count": 6
+  },
+  "processTime": 32,
+  "experience": 0.05
+}

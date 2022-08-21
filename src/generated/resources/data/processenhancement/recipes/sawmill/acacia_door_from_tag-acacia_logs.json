@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "tag": "minecraft:acacia_logs"
+    }
+  ],
+  "result": {
+    "item": "minecraft:acacia_door",
+    "count": 3
+  },
+  "processTime": 32,
+  "experience": 0.05
+}

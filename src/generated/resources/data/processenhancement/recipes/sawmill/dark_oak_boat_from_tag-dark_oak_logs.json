@@ -1,0 +1,13 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "tag": "minecraft:dark_oak_logs"
+    }
+  ],
+  "result": {
+    "item": "minecraft:dark_oak_boat"
+  },
+  "processTime": 32,
+  "experience": 0.05
+}

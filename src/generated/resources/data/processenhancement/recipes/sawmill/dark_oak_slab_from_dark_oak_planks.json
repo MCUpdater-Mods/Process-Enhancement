@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "item": "minecraft:dark_oak_planks"
+    }
+  ],
+  "result": {
+    "item": "minecraft:dark_oak_slab",
+    "count": 2
+  },
+  "processTime": 32,
+  "experience": 0.05
+}

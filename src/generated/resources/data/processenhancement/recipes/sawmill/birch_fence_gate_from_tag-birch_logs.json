@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "tag": "minecraft:birch_logs"
+    }
+  ],
+  "result": {
+    "item": "minecraft:birch_fence_gate",
+    "count": 2
+  },
+  "processTime": 32,
+  "experience": 0.05
+}
