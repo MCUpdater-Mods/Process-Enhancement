@@ -28,6 +28,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         machine(Registration.FURNACE_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.STONE, new ResourceLocation(ProcessEnhancement.MODID, "block/electric_furnace"));
         machine(Registration.SAWMILL_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.OAK_PLANKS, new ResourceLocation(ProcessEnhancement.MODID, "block/sawmill"));
         machine(Registration.GRINDER_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/grinder"));
+        machine(Registration.STONECUTTER_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.STONE_BRICKS, new ResourceLocation(ProcessEnhancement.MODID, "block/sawmill"));
 
         horizontalBlock(Registration.BASICBATTERY_BLOCK.get(), (blockState -> {
             int charge = blockState.getValue(BasicBatteryBlock.CHARGE_LEVEL);

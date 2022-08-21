@@ -31,12 +31,13 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
     @Override
     protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> finishedRecipeConsumer) {
-        crudeMachineRecipe(finishedRecipeConsumer,Registration.CRUDEGENERATOR_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Blocks.COBBLESTONE), Ingredient.of(Items.STICK));
-        basicMachineRecipe(finishedRecipeConsumer,Registration.BASICGENERATOR_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.BRICK), Ingredient.of(Blocks.FURNACE));
-        basicMachineRecipe(finishedRecipeConsumer,Registration.BASICBATTERY_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(CAPACITOR.get()));
-        crudeMachineRecipe(finishedRecipeConsumer,Registration.FURNACE_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Blocks.STONE), Ingredient.of(Blocks.FURNACE));
-        basicMachineRecipe(finishedRecipeConsumer,Registration.SAWMILL_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(ItemTags.PLANKS), Ingredient.of(Items.IRON_AXE));
-        basicMachineRecipe(finishedRecipeConsumer,Registration.GRINDER_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.STONECUTTER));
+        crudeMachineRecipe(finishedRecipeConsumer, CRUDEGENERATOR_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Blocks.COBBLESTONE), Ingredient.of(Items.STICK));
+        basicMachineRecipe(finishedRecipeConsumer, BASICGENERATOR_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.BRICK), Ingredient.of(Blocks.FURNACE));
+        basicMachineRecipe(finishedRecipeConsumer, BASICBATTERY_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(CAPACITOR.get()));
+        crudeMachineRecipe(finishedRecipeConsumer, FURNACE_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Blocks.STONE), Ingredient.of(Blocks.FURNACE));
+        basicMachineRecipe(finishedRecipeConsumer, SAWMILL_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(ItemTags.PLANKS), Ingredient.of(Items.IRON_AXE));
+        basicMachineRecipe(finishedRecipeConsumer, GRINDER_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.STONECUTTER));
+        basicMachineRecipe(finishedRecipeConsumer, STONECUTTER_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Blocks.STONE_BRICKS), Ingredient.of(Blocks.STONECUTTER));
 
         // Sawmill recipes
         sawmill(finishedRecipeConsumer, Ingredient.of(ItemTags.PLANKS), Items.STICK, 3, 100, 0.01f);

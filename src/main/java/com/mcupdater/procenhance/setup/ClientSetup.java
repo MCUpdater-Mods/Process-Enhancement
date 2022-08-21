@@ -6,6 +6,7 @@ import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceScreen;
 import com.mcupdater.procenhance.blocks.basic_generator.BasicGeneratorScreen;
 import com.mcupdater.procenhance.blocks.grinder.GrinderScreen;
 import com.mcupdater.procenhance.blocks.sawmill.SawmillScreen;
+import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -26,5 +27,6 @@ public class ClientSetup {
         MenuScreens.register(Registration.FURNACE_MENU.get(), ElectricFurnaceScreen::new);
         MenuScreens.register(Registration.SAWMILL_MENU.get(), SawmillScreen::new);
         MenuScreens.register(Registration.GRINDER_MENU.get(), GrinderScreen::new);
+        MenuScreens.register(Registration.STONECUTTER_MENU.get(), ElectricStonecutterScreen::new);
     }
 }

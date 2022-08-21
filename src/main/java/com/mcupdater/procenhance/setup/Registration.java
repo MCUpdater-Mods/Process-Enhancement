@@ -22,12 +22,16 @@ import com.mcupdater.procenhance.blocks.grinder.GrinderMenu;
 import com.mcupdater.procenhance.blocks.sawmill.SawmillBlock;
 import com.mcupdater.procenhance.blocks.sawmill.SawmillEntity;
 import com.mcupdater.procenhance.blocks.sawmill.SawmillMenu;
+import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterBlock;
+import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterEntity;
+import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterMenu;
 import com.mcupdater.procenhance.recipe.GrinderRecipe;
 import com.mcupdater.procenhance.recipe.SawmillRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -116,6 +120,16 @@ public class Registration {
         return new GrinderMenu(windowId, world, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
     })));
     public static final RegistryObject<RecipeSerializer<GrinderRecipe>> GRINDER_SERIALIZER = RECIPE_SERIALIZERS.register("grinder", () -> GrinderRecipe.Serializer.INSTANCE);
+
+    public static final RegistryObject<ElectricStonecutterBlock> STONECUTTER_BLOCK = MACHINES.register("stonecutter", ElectricStonecutterBlock::new);
+    public static final RegistryObject<Item> STONECUTTER_BLOCKITEM = ITEMS.register("stonecutter", () -> new BlockItem(STONECUTTER_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<ElectricStonecutterEntity>> STONECUTTER_ENTITY = BLOCK_ENTITIES.register("stonecutter", () -> BlockEntityType.Builder.of(ElectricStonecutterEntity::new, STONECUTTER_BLOCK.get()).build(null));
+    public static final RegistryObject<MenuType<ElectricStonecutterMenu>> STONECUTTER_MENU = CONTAINERS.register("stonecutter", () -> IForgeMenuType.create((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        Level level = inv.player.level;
+        ElectricStonecutterEntity blockEntity = (ElectricStonecutterEntity) level.getBlockEntity(pos);
+        return new ElectricStonecutterMenu(windowId, level, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
+    }));
 
     public static final RegistryObject<CopperWireBlock> COPPERWIRE_BLOCK = BLOCKS.register("copper_wire", CopperWireBlock::new);
     public static final RegistryObject<Item> COPPERWIRE_BLOCKITEM = ITEMS.register("copper_wire", () -> new BlockItem(COPPERWIRE_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
