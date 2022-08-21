@@ -10,5 +10,6 @@
     "item.processenhancement.copper_dust": "Copper Dust",
     "item.processenhancement.capacitor": "Capacitor",
     "block.processenhancement.basic_battery": "Basic Battery",
-    "block.processenhancement.copper_wire": "Copper Wire"
+    "block.processenhancement.copper_wire": "Copper Wire",
+    "block.processenhancement.stonecutter": "Electric Stonecutter"
 }
