@@ -1,7 +1,6 @@
 package com.mcupdater.procenhance.network;
 
 import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterEntity;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -33,12 +32,7 @@ public class RecipeChangeStonecutterPacket {
 
     public static void handle(RecipeChangeStonecutterPacket msg, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            Level level;
-            if (ctx.get().getSender() != null) {
-                level = ctx.get().getSender().getLevel();
-            } else {
-                level = Minecraft.getInstance().level;
-            }
+            Level level = ctx.get().getSender().getLevel();
             if (level.getBlockEntity(msg.blockPos) instanceof ElectricStonecutterEntity machine) {
                 StonecutterRecipe stonecutterRecipe = level.getRecipeManager().getAllRecipesFor(RecipeType.STONECUTTING).stream().filter(recipe -> recipe.getId().equals(msg.recipeId)).findFirst().orElse(null);
                 machine.setCurrentRecipe(stonecutterRecipe);

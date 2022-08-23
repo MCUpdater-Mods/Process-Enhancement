@@ -12,8 +12,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
@@ -83,6 +88,9 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
     @Override
     public void tick(Level pLevel, BlockPos pPos, BlockState pBlockState) {
         if (this.level != null) {
+            if (this.itemStorage.get(2).isEmpty() && this.currentRecipe != null) {
+                this.setCurrentRecipe(null);
+            }
             if (this.currentRecipe == null && this.recipeId != null) {
                 this.setCurrentRecipe(this.level.getRecipeManager().getAllRecipesFor(SawmillRecipe.Type.INSTANCE).stream().filter(recipe -> recipe.getId().equals(this.recipeId)).findFirst().get());
             }
@@ -150,9 +158,27 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
         } else {
             this.recipeId = null;
         }
-        if (!level.isClientSide()) {
-            ChannelRegistration.SAWMILL_RECIPE_CHANGE.send(PacketDistributor.ALL.noArg(), new RecipeChangeSawmillPacket(this.worldPosition, this.currentRecipe.getId()));
+        if (this.level != null && !this.level.isClientSide) {
+            for (Connection conn : this.level.getServer().getConnection().getConnections()) {
+                conn.send(this.getUpdatePacket());
+            }
         }
+    }
+
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        return this.saveWithoutMetadata();
+    }
+
+    @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        super.onDataPacket(net, pkt);
+        this.setCurrentRecipe(this.level.getRecipeManager().getAllRecipesFor(SawmillRecipe.Type.INSTANCE).stream().filter(recipe -> recipe.getId().equals(this.recipeId)).findFirst().get());
     }
 
     public SawmillRecipe getCurrentRecipe() {
@@ -248,7 +274,6 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
-        ChannelRegistration.SAWMILL_RECIPE_CHANGE.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), 16.0d, this.level.dimension())), new RecipeChangeSawmillPacket(this.worldPosition, (this.currentRecipe != null ? this.currentRecipe.getId() : new ResourceLocation(ProcessEnhancement.MODID, "invalid_recipe"))));
         return new SawmillMenu(windowId, this.level, this.worldPosition, inventory, player, this.data, DataHelper.getAdjacentNames(this.level, this.worldPosition));
     }
 }

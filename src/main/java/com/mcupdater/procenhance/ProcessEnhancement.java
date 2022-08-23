@@ -1,9 +1,6 @@
 package com.mcupdater.procenhance;
 
-import com.mcupdater.procenhance.setup.ClientSetup;
-import com.mcupdater.procenhance.setup.Config;
-import com.mcupdater.procenhance.setup.ModSetup;
-import com.mcupdater.procenhance.setup.Registration;
+import com.mcupdater.procenhance.setup.*;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
