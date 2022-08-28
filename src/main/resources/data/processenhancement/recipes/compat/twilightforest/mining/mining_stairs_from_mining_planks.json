@@ -1,0 +1,19 @@
+{
+  "type": "processenhancement:sawmill",
+  "conditions": [
+    {
+      "modid": "twilightforest",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "twilightforest:mining_planks"
+    }
+  ],
+  "result": {
+    "item": "twilightforest:mining_stairs"
+  },
+  "processTime": 16,
+  "experience": 0.01
+}

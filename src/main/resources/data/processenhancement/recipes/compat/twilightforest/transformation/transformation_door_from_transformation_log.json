@@ -1,0 +1,20 @@
+{
+  "type": "processenhancement:sawmill",
+  "conditions": [
+    {
+      "modid": "twilightforest",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "twilightforest:transformation_log"
+    }
+  ],
+  "result": {
+    "item": "twilightforest:transformation_door",
+    "count": 3
+  },
+  "processTime": 32,
+  "experience": 0.05
+}

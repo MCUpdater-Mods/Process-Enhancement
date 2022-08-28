@@ -134,9 +134,9 @@ public class SawmillScreen extends AbstractMachineScreen<SawmillEntity,SawmillMe
                 int position = index - this.startIndex;
                 double x = pMouseX - (double)(relX + position % RECIPES_COLUMNS * RECIPES_IMAGE_SIZE_WIDTH);
                 double y = pMouseY - (double)(relY + position / RECIPES_COLUMNS * RECIPES_IMAGE_SIZE_HEIGHT);
-                if (x >= 0.0D && y >= 0.0D && x < (double)RECIPES_IMAGE_SIZE_WIDTH && y < (double)RECIPES_IMAGE_SIZE_HEIGHT && this.menu.clickMenuButton(this.minecraft.player, position)) {
+                if (x >= 0.0D && y >= 0.0D && x < (double)RECIPES_IMAGE_SIZE_WIDTH && y < (double)RECIPES_IMAGE_SIZE_HEIGHT && this.menu.clickMenuButton(this.minecraft.player, index)) {
                     Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
-                    this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, position);
+                    this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, index);
                     return true;
                 }
             }

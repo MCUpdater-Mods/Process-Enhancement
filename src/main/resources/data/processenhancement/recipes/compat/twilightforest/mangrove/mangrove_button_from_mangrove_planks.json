@@ -1,0 +1,20 @@
+{
+  "type": "processenhancement:sawmill",
+  "conditions": [
+    {
+      "modid": "twilightforest",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "twilightforest:mangrove_planks"
+    }
+  ],
+  "result": {
+    "item": "twilightforest:mangrove_button",
+    "count": 4
+  },
+  "processTime": 16,
+  "experience": 0.01
+}

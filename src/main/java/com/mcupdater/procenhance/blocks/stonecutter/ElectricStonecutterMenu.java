@@ -6,7 +6,7 @@ import com.mcupdater.mculib.inventory.MachineOutputSlot;
 import com.mcupdater.mculib.inventory.PhantomSlot;
 import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.network.ChannelRegistration;
-import com.mcupdater.procenhance.network.RecipeChangeStonecutterPacket;
+import com.mcupdater.procenhance.network.RecipeChangePacket;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -48,7 +48,7 @@ public class ElectricStonecutterMenu extends AbstractMachineMenu<ElectricStonecu
             } else {
                 recipeId = new ResourceLocation(ProcessEnhancement.MODID,"invalid_recipe");
             }
-            ChannelRegistration.STONECUTTER_RECIPE_CHANGE.sendToServer(new RecipeChangeStonecutterPacket(ElectricStonecutterMenu.this.machineEntity.getBlockPos(), recipeId));
+            ChannelRegistration.RECIPE_CHANGE.sendToServer(new RecipeChangePacket(ElectricStonecutterMenu.this.machineEntity.getBlockPos(), recipeId));
         }
     };
 

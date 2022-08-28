@@ -1,0 +1,20 @@
+{
+  "type": "processenhancement:sawmill",
+  "conditions": [
+    {
+      "modid": "quark",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "quark:blossom_logs"
+    }
+  ],
+  "result": {
+    "item": "quark:blossom_ladder",
+    "count": 24
+  },
+  "processTime": 32,
+  "experience": 0.05
+}

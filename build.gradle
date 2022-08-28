@@ -192,6 +192,17 @@ dependencies {
     // Examples using mod jars from ./libs
     implementation fg.deobf("blank:MCULib-1.18.2:1.2")
 
+    // Mods for testing
+    runtimeOnly fg.deobf("blank:mcwroofs:1.0")
+    runtimeOnly fg.deobf("blank:mcwwindows:1.0")
+
+    // Mods for integration
+    //implementation fg.deobf("blank:ars_nouveau:1.0")
+    //implementation fg.deobf("blank:cyclopscore:1.0")
+    //implementation fg.deobf("blank:integrateddynamics:1.0")
+    //runtimeOnly fg.deobf("blank:quark:1.0")
+    //implementation fg.deobf("blank:twilightforest:1.0")
+
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html

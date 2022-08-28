@@ -1,0 +1,19 @@
+{
+  "type": "processenhancement:sawmill",
+  "conditions": [
+    {
+      "modid": "twilightforest",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "twilightforest:twilight_oak_planks"
+    }
+  ],
+  "result": {
+    "item": "twilightforest:twilight_oak_stairs"
+  },
+  "processTime": 16,
+  "experience": 0.01
+}

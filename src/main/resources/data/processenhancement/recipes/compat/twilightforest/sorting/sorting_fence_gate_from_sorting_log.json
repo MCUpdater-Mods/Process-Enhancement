@@ -1,0 +1,20 @@
+{
+  "type": "processenhancement:sawmill",
+  "conditions": [
+    {
+      "modid": "twilightforest",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "twilightforest:sorting_log"
+    }
+  ],
+  "result": {
+    "item": "twilightforest:sorting_fence_gate",
+    "count": 2
+  },
+  "processTime": 32,
+  "experience": 0.05
+}

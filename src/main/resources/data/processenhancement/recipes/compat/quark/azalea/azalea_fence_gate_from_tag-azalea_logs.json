@@ -1,0 +1,20 @@
+{
+  "type": "processenhancement:sawmill",
+  "conditions": [
+    {
+      "modid": "quark",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "quark:azalea_logs"
+    }
+  ],
+  "result": {
+    "item": "quark:azalea_fence_gate",
+    "count": 2
+  },
+  "processTime": 32,
+  "experience": 0.05
+}

@@ -1,0 +1,20 @@
+{
+  "type": "processenhancement:sawmill",
+  "conditions": [
+    {
+      "modid": "twilightforest",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "twilightforest:mangrove_log"
+    }
+  ],
+  "result": {
+    "item": "twilightforest:mangrove_stairs",
+    "count": 6
+  },
+  "processTime": 32,
+  "experience": 0.05
+}

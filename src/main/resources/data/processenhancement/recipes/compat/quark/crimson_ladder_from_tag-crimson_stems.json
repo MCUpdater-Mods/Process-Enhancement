@@ -1,0 +1,20 @@
+{
+  "type": "processenhancement:sawmill",
+  "conditions": [
+    {
+      "modid": "quark",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "minecraft:crimson_stems"
+    }
+  ],
+  "result": {
+    "item": "quark:crimson_ladder",
+    "count": 24
+  },
+  "processTime": 32,
+  "experience": 0.05
+}

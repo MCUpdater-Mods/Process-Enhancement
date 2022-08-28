@@ -2,10 +2,6 @@ package com.mcupdater.procenhance.blocks.sawmill;
 
 import com.mcupdater.mculib.block.AbstractMachineBlockEntity;
 import com.mcupdater.mculib.helpers.DataHelper;
-import com.mcupdater.procenhance.ProcessEnhancement;
-import com.mcupdater.procenhance.network.ChannelRegistration;
-import com.mcupdater.procenhance.network.RecipeChangeSawmillPacket;
-import com.mcupdater.procenhance.network.RecipeChangeStonecutterPacket;
 import com.mcupdater.procenhance.recipe.SawmillRecipe;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
@@ -13,7 +9,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.Packet;
@@ -26,7 +21,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -34,7 +28,6 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
-import net.minecraftforge.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -92,7 +85,7 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
                 this.setCurrentRecipe(null);
             }
             if (this.currentRecipe == null && this.recipeId != null) {
-                this.setCurrentRecipe(this.level.getRecipeManager().getAllRecipesFor(SawmillRecipe.Type.INSTANCE).stream().filter(recipe -> recipe.getId().equals(this.recipeId)).findFirst().get());
+                this.setCurrentRecipe(this.recipeId);
             }
         }
         super.tick(pLevel, pPos, pBlockState);
@@ -151,10 +144,12 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
         return super.getCapability(cap, side);
     }
 
-    public void setCurrentRecipe(SawmillRecipe newRecipe) {
-        this.currentRecipe = newRecipe;
-        if (newRecipe != null) {
-            this.recipeId = newRecipe.getId();
+    @Override
+    public void setCurrentRecipe(ResourceLocation recipeId) {
+        SawmillRecipe sawmillRecipe = level.getRecipeManager().getAllRecipesFor(SawmillRecipe.Type.INSTANCE).stream().filter(recipe -> recipe.getId().equals(recipeId)).findFirst().orElse(null);
+        this.currentRecipe = sawmillRecipe;
+        if (sawmillRecipe != null) {
+            this.recipeId = sawmillRecipe.getId();
         } else {
             this.recipeId = null;
         }
@@ -163,6 +158,7 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
                 conn.send(this.getUpdatePacket());
             }
         }
+        super.setCurrentRecipe(recipeId);
     }
 
     @Override
@@ -178,7 +174,7 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         super.onDataPacket(net, pkt);
-        this.setCurrentRecipe(this.level.getRecipeManager().getAllRecipesFor(SawmillRecipe.Type.INSTANCE).stream().filter(recipe -> recipe.getId().equals(this.recipeId)).findFirst().get());
+        this.setCurrentRecipe(this.recipeId);
     }
 
     public SawmillRecipe getCurrentRecipe() {

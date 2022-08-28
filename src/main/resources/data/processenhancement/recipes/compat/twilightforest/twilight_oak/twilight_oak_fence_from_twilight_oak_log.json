@@ -1,0 +1,20 @@
+{
+  "type": "processenhancement:sawmill",
+  "conditions": [
+    {
+      "modid": "twilightforest",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "twilightforest:twilight_oak_log"
+    }
+  ],
+  "result": {
+    "item": "twilightforest:twilight_oak_fence",
+    "count": 4
+  },
+  "processTime": 32,
+  "experience": 0.05
+}

@@ -6,7 +6,7 @@ import com.mcupdater.mculib.inventory.MachineOutputSlot;
 import com.mcupdater.mculib.inventory.PhantomSlot;
 import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.network.ChannelRegistration;
-import com.mcupdater.procenhance.network.RecipeChangeSawmillPacket;
+import com.mcupdater.procenhance.network.RecipeChangePacket;
 import com.mcupdater.procenhance.recipe.SawmillRecipe;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
@@ -14,7 +14,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
@@ -22,7 +21,6 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
@@ -51,7 +49,7 @@ public class SawmillMenu extends AbstractMachineMenu<SawmillEntity> {
             } else {
                 recipeId = new ResourceLocation(ProcessEnhancement.MODID, "invalid_recipe");
             }
-            ChannelRegistration.SAWMILL_RECIPE_CHANGE.sendToServer(new RecipeChangeSawmillPacket(SawmillMenu.this.machineEntity.getBlockPos(), recipeId));
+            ChannelRegistration.RECIPE_CHANGE.sendToServer(new RecipeChangePacket(SawmillMenu.this.machineEntity.getBlockPos(), recipeId));
         }
     };
 

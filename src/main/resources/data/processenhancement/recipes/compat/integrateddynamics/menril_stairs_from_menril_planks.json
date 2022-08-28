@@ -1,0 +1,19 @@
+{
+  "type": "processenhancement:sawmill",
+  "conditions": [
+    {
+      "modid": "integrateddynamics",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "integrateddynamics:menril_planks"
+    }
+  ],
+  "result": {
+    "item": "integrateddynamics:menril_stairs"
+  },
+  "processTime": 16,
+  "experience": 0.01
+}

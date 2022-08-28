@@ -1,0 +1,20 @@
+{
+  "type": "processenhancement:sawmill",
+  "conditions": [
+    {
+      "modid": "quark",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "minecraft:spruce_logs"
+    }
+  ],
+  "result": {
+    "item": "quark:spruce_ladder",
+    "count": 24
+  },
+  "processTime": 32,
+  "experience": 0.05
+}

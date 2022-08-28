@@ -20,5 +20,7 @@ public class DataGenerators {
         dataGenerator.addProvider(new ModBlockStateProvider(dataGenerator,existingFileHelper));
         dataGenerator.addProvider(new ModItemModelProvider(dataGenerator,existingFileHelper));
         dataGenerator.addProvider(new ModBlockTagsProvider(dataGenerator, ProcessEnhancement.MODID, existingFileHelper));
+
+        dataGenerator.addProvider(new ModRecipeCompatibilityProvider(dataGenerator));
     }
 }

@@ -1,0 +1,40 @@
+{
+  "type": "processenhancement:grinder",
+  "ingredients": [
+    {
+      "item": "minecraft:nether_quartz_ore"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "item": "minecraft:quartz",
+        "count": 6
+      },
+      "weight": 55
+    },
+    {
+      "stack": {
+        "item": "minecraft:quartz",
+        "count": 8
+      },
+      "weight": 25
+    },
+    {
+      "stack": {
+        "item": "minecraft:quartz",
+        "count": 10
+      },
+      "weight": 18
+    },
+    {
+      "stack": {
+        "item": "minecraft:quartz",
+        "count": 12
+      },
+      "weight": 2
+    }
+  ],
+  "processTime": 200,
+  "experience": 0.05
+}

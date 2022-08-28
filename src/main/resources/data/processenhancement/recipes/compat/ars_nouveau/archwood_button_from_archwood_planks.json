@@ -1,0 +1,20 @@
+{
+  "type": "processenhancement:sawmill",
+  "conditions": [
+    {
+      "modid": "ars_nouveau",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "ars_nouveau:archwood_planks"
+    }
+  ],
+  "result": {
+    "item": "ars_nouveau:archwood_button",
+    "count": 4
+  },
+  "processTime": 16,
+  "experience": 0.01
+}

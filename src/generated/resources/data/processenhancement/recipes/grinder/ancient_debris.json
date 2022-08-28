@@ -1,0 +1,40 @@
+{
+  "type": "processenhancement:grinder",
+  "ingredients": [
+    {
+      "item": "minecraft:ancient_debris"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "item": "minecraft:netherite_scrap",
+        "count": 3
+      },
+      "weight": 55
+    },
+    {
+      "stack": {
+        "item": "minecraft:netherite_scrap",
+        "count": 4
+      },
+      "weight": 25
+    },
+    {
+      "stack": {
+        "item": "minecraft:netherite_scrap",
+        "count": 5
+      },
+      "weight": 18
+    },
+    {
+      "stack": {
+        "item": "minecraft:netherite_scrap",
+        "count": 6
+      },
+      "weight": 2
+    }
+  ],
+  "processTime": 200,
+  "experience": 0.05
+}

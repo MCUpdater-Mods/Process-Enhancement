@@ -1,0 +1,19 @@
+{
+  "type": "processenhancement:sawmill",
+  "conditions": [
+    {
+      "modid": "quark",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "quark:azalea_logs"
+    }
+  ],
+  "result": {
+    "item": "quark:azalea_boat"
+  },
+  "processTime": 32,
+  "experience": 0.05
+}

@@ -86,7 +86,7 @@ public class ElectricStonecutterEntity extends AbstractMachineBlockEntity {
                 this.setCurrentRecipe(null);
             }
             if (this.currentRecipe == null && this.recipeId != null) {
-                this.setCurrentRecipe(this.level.getRecipeManager().getAllRecipesFor(RecipeType.STONECUTTING).stream().filter(recipe -> recipe.getId().equals(this.recipeId)).findFirst().get());
+                this.setCurrentRecipe(this.recipeId);
             }
         }
         super.tick(pLevel, pPos, pBlockState);
@@ -144,10 +144,12 @@ public class ElectricStonecutterEntity extends AbstractMachineBlockEntity {
         return super.getCapability(cap, side);
     }
 
-    public void setCurrentRecipe(StonecutterRecipe newRecipe) {
-        this.currentRecipe = newRecipe;
-        if (newRecipe != null) {
-            this.recipeId = newRecipe.getId();
+    @Override
+    public void setCurrentRecipe(ResourceLocation recipeId) {
+        StonecutterRecipe stonecutterRecipe = level.getRecipeManager().getAllRecipesFor(RecipeType.STONECUTTING).stream().filter(recipe -> recipe.getId().equals(recipeId)).findFirst().orElse(null);
+        this.currentRecipe = stonecutterRecipe;
+        if (stonecutterRecipe != null) {
+            this.recipeId = stonecutterRecipe.getId();
         } else {
             this.recipeId = null;
         }
@@ -156,6 +158,7 @@ public class ElectricStonecutterEntity extends AbstractMachineBlockEntity {
                 conn.send(this.getUpdatePacket());
             }
         }
+        super.setCurrentRecipe(recipeId);
     }
 
     @Override
@@ -171,7 +174,7 @@ public class ElectricStonecutterEntity extends AbstractMachineBlockEntity {
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         super.onDataPacket(net, pkt);
-        this.setCurrentRecipe(this.level.getRecipeManager().getAllRecipesFor(RecipeType.STONECUTTING).stream().filter(recipe -> recipe.getId().equals(this.recipeId)).findFirst().get());
+        this.setCurrentRecipe(this.recipeId);
     }
 
     public StonecutterRecipe getCurrentRecipe() {

@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "ingredients": [
+    {
+      "tag": "minecraft:logs"
+    }
+  ],
+  "result": {
+    "item": "minecraft:ladder",
+    "count": 24
+  },
+  "processTime": 32,
+  "experience": 0.05
+}
