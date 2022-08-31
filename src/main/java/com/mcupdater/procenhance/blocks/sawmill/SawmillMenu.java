@@ -59,9 +59,9 @@ public class SawmillMenu extends AbstractMachineMenu<SawmillEntity> {
 
     @Override
     protected void addMachineSlots() {
-        this.addSlot(new MachineInputSlot(this.machineEntity, new InvWrapper(this.machineEntity), 0, 12, 48));
-        this.addSlot(new MachineOutputSlot(this.machineEntity, new InvWrapper(this.machineEntity), 1, 127, 33));
-        this.phantomSlot = this.addSlot(new PhantomSlot(this.machineEntity, 2, 12, 19) {
+        this.addSlot(new MachineInputSlot(this.machineEntity, new InvWrapper(this.machineEntity.getInventory()), 0, 12, 48));
+        this.addSlot(new MachineOutputSlot(this.machineEntity, new InvWrapper(this.machineEntity.getInventory()), 1, 127, 33));
+        this.phantomSlot = this.addSlot(new PhantomSlot(this.machineEntity.getInventory(), 2, 12, 19) {
             @Override
             public void setChanged() {
                 super.setChanged();
@@ -75,7 +75,6 @@ public class SawmillMenu extends AbstractMachineMenu<SawmillEntity> {
     public ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
-        ProcessEnhancement.LOGGER.debug("index={}",index);
         if (slot.hasItem()) {
             ItemStack stackInSlot = slot.getItem();
             itemstack = stackInSlot.copy();
@@ -83,7 +82,7 @@ public class SawmillMenu extends AbstractMachineMenu<SawmillEntity> {
                 return ItemStack.EMPTY;
             }
             if (index != 0 && index != 1) {
-                if (this.machineEntity.canPlaceItem(0, stackInSlot)) {
+                if (this.machineEntity.canPlaceItem(stackInSlot)) {
                     if (!this.moveItemStackTo(stackInSlot, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
@@ -128,7 +127,7 @@ public class SawmillMenu extends AbstractMachineMenu<SawmillEntity> {
     private void setupRecipeList(ItemStack itemStack) {
         this.recipes.clear();
         if (!itemStack.isEmpty()) {
-            this.recipes = this.machineEntity.getLevel().getRecipeManager().getRecipesFor(SawmillRecipe.Type.INSTANCE, this.machineEntity, this.machineEntity.getLevel());
+            this.recipes = this.machineEntity.getLevel().getRecipeManager().getRecipesFor(SawmillRecipe.Type.INSTANCE, this.machineEntity.getInventory(), this.machineEntity.getLevel());
         }
     }
 

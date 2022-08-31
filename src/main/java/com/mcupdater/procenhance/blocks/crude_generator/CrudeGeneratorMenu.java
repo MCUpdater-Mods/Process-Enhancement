@@ -1,5 +1,6 @@
 package com.mcupdater.procenhance.blocks.crude_generator;
 
+import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
 import com.mcupdater.mculib.block.IConfigurableMenu;
 import com.mcupdater.mculib.capabilities.PowerTrackingMenu;
 import com.mcupdater.procenhance.setup.Registration;
@@ -12,7 +13,6 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -100,7 +100,7 @@ public class CrudeGeneratorMenu extends PowerTrackingMenu implements IConfigurab
     }
 
     @Override
-    public BlockEntity getBlockEntity() {
+    public AbstractConfigurableBlockEntity getBlockEntity() {
         return this.localBlockEntity;
     }
 

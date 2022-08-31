@@ -1,14 +1,17 @@
 package com.mcupdater.procenhance.blocks.crude_generator;
 
+import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
 import com.mcupdater.mculib.block.AbstractMachineBlock;
-import com.mcupdater.mculib.capabilities.PoweredBlockEntity;
+import com.mcupdater.mculib.capabilities.EnergyResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
+import com.mcupdater.mculib.inventory.InputOutputSettings;
+import com.mcupdater.mculib.inventory.SideSetting;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -23,19 +26,27 @@ import java.util.List;
 
 import static com.mcupdater.procenhance.setup.Registration.CRUDEGENERATOR_BLOCKENTITY;
 
-public class CrudeGeneratorEntity extends PoweredBlockEntity implements MenuProvider {
+public class CrudeGeneratorEntity extends AbstractConfigurableBlockEntity {
     private Component name;
     private List<Block> validSources = Arrays.asList(Blocks.LAVA,Blocks.FIRE,Blocks.SOUL_FIRE,Blocks.CAMPFIRE,Blocks.SOUL_CAMPFIRE);
 
     public CrudeGeneratorEntity(BlockPos blockPos, BlockState blockState) {
-        super(CRUDEGENERATOR_BLOCKENTITY.get(), blockPos, blockState, 50000, Integer.MAX_VALUE, ReceiveMode.NO_RECEIVE, SendMode.SEND_ALL );
+        super(CRUDEGENERATOR_BLOCKENTITY.get(), blockPos, blockState);
+        EnergyResourceHandler energyResourceHandler = new EnergyResourceHandler(this.level, 50000, Integer.MAX_VALUE, false);
+        for (Direction side : Direction.values()) {
+            InputOutputSettings ioSetting = energyResourceHandler.getIOSettings(side);
+            ioSetting.setInputSetting(SideSetting.DISABLED);
+            energyResourceHandler.updateIOSettings(side, ioSetting);
+        }
+        this.configMap.put("power", energyResourceHandler);
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pBlockState) {
+        EnergyResourceHandler energyStorage = (EnergyResourceHandler) this.configMap.get("power");
         if (!this.level.isClientSide) {
             Block blockBelow = this.level.getBlockState(this.worldPosition.below()).getBlock();
             if (validSources.contains(blockBelow)) {
-                int added = this.energyStorage.getInternalHandler().receiveEnergy(Config.CRUDE_GENERATOR_PER_TICK.get(), false);
+                int added = energyStorage.getInternalHandler().receiveEnergy(Config.CRUDE_GENERATOR_PER_TICK.get(), false);
                 if (added > 0) {
                     boolean currentState = pBlockState.getValue((AbstractMachineBlock.ACTIVE));
                     if (!currentState) {
@@ -76,19 +87,14 @@ public class CrudeGeneratorEntity extends PoweredBlockEntity implements MenuProv
         super.saveAdditional(compound);
     }
 
-    // MenuProvider methods
     @Override
-    public Component getDisplayName() {
-        return this.name != null ? this.name : new TranslatableComponent("block.processenhancement.crude_generator");
+    protected Component getDefaultName() {
+        return new TranslatableComponent("block.processenhancement.crude_generator");
     }
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
         return new CrudeGeneratorMenu(windowId, this.level, this.worldPosition, inventory, player, DataHelper.getAdjacentNames(this.level, this.worldPosition));
-    }
-
-    public void setCustomName(Component hoverName) {
-        this.name = hoverName;
     }
 }

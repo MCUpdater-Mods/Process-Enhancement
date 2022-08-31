@@ -1,5 +1,6 @@
 package com.mcupdater.procenhance.blocks.basic_generator;
 
+import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
 import com.mcupdater.mculib.block.IConfigurableMenu;
 import com.mcupdater.mculib.capabilities.PowerTrackingMenu;
 import com.mcupdater.mculib.inventory.BucketSlot;
@@ -15,7 +16,6 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -39,8 +39,8 @@ public class BasicGeneratorMenu extends PowerTrackingMenu implements IConfigurab
         this.data = data;
 
         if (this.localBlockEntity != null) {
-            addSlot(new FuelSlot(new InvWrapper(this.localBlockEntity), 0, 81, 56));
-            addSlot(new BucketSlot(new InvWrapper(this.localBlockEntity), 1, 105, 56));
+            addSlot(new FuelSlot(new InvWrapper(this.localBlockEntity.getInventory()), 0, 81, 56));
+            addSlot(new BucketSlot(new InvWrapper(this.localBlockEntity.getInventory()), 1, 105, 56));
         }
         layoutPlayerInventorySlots(8, 84);
         trackPower();
@@ -90,7 +90,7 @@ public class BasicGeneratorMenu extends PowerTrackingMenu implements IConfigurab
                     return ItemStack.EMPTY;
                 }
             } else { // Player inventory slots
-                if (this.localBlockEntity.canPlaceItem(0, stackInSlot)) { // Insert fuel
+                if (this.localBlockEntity.canPlaceItem(stackInSlot)) { // Insert fuel
                     if (!this.moveItemStackTo(stackInSlot, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
@@ -131,7 +131,7 @@ public class BasicGeneratorMenu extends PowerTrackingMenu implements IConfigurab
     }
 
     @Override
-    public BlockEntity getBlockEntity() {
+    public AbstractConfigurableBlockEntity getBlockEntity() {
         return this.localBlockEntity;
     }
 

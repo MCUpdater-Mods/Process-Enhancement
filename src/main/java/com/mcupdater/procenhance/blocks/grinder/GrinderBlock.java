@@ -69,8 +69,8 @@ public class GrinderBlock extends AbstractMachineBlock {
         if (oldState.getBlock() != newState.getBlock()) {
             BlockEntity blockEntity = level.getBlockEntity(blockPos);
 
-            if (blockEntity instanceof GrinderEntity) {
-                Containers.dropContents(level, blockPos, (GrinderEntity) blockEntity);
+            if (blockEntity instanceof GrinderEntity grinderEntity) {
+                Containers.dropContents(level, blockPos, grinderEntity.getInventory());
                 level.updateNeighbourForOutputSignal(blockPos, this);
             }
             super.onRemove(oldState, level, blockPos, newState, flag);

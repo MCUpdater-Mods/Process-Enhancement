@@ -67,8 +67,8 @@ public class ElectricFurnaceBlock extends AbstractMachineBlock {
         if (oldState.getBlock() != newState.getBlock()) {
             BlockEntity blockEntity = level.getBlockEntity(blockPos);
 
-            if (blockEntity instanceof ElectricFurnaceEntity) {
-                Containers.dropContents(level, blockPos, (ElectricFurnaceEntity) blockEntity);
+            if (blockEntity instanceof ElectricFurnaceEntity electricFurnaceEntity) {
+                Containers.dropContents(level, blockPos, electricFurnaceEntity.getInventory());
                 level.updateNeighbourForOutputSignal(blockPos, this);
             }
             super.onRemove(oldState, level, blockPos, newState, flag);

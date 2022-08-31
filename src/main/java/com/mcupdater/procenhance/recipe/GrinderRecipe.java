@@ -9,12 +9,13 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
-public class GrinderRecipe implements Recipe<GrinderEntity> {
+public class GrinderRecipe implements Recipe<Container> {
     private final ResourceLocation id;
     private final NonNullList<Ingredient> ingredients;
     private final NonNullList<Tuple<ItemStack,Integer>> outputs;
@@ -30,7 +31,7 @@ public class GrinderRecipe implements Recipe<GrinderEntity> {
     }
 
     @Override
-    public boolean matches(GrinderEntity container, Level level) {
+    public boolean matches(Container container, Level level) {
         return ingredients.get(0).test(container.getItem(0));
     }
 
@@ -40,7 +41,7 @@ public class GrinderRecipe implements Recipe<GrinderEntity> {
     }
 
     @Override
-    public ItemStack assemble(GrinderEntity p_44001_) {
+    public ItemStack assemble(Container container) {
         return ItemStack.EMPTY;
     }
 

@@ -1,18 +1,19 @@
 package com.mcupdater.procenhance.blocks.basic_generator;
 
+import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
 import com.mcupdater.mculib.block.AbstractMachineBlock;
-import com.mcupdater.mculib.capabilities.PoweredBlockEntity;
+import com.mcupdater.mculib.capabilities.EnergyResourceHandler;
+import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
+import com.mcupdater.mculib.inventory.InputOutputSettings;
+import com.mcupdater.mculib.inventory.SideSetting;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -22,21 +23,13 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import org.jetbrains.annotations.Nullable;
-
-import javax.annotation.Nonnull;
 
 import static com.mcupdater.procenhance.setup.Registration.BASICGENERATOR_BLOCKENTITY;
 
-public class BasicGeneratorEntity extends PoweredBlockEntity implements WorldlyContainer, MenuProvider {
-    protected NonNullList<ItemStack> itemStorage = NonNullList.withSize(2, ItemStack.EMPTY);
-    private final LazyOptional<IItemHandlerModifiable>[] itemHandler = SidedInvWrapper.create(this, Direction.values());
-    private Component name;
+public class BasicGeneratorEntity extends AbstractConfigurableBlockEntity {
+    //    protected NonNullList<ItemStack> itemStorage = NonNullList.withSize(2, ItemStack.EMPTY);
+    //    private final LazyOptional<IItemHandlerModifiable>[] itemHandler = SidedInvWrapper.create(this, Direction.values());
     int burnCurrent;
     int burnTotal;
     public ContainerData data = new ContainerData() {
@@ -70,13 +63,25 @@ public class BasicGeneratorEntity extends PoweredBlockEntity implements WorldlyC
         }
     };
     public BasicGeneratorEntity(BlockPos blockPos, BlockState blockState) {
-        super(BASICGENERATOR_BLOCKENTITY.get(), blockPos, blockState, 200000, Integer.MAX_VALUE, ReceiveMode.NO_RECEIVE, SendMode.SEND_ALL );
+        super(BASICGENERATOR_BLOCKENTITY.get(), blockPos, blockState);
+        EnergyResourceHandler energyResourceHandler = new EnergyResourceHandler(this.level, 200000, Integer.MAX_VALUE, false);
+        for (Direction side : Direction.values()) {
+            InputOutputSettings ioSetting = energyResourceHandler.getIOSettings(side);
+            ioSetting.setInputSetting(SideSetting.DISABLED);
+            energyResourceHandler.updateIOSettings(side, ioSetting);
+        }
+        ItemResourceHandler itemResourceHandler = new ItemResourceHandler(this.level, 2, new int[]{0,1}, new int[]{0}, new int[]{1}, this::stillValid);
+        itemResourceHandler.setInsertFunction(this::canPlaceItem);
+        this.configMap.put("power", energyResourceHandler);
+        this.configMap.put("items", itemResourceHandler);
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pBlockState) {
+        EnergyResourceHandler energyStorage = (EnergyResourceHandler) this.configMap.get("power");
+        ItemResourceHandler itemStorage = (ItemResourceHandler) this.configMap.get("items");
         if (!this.level.isClientSide) {
             if (this.burnCurrent > 0) {
-                int added = this.energyStorage.getInternalHandler().receiveEnergy(Config.BASIC_GENERATOR_PER_TICK.get(), false);
+                int added = energyStorage.getInternalHandler().receiveEnergy(Config.BASIC_GENERATOR_PER_TICK.get(), false);
                 if (added > 0) {
                     --this.burnCurrent;
                     boolean currentState = pBlockState.getValue((AbstractMachineBlock.ACTIVE));
@@ -98,21 +103,21 @@ public class BasicGeneratorEntity extends PoweredBlockEntity implements WorldlyC
                     pLevel.setBlock(pPos, pBlockState, 3);
                 }
             }
-            if (this.burnCurrent == 0 && !this.itemStorage.get(0).isEmpty()) {
-                int newBurnTime = ForgeHooks.getBurnTime(this.itemStorage.get(0), RecipeType.SMELTING);
+            if (this.burnCurrent == 0 && !itemStorage.getItem(0).isEmpty()) {
+                int newBurnTime = ForgeHooks.getBurnTime(itemStorage.getItem(0), RecipeType.SMELTING);
                 if (newBurnTime > 0) {
-                    if (this.itemStorage.get(0).hasContainerItem()) {
-                        if ((this.itemStorage.get(0).getContainerItem().sameItem(this.itemStorage.get(1)) && this.itemStorage.get(1).getCount() < this.itemStorage.get(1).getMaxStackSize()) || this.itemStorage.get(1).isEmpty()) {
-                            if (this.itemStorage.get(1).isEmpty()) {
-                                this.itemStorage.set(1, itemStorage.get(0).getContainerItem());
+                    if (itemStorage.getItem(0).hasContainerItem()) {
+                        if ((itemStorage.getItem(0).getContainerItem().sameItem(itemStorage.getItem(1)) && itemStorage.getItem(1).getCount() < itemStorage.getItem(1).getMaxStackSize()) || itemStorage.getItem(1).isEmpty()) {
+                            if (itemStorage.getItem(1).isEmpty()) {
+                                itemStorage.setItem(1, itemStorage.getItem(0).getContainerItem());
                             } else {
-                                this.itemStorage.get(1).grow(1);
+                                itemStorage.getItem(1).grow(1);
                             }
                         } else {
                             return;
                         }
                     }
-                    this.itemStorage.get(0).shrink(1);
+                    itemStorage.getItem(0).shrink(1);
                     this.burnCurrent += newBurnTime;
                     this.burnTotal = this.burnCurrent;
                 }
@@ -124,75 +129,17 @@ public class BasicGeneratorEntity extends PoweredBlockEntity implements WorldlyC
     @Override
     public void load(CompoundTag compound) {
         super.load(compound);
-        this.itemStorage = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         this.burnTotal = compound.getInt("burnTotal");
         this.burnCurrent = compound.getInt("burnCurrent");
-        if (compound.contains("CustomName", 8)) {
-            this.name = Component.Serializer.fromJson(compound.getString("CustomName"));
-        }
-        ContainerHelper.loadAllItems(compound, this.itemStorage);
     }
 
     @Override
     public void saveAdditional(CompoundTag compound) {
         compound.putInt("burnTotal", this.burnTotal);
         compound.putInt("burnCurrent", this.burnCurrent);
-        ContainerHelper.saveAllItems(compound, this.itemStorage);
-        if (this.name != null) {
-            compound.putString("CustomName", Component.Serializer.toJson(this.name));
-        }
         super.saveAdditional(compound);
     }
 
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @javax.annotation.Nullable Direction side) {
-        if (cap.equals(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)) {
-            return itemHandler[side != null ? side.ordinal() : 0].cast();
-        }
-        return super.getCapability(cap, side);
-    }
-
-    // WorldlyContainer methods
-    @Override
-    public int getContainerSize() {
-        return this.itemStorage.size();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        for(ItemStack itemstack : this.itemStorage) {
-            if (!itemstack.isEmpty()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public ItemStack getItem(int index) {
-        return this.itemStorage.get(index);
-    }
-
-    @Override
-    public ItemStack removeItem(int index, int count) {
-        return ContainerHelper.removeItem(this.itemStorage, index, count);
-    }
-
-    @Override
-    public ItemStack removeItemNoUpdate(int index) {
-        return ContainerHelper.takeItem(this.itemStorage, index);
-    }
-
-    @Override
-    public void setItem(int index, ItemStack stack) {
-        this.itemStorage.set(index, stack);
-        if (stack.getCount() > this.getMaxStackSize()) {
-            stack.setCount(this.getMaxStackSize());
-        }
-    }
-
-    @Override
     public boolean stillValid(Player player) {
         if (this.level.getBlockEntity(this.worldPosition) != this) {
             return false;
@@ -201,42 +148,13 @@ public class BasicGeneratorEntity extends PoweredBlockEntity implements WorldlyC
         }
     }
 
-    @Override
-    public boolean canPlaceItem(int index, ItemStack stack) {
-        switch (index) {
-            case 0:
-                return (ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) > 0);
-            case 1:
-                return true;
-            default:
-                return false; // Invalid slot
-        }
+    public boolean canPlaceItem(ItemStack stack) {
+        return (ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) > 0);
     }
 
     @Override
-    public int[] getSlotsForFace(Direction side) {
-        return new int[]{0,1};
-    }
-
-    @Override
-    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, @javax.annotation.Nullable Direction direction) {
-        return index == 0 && this.canPlaceItem(index, itemStackIn);
-    }
-
-    @Override
-    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-        return index == 1;
-    }
-
-    @Override
-    public void clearContent() {
-        this.itemStorage.clear();
-    }
-
-    // MenuProvider methods
-    @Override
-    public Component getDisplayName() {
-        return this.name != null ? this.name : new TranslatableComponent("block.processenhancement.basic_generator");
+    protected Component getDefaultName() {
+        return new TranslatableComponent("block.processenhancement.basic_generator");
     }
 
     @Nullable
@@ -245,7 +163,7 @@ public class BasicGeneratorEntity extends PoweredBlockEntity implements WorldlyC
         return new BasicGeneratorMenu(windowId, this.level, this.worldPosition, inventory, player, this.data, DataHelper.getAdjacentNames(this.level, this.worldPosition));
     }
 
-    public void setCustomName(Component hoverName) {
-        this.name = hoverName;
+    public Container getInventory() {
+        return (ItemResourceHandler) this.configMap.get("items");
     }
 }

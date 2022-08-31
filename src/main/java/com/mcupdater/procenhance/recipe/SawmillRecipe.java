@@ -8,13 +8,14 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
-public class SawmillRecipe implements Recipe<SawmillEntity> {
+public class SawmillRecipe implements Recipe<Container> {
     private final ResourceLocation id;
     private final ItemStack result;
     private final int processTime;
@@ -30,7 +31,7 @@ public class SawmillRecipe implements Recipe<SawmillEntity> {
     }
 
     @Override
-    public boolean matches(SawmillEntity container, Level level) {
+    public boolean matches(Container container, Level level) {
         return ingredients.get(0).test(container.getItem(2)); // match to phantom slot
     }
 
@@ -40,7 +41,7 @@ public class SawmillRecipe implements Recipe<SawmillEntity> {
     }
 
     @Override
-    public ItemStack assemble(SawmillEntity container) {
+    public ItemStack assemble(Container container) {
         return result;
     }
 

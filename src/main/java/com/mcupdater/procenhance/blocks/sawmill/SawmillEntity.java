@@ -1,12 +1,12 @@
 package com.mcupdater.procenhance.blocks.sawmill;
 
 import com.mcupdater.mculib.block.AbstractMachineBlockEntity;
+import com.mcupdater.mculib.capabilities.EnergyResourceHandler;
+import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.procenhance.recipe.SawmillRecipe;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
@@ -15,7 +15,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -23,23 +23,14 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Arrays;
 
 import static com.mcupdater.procenhance.setup.Registration.SAWMILL_BLOCKENTITY;
 
 public class SawmillEntity extends AbstractMachineBlockEntity {
 
-    protected NonNullList<ItemStack> itemStorage = NonNullList.withSize(3, ItemStack.EMPTY);
-    private final LazyOptional<IItemHandlerModifiable>[] itemHandler = SidedInvWrapper.create(this, Direction.values());
     private SawmillRecipe currentRecipe = null;
     private ResourceLocation recipeId = null;
 
@@ -75,13 +66,16 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
     };
 
     public SawmillEntity(BlockPos blockPos, BlockState blockState) {
-        super(SAWMILL_BLOCKENTITY.get(), blockPos, blockState, 20000, Integer.MAX_VALUE, ReceiveMode.ACCEPTS, SendMode.SHARE, Config.SAWMILL_ENERGY_PER_TICK.get());
+        super(SAWMILL_BLOCKENTITY.get(), blockPos, blockState, 20000, Integer.MAX_VALUE, Config.SAWMILL_ENERGY_PER_TICK.get(), 1);
+        ItemResourceHandler itemResourceHandler = new ItemResourceHandler(this.level, 3, new int[]{0,1}, new int[]{0}, new int[]{1}, this::stillValid);
+        itemResourceHandler.setInsertFunction(this::canPlaceItem);
+        this.configMap.put("items", itemResourceHandler);
     }
 
     @Override
     public void tick(Level pLevel, BlockPos pPos, BlockState pBlockState) {
         if (this.level != null) {
-            if (this.itemStorage.get(2).isEmpty() && this.currentRecipe != null) {
+            if (this.getInventory().getItem(2).isEmpty() && this.currentRecipe != null) {
                 this.setCurrentRecipe(null);
             }
             if (this.currentRecipe == null && this.recipeId != null) {
@@ -93,55 +87,29 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
 
     @Override
     protected boolean performWork() {
+        ItemResourceHandler itemStorage = (ItemResourceHandler) this.configMap.get("items");
+        EnergyResourceHandler energyStorage = (EnergyResourceHandler) this.configMap.get("power");
         if (this.currentRecipe == null) {
             return false;
         }
-        ItemStack inputSlot = this.itemStorage.get(0);
-        ItemStack outputSlot = this.itemStorage.get(1);
-        if (this.energyStorage.getStoredEnergy() >= Config.SAWMILL_ENERGY_PER_TICK.get() && (outputSlot.isEmpty() || (outputSlot.sameItem(currentRecipe.getResultItem()) && outputSlot.getCount() <= outputSlot.getMaxStackSize() - (currentRecipe.getResultItem().getCount()))) && !inputSlot.isEmpty()) {
+        ItemStack inputSlot = itemStorage.getItem(0);
+        ItemStack outputSlot = itemStorage.getItem(1);
+        if (energyStorage.getStoredEnergy() >= Config.SAWMILL_ENERGY_PER_TICK.get() && (outputSlot.isEmpty() || (outputSlot.sameItem(currentRecipe.getResultItem()) && outputSlot.getCount() <= outputSlot.getMaxStackSize() - (currentRecipe.getResultItem().getCount()))) && !inputSlot.isEmpty()) {
             this.workProgress++;
             if (this.workProgress >= this.workTotal) {
-                ItemStack result = this.currentRecipe.assemble(this);
+                ItemStack result = this.currentRecipe.assemble(itemStorage);
                 if (outputSlot.isEmpty()) {
-                    this.itemStorage.set(1, result.copy());
+                    itemStorage.setItem(1, result.copy());
                 } else if (outputSlot.is(result.getItem())) {
                     outputSlot.grow(result.getCount());
                 }
                 this.workProgress = 0;
-                this.itemStorage.get(0).shrink(1);
+                itemStorage.getItem(0).shrink(1);
                 this.storedXP += this.currentRecipe.getExperience();
             }
             return true;
         }
         return false;
-    }
-
-    @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
-        this.itemStorage = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(compound, this.itemStorage);
-        if (compound.contains("recipeId")) {
-            recipeId = new ResourceLocation(compound.getString("recipeId"));
-        }
-    }
-
-    @Override
-    public void saveAdditional(CompoundTag compound) {
-        if (this.currentRecipe != null) {
-            compound.putString("recipeId", this.currentRecipe.getId().toString());
-        }
-        ContainerHelper.saveAllItems(compound,this.itemStorage);
-        super.saveAdditional(compound);
-    }
-
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap.equals(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)) {
-            return itemHandler[side != null ? side.ordinal() : 0].cast();
-        }
-        return super.getCapability(cap, side);
     }
 
     @Override
@@ -152,11 +120,6 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
             this.recipeId = sawmillRecipe.getId();
         } else {
             this.recipeId = null;
-        }
-        if (this.level != null && !this.level.isClientSide) {
-            for (Connection conn : this.level.getServer().getConnection().getConnections()) {
-                conn.send(this.getUpdatePacket());
-            }
         }
         super.setCurrentRecipe(recipeId);
     }
@@ -181,46 +144,6 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
         return this.currentRecipe;
     }
 
-    // WorldlyContainer methods
-    @Override
-    public int getContainerSize() {
-        return this.itemStorage.size();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        for(ItemStack itemStack : this.itemStorage) {
-            if (!itemStack.isEmpty()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public ItemStack getItem(int index) {
-        return this.itemStorage.get(index);
-    }
-
-    @Override
-    public ItemStack removeItem(int index, int count) {
-        return ContainerHelper.removeItem(this.itemStorage, index, count);
-    }
-
-    @Override
-    public ItemStack removeItemNoUpdate(int index) {
-        return ContainerHelper.takeItem(this.itemStorage, index);
-    }
-
-    @Override
-    public void setItem(int index, ItemStack stack) {
-        this.itemStorage.set(index, stack);
-        if (stack.getCount() > this.getMaxStackSize()) {
-            stack.setCount(this.getMaxStackSize());
-        }
-    }
-
-    @Override
     public boolean stillValid(Player player) {
         if (this.level.getBlockEntity(this.worldPosition) != this) {
             return false;
@@ -229,39 +152,10 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
         }
     }
 
-    @Override
-    public boolean canPlaceItem(int index, ItemStack stack) {
-        switch (index) {
-            case 0:
-                return this.currentRecipe != null && Arrays.stream(this.currentRecipe.getIngredients().get(0).getItems()).anyMatch(validStack -> validStack.sameItem(stack)); // Source slot
-            case 1:
-                return false; // Destination slot
-            default:
-                return false; // Invalid slot
-        }
+    public boolean canPlaceItem(ItemStack stack) {
+        return this.currentRecipe != null && Arrays.stream(this.currentRecipe.getIngredients().get(0).getItems()).anyMatch(validStack -> validStack.sameItem(stack)); // Source slot
     }
 
-    @Override
-    public int[] getSlotsForFace(Direction side) {
-        return new int[]{0,1};
-    }
-
-    @Override
-    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, @Nullable Direction direction) {
-        return this.canPlaceItem(index, itemStackIn);
-    }
-
-    @Override
-    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-        return index == 1;
-    }
-
-    @Override
-    public void clearContent() {
-        this.itemStorage.clear();
-    }
-
-    // MenuProvider methods
     @Override
     public Component getDefaultName() {
         return new TranslatableComponent("block.processenhancement.sawmill");
@@ -271,5 +165,9 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
         return new SawmillMenu(windowId, this.level, this.worldPosition, inventory, player, this.data, DataHelper.getAdjacentNames(this.level, this.worldPosition));
+    }
+
+    public Container getInventory() {
+        return (ItemResourceHandler) this.configMap.get("items");
     }
 }

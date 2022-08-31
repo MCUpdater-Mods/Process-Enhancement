@@ -1,5 +1,6 @@
 package com.mcupdater.procenhance.blocks.basic_battery;
 
+import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
 import com.mcupdater.mculib.block.IConfigurableMenu;
 import com.mcupdater.mculib.capabilities.PowerTrackingMenu;
 import com.mcupdater.procenhance.setup.Registration;
@@ -12,7 +13,6 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -34,7 +34,7 @@ public class BasicBatteryMenu extends PowerTrackingMenu implements IConfigurable
         this.playerInventory = new InvWrapper(pPlayerInventory);
 
         if (this.localBlockEntity != null) {
-            addSlot(new SlotItemHandler(new InvWrapper(this.localBlockEntity), 0, 81, 56));
+            addSlot(new SlotItemHandler(new InvWrapper(this.localBlockEntity.getInventory()), 0, 81, 56));
         }
         layoutPlayerInventorySlots(8,84);
         trackPower();
@@ -83,7 +83,7 @@ public class BasicBatteryMenu extends PowerTrackingMenu implements IConfigurable
                     return ItemStack.EMPTY;
                 }
             } else { // Player inventory slots
-                if (this.localBlockEntity.canPlaceItem(0, stackInSlot)) { // Insert to charging slot
+                if (this.localBlockEntity.canPlaceItem(stackInSlot)) { // Insert to charging slot
                     if (!this.moveItemStackTo(stackInSlot, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
@@ -112,7 +112,7 @@ public class BasicBatteryMenu extends PowerTrackingMenu implements IConfigurable
     }
 
     @Override
-    public BlockEntity getBlockEntity() {
+    public AbstractConfigurableBlockEntity getBlockEntity() {
         return this.localBlockEntity;
     }
 

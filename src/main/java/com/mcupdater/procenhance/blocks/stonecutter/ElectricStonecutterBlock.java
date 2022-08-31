@@ -60,8 +60,8 @@ public class ElectricStonecutterBlock extends AbstractMachineBlock {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
 
             if (blockEntity instanceof ElectricStonecutterEntity machineEntity) {
-                machineEntity.itemStorage.set(2, ItemStack.EMPTY); // Clear phantom slot before dropping contents
-                Containers.dropContents(pLevel, pPos, machineEntity);
+                machineEntity.getInventory().setItem(2, ItemStack.EMPTY); // Clear phantom slot before dropping contents
+                Containers.dropContents(pLevel, pPos, machineEntity.getInventory());
                 pLevel.updateNeighbourForOutputSignal(pPos, this);
             }
             super.onRemove(pOldState, pLevel, pPos, pNewState, pIsMoving);

@@ -152,7 +152,7 @@ public class CopperWireBlock extends BaseEntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
         return (lvl, pos, state, entity) -> {
             if (entity instanceof CopperWireEntity wire) {
-                wire.tick(lvl, pos, state);
+                wire.tick(lvl, pos);
             }
         };
     }

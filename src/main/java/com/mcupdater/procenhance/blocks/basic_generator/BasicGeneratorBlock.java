@@ -88,8 +88,8 @@ public class BasicGeneratorBlock extends AbstractMachineBlock {
         if (oldState.getBlock() != newState.getBlock()) {
             BlockEntity blockEntity = level.getBlockEntity(blockPos);
 
-            if (blockEntity instanceof BasicGeneratorEntity) {
-                Containers.dropContents(level, blockPos, (BasicGeneratorEntity) blockEntity);
+            if (blockEntity instanceof BasicGeneratorEntity generatorEntity) {
+                Containers.dropContents(level, blockPos, generatorEntity.getInventory());
                 level.updateNeighbourForOutputSignal(blockPos, this);
             }
             super.onRemove(oldState, level, blockPos, newState, flag);

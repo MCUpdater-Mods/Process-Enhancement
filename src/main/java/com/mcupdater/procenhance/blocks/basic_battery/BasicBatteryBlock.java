@@ -76,8 +76,8 @@ public class BasicBatteryBlock extends AbstractMachineBlock {
         if (pOldState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
 
-            if (blockEntity instanceof BasicBatteryEntity) {
-                Containers.dropContents(pLevel, pPos, (BasicBatteryEntity) blockEntity);
+            if (blockEntity instanceof BasicBatteryEntity batteryEntity) {
+                Containers.dropContents(pLevel, pPos, batteryEntity.getInventory());
                 pLevel.updateNeighbourForOutputSignal(pPos, this);
             }
             super.onRemove(pOldState, pLevel, pPos, pNewState, pIsMoving);

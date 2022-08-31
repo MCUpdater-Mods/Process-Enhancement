@@ -65,8 +65,8 @@ public class SawmillBlock extends AbstractMachineBlock {
             BlockEntity blockEntity = level.getBlockEntity(blockPos);
 
             if (blockEntity instanceof SawmillEntity machineEntity) {
-                machineEntity.itemStorage.set(2, ItemStack.EMPTY); // Clear phantom slot before dropping contents
-                Containers.dropContents(level, blockPos, (SawmillEntity) blockEntity);
+                machineEntity.getInventory().setItem(2, ItemStack.EMPTY); // Clear phantom slot before dropping contents
+                Containers.dropContents(level, blockPos, machineEntity.getInventory());
                 level.updateNeighbourForOutputSignal(blockPos, this);
             }
             super.onRemove(oldState, level, blockPos, newState, flag);
