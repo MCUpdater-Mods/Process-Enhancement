@@ -1,7 +1,8 @@
-package com.mcupdater.procenhance.blocks.basic_battery;
+package com.mcupdater.procenhance.blocks.buffer;
 
 import com.mcupdater.mculib.gui.ConfigPanel;
 import com.mcupdater.mculib.gui.TabConfig;
+import com.mcupdater.mculib.gui.WidgetFluid;
 import com.mcupdater.mculib.gui.WidgetPower;
 import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -12,23 +13,28 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class BasicBatteryScreen extends AbstractContainerScreen<BasicBatteryMenu> {
-
-    private static final ResourceLocation GUI = new ResourceLocation(ProcessEnhancement.MODID, "textures/gui/battery.png");
+public class BufferScreen extends AbstractContainerScreen<BufferMenu> {
+    private static final ResourceLocation GUI = new ResourceLocation(ProcessEnhancement.MODID, "textures/gui/buffer.png");
     private ConfigPanel configPanel;
     private TabConfig configTab;
-    public BasicBatteryScreen(BasicBatteryMenu pMenu, Inventory pInventory, Component pName) {
-        super(pMenu, pInventory, pName);
+    private WidgetPower powerWidget;
+    private WidgetFluid fluidWidget;
+
+    public BufferScreen(BufferMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
+        super(pMenu, pPlayerInventory, pTitle);
     }
 
     @Override
     protected void init() {
         super.init();
-        this.addRenderableWidget(new WidgetPower(this.leftPos + 153, this.topPos + 5, 18, 71, menu.getEnergyHandler(), WidgetPower.Orientation.VERTICAL));
+        powerWidget = this.addRenderableWidget(new WidgetPower(this.leftPos + 153, this.topPos + 7, 18, 68, menu.getEnergyHandler(), WidgetPower.Orientation.VERTICAL));
+        fluidWidget = this.addRenderableWidget(new WidgetFluid( this.leftPos + 5, this.topPos + 14, 18, 58, menu.getBlockEntity().getFluidHandler(), 0));
         this.configPanel = new ConfigPanel(this.menu, this.leftPos, this.topPos, this.imageWidth, this.imageHeight);
         this.configPanel.setVisible(false);
-        this.configTab = this.addRenderableWidget(new TabConfig(this.leftPos - 22, this.topPos + 2,22,22, (mouseX, mouseY) -> {
+        this.configTab = this.addRenderableWidget(new TabConfig(this.leftPos - 22, this.topPos + 2, 22, 22, (mouseX, mouseY) -> {
             this.configPanel.setVisible(!this.configPanel.isVisible());
+            this.powerWidget.visible = !this.powerWidget.visible;
+            this.fluidWidget.visible = !this.fluidWidget.visible;
         }));
         this.configTab.setChild(this.configPanel);
     }
@@ -73,11 +79,11 @@ public class BasicBatteryScreen extends AbstractContainerScreen<BasicBatteryMenu
     }
 
     @Override
-    protected void renderBg(PoseStack pPoseStack, float pPartialTick, int pMouseX, int pMouseY) {
+    protected void renderBg(PoseStack poseStack, float partialTicks, int mouseX, int mouseY) {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, GUI);
         int relX = this.leftPos;
         int relY = this.topPos;
-        this.blit(pPoseStack, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
+        this.blit(poseStack,relX,relY,0,0,this.imageWidth,this.imageHeight);
     }
 }

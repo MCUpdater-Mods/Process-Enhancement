@@ -1,7 +1,7 @@
 package com.mcupdater.procenhance.datagen;
 
 import com.mcupdater.procenhance.ProcessEnhancement;
-import com.mcupdater.procenhance.blocks.basic_battery.BasicBatteryBlock;
+import com.mcupdater.procenhance.blocks.battery.BatteryBlock;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -25,20 +25,57 @@ public class ModBlockStateProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
         machine(Registration.CRUDEGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.COBBLESTONE, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
         machine(Registration.BASICGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.BRICKS, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
+        machine(Registration.INTERGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, Blocks.BRICKS, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
+        machine(Registration.ADVGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.GOLD_BLOCK, Blocks.BRICKS, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
+        machine(Registration.INDGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK, Blocks.BRICKS, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
         machine(Registration.FURNACE_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.STONE, new ResourceLocation(ProcessEnhancement.MODID, "block/electric_furnace"));
         machine(Registration.SAWMILL_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.OAK_PLANKS, new ResourceLocation(ProcessEnhancement.MODID, "block/sawmill"));
         machine(Registration.GRINDER_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/grinder"));
         machine(Registration.STONECUTTER_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.STONE_BRICKS, new ResourceLocation(ProcessEnhancement.MODID, "block/sawmill"));
+        machine(Registration.BUFFER_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.SPRUCE_PLANKS, new ResourceLocation(ProcessEnhancement.MODID, "block/buffer"));
 
         horizontalBlock(Registration.BASICBATTERY_BLOCK.get(), (blockState -> {
-            int charge = blockState.getValue(BasicBatteryBlock.CHARGE_LEVEL);
+            int charge = blockState.getValue(BatteryBlock.CHARGE_LEVEL);
             return models().getBuilder(Registration.BASICBATTERY_BLOCK.get().getRegistryName().getPath() + (charge > 0 ? Integer.toString(charge) : ""))
                     .parent(new ModelFile.UncheckedModelFile("mculib:block/machine"))
                     .texture("frame", blockTexture(Blocks.COPPER_BLOCK))
                     .texture("corner", blockTexture(Blocks.COPPER_BLOCK))
                     .texture("face",blockTexture(Blocks.IRON_BLOCK))
                     .texture("inset", blockTexture(Blocks.BLACK_CONCRETE))
-                    .texture("overlay", new ResourceLocation(ProcessEnhancement.MODID, "block/battery" + blockState.getValue(BasicBatteryBlock.CHARGE_LEVEL)))
+                    .texture("overlay", new ResourceLocation(ProcessEnhancement.MODID, "block/battery" + blockState.getValue(BatteryBlock.CHARGE_LEVEL)))
+                    .texture("particle", blockTexture(Blocks.COPPER_BLOCK));
+        }));
+        horizontalBlock(Registration.INTBATTERY_BLOCK.get(), (blockState -> {
+            int charge = blockState.getValue(BatteryBlock.CHARGE_LEVEL);
+            return models().getBuilder(Registration.INTBATTERY_BLOCK.get().getRegistryName().getPath() + (charge > 0 ? Integer.toString(charge) : ""))
+                    .parent(new ModelFile.UncheckedModelFile("mculib:block/machine"))
+                    .texture("frame", blockTexture(Blocks.COPPER_BLOCK))
+                    .texture("corner", blockTexture(Blocks.IRON_BLOCK))
+                    .texture("face",blockTexture(Blocks.IRON_BLOCK))
+                    .texture("inset", blockTexture(Blocks.BLACK_CONCRETE))
+                    .texture("overlay", new ResourceLocation(ProcessEnhancement.MODID, "block/battery" + blockState.getValue(BatteryBlock.CHARGE_LEVEL)))
+                    .texture("particle", blockTexture(Blocks.COPPER_BLOCK));
+        }));
+        horizontalBlock(Registration.ADVBATTERY_BLOCK.get(), (blockState -> {
+            int charge = blockState.getValue(BatteryBlock.CHARGE_LEVEL);
+            return models().getBuilder(Registration.ADVBATTERY_BLOCK.get().getRegistryName().getPath() + (charge > 0 ? Integer.toString(charge) : ""))
+                    .parent(new ModelFile.UncheckedModelFile("mculib:block/machine"))
+                    .texture("frame", blockTexture(Blocks.COPPER_BLOCK))
+                    .texture("corner", blockTexture(Blocks.GOLD_BLOCK))
+                    .texture("face",blockTexture(Blocks.IRON_BLOCK))
+                    .texture("inset", blockTexture(Blocks.BLACK_CONCRETE))
+                    .texture("overlay", new ResourceLocation(ProcessEnhancement.MODID, "block/battery" + blockState.getValue(BatteryBlock.CHARGE_LEVEL)))
+                    .texture("particle", blockTexture(Blocks.COPPER_BLOCK));
+        }));
+        horizontalBlock(Registration.INDBATTERY_BLOCK.get(), (blockState -> {
+            int charge = blockState.getValue(BatteryBlock.CHARGE_LEVEL);
+            return models().getBuilder(Registration.INDBATTERY_BLOCK.get().getRegistryName().getPath() + (charge > 0 ? Integer.toString(charge) : ""))
+                    .parent(new ModelFile.UncheckedModelFile("mculib:block/machine"))
+                    .texture("frame", blockTexture(Blocks.COPPER_BLOCK))
+                    .texture("corner", blockTexture(Blocks.DIAMOND_BLOCK))
+                    .texture("face",blockTexture(Blocks.IRON_BLOCK))
+                    .texture("inset", blockTexture(Blocks.BLACK_CONCRETE))
+                    .texture("overlay", new ResourceLocation(ProcessEnhancement.MODID, "block/battery" + blockState.getValue(BatteryBlock.CHARGE_LEVEL)))
                     .texture("particle", blockTexture(Blocks.COPPER_BLOCK));
         }));
     }

@@ -1,4 +1,4 @@
-package com.mcupdater.procenhance.blocks.basic_battery;
+package com.mcupdater.procenhance.blocks.battery;
 
 import com.mcupdater.mculib.block.AbstractMachineBlock;
 import com.mcupdater.mculib.helpers.DataHelper;
@@ -29,10 +29,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-public class BasicBatteryBlock extends AbstractMachineBlock {
+public abstract class BatteryBlock extends AbstractMachineBlock {
     public static final IntegerProperty CHARGE_LEVEL = IntegerProperty.create("charge",0,4);
 
-    public BasicBatteryBlock() {
+    public BatteryBlock() {
         super(Properties.of(Material.METAL).sound(SoundType.METAL).strength(5.0f));
         this.registerDefaultState(
                 this.stateDefinition.any()
@@ -48,17 +48,11 @@ public class BasicBatteryBlock extends AbstractMachineBlock {
         builder.add(CHARGE_LEVEL);
     }
 
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new BasicBatteryEntity(pPos, pState);
-    }
-
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof BasicBatteryEntity) {
+            if (blockEntity instanceof BatteryEntity) {
                 Map<Direction, Component> adjacentNames = DataHelper.getAdjacentNames(pLevel, pPos);
                 NetworkHooks.openGui((ServerPlayer)pPlayer, (MenuProvider)blockEntity, (buf) -> {
                     buf.writeBlockPos(pPos);
@@ -76,7 +70,7 @@ public class BasicBatteryBlock extends AbstractMachineBlock {
         if (pOldState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
 
-            if (blockEntity instanceof BasicBatteryEntity batteryEntity) {
+            if (blockEntity instanceof BatteryEntity batteryEntity) {
                 Containers.dropContents(pLevel, pPos, batteryEntity.getInventory());
                 pLevel.updateNeighbourForOutputSignal(pPos, this);
             }
@@ -88,8 +82,8 @@ public class BasicBatteryBlock extends AbstractMachineBlock {
     public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
         if (pStack.hasCustomHoverName()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof BasicBatteryEntity) {
-                ((BasicBatteryEntity)blockEntity).setCustomName(pStack.getHoverName());
+            if (blockEntity instanceof BatteryEntity) {
+                ((BatteryEntity)blockEntity).setCustomName(pStack.getHoverName());
             }
         }
     }
@@ -98,9 +92,10 @@ public class BasicBatteryBlock extends AbstractMachineBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
         return (lvl, pos, state, entity) -> {
-            if (entity instanceof BasicBatteryEntity capacitor) {
+            if (entity instanceof BatteryEntity capacitor) {
                 capacitor.tick(lvl, pos, state);
             }
         };
     }
+
 }

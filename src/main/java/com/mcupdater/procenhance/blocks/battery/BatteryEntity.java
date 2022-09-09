@@ -1,4 +1,4 @@
-package com.mcupdater.procenhance.blocks.basic_battery;
+package com.mcupdater.procenhance.blocks.battery;
 
 import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
 import com.mcupdater.mculib.capabilities.EnergyResourceHandler;
@@ -6,7 +6,6 @@ import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -15,20 +14,21 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.Nullable;
 
-import static com.mcupdater.procenhance.setup.Registration.BASICBATTERY_BLOCKENTITY;
-
-public class BasicBatteryEntity extends AbstractConfigurableBlockEntity {
-    private Component name;
+public abstract class BatteryEntity extends AbstractConfigurableBlockEntity {
     public ContainerData data = new SimpleContainerData(0);
 
-    public BasicBatteryEntity(BlockPos pPos, BlockState pState) {
-        super(BASICBATTERY_BLOCKENTITY.get(), pPos, pState);
-        EnergyResourceHandler energyResourceHandler = new EnergyResourceHandler(this.level, 500000, 10000, false);
+    public BatteryEntity(BlockEntityType<?> pBlockEntityType, BlockPos pPos, BlockState pState) {
+        super(pBlockEntityType, pPos, pState);
+    }
+
+    protected void setup(int transferRate) {
+        EnergyResourceHandler energyResourceHandler = new EnergyResourceHandler(this.level, 50 * transferRate, transferRate, false);
         ItemResourceHandler itemResourceHandler = new ItemResourceHandler(this.level, 1, new int[]{0}, new int[]{0}, new int[]{0}, this::stillValid);
         itemResourceHandler.setInsertFunction(this::canPlaceItem);
         itemResourceHandler.setExtractFunction(this::canTakeItem);
@@ -46,9 +46,9 @@ public class BasicBatteryEntity extends AbstractConfigurableBlockEntity {
             }
             // Update BlockState
             int powerLevel = (int) Math.round(((double)energyStorage.getStoredEnergy() / (double)energyStorage.getCapacity()) * 4.0d);
-            int currentState = pBlockState.getValue(BasicBatteryBlock.CHARGE_LEVEL);
+            int currentState = pBlockState.getValue(BatteryBlock.CHARGE_LEVEL);
             if (powerLevel != currentState) {
-                pBlockState = pBlockState.setValue(BasicBatteryBlock.CHARGE_LEVEL, powerLevel);
+                pBlockState = pBlockState.setValue(BatteryBlock.CHARGE_LEVEL, powerLevel);
                 pLevel.setBlock(pPos, pBlockState, 3);
             }
         }
@@ -69,14 +69,14 @@ public class BasicBatteryEntity extends AbstractConfigurableBlockEntity {
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new BasicBatteryMenu(pContainerId, this.level, this.worldPosition, pPlayerInventory, pPlayer, DataHelper.getAdjacentNames(this.level, this.worldPosition));
+        return new BatteryMenu(pContainerId, this.level, this.worldPosition, pPlayerInventory, pPlayer, DataHelper.getAdjacentNames(this.level, this.worldPosition));
     }
 
-    public boolean canPlaceItem(ItemStack pStack) {
+    public boolean canPlaceItem(int slot, ItemStack pStack) {
         return pStack.getCapability(CapabilityEnergy.ENERGY).isPresent();
     }
 
-    public boolean canTakeItem(ItemStack pStack) {
+    public boolean canTakeItem(int slot, ItemStack pStack) {
         if (!pStack.getCapability(CapabilityEnergy.ENERGY).isPresent()) {
             return true;
         } else {
@@ -93,12 +93,8 @@ public class BasicBatteryEntity extends AbstractConfigurableBlockEntity {
         }
     }
 
-    @Override
-    protected Component getDefaultName() {
-        return new TranslatableComponent("block.processenhancement.basic_battery");
-    }
-
     public Container getInventory() {
         return (ItemResourceHandler) this.configMap.get("items");
     }
+
 }

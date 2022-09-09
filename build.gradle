@@ -190,7 +190,7 @@ dependencies {
     // implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency
 
     // Examples using mod jars from ./libs
-    implementation fg.deobf("blank:MCULib-1.18.2:1.2")
+    implementation fg.deobf("blank:MCULib-1.18.2:1.3")
 
     // Mods for testing
     runtimeOnly fg.deobf("blank:mcwroofs:1.0")

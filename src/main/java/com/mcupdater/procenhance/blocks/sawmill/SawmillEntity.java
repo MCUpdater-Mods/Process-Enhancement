@@ -152,7 +152,7 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
         }
     }
 
-    public boolean canPlaceItem(ItemStack stack) {
+    public boolean canPlaceItem(int slot, ItemStack stack) {
         return this.currentRecipe != null && Arrays.stream(this.currentRecipe.getIngredients().get(0).getItems()).anyMatch(validStack -> validStack.sameItem(stack)); // Source slot
     }
 

@@ -3,11 +3,18 @@
   "values": [
     "processenhancement:crude_generator",
     "processenhancement:basic_generator",
+    "processenhancement:intermediate_generator",
+    "processenhancement:advanced_generator",
+    "processenhancement:industrial_generator",
     "processenhancement:basic_battery",
+    "processenhancement:intermediate_battery",
+    "processenhancement:advanced_battery",
+    "processenhancement:industrial_battery",
     "processenhancement:electric_furnace",
     "processenhancement:sawmill",
     "processenhancement:grinder",
     "processenhancement:stonecutter",
+    "processenhancement:buffer",
     "processenhancement:copper_wire"
   ]
 }

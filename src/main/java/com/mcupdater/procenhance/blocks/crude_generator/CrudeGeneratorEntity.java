@@ -9,7 +9,6 @@ import com.mcupdater.mculib.inventory.SideSetting;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
@@ -27,7 +26,6 @@ import java.util.List;
 import static com.mcupdater.procenhance.setup.Registration.CRUDEGENERATOR_BLOCKENTITY;
 
 public class CrudeGeneratorEntity extends AbstractConfigurableBlockEntity {
-    private Component name;
     private List<Block> validSources = Arrays.asList(Blocks.LAVA,Blocks.FIRE,Blocks.SOUL_FIRE,Blocks.CAMPFIRE,Blocks.SOUL_CAMPFIRE);
 
     public CrudeGeneratorEntity(BlockPos blockPos, BlockState blockState) {
@@ -69,22 +67,6 @@ public class CrudeGeneratorEntity extends AbstractConfigurableBlockEntity {
             }
         }
         super.tick();
-    }
-
-    @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
-        if (compound.contains("CustomName", 8)) {
-            this.name = Component.Serializer.fromJson(compound.getString("CustomName"));
-        }
-    }
-
-    @Override
-    public void saveAdditional(CompoundTag compound) {
-        if (this.name != null) {
-            compound.putString("CustomName", Component.Serializer.toJson(this.name));
-        }
-        super.saveAdditional(compound);
     }
 
     @Override

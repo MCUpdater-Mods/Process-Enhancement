@@ -1,4 +1,4 @@
-package com.mcupdater.procenhance.blocks.basic_generator;
+package com.mcupdater.procenhance.blocks.generator;
 
 import com.mcupdater.mculib.block.AbstractMachineBlock;
 import com.mcupdater.mculib.helpers.DataHelper;
@@ -30,23 +30,18 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Random;
 
-public class BasicGeneratorBlock extends AbstractMachineBlock {
-    public BasicGeneratorBlock() {
+public abstract class GeneratorBlock extends AbstractMachineBlock {
+    public GeneratorBlock() {
         super(Properties.of(Material.STONE).sound(SoundType.STONE).strength(5.0f));
     }
 
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new BasicGeneratorEntity(blockPos, blockState);
-    }
 
     @Override
     @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide) {
             BlockEntity blockEntity =pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof BasicGeneratorEntity) {
+            if (blockEntity instanceof GeneratorEntity) {
                 Map<Direction, Component> adjacentNames = DataHelper.getAdjacentNames(pLevel, pPos);
                 NetworkHooks.openGui((ServerPlayer)pPlayer, (MenuProvider)blockEntity, (buf) -> {
                     buf.writeBlockPos(pPos);
@@ -88,7 +83,7 @@ public class BasicGeneratorBlock extends AbstractMachineBlock {
         if (oldState.getBlock() != newState.getBlock()) {
             BlockEntity blockEntity = level.getBlockEntity(blockPos);
 
-            if (blockEntity instanceof BasicGeneratorEntity generatorEntity) {
+            if (blockEntity instanceof GeneratorEntity generatorEntity) {
                 Containers.dropContents(level, blockPos, generatorEntity.getInventory());
                 level.updateNeighbourForOutputSignal(blockPos, this);
             }
@@ -100,8 +95,8 @@ public class BasicGeneratorBlock extends AbstractMachineBlock {
     public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @org.jetbrains.annotations.Nullable LivingEntity pPlacer, ItemStack pStack) {
         if (pStack.hasCustomHoverName()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof BasicGeneratorEntity) {
-                ((BasicGeneratorEntity)blockEntity).setCustomName(pStack.getHoverName());
+            if (blockEntity instanceof GeneratorEntity) {
+                ((GeneratorEntity)blockEntity).setCustomName(pStack.getHoverName());
             }
         }
     }
@@ -109,9 +104,10 @@ public class BasicGeneratorBlock extends AbstractMachineBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type){
         return (lvl, pos, state, entity) -> {
-            if (entity instanceof BasicGeneratorEntity generator) {
+            if (entity instanceof GeneratorEntity generator) {
                 generator.tick(lvl, pos, state);
             }
         };
     }
+
 }

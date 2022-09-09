@@ -1,4 +1,4 @@
-package com.mcupdater.procenhance.blocks.basic_generator;
+package com.mcupdater.procenhance.blocks.generator;
 
 import com.mcupdater.mculib.gui.ConfigPanel;
 import com.mcupdater.mculib.gui.TabConfig;
@@ -12,13 +12,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class BasicGeneratorScreen extends AbstractContainerScreen<BasicGeneratorMenu> {
+public class GeneratorScreen extends AbstractContainerScreen<GeneratorMenu> {
 
     private static final ResourceLocation GUI = new ResourceLocation(ProcessEnhancement.MODID, "textures/gui/generator.png");
     private ConfigPanel configPanel;
     private TabConfig configTab;
 
-    public BasicGeneratorScreen(BasicGeneratorMenu menu, Inventory inventory, Component name) {
+    public GeneratorScreen(GeneratorMenu menu, Inventory inventory, Component name) {
         super(menu,inventory,name);
     }
 

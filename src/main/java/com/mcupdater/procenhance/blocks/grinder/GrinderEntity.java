@@ -11,18 +11,18 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static com.mcupdater.procenhance.setup.Registration.GRINDER_BLOCKENTITY;
 
@@ -58,11 +58,13 @@ public class GrinderEntity extends AbstractMachineBlockEntity {
             return 2;
         }
     };
+    private Set<Item> prizePool = new HashSet<>();
+    private int maxOutput = 0;
 
     public GrinderEntity(BlockPos blockPos, BlockState blockState) {
         super(GRINDER_BLOCKENTITY.get(), blockPos, blockState, 20000, Integer.MAX_VALUE, Config.GRINDER_ENERGY_PER_TICK.get(), 1);
         ItemResourceHandler itemResourceHandler = new ItemResourceHandler(this.level, 2, new int[]{0,1}, new int[]{0}, new int[]{1}, this::stillValid);
-        itemResourceHandler.setInsertFunction(itemStack -> this.level.getRecipeManager().getAllRecipesFor(GrinderRecipe.Type.INSTANCE).stream().anyMatch(recipe -> recipe.getIngredients().get(0).getItems()[0].sameItem(itemStack)));
+        itemResourceHandler.setInsertFunction((slot, itemStack) -> this.level.getRecipeManager().getAllRecipesFor(GrinderRecipe.Type.INSTANCE).stream().anyMatch(recipe -> Arrays.stream(recipe.getIngredients().get(0).getItems()).anyMatch(inputStack -> inputStack.sameItem(itemStack))));
         this.configMap.put("items", itemResourceHandler);
     }
 
@@ -76,6 +78,12 @@ public class GrinderEntity extends AbstractMachineBlockEntity {
             if (this.currentRecipe == null || !this.currentRecipe.equals(recipe)) {
                 if (recipe != null) {
                     this.currentRecipe = (GrinderRecipe) recipe;
+                    this.prizePool.clear();
+                    this.maxOutput = 0;
+                    for (Tuple<ItemStack, Integer> entry : currentRecipe.getOutputs()) {
+                        this.prizePool.add(entry.getA().getItem());
+                        this.maxOutput = Math.max(this.maxOutput, entry.getA().getCount());
+                    }
                     this.workTotal = this.currentRecipe.getProcessTime();
                 }
                 this.workProgress = 0;
@@ -84,7 +92,7 @@ public class GrinderEntity extends AbstractMachineBlockEntity {
             this.currentRecipe = null;
         }
         ItemStack outputSlot = itemStorage.getItem(1);
-        if (this.currentRecipe != null && outputSlot.isEmpty()) {
+        if (this.currentRecipe != null && (outputSlot.isEmpty() || (this.prizePool.size() == 1 && this.prizePool.contains(outputSlot.getItem()) && outputSlot.getCount() <= (outputSlot.getMaxStackSize() - this.maxOutput)))) {
             this.workProgress++;
             if (this.workProgress >= this.workTotal) {
                 List<ItemStack> prizeList = new ArrayList<>();
@@ -96,7 +104,11 @@ public class GrinderEntity extends AbstractMachineBlockEntity {
                 }
                 Collections.shuffle(prizeList);
                 ItemStack prize = prizeList.get(this.level.getRandom().nextInt(prizeList.size()));
-                itemStorage.setItem(1, prize.copy());
+                if (outputSlot.isEmpty()) {
+                    itemStorage.setItem(1, prize.copy());
+                } else if (outputSlot.is(prize.getItem())){
+                    outputSlot.grow(prize.getCount());
+                }
                 this.workProgress = 0;
                 itemStorage.getItem(0).shrink(1);
                 this.storedXP += this.currentRecipe.getExperience();

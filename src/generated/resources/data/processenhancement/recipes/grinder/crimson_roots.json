@@ -1,0 +1,19 @@
+{
+  "type": "processenhancement:grinder",
+  "ingredients": [
+    {
+      "item": "minecraft:crimson_roots"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "item": "minecraft:red_dye",
+        "count": 2
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 50,
+  "experience": 0.1
+}

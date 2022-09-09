@@ -1,17 +1,14 @@
-package com.mcupdater.procenhance.blocks.basic_generator;
+package com.mcupdater.procenhance.blocks.battery;
 
 import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
 import com.mcupdater.mculib.block.IConfigurableMenu;
 import com.mcupdater.mculib.capabilities.PowerTrackingMenu;
-import com.mcupdater.mculib.inventory.BucketSlot;
-import com.mcupdater.mculib.inventory.FuelSlot;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -22,29 +19,25 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 import java.util.Map;
 
-public class BasicGeneratorMenu extends PowerTrackingMenu implements IConfigurableMenu {
-    private final BasicGeneratorEntity localBlockEntity;
+public class BatteryMenu extends PowerTrackingMenu implements IConfigurableMenu {
+    private final BatteryEntity localBlockEntity;
     private final Player player;
     private final IItemHandler playerInventory;
-    private final ContainerData data;
     private final Map<Direction, Component> adjacentNames;
 
-    public BasicGeneratorMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data, Map<Direction, Component> adjacentNames) {
-        super(Registration.BASICGENERATOR_MENU.get(), windowId);
+    public BatteryMenu(int pContainerId, Level level, BlockPos worldPosition, Inventory pPlayerInventory, Player pPlayer, Map<Direction, Component> adjacentNames) {
+        super(Registration.BATTERY_MENU.get(), pContainerId);
         this.adjacentNames = adjacentNames;
-        this.localBlockEntity = level.getBlockEntity(blockPos) instanceof BasicGeneratorEntity ? (BasicGeneratorEntity) level.getBlockEntity(blockPos) : null;
+        this.localBlockEntity = level.getBlockEntity(worldPosition) instanceof BatteryEntity ? (BatteryEntity) level.getBlockEntity(worldPosition) : null;
         this.tileEntity = this.localBlockEntity;
-        this.player = player;
-        this.playerInventory = new InvWrapper(inventory);
-        this.data = data;
+        this.player = pPlayer;
+        this.playerInventory = new InvWrapper(pPlayerInventory);
 
         if (this.localBlockEntity != null) {
-            addSlot(new FuelSlot(new InvWrapper(this.localBlockEntity.getInventory()), 0, 81, 56));
-            addSlot(new BucketSlot(new InvWrapper(this.localBlockEntity.getInventory()), 1, 105, 56));
+            addSlot(new SlotItemHandler(new InvWrapper(this.localBlockEntity.getInventory()), 0, 81, 56));
         }
-        layoutPlayerInventorySlots(8, 84);
+        layoutPlayerInventorySlots(8,84);
         trackPower();
-        addDataSlots(data);
     }
 
     private void layoutPlayerInventorySlots(int leftCol, int topRow) {
@@ -74,31 +67,31 @@ public class BasicGeneratorMenu extends PowerTrackingMenu implements IConfigurab
     }
 
     @Override
-    public boolean stillValid(Player playerIn) {
-        return stillValid(ContainerLevelAccess.create(localBlockEntity.getLevel(), localBlockEntity.getBlockPos()), player, Registration.BASICGENERATOR_BLOCK.get());
+    public boolean stillValid(Player pPlayer) {
+        return ContainerLevelAccess.create(localBlockEntity.getLevel(), localBlockEntity.getBlockPos()).evaluate((level, blockPos) -> pPlayer.distanceToSqr((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.5D, (double)blockPos.getZ() + 0.5D) <= 64.0D, true);
     }
 
     @Override
-    public ItemStack quickMoveStack(Player player, int index) {
-        ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(index);
+    public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
+        ItemStack itemStack = ItemStack.EMPTY;
+        Slot slot = this.slots.get(pIndex);
         if (slot != null && slot.hasItem()) {
             ItemStack stackInSlot = slot.getItem();
-            itemstack = stackInSlot.copy();
-            if (index == 0 || index == 1) { // Fuel slot (0) or bucket output slot (1)
-                if (!this.moveItemStackTo(stackInSlot, 2,38, true)) {
+            itemStack = stackInSlot.copy();
+            if (pIndex == 0) { // Charging slot (0)
+                if (!this.moveItemStackTo(stackInSlot, 1, 37, true)) {
                     return ItemStack.EMPTY;
                 }
             } else { // Player inventory slots
-                if (this.localBlockEntity.canPlaceItem(stackInSlot)) { // Insert fuel
+                if (this.localBlockEntity.canPlaceItem(0, stackInSlot)) { // Insert to charging slot
                     if (!this.moveItemStackTo(stackInSlot, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index >= 2 && index < 29) { // Move to hotbar
-                    if (!this.moveItemStackTo(stackInSlot, 29, 38, false)) {
+                } else if (pIndex >= 1 && pIndex < 28) { // Move to hotbar
+                    if (!this.moveItemStackTo(stackInSlot, 28, 37, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index >= 29 && index < 38 && !this.moveItemStackTo(stackInSlot, 2, 29, false)) { // Move to inventory
+                } else if (pIndex >= 28 && pIndex < 37 && !this.moveItemStackTo(stackInSlot, 1, 28, false)) { // Move to inventory
                     return ItemStack.EMPTY;
                 }
             }
@@ -109,25 +102,13 @@ public class BasicGeneratorMenu extends PowerTrackingMenu implements IConfigurab
                 slot.setChanged();
             }
 
-            if (stackInSlot.getCount() == itemstack.getCount()) {
+            if (stackInSlot.getCount() == itemStack.getCount()) {
                 return ItemStack.EMPTY;
             }
 
-            slot.onTake(player, stackInSlot);
+            slot.onTake(pPlayer, stackInSlot);
         }
-        return itemstack;
-    }
-
-    public boolean isFueled() {
-        return this.data.get(0) > 0;
-    }
-
-    public int getBurnProgress() {
-        int maxBurn = this.data.get(1);
-        if (maxBurn == 0) {
-            maxBurn = 200;
-        }
-        return this.data.get(0) * 13 / maxBurn;
+        return itemStack;
     }
 
     @Override

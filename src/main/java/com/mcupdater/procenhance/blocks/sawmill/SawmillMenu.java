@@ -82,7 +82,7 @@ public class SawmillMenu extends AbstractMachineMenu<SawmillEntity> {
                 return ItemStack.EMPTY;
             }
             if (index != 0 && index != 1) {
-                if (this.machineEntity.canPlaceItem(stackInSlot)) {
+                if (this.machineEntity.canPlaceItem(0, stackInSlot)) {
                     if (!this.moveItemStackTo(stackInSlot, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }

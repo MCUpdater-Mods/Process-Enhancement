@@ -1,9 +1,10 @@
 package com.mcupdater.procenhance.setup;
 
-import com.mcupdater.procenhance.blocks.basic_battery.BasicBatteryScreen;
+import com.mcupdater.procenhance.blocks.battery.BatteryScreen;
+import com.mcupdater.procenhance.blocks.buffer.BufferScreen;
 import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorScreen;
 import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceScreen;
-import com.mcupdater.procenhance.blocks.basic_generator.BasicGeneratorScreen;
+import com.mcupdater.procenhance.blocks.generator.GeneratorScreen;
 import com.mcupdater.procenhance.blocks.grinder.GrinderScreen;
 import com.mcupdater.procenhance.blocks.sawmill.SawmillScreen;
 import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterScreen;
@@ -22,11 +23,12 @@ public class ClientSetup {
         ItemBlockRenderTypes.setRenderLayer(Registration.COPPERWIRE_BLOCK.get(), RenderType.cutout());
 
         MenuScreens.register(Registration.CRUDEGENERATOR_MENU.get(), CrudeGeneratorScreen::new);
-        MenuScreens.register(Registration.BASICGENERATOR_MENU.get(), BasicGeneratorScreen::new);
-        MenuScreens.register(Registration.BASICBATTERY_MENU.get(), BasicBatteryScreen::new);
+        MenuScreens.register(Registration.GENERATOR_MENU.get(), GeneratorScreen::new);
+        MenuScreens.register(Registration.BATTERY_MENU.get(), BatteryScreen::new);
         MenuScreens.register(Registration.FURNACE_MENU.get(), ElectricFurnaceScreen::new);
         MenuScreens.register(Registration.SAWMILL_MENU.get(), SawmillScreen::new);
         MenuScreens.register(Registration.GRINDER_MENU.get(), GrinderScreen::new);
         MenuScreens.register(Registration.STONECUTTER_MENU.get(), ElectricStonecutterScreen::new);
+        MenuScreens.register(Registration.BUFFER_MENU.get(), BufferScreen::new);
     }
 }
