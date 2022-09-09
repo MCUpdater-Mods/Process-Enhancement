@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "UUU",
+    "UMU",
+    "UUU"
+  ],
+  "key": {
+    "M": {
+      "item": "processenhancement:basic_battery"
+    },
+    "U": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "processenhancement:intermediate_battery"
+  }
+}

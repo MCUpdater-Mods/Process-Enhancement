@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "UUU",
+    "UMU",
+    "UUU"
+  ],
+  "key": {
+    "M": {
+      "item": "processenhancement:intermediate_generator"
+    },
+    "U": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "item": "processenhancement:advanced_generator"
+  }
+}

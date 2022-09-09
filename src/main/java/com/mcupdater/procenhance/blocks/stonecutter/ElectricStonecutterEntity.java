@@ -153,7 +153,7 @@ public class ElectricStonecutterEntity extends AbstractMachineBlockEntity {
         }
     }
 
-    public boolean canPlaceItem(ItemStack pStack) {
+    public boolean canPlaceItem(int slot, ItemStack pStack) {
         return this.currentRecipe != null && Arrays.stream(this.currentRecipe.getIngredients().get(0).getItems()).anyMatch(validStack -> validStack.sameItem(pStack)); // Source slot
     }
 

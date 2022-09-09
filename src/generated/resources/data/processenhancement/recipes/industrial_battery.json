@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "UUU",
+    "UMU",
+    "UUU"
+  ],
+  "key": {
+    "M": {
+      "item": "processenhancement:advanced_battery"
+    },
+    "U": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "processenhancement:industrial_battery"
+  }
+}

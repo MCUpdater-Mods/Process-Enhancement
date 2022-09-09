@@ -1,0 +1,66 @@
+{
+  "type": "processenhancement:grinder",
+  "ingredients": [
+    {
+      "item": "minecraft:basalt"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "item": "minecraft:netherrack"
+      },
+      "weight": 40
+    },
+    {
+      "stack": {
+        "item": "minecraft:blackstone"
+      },
+      "weight": 40
+    },
+    {
+      "stack": {
+        "item": "minecraft:soul_sand"
+      },
+      "weight": 30
+    },
+    {
+      "stack": {
+        "item": "minecraft:soul_soil"
+      },
+      "weight": 30
+    },
+    {
+      "stack": {
+        "item": "minecraft:quartz"
+      },
+      "weight": 20
+    },
+    {
+      "stack": {
+        "item": "processenhancement:gold_dust"
+      },
+      "weight": 10
+    },
+    {
+      "stack": {
+        "item": "minecraft:glowstone_dust"
+      },
+      "weight": 10
+    },
+    {
+      "stack": {
+        "item": "minecraft:gilded_blackstone"
+      },
+      "weight": 5
+    },
+    {
+      "stack": {
+        "item": "minecraft:netherite_scrap"
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 200,
+  "experience": 0.1
+}

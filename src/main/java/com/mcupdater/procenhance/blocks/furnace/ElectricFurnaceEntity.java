@@ -21,6 +21,8 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
+import java.util.Arrays;
+
 import static com.mcupdater.procenhance.setup.Registration.FURNACE_BLOCKENTITY;
 
 public class ElectricFurnaceEntity extends AbstractMachineBlockEntity {
@@ -64,11 +66,11 @@ public class ElectricFurnaceEntity extends AbstractMachineBlockEntity {
         this.configMap.put("items", itemResourceHandler);
     }
 
-    private Boolean isItemValid(ItemStack itemStack) {
+    private boolean isItemValid(int slot, ItemStack itemStack) {
         return this.level.getRecipeManager().
                 getAllRecipesFor(RecipeType.SMELTING).stream()
                 .anyMatch(recipe ->
-                        recipe.getIngredients().get(0).getItems()[0].sameItem(itemStack));
+                        Arrays.stream(recipe.getIngredients().get(0).getItems()).anyMatch(inputItem -> inputItem.sameItem(itemStack)));
     }
 
     @Override

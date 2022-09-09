@@ -11,5 +11,12 @@
     "item.processenhancement.capacitor": "Capacitor",
     "block.processenhancement.basic_battery": "Basic Battery",
     "block.processenhancement.copper_wire": "Copper Wire",
-    "block.processenhancement.stonecutter": "Electric Stonecutter"
+    "block.processenhancement.stonecutter": "Electric Stonecutter",
+    "block.processenhancement.buffer": "Buffer",
+    "block.processenhancement.intermediate_generator": "Intermediate Generator",
+    "block.processenhancement.advanced_generator": "Advanced Generator",
+    "block.processenhancement.industrial_generator": "Industrial Generator",
+    "block.processenhancement.intermediate_battery": "Intermediate Battery",
+    "block.processenhancement.advanced_battery": "Advanced Battery",
+    "block.processenhancement.industrial_battery": "Industrial Battery"
 }

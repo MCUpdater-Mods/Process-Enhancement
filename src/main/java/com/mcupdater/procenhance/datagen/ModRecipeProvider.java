@@ -15,10 +15,11 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
-import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -34,12 +35,21 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     @Override
     protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> finishedRecipeConsumer) {
         crudeMachineRecipe(finishedRecipeConsumer, CRUDEGENERATOR_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Blocks.COBBLESTONE), Ingredient.of(Items.STICK));
-        basicMachineRecipe(finishedRecipeConsumer, BASICGENERATOR_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.BRICK), Ingredient.of(Blocks.FURNACE));
-        basicMachineRecipe(finishedRecipeConsumer, BASICBATTERY_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(CAPACITOR.get()));
         crudeMachineRecipe(finishedRecipeConsumer, FURNACE_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Blocks.STONE), Ingredient.of(Blocks.FURNACE));
         basicMachineRecipe(finishedRecipeConsumer, SAWMILL_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(ItemTags.PLANKS), Ingredient.of(Items.IRON_AXE));
         basicMachineRecipe(finishedRecipeConsumer, GRINDER_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.STONECUTTER));
         basicMachineRecipe(finishedRecipeConsumer, STONECUTTER_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Blocks.STONE_BRICKS), Ingredient.of(Blocks.STONECUTTER));
+        basicMachineRecipe(finishedRecipeConsumer, BUFFER_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Tags.Items.CHESTS), Ingredient.of(Items.GLASS_BOTTLE));
+
+        basicMachineRecipe(finishedRecipeConsumer, BASICGENERATOR_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.BRICK), Ingredient.of(Blocks.FURNACE));
+        upgradeMachineRecipe(finishedRecipeConsumer, INTERGENERATOR_BLOCK.get(), BASICGENERATOR_BLOCK.get(), Ingredient.of(Items.IRON_INGOT));
+        upgradeMachineRecipe(finishedRecipeConsumer, ADVGENERATOR_BLOCK.get(), INTERGENERATOR_BLOCK.get(), Ingredient.of(Items.GOLD_INGOT));
+        upgradeMachineRecipe(finishedRecipeConsumer, INDGENERATOR_BLOCK.get(), ADVGENERATOR_BLOCK.get(), Ingredient.of(Items.DIAMOND));
+
+        basicMachineRecipe(finishedRecipeConsumer, BASICBATTERY_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(CAPACITOR.get()));
+        upgradeMachineRecipe(finishedRecipeConsumer, INTBATTERY_BLOCK.get(), BASICBATTERY_BLOCK.get(), Ingredient.of(Items.IRON_INGOT));
+        upgradeMachineRecipe(finishedRecipeConsumer, ADVBATTERY_BLOCK.get(), INTBATTERY_BLOCK.get(), Ingredient.of(Items.GOLD_INGOT));
+        upgradeMachineRecipe(finishedRecipeConsumer, INDBATTERY_BLOCK.get(), ADVBATTERY_BLOCK.get(), Ingredient.of(Items.DIAMOND));
 
         // Sawmill recipes
         //sawmill(finishedRecipeConsumer, Ingredient.of(ItemTags.DIRT), Items.DIAMOND, 1, 32, 0.05f, new ModLoadedCondition("testmod"));
@@ -192,8 +202,23 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .addOutput(new ItemStack(GOLD_DUST.get(), 1), 8)
                 .addOutput(new ItemStack(Items.REDSTONE, 1), 8)
                 .addOutput(new ItemStack(Items.LAPIS_LAZULI, 1), 8)
-                .addOutput(new ItemStack(Items.GLOWSTONE_DUST, 1), 6)
                 .addOutput(new ItemStack(Items.DIAMOND, 1), 2)
+                .save(finishedRecipeConsumer);
+        grinder("basalt",Ingredient.of(Blocks.BASALT), 200, 0.1f)
+                .addOutput(new ItemStack(Blocks.NETHERRACK, 1), 40)
+                .addOutput(new ItemStack(Blocks.BLACKSTONE, 1), 40)
+                .addOutput(new ItemStack(Blocks.SOUL_SAND, 1), 30)
+                .addOutput(new ItemStack(Blocks.SOUL_SOIL, 1), 30)
+                .addOutput(new ItemStack(Items.QUARTZ, 1), 20)
+                .addOutput(new ItemStack(GOLD_DUST.get(), 1), 10)
+                .addOutput(new ItemStack(Items.GLOWSTONE_DUST, 1), 10)
+                .addOutput(new ItemStack(Blocks.GILDED_BLACKSTONE, 1), 5)
+                .addOutput(new ItemStack(Items.NETHERITE_SCRAP, 1), 1)
+                .save(finishedRecipeConsumer);
+        grinder("soul_soil",Ingredient.of(Blocks.SOUL_SOIL), 200, 0.1f)
+                .addOutput(new ItemStack(Blocks.WARPED_ROOTS, 1), 30)
+                .addOutput(new ItemStack(Blocks.CRIMSON_ROOTS, 1), 30)
+                .addOutput(new ItemStack(Items.NETHER_WART, 1), 1)
                 .save(finishedRecipeConsumer);
         grinder("raw_iron", Ingredient.of(Items.RAW_IRON),200,0.05f)
                 .addOutput(new ItemStack(IRON_DUST.get(), 1), 2)
@@ -237,6 +262,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         grinder_single("cocoa_beans", Ingredient.of(Items.COCOA_BEANS), new ItemStack(Items.BROWN_DYE,3), 50,0.0f, finishedRecipeConsumer);
         grinder_single("ink_sac", Ingredient.of(Items.INK_SAC), new ItemStack(Items.BLACK_DYE, 3), 50, 0.0f, finishedRecipeConsumer);
         grinder_single("lapis_lazuli", Ingredient.of(Items.LAPIS_LAZULI), new ItemStack(Items.BLUE_DYE, 3), 50, 0.0f, finishedRecipeConsumer);
+        grinder_single("warped_roots",Ingredient.of(Blocks.WARPED_ROOTS), new ItemStack(Items.CYAN_DYE,2), 50, 0.1f, finishedRecipeConsumer);
+        grinder_single("crimson_roots",Ingredient.of(Blocks.CRIMSON_ROOTS), new ItemStack(Items.RED_DYE,2), 50, 0.1f, finishedRecipeConsumer);
+        grinder_single("lily_pad",Ingredient.of(Blocks.LILY_PAD), new ItemStack(Items.GREEN_DYE,4), 50, 0.1f, finishedRecipeConsumer);
+        grinder_single("vines",Ingredient.of(Blocks.VINE), new ItemStack(Items.GREEN_DYE,2), 50, 0.1f, finishedRecipeConsumer);
+        grinder_single("gunpowder",Ingredient.of(Items.GUNPOWDER), new ItemStack(Items.GRAY_DYE,2), 50, 0.1f, finishedRecipeConsumer);
         grinder_single("bone", Ingredient.of(Items.BONE), new ItemStack(Items.BONE_MEAL,6), 50,0.0f, finishedRecipeConsumer);
         grinder_single("blaze_rod", Ingredient.of(Items.BLAZE_ROD), new ItemStack(Items.BLAZE_POWDER,4), 50,0.0f, finishedRecipeConsumer);
         grinder_single("flint", Ingredient.of(Items.FLINT), new ItemStack(Items.GUNPOWDER,1), 50,0.0f, finishedRecipeConsumer);
@@ -277,6 +307,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     protected static void basicMachineRecipe(Consumer<FinishedRecipe> finishedRecipeConsumer, ItemLike result, Ingredient corner, Ingredient face, Ingredient core) {
         ShapedRecipeBuilder.shaped(result).define('C', corner).define('F',face).define('#',core).define('R',Ingredient.of(Items.REDSTONE)).pattern("CFC").pattern("F#F").pattern("CRC").unlockedBy("automatic", has(Items.COPPER_INGOT)).save(finishedRecipeConsumer);
     }
+
+    private void upgradeMachineRecipe(Consumer<FinishedRecipe> finishedRecipeConsumer, ItemLike result, Block baseMachine, Ingredient upgradeItem) {
+        ShapedRecipeBuilder.shaped(result).define('M', Ingredient.of(baseMachine)).define('U', upgradeItem).pattern("UUU").pattern("UMU").pattern("UUU").unlockedBy("automatic", has(baseMachine)).save(finishedRecipeConsumer);
+    }
+
 
     public static void sawmill(Consumer<FinishedRecipe> consumer, Ingredient input, ItemLike output, int count, int processTime, float experience, ICondition condition) {
         new SawmillRecipeBuilder(input,output,count,processTime,experience).unlockedBy("has_sawmill", has(Registration.SAWMILL_BLOCK.get())).addCondition(condition).save(consumer);

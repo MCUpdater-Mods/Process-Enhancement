@@ -1,0 +1,30 @@
+{
+  "type": "processenhancement:grinder",
+  "ingredients": [
+    {
+      "item": "minecraft:soul_soil"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "item": "minecraft:warped_roots"
+      },
+      "weight": 30
+    },
+    {
+      "stack": {
+        "item": "minecraft:crimson_roots"
+      },
+      "weight": 30
+    },
+    {
+      "stack": {
+        "item": "minecraft:nether_wart"
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 200,
+  "experience": 0.1
+}
