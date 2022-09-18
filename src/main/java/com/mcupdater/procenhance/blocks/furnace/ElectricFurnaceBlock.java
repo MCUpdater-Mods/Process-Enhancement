@@ -19,15 +19,9 @@ import net.minecraft.world.level.material.Material;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class ElectricFurnaceBlock extends AbstractMachineBlock {
+public abstract class ElectricFurnaceBlock extends AbstractMachineBlock {
     public ElectricFurnaceBlock() {
         super(Properties.of(Material.STONE).sound(SoundType.STONE).strength(5.0f));
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new ElectricFurnaceEntity(blockPos, blockState);
     }
 
     @Override

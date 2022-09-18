@@ -7,11 +7,8 @@ import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.procenhance.recipe.GrinderRecipe;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.Container;
-import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -19,14 +16,13 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-import static com.mcupdater.procenhance.setup.Registration.GRINDER_BLOCKENTITY;
-
-public class GrinderEntity extends AbstractMachineBlockEntity {
+public abstract class GrinderEntity extends AbstractMachineBlockEntity {
     private GrinderRecipe currentRecipe = null;
 
     public ContainerData data = new ContainerData() {
@@ -61,8 +57,8 @@ public class GrinderEntity extends AbstractMachineBlockEntity {
     private Set<Item> prizePool = new HashSet<>();
     private int maxOutput = 0;
 
-    public GrinderEntity(BlockPos blockPos, BlockState blockState) {
-        super(GRINDER_BLOCKENTITY.get(), blockPos, blockState, 20000, Integer.MAX_VALUE, Config.GRINDER_ENERGY_PER_TICK.get(), 1);
+    public GrinderEntity(BlockEntityType<?> pType, BlockPos blockPos, BlockState blockState, int multiplier) {
+        super(pType, blockPos, blockState, Config.GRINDER_ENERGY_PER_TICK.get() * 1000 * multiplier, Integer.MAX_VALUE, Config.GRINDER_ENERGY_PER_TICK.get(), multiplier);
         ItemResourceHandler itemResourceHandler = new ItemResourceHandler(this.level, 2, new int[]{0,1}, new int[]{0}, new int[]{1}, this::stillValid);
         itemResourceHandler.setInsertFunction((slot, itemStack) -> this.level.getRecipeManager().getAllRecipesFor(GrinderRecipe.Type.INSTANCE).stream().anyMatch(recipe -> Arrays.stream(recipe.getIngredients().get(0).getItems()).anyMatch(inputStack -> inputStack.sameItem(itemStack))));
         this.configMap.put("items", itemResourceHandler);
@@ -124,11 +120,6 @@ public class GrinderEntity extends AbstractMachineBlockEntity {
         } else {
             return player.distanceToSqr((double)this.worldPosition.getX() + 0.5, (double) this.worldPosition.getY() + 0.5D, (double) this.worldPosition.getZ() + 0.5D) <= 64.0D;
         }
-    }
-
-    @Override
-    public Component getDefaultName() {
-        return new TranslatableComponent("block.processenhancement.grinder");
     }
 
     @Nullable

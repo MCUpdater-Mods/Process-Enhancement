@@ -35,8 +35,15 @@ public class JEIProcEnhancePlugin implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(Registration.SAWMILL_BLOCK.get()), new RecipeType<>(SawmillRecipeCategory.UID, SawmillRecipe.class));
-        registration.addRecipeCatalyst(new ItemStack(Registration.GRINDER_BLOCK.get()), new RecipeType<>(GrinderRecipeCategory.UID, GrinderRecipe.class));
-        registration.addRecipeCatalyst(new ItemStack(Registration.FURNACE_BLOCK.get()), RecipeTypes.SMELTING);
+        registration.addRecipeCatalyst(new ItemStack(Registration.STONECUTTER_BLOCK.get()), RecipeTypes.STONECUTTING);
+        registration.addRecipeCatalyst(new ItemStack(Registration.GRINDERT1_BLOCK.get()), new RecipeType<>(GrinderRecipeCategory.UID, GrinderRecipe.class));
+        registration.addRecipeCatalyst(new ItemStack(Registration.GRINDERT2_BLOCK.get()), new RecipeType<>(GrinderRecipeCategory.UID, GrinderRecipe.class));
+        registration.addRecipeCatalyst(new ItemStack(Registration.GRINDERT3_BLOCK.get()), new RecipeType<>(GrinderRecipeCategory.UID, GrinderRecipe.class));
+        registration.addRecipeCatalyst(new ItemStack(Registration.GRINDERT4_BLOCK.get()), new RecipeType<>(GrinderRecipeCategory.UID, GrinderRecipe.class));
+        registration.addRecipeCatalyst(new ItemStack(Registration.FURNACET1_BLOCK.get()), RecipeTypes.SMELTING);
+        registration.addRecipeCatalyst(new ItemStack(Registration.FURNACET2_BLOCK.get()), RecipeTypes.SMELTING);
+        registration.addRecipeCatalyst(new ItemStack(Registration.FURNACET3_BLOCK.get()), RecipeTypes.SMELTING);
+        registration.addRecipeCatalyst(new ItemStack(Registration.FURNACET4_BLOCK.get()), RecipeTypes.SMELTING);
     }
 
     @Override

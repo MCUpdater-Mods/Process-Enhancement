@@ -32,6 +32,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.system.CallbackI;
 
 public abstract class LavaGeneratorEntity extends AbstractConfigurableBlockEntity {
     int burnCurrent;
@@ -134,9 +135,13 @@ public abstract class LavaGeneratorEntity extends AbstractConfigurableBlockEntit
                 }
                 if (fluidHandlerItem.getFluidInTank(0).isEmpty()) {
                     itemStorage.setItem(0, fluidHandlerItem.getContainer());
-                    if (itemStorage.getItem(1).isEmpty()) {
+                    if ((itemStorage.getItem(0).sameItem(itemStorage.getItem(1)) && itemStorage.getItem(1).getCount() < itemStorage.getItem(1).getMaxStackSize()) || itemStorage.getItem(1).isEmpty()) {
                         ItemStack stack = itemStorage.removeItem(0, 1);
-                        itemStorage.setItem(1, stack);
+                        if (itemStorage.getItem(1).isEmpty()) {
+                            itemStorage.setItem(1, stack);
+                        } else {
+                            itemStorage.getItem(1).grow(1);
+                        }
                     }
                 }
             }

@@ -11,13 +11,9 @@ import com.mcupdater.procenhance.blocks.copper_wire.CopperWireEntity;
 import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorBlock;
 import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorEntity;
 import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorMenu;
-import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceBlock;
-import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceEntity;
-import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceMenu;
+import com.mcupdater.procenhance.blocks.furnace.*;
 import com.mcupdater.procenhance.blocks.generator.*;
-import com.mcupdater.procenhance.blocks.grinder.GrinderBlock;
-import com.mcupdater.procenhance.blocks.grinder.GrinderEntity;
-import com.mcupdater.procenhance.blocks.grinder.GrinderMenu;
+import com.mcupdater.procenhance.blocks.grinder.*;
 import com.mcupdater.procenhance.blocks.lava_generator.*;
 import com.mcupdater.procenhance.blocks.sawmill.SawmillBlock;
 import com.mcupdater.procenhance.blocks.sawmill.SawmillEntity;
@@ -131,10 +127,25 @@ public class Registration {
     })));
     public static final RegistryObject<RecipeSerializer<BatteryUpgradeRecipe>> BATTERYUPGRADE_SERIALIZER = RECIPE_SERIALIZERS.register("battery_upgrade", () -> BatteryUpgradeRecipe.SERIALIZER);
 
-    public static final RegistryObject<ElectricFurnaceBlock> FURNACE_BLOCK = MACHINES.register("electric_furnace", ElectricFurnaceBlock::new);
-    public static final RegistryObject<Item> FURNACE_BLOCKITEM = ITEMS.register("electric_furnace", () -> new BlockItem(FURNACE_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
-    public static final RegistryObject<BlockEntityType<ElectricFurnaceEntity>> FURNACE_BLOCKENTITY = BLOCK_ENTITIES.register("electric_furnace", () -> {
-        return BlockEntityType.Builder.of(ElectricFurnaceEntity::new, FURNACE_BLOCK.get()).build(null);
+    public static final RegistryObject<ElectricFurnaceBlockT1> FURNACET1_BLOCK = MACHINES.register("basic_furnace", ElectricFurnaceBlockT1::new);
+    public static final RegistryObject<Item> FURNACET1_BLOCKITEM = ITEMS.register("basic_furnace", () -> new BlockItem(FURNACET1_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<ElectricFurnaceEntityT1>> FURNACET1_BLOCKENTITY = BLOCK_ENTITIES.register("basic_furnace", () -> {
+        return BlockEntityType.Builder.of(ElectricFurnaceEntityT1::new, FURNACET1_BLOCK.get()).build(null);
+    });
+    public static final RegistryObject<ElectricFurnaceBlockT2> FURNACET2_BLOCK = MACHINES.register("intermediate_furnace", ElectricFurnaceBlockT2::new);
+    public static final RegistryObject<Item> FURNACET2_BLOCKITEM = ITEMS.register("intermediate_furnace", () -> new BlockItem(FURNACET2_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<ElectricFurnaceEntityT2>> FURNACET2_BLOCKENTITY = BLOCK_ENTITIES.register("intermediate_furnace", () -> {
+        return BlockEntityType.Builder.of(ElectricFurnaceEntityT2::new, FURNACET2_BLOCK.get()).build(null);
+    });
+    public static final RegistryObject<ElectricFurnaceBlockT3> FURNACET3_BLOCK = MACHINES.register("advanced_furnace", ElectricFurnaceBlockT3::new);
+    public static final RegistryObject<Item> FURNACET3_BLOCKITEM = ITEMS.register("advanced_furnace", () -> new BlockItem(FURNACET3_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<ElectricFurnaceEntityT3>> FURNACET3_BLOCKENTITY = BLOCK_ENTITIES.register("advanced_furnace", () -> {
+        return BlockEntityType.Builder.of(ElectricFurnaceEntityT3::new, FURNACET3_BLOCK.get()).build(null);
+    });
+    public static final RegistryObject<ElectricFurnaceBlockT4> FURNACET4_BLOCK = MACHINES.register("industrial_furnace", ElectricFurnaceBlockT4::new);
+    public static final RegistryObject<Item> FURNACET4_BLOCKITEM = ITEMS.register("industrial_furnace", () -> new BlockItem(FURNACET4_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<ElectricFurnaceEntityT4>> FURNACET4_BLOCKENTITY = BLOCK_ENTITIES.register("industrial_furnace", () -> {
+        return BlockEntityType.Builder.of(ElectricFurnaceEntityT4::new, FURNACET4_BLOCK.get()).build(null);
     });
     public static final RegistryObject<MenuType<ElectricFurnaceMenu>> FURNACE_MENU = CONTAINERS.register("electric_furnace", () -> IForgeMenuType.create((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
@@ -154,9 +165,18 @@ public class Registration {
     }));
     public static final RegistryObject<RecipeSerializer<SawmillRecipe>> SAWMILL_SERIALIZER = RECIPE_SERIALIZERS.register("sawmill",() -> SawmillRecipe.Serializer.INSTANCE);
 
-    public static final RegistryObject<GrinderBlock> GRINDER_BLOCK = MACHINES.register("grinder", GrinderBlock::new);
-    public static final RegistryObject<Item> GRINDER_BLOCKITEM = ITEMS.register("grinder", () -> new BlockItem(GRINDER_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
-    public static final RegistryObject<BlockEntityType<GrinderEntity>> GRINDER_BLOCKENTITY = BLOCK_ENTITIES.register("grinder", () -> BlockEntityType.Builder.of(GrinderEntity::new, GRINDER_BLOCK.get()).build(null));
+    public static final RegistryObject<GrinderBlockT1> GRINDERT1_BLOCK = MACHINES.register("basic_grinder", GrinderBlockT1::new);
+    public static final RegistryObject<Item> GRINDERT1_BLOCKITEM = ITEMS.register("basic_grinder", () -> new BlockItem(GRINDERT1_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<GrinderEntityT1>> GRINDERT1_BLOCKENTITY = BLOCK_ENTITIES.register("basic_grinder", () -> BlockEntityType.Builder.of(GrinderEntityT1::new, GRINDERT1_BLOCK.get()).build(null));
+    public static final RegistryObject<GrinderBlockT2> GRINDERT2_BLOCK = MACHINES.register("intermediate_grinder", GrinderBlockT2::new);
+    public static final RegistryObject<Item> GRINDERT2_BLOCKITEM = ITEMS.register("intermediate_grinder", () -> new BlockItem(GRINDERT2_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<GrinderEntityT2>> GRINDERT2_BLOCKENTITY = BLOCK_ENTITIES.register("intermediate_grinder", () -> BlockEntityType.Builder.of(GrinderEntityT2::new, GRINDERT2_BLOCK.get()).build(null));
+    public static final RegistryObject<GrinderBlockT3> GRINDERT3_BLOCK = MACHINES.register("advanced_grinder", GrinderBlockT3::new);
+    public static final RegistryObject<Item> GRINDERT3_BLOCKITEM = ITEMS.register("advanced_grinder", () -> new BlockItem(GRINDERT3_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<GrinderEntityT3>> GRINDERT3_BLOCKENTITY = BLOCK_ENTITIES.register("advanced_grinder", () -> BlockEntityType.Builder.of(GrinderEntityT3::new, GRINDERT3_BLOCK.get()).build(null));
+    public static final RegistryObject<GrinderBlockT4> GRINDERT4_BLOCK = MACHINES.register("industrial_grinder", GrinderBlockT4::new);
+    public static final RegistryObject<Item> GRINDERT4_BLOCKITEM = ITEMS.register("industrial_grinder", () -> new BlockItem(GRINDERT4_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<GrinderEntityT4>> GRINDERT4_BLOCKENTITY = BLOCK_ENTITIES.register("industrial_grinder", () -> BlockEntityType.Builder.of(GrinderEntityT4::new, GRINDERT4_BLOCK.get()).build(null));
     public static final RegistryObject<MenuType<GrinderMenu>> GRINDER_MENU = CONTAINERS.register("grinder", () -> IForgeMenuType.create(((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.level;

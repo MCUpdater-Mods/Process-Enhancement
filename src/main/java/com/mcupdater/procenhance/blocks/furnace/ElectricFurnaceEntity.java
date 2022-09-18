@@ -6,8 +6,6 @@ import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -17,15 +15,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
 import java.util.Arrays;
 
-import static com.mcupdater.procenhance.setup.Registration.FURNACE_BLOCKENTITY;
-
-public class ElectricFurnaceEntity extends AbstractMachineBlockEntity {
+public abstract class ElectricFurnaceEntity extends AbstractMachineBlockEntity {
 
     private AbstractCookingRecipe currentRecipe = null;
 
@@ -59,8 +56,8 @@ public class ElectricFurnaceEntity extends AbstractMachineBlockEntity {
         }
     };
 
-    public ElectricFurnaceEntity(BlockPos blockPos, BlockState blockState) {
-        super(FURNACE_BLOCKENTITY.get(), blockPos, blockState, 20000, Integer.MAX_VALUE, Config.FURNACE_ENERGY_PER_TICK.get(), 1);
+    public ElectricFurnaceEntity(BlockEntityType<?> pType, BlockPos blockPos, BlockState blockState, int pMultiplier) {
+        super(pType, blockPos, blockState, Config.FURNACE_ENERGY_PER_TICK.get() * 1000 * pMultiplier, Integer.MAX_VALUE, Config.FURNACE_ENERGY_PER_TICK.get(), pMultiplier);
         ItemResourceHandler itemResourceHandler = new ItemResourceHandler(this.level, 2, new int[]{0, 1}, new int[]{0}, new int[]{1}, this::stillValid);
         itemResourceHandler.setInsertFunction(this::isItemValid);
         this.configMap.put("items", itemResourceHandler);
@@ -119,11 +116,6 @@ public class ElectricFurnaceEntity extends AbstractMachineBlockEntity {
     }
 
     // MenuProvider methods
-    @Override
-    public Component getDefaultName() {
-        return new TranslatableComponent("block.processenhancement.electric_furnace");
-    }
-
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
