@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "UuU",
+    "uMu",
+    "UuU"
+  ],
+  "key": {
+    "M": {
+      "item": "processenhancement:intermediate_furnace"
+    },
+    "U": {
+      "item": "minecraft:gold_ingot"
+    },
+    "u": {
+      "item": "minecraft:iron_block"
+    }
+  },
+  "result": {
+    "item": "processenhancement:advanced_furnace"
+  }
+}
