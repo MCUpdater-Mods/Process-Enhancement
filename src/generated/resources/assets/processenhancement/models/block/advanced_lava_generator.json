@@ -1,0 +1,11 @@
+{
+  "parent": "mculib:block/machine",
+  "textures": {
+    "frame": "minecraft:block/copper_block",
+    "corner": "minecraft:block/gold_block",
+    "face": "minecraft:block/nether_bricks",
+    "inset": "minecraft:block/black_concrete",
+    "overlay": "processenhancement:block/generator",
+    "particle": "minecraft:block/copper_block"
+  }
+}

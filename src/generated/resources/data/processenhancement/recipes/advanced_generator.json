@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "UUU",
-    "UMU",
-    "UUU"
+    "UuU",
+    "uMu",
+    "UuU"
   ],
   "key": {
     "M": {
@@ -11,6 +11,9 @@
     },
     "U": {
       "item": "minecraft:gold_ingot"
+    },
+    "u": {
+      "item": "minecraft:iron_block"
     }
   },
   "result": {

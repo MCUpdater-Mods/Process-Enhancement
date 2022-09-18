@@ -9,6 +9,7 @@ public class Config {
     public static final String CATEGORY_GENERAL = "general";
     public static ForgeConfigSpec.IntValue CRUDE_GENERATOR_PER_TICK;
     public static ForgeConfigSpec.IntValue BASIC_GENERATOR_PER_TICK;
+    public static ForgeConfigSpec.IntValue BASIC_LAVA_GENERATOR_PER_TICK;
     public static ForgeConfigSpec.IntValue FURNACE_ENERGY_PER_TICK;
     public static ForgeConfigSpec.IntValue SAWMILL_ENERGY_PER_TICK;
     public static ForgeConfigSpec.IntValue GRINDER_ENERGY_PER_TICK;
@@ -19,6 +20,7 @@ public class Config {
         COMMON_BUILDER.comment("General settings").push(CATEGORY_GENERAL);
         CRUDE_GENERATOR_PER_TICK = COMMON_BUILDER.comment("Crude Generator: How much energy produced per tick").defineInRange("CrudeGeneratorProduction",5,0, Integer.MAX_VALUE);
         BASIC_GENERATOR_PER_TICK = COMMON_BUILDER.comment("Basic Generator: How much energy produced per tick").defineInRange("BasicGeneratorProduction",20,0, Integer.MAX_VALUE);
+        BASIC_LAVA_GENERATOR_PER_TICK = COMMON_BUILDER.comment("Basic Lava Generator: How much energy produced per tick").defineInRange("BasicLavaGeneratorProduction", 30, 0, Integer.MAX_VALUE);
         FURNACE_ENERGY_PER_TICK = COMMON_BUILDER.comment("Electric Furnace: How much energy is required per tick").defineInRange("FurnaceEnergyUse",20,0, Integer.MAX_VALUE);
         SAWMILL_ENERGY_PER_TICK = COMMON_BUILDER.comment("Sawmill: How much energy is required per tick").defineInRange("SawmillEnergyUse", 20, 0, Integer.MAX_VALUE);
         GRINDER_ENERGY_PER_TICK = COMMON_BUILDER.comment("Grinder: How much energy is required per tick").defineInRange("GrinderEnergyUse", 20, 0, Integer.MAX_VALUE);

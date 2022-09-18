@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "processenhancement:battery_upgrade",
   "pattern": [
-    "UUU",
-    "UMU",
-    "UUU"
+    "UuU",
+    "uBu",
+    "UuU"
   ],
   "key": {
-    "M": {
+    "B": {
       "item": "processenhancement:intermediate_battery"
     },
     "U": {
       "item": "minecraft:gold_ingot"
+    },
+    "u": {
+      "item": "minecraft:iron_block"
     }
   },
   "result": {

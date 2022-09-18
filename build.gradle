@@ -195,6 +195,7 @@ dependencies {
     // Mods for testing
     runtimeOnly fg.deobf("blank:mcwroofs:1.0")
     runtimeOnly fg.deobf("blank:mcwwindows:1.0")
+    runtimeOnly fg.deobf("blank:nbttool:2.1.0")
 
     // Mods for integration
     //implementation fg.deobf("blank:ars_nouveau:1.0")

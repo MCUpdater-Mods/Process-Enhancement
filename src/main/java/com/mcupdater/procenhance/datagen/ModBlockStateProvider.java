@@ -23,11 +23,15 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        machine(Registration.CRUDEGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.COBBLESTONE, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
+        machine(Registration.CRUDEGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.SMOOTH_STONE, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
         machine(Registration.BASICGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.BRICKS, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
         machine(Registration.INTERGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, Blocks.BRICKS, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
         machine(Registration.ADVGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.GOLD_BLOCK, Blocks.BRICKS, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
         machine(Registration.INDGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK, Blocks.BRICKS, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
+        machine(Registration.BASICLAVAGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.NETHER_BRICKS, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
+        machine(Registration.INTERLAVAGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, Blocks.NETHER_BRICKS, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
+        machine(Registration.ADVLAVAGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.GOLD_BLOCK, Blocks.NETHER_BRICKS, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
+        machine(Registration.INDLAVAGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK, Blocks.NETHER_BRICKS, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
         machine(Registration.FURNACE_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.STONE, new ResourceLocation(ProcessEnhancement.MODID, "block/electric_furnace"));
         machine(Registration.SAWMILL_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.OAK_PLANKS, new ResourceLocation(ProcessEnhancement.MODID, "block/sawmill"));
         machine(Registration.GRINDER_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/grinder"));

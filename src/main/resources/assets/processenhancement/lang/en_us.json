@@ -18,5 +18,9 @@
     "block.processenhancement.industrial_generator": "Industrial Generator",
     "block.processenhancement.intermediate_battery": "Intermediate Battery",
     "block.processenhancement.advanced_battery": "Advanced Battery",
-    "block.processenhancement.industrial_battery": "Industrial Battery"
+    "block.processenhancement.industrial_battery": "Industrial Battery",
+    "block.processenhancement.basic_lava_generator": "Basic Lava Generator",
+    "block.processenhancement.intermediate_lava_generator": "Intermediate Lava Generator",
+    "block.processenhancement.advanced_lava_generator": "Advanced Lava Generator",
+    "block.processenhancement.industrial_lava_generator": "Industrial Lava Generator"
 }

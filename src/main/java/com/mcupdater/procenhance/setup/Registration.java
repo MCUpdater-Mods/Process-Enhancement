@@ -18,12 +18,14 @@ import com.mcupdater.procenhance.blocks.generator.*;
 import com.mcupdater.procenhance.blocks.grinder.GrinderBlock;
 import com.mcupdater.procenhance.blocks.grinder.GrinderEntity;
 import com.mcupdater.procenhance.blocks.grinder.GrinderMenu;
+import com.mcupdater.procenhance.blocks.lava_generator.*;
 import com.mcupdater.procenhance.blocks.sawmill.SawmillBlock;
 import com.mcupdater.procenhance.blocks.sawmill.SawmillEntity;
 import com.mcupdater.procenhance.blocks.sawmill.SawmillMenu;
 import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterBlock;
 import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterEntity;
 import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterMenu;
+import com.mcupdater.procenhance.recipe.BatteryUpgradeRecipe;
 import com.mcupdater.procenhance.recipe.GrinderRecipe;
 import com.mcupdater.procenhance.recipe.SawmillRecipe;
 import net.minecraft.core.BlockPos;
@@ -45,14 +47,17 @@ import static com.mcupdater.procenhance.ProcessEnhancement.MODID;
 
 public class Registration {
     public static final DeferredRegister<Block> MACHINES = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
+    public static final DeferredRegister<Block> BATTERIES = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, MODID);
     public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MODID);
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, ProcessEnhancement.MODID);
 
+
     public static void init(IEventBus modEventBus) {
         MACHINES.register(modEventBus);
+        BATTERIES.register(modEventBus);
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         BLOCK_ENTITIES.register(modEventBus);
@@ -88,23 +93,43 @@ public class Registration {
         return new GeneratorMenu(windowId, world, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
     }));
 
-    public static final RegistryObject<BatteryBlockT1> BASICBATTERY_BLOCK = MACHINES.register("basic_battery", BatteryBlockT1::new);
-    public static final RegistryObject<Item> BASICBATTERY_BLOCKITEM = ITEMS.register("basic_battery", () -> new BlockItem(BASICBATTERY_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<LavaGeneratorBlockT1> BASICLAVAGENERATOR_BLOCK = MACHINES.register("basic_lava_generator", LavaGeneratorBlockT1::new);
+    public static final RegistryObject<Item> BASICLAVALGENERATOR_BLOCKITEM = ITEMS.register("basic_lava_generator", () -> new BlockItem(BASICLAVAGENERATOR_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<LavaGeneratorEntityT1>> BASICLAVAGENERATOR_BLOCKENTITY = BLOCK_ENTITIES.register("basic_lava_generator", () -> BlockEntityType.Builder.of(LavaGeneratorEntityT1::new, BASICLAVAGENERATOR_BLOCK.get()).build(null));
+    public static final RegistryObject<LavaGeneratorBlockT2> INTERLAVAGENERATOR_BLOCK = MACHINES.register("intermediate_lava_generator", LavaGeneratorBlockT2::new);
+    public static final RegistryObject<Item> INTERLAVAGENERATOR_BLOCKITEM = ITEMS.register("intermediate_lava_generator", () -> new BlockItem(INTERLAVAGENERATOR_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<LavaGeneratorEntityT2>> INTERLAVAGENERATOR_BLOCKENTITY = BLOCK_ENTITIES.register("intermediate_lava_generator", () -> BlockEntityType.Builder.of(LavaGeneratorEntityT2::new, INTERLAVAGENERATOR_BLOCK.get()).build(null));
+    public static final RegistryObject<LavaGeneratorBlockT3> ADVLAVAGENERATOR_BLOCK = MACHINES.register("advanced_lava_generator", LavaGeneratorBlockT3::new);
+    public static final RegistryObject<Item> ADVLAVAGENERATOR_BLOCKITEM = ITEMS.register("advanced_lava_generator", () -> new BlockItem(ADVLAVAGENERATOR_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<LavaGeneratorEntityT3>> ADVLAVAGENERATOR_BLOCKENTITY = BLOCK_ENTITIES.register("advanced_lava_generator", () -> BlockEntityType.Builder.of(LavaGeneratorEntityT3::new, ADVLAVAGENERATOR_BLOCK.get()).build(null));
+    public static final RegistryObject<LavaGeneratorBlockT4> INDLAVAGENERATOR_BLOCK = MACHINES.register("industrial_lava_generator", LavaGeneratorBlockT4::new);
+    public static final RegistryObject<Item> INDLAVAGENERATOR_BLOCKITEM = ITEMS.register("industrial_lava_generator", () -> new BlockItem(INDLAVAGENERATOR_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<LavaGeneratorEntityT4>> INDLAVAGENERATOR_BLOCKENTITY = BLOCK_ENTITIES.register("industrial_lava_generator", () -> BlockEntityType.Builder.of(LavaGeneratorEntityT4::new, INDLAVAGENERATOR_BLOCK.get()).build(null));
+
+    public static final RegistryObject<MenuType<LavaGeneratorMenu>> LAVAGENERATOR_MENU = CONTAINERS.register("lava_generator", () -> IForgeMenuType.create((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        Level world = inv.player.level;
+        LavaGeneratorEntity blockEntity = (LavaGeneratorEntity) world.getBlockEntity(pos);
+        return new LavaGeneratorMenu(windowId, world, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
+    }));
+    public static final RegistryObject<BatteryBlockT1> BASICBATTERY_BLOCK = BATTERIES.register("basic_battery", BatteryBlockT1::new);
+    public static final RegistryObject<Item> BASICBATTERY_BLOCKITEM = ITEMS.register("basic_battery", () -> new BatteryBlockItem(BASICBATTERY_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP), 10000));
     public static final RegistryObject<BlockEntityType<BatteryEntityT1>> BASICBATTERY_BLOCKENTITY = BLOCK_ENTITIES.register("basic_battery", () -> BlockEntityType.Builder.of(BatteryEntityT1::new, BASICBATTERY_BLOCK.get()).build(null) );
-    public static final RegistryObject<BatteryBlockT2> INTBATTERY_BLOCK = MACHINES.register("intermediate_battery", BatteryBlockT2::new);
-    public static final RegistryObject<Item> INTBATTERY_BLOCKITEM = ITEMS.register("intermediate_battery", () -> new BlockItem(INTBATTERY_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BatteryBlockT2> INTBATTERY_BLOCK = BATTERIES.register("intermediate_battery", BatteryBlockT2::new);
+    public static final RegistryObject<Item> INTBATTERY_BLOCKITEM = ITEMS.register("intermediate_battery", () -> new BatteryBlockItem(INTBATTERY_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP), 20000));
     public static final RegistryObject<BlockEntityType<BatteryEntityT2>> INTBATTERY_BLOCKENTITY = BLOCK_ENTITIES.register("intermediate_battery", () -> BlockEntityType.Builder.of(BatteryEntityT2::new, INTBATTERY_BLOCK.get()).build(null) );
-    public static final RegistryObject<BatteryBlockT3> ADVBATTERY_BLOCK = MACHINES.register("advanced_battery", BatteryBlockT3::new);
-    public static final RegistryObject<Item> ADVBATTERY_BLOCKITEM = ITEMS.register("advanced_battery", () -> new BlockItem(ADVBATTERY_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BatteryBlockT3> ADVBATTERY_BLOCK = BATTERIES.register("advanced_battery", BatteryBlockT3::new);
+    public static final RegistryObject<Item> ADVBATTERY_BLOCKITEM = ITEMS.register("advanced_battery", () -> new BatteryBlockItem(ADVBATTERY_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP),40000));
     public static final RegistryObject<BlockEntityType<BatteryEntityT3>> ADVBATTERY_BLOCKENTITY = BLOCK_ENTITIES.register("advanced_battery", () -> BlockEntityType.Builder.of(BatteryEntityT3::new, ADVBATTERY_BLOCK.get()).build(null) );
-    public static final RegistryObject<BatteryBlockT4> INDBATTERY_BLOCK = MACHINES.register("industrial_battery", BatteryBlockT4::new);
-    public static final RegistryObject<Item> INDBATTERY_BLOCKITEM = ITEMS.register("industrial_battery", () -> new BlockItem(INDBATTERY_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BatteryBlockT4> INDBATTERY_BLOCK = BATTERIES.register("industrial_battery", BatteryBlockT4::new);
+    public static final RegistryObject<Item> INDBATTERY_BLOCKITEM = ITEMS.register("industrial_battery", () -> new BatteryBlockItem(INDBATTERY_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP), 80000));
     public static final RegistryObject<BlockEntityType<BatteryEntityT4>> INDBATTERY_BLOCKENTITY = BLOCK_ENTITIES.register("industrial_battery", () -> BlockEntityType.Builder.of(BatteryEntityT4::new, INDBATTERY_BLOCK.get()).build(null) );
     public static final RegistryObject<MenuType<BatteryMenu>> BATTERY_MENU = CONTAINERS.register("battery", () -> IForgeMenuType.create(((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level level = inv.player.level;
         return new BatteryMenu(windowId, level, pos, inv, inv.player, DataHelper.readDirectionMap(data));
     })));
+    public static final RegistryObject<RecipeSerializer<BatteryUpgradeRecipe>> BATTERYUPGRADE_SERIALIZER = RECIPE_SERIALIZERS.register("battery_upgrade", () -> BatteryUpgradeRecipe.SERIALIZER);
 
     public static final RegistryObject<ElectricFurnaceBlock> FURNACE_BLOCK = MACHINES.register("electric_furnace", ElectricFurnaceBlock::new);
     public static final RegistryObject<Item> FURNACE_BLOCKITEM = ITEMS.register("electric_furnace", () -> new BlockItem(FURNACE_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));

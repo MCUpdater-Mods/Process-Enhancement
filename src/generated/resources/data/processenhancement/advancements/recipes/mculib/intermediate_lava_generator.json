@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "processenhancement:intermediate_lava_generator"
+    ]
+  },
+  "criteria": {
+    "automatic": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "processenhancement:basic_lava_generator"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "processenhancement:intermediate_lava_generator"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "automatic",
+      "has_the_recipe"
+    ]
+  ]
+}

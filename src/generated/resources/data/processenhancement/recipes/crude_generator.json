@@ -10,10 +10,10 @@
       "item": "minecraft:copper_ingot"
     },
     "F": {
-      "item": "minecraft:cobblestone"
+      "item": "minecraft:smooth_stone"
     },
     "#": {
-      "item": "minecraft:stick"
+      "item": "minecraft:furnace"
     }
   },
   "result": {
