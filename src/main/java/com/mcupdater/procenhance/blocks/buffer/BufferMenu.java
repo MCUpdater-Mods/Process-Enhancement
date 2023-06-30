@@ -11,6 +11,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -74,5 +76,42 @@ public class BufferMenu extends PowerTrackingMenu implements IConfigurableMenu {
     @Override
     public boolean stillValid(Player pPlayer) {
         return stillValid(ContainerLevelAccess.create(this.tileEntity.getLevel(), this.tileEntity.getBlockPos()), pPlayer, Registration.BUFFER_BLOCK.get());
+    }
+
+    @Override
+    public ItemStack quickMoveStack(Player player, int index) {
+        ItemStack itemstack = ItemStack.EMPTY;
+        Slot slot = this.slots.get(index);
+        if (slot != null && slot.hasItem()) {
+            ItemStack stackInSlot = slot.getItem();
+            itemstack = stackInSlot.copy();
+            if (index >= 0 && index <= 5) {
+                if (!this.moveItemStackTo(stackInSlot, 6,42, true)) {
+                    return ItemStack.EMPTY;
+                }
+            } else { // Player inventory slots
+                if (index >= 6 && index < 33) {
+                    // Move to buffer then hotbar
+                    if (!this.moveItemStackTo(stackInSlot,0,6, false) && !this.moveItemStackTo(stackInSlot, 33, 42, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if (index >= 33 && index < 42 && !this.moveItemStackTo(stackInSlot, 6, 33, false)) { // Move to inventory
+                    return ItemStack.EMPTY;
+                }
+            }
+
+            if (stackInSlot.isEmpty()) {
+                slot.set(ItemStack.EMPTY);
+            } else {
+                slot.setChanged();
+            }
+
+            if (stackInSlot.getCount() == itemstack.getCount()) {
+                return ItemStack.EMPTY;
+            }
+
+            slot.onTake(player, stackInSlot);
+        }
+        return itemstack;
     }
 }

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "UuU",
+    "uMu",
+    "UuU"
+  ],
+  "key": {
+    "M": {
+      "item": "processenhancement:advanced_miner"
+    },
+    "U": {
+      "item": "minecraft:diamond"
+    },
+    "u": {
+      "item": "minecraft:gold_block"
+    }
+  },
+  "result": {
+    "item": "processenhancement:industrial_miner"
+  }
+}

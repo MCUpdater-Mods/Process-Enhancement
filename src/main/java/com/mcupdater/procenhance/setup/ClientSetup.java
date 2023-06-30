@@ -7,8 +7,11 @@ import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceScreen;
 import com.mcupdater.procenhance.blocks.generator.GeneratorScreen;
 import com.mcupdater.procenhance.blocks.grinder.GrinderScreen;
 import com.mcupdater.procenhance.blocks.lava_generator.LavaGeneratorScreen;
+import com.mcupdater.procenhance.blocks.miner.MinerScreen;
+import com.mcupdater.procenhance.blocks.pump.PumpScreen;
 import com.mcupdater.procenhance.blocks.sawmill.SawmillScreen;
 import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterScreen;
+import com.mcupdater.procenhance.blocks.tank.TankScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -35,5 +38,8 @@ public class ClientSetup {
         MenuScreens.register(Registration.GRINDER_MENU.get(), GrinderScreen::new);
         MenuScreens.register(Registration.STONECUTTER_MENU.get(), ElectricStonecutterScreen::new);
         MenuScreens.register(Registration.BUFFER_MENU.get(), BufferScreen::new);
+        MenuScreens.register(Registration.TANK_MENU.get(), TankScreen::new);
+        MenuScreens.register(Registration.PUMP_MENU.get(), PumpScreen::new);
+        MenuScreens.register(Registration.MINER_MENU.get(), MinerScreen::new);
     }
 }

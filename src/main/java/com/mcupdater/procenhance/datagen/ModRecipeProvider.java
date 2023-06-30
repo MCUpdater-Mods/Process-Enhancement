@@ -6,10 +6,7 @@ import com.mcupdater.procenhance.datagen.custom.SawmillRecipeBuilder;
 import com.mcupdater.procenhance.recipe.BatteryUpgradeRecipe;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -65,6 +62,21 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         upgradeMachineRecipe(finishedRecipeConsumer, GRINDERT2_BLOCK.get(), GRINDERT1_BLOCK.get(), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.COPPER_BLOCK));
         upgradeMachineRecipe(finishedRecipeConsumer, GRINDERT3_BLOCK.get(), GRINDERT2_BLOCK.get(), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Blocks.IRON_BLOCK));
         upgradeMachineRecipe(finishedRecipeConsumer, GRINDERT4_BLOCK.get(), GRINDERT3_BLOCK.get(), Ingredient.of(Items.DIAMOND), Ingredient.of(Blocks.GOLD_BLOCK));
+
+        basicMachineRecipe(finishedRecipeConsumer, TANKT1_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.GLASS));
+        upgradeMachineRecipe(finishedRecipeConsumer, TANKT2_BLOCK.get(), TANKT1_BLOCK.get(), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.COPPER_BLOCK));
+        upgradeMachineRecipe(finishedRecipeConsumer, TANKT3_BLOCK.get(), TANKT2_BLOCK.get(), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Blocks.IRON_BLOCK));
+        upgradeMachineRecipe(finishedRecipeConsumer, TANKT4_BLOCK.get(), TANKT3_BLOCK.get(), Ingredient.of(Items.DIAMOND), Ingredient.of(Blocks.GOLD_BLOCK));
+
+        basicMachineRecipe(finishedRecipeConsumer, PUMPT1_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Items.BUCKET));
+        upgradeMachineRecipe(finishedRecipeConsumer, PUMPT2_BLOCK.get(), PUMPT1_BLOCK.get(), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.COPPER_BLOCK));
+        upgradeMachineRecipe(finishedRecipeConsumer, PUMPT3_BLOCK.get(), PUMPT2_BLOCK.get(), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Blocks.IRON_BLOCK));
+        upgradeMachineRecipe(finishedRecipeConsumer, PUMPT4_BLOCK.get(), PUMPT3_BLOCK.get(), Ingredient.of(Items.DIAMOND), Ingredient.of(Blocks.GOLD_BLOCK));
+
+        basicMachineRecipe(finishedRecipeConsumer, MINERT1_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Items.DIAMOND_PICKAXE));
+        upgradeMachineRecipe(finishedRecipeConsumer, MINERT2_BLOCK.get(), MINERT1_BLOCK.get(), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.COPPER_BLOCK));
+        upgradeMachineRecipe(finishedRecipeConsumer, MINERT3_BLOCK.get(), MINERT2_BLOCK.get(), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Blocks.IRON_BLOCK));
+        upgradeMachineRecipe(finishedRecipeConsumer, MINERT4_BLOCK.get(), MINERT3_BLOCK.get(), Ingredient.of(Items.DIAMOND), Ingredient.of(Blocks.GOLD_BLOCK));
 
         // Sawmill recipes
         //sawmill(finishedRecipeConsumer, Ingredient.of(ItemTags.DIRT), Items.DIAMOND, 1, 32, 0.05f, new ModLoadedCondition("testmod"));
@@ -286,6 +298,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         grinder_single("blaze_rod", Ingredient.of(Items.BLAZE_ROD), new ItemStack(Items.BLAZE_POWDER,4), 50,0.0f, finishedRecipeConsumer);
         grinder_single("flint", Ingredient.of(Items.FLINT), new ItemStack(Items.GUNPOWDER,1), 50,0.0f, finishedRecipeConsumer);
         grinder_single("wool", Ingredient.of(ItemTags.WOOL), new ItemStack(Items.STRING,4), 100, 0.01f, finishedRecipeConsumer);
+        grinder_single("sugar_cane", Ingredient.of(Items.SUGAR_CANE), new ItemStack(PLANT_DUST.get(), 1), 50, 0.1f, finishedRecipeConsumer);
+        grinder_single("bamboo", Ingredient.of(Items.BAMBOO), new ItemStack(PLANT_DUST.get(), 1), 50, 0.1f, finishedRecipeConsumer);
+        grinder_single("kelp", Ingredient.of(Items.KELP), new ItemStack(PLANT_DUST.get(), 1), 50, 0.1f, finishedRecipeConsumer);
 
         cookOre(finishedRecipeConsumer, IRON_DUST.get(), Items.IRON_INGOT, 0.7f);
         cookOre(finishedRecipeConsumer, COPPER_DUST.get(), Items.COPPER_INGOT, 0.7f);
@@ -293,6 +308,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         ShapedRecipeBuilder.shaped(CAPACITOR.get()).define('B',Ingredient.of(Items.BLUE_DYE)).define('C',Ingredient.of(Items.COPPER_INGOT)).define('P',Ingredient.of(Items.PAPER)).define('I',Ingredient.of(Items.IRON_NUGGET)).pattern("BBB").pattern("CPC").pattern("I I").unlockedBy("automatic", has(Items.COPPER_INGOT)).save(finishedRecipeConsumer);
         ShapedRecipeBuilder.shaped(COPPERWIRE_BLOCKITEM.get(),16).define('C', Ingredient.of(Items.COPPER_INGOT)).pattern("CCC").unlockedBy("automatic",has(Items.COPPER_INGOT)).save(finishedRecipeConsumer);
+        ShapelessRecipeBuilder.shapeless(Items.SLIME_BALL).requires(Items.MILK_BUCKET,1).requires(PLANT_DUST.get(),1).unlockedBy("automatic",has(PLANT_DUST.get())).save(finishedRecipeConsumer);
     }
 
     private void grinder_oreblock(String recipeName, Ingredient input, int multiplier, int processTime, float experience, Item output, Consumer<FinishedRecipe> finishedRecipeConsumer) {

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "UuU",
+    "uMu",
+    "UuU"
+  ],
+  "key": {
+    "M": {
+      "item": "processenhancement:basic_miner"
+    },
+    "U": {
+      "item": "minecraft:iron_ingot"
+    },
+    "u": {
+      "item": "minecraft:copper_block"
+    }
+  },
+  "result": {
+    "item": "processenhancement:intermediate_miner"
+  }
+}

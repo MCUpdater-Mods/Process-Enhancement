@@ -30,5 +30,18 @@
     "block.processenhancement.basic_grinder": "Basic Grinder",
     "block.processenhancement.intermediate_grinder": "Intermediate Grinder",
     "block.processenhancement.advanced_grinder": "Advanced Grinder",
-    "block.processenhancement.industrial_grinder": "Industrial Grinder"
+    "block.processenhancement.industrial_grinder": "Industrial Grinder",
+    "block.processenhancement.basic_tank": "Basic Tank",
+    "block.processenhancement.intermediate_tank": "Intermediate Tank",
+    "block.processenhancement.advanced_tank": "Advanced Tank",
+    "block.processenhancement.industrial_tank": "Industrial Tank",
+    "block.processenhancement.basic_pump": "Basic Pump",
+    "block.processenhancement.intermediate_pump": "Intermediate Pump",
+    "block.processenhancement.advanced_pump": "Advanced Pump",
+    "block.processenhancement.industrial_pump": "Industrial Pump",
+    "block.processenhancement.basic_miner": "Basic Miner",
+    "block.processenhancement.intermediate_miner": "Intermediate Miner",
+    "block.processenhancement.advanced_miner": "Advanced Miner",
+    "block.processenhancement.industrial_miner": "Industrial Miner",
+    "item.processenhancement.plant_dust": "Macerated Biomass"
 }

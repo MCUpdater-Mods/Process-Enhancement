@@ -14,6 +14,8 @@ public class Config {
     public static ForgeConfigSpec.IntValue SAWMILL_ENERGY_PER_TICK;
     public static ForgeConfigSpec.IntValue GRINDER_ENERGY_PER_TICK;
     public static ForgeConfigSpec.IntValue STONECUTTER_ENERGY_PER_TICK;
+    public static ForgeConfigSpec.IntValue PUMP_ENERGY_PER_TICK;
+    public static ForgeConfigSpec.IntValue MINER_ENERGY_PER_TICK;
 
     static {
         ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
@@ -25,6 +27,8 @@ public class Config {
         SAWMILL_ENERGY_PER_TICK = COMMON_BUILDER.comment("Sawmill: How much energy is required per tick").defineInRange("SawmillEnergyUse", 20, 0, Integer.MAX_VALUE);
         GRINDER_ENERGY_PER_TICK = COMMON_BUILDER.comment("Grinder: How much energy is required per tick").defineInRange("GrinderEnergyUse", 20, 0, Integer.MAX_VALUE);
         STONECUTTER_ENERGY_PER_TICK = COMMON_BUILDER.comment("Electric Stonecutter: How much energy is required per tick").defineInRange("StonecutterEnergyUse", 20, 0, Integer.MAX_VALUE);
+        PUMP_ENERGY_PER_TICK = COMMON_BUILDER.comment("Pump: How much energy is required per tick").defineInRange("PumpEnergyUse", 20, 0, Integer.MAX_VALUE);
+        MINER_ENERGY_PER_TICK = COMMON_BUILDER.comment("Miner: How much energy is required per tick").defineInRange("MinerEnergyUse", 20, 0, Integer.MAX_VALUE);
 
         COMMON_CONFIG = COMMON_BUILDER.build();
     }

@@ -1,5 +1,6 @@
 package com.mcupdater.procenhance.datagen;
 
+import com.mcupdater.mculib.block.AbstractMachineBlock;
 import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.blocks.battery.BatteryBlock;
 import com.mcupdater.procenhance.setup.Registration;
@@ -23,26 +24,38 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        machine(Registration.CRUDEGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.SMOOTH_STONE, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
-        machine(Registration.BASICGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.BRICKS, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
-        machine(Registration.INTERGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, Blocks.BRICKS, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
-        machine(Registration.ADVGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.GOLD_BLOCK, Blocks.BRICKS, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
-        machine(Registration.INDGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK, Blocks.BRICKS, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
-        machine(Registration.BASICLAVAGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.NETHER_BRICKS, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
-        machine(Registration.INTERLAVAGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, Blocks.NETHER_BRICKS, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
-        machine(Registration.ADVLAVAGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.GOLD_BLOCK, Blocks.NETHER_BRICKS, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
-        machine(Registration.INDLAVAGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK, Blocks.NETHER_BRICKS, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/generator"));
-        machine(Registration.FURNACET1_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.COPPER_BLOCK, Blocks.STONE, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/electric_furnace"));
-        machine(Registration.FURNACET2_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, Blocks.STONE, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/electric_furnace"));
-        machine(Registration.FURNACET3_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.GOLD_BLOCK, Blocks.STONE, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/electric_furnace"));
-        machine(Registration.FURNACET4_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK, Blocks.STONE, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/electric_furnace"));
-        machine(Registration.SAWMILL_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.OAK_PLANKS, new ResourceLocation(ProcessEnhancement.MODID, "block/sawmill"));
-        machine(Registration.GRINDERT1_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/grinder"));
-        machine(Registration.GRINDERT2_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/grinder"));
-        machine(Registration.GRINDERT3_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.GOLD_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/grinder"));
-        machine(Registration.GRINDERT4_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, new ResourceLocation(ProcessEnhancement.MODID, "block/grinder"));
-        machine(Registration.STONECUTTER_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.STONE_BRICKS, new ResourceLocation(ProcessEnhancement.MODID, "block/sawmill"));
-        machine(Registration.BUFFER_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.SPRUCE_PLANKS, new ResourceLocation(ProcessEnhancement.MODID, "block/buffer"));
+        machine(Registration.CRUDEGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.SMOOTH_STONE, "block/generator", false);
+        machine(Registration.BASICGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.BRICKS, "block/generator", false);
+        machine(Registration.INTERGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, Blocks.BRICKS, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/generator", false);
+        machine(Registration.ADVGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.GOLD_BLOCK, Blocks.BRICKS, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/generator", false);
+        machine(Registration.INDGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK, Blocks.BRICKS, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/generator", false);
+        machine(Registration.BASICLAVAGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.NETHER_BRICKS, "block/generator", false);
+        machine(Registration.INTERLAVAGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, Blocks.NETHER_BRICKS, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/generator", false);
+        machine(Registration.ADVLAVAGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.GOLD_BLOCK, Blocks.NETHER_BRICKS, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/generator", false);
+        machine(Registration.INDLAVAGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK, Blocks.NETHER_BRICKS, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/generator", false);
+        machine(Registration.FURNACET1_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.COPPER_BLOCK, Blocks.STONE, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/electric_furnace", true);
+        machine(Registration.FURNACET2_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, Blocks.STONE, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/electric_furnace", true);
+        machine(Registration.FURNACET3_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.GOLD_BLOCK, Blocks.STONE, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/electric_furnace", true);
+        machine(Registration.FURNACET4_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK, Blocks.STONE, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/electric_furnace", true);
+        machine(Registration.SAWMILL_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.OAK_PLANKS, "block/sawmill", false);
+        machine(Registration.GRINDERT1_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, "block/grinder", false);
+        machine(Registration.GRINDERT2_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/grinder", false);
+        machine(Registration.GRINDERT3_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.GOLD_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/grinder", false);
+        machine(Registration.GRINDERT4_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/grinder", false);
+        machine(Registration.STONECUTTER_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.STONE_BRICKS, "block/sawmill", false);
+        machine(Registration.BUFFER_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.SPRUCE_PLANKS, "block/buffer", false);
+        machine(Registration.TANKT1_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, "block/tank", false);
+        machine(Registration.TANKT2_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/tank", false);
+        machine(Registration.TANKT3_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.GOLD_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/tank", false);
+        machine(Registration.TANKT4_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/tank", false);
+        machine(Registration.PUMPT1_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.COPPER_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/pump", true);
+        machine(Registration.PUMPT2_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/pump", true);
+        machine(Registration.PUMPT3_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.GOLD_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/pump", true);
+        machine(Registration.PUMPT4_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/pump", true);
+        machine(Registration.MINERT1_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.COPPER_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/miner", true);
+        machine(Registration.MINERT2_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/miner", true);
+        machine(Registration.MINERT3_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.GOLD_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/miner", true);
+        machine(Registration.MINERT4_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/miner", true);
 
         horizontalBlock(Registration.BASICBATTERY_BLOCK.get(), (blockState -> {
             int charge = blockState.getValue(BatteryBlock.CHARGE_LEVEL);
@@ -90,19 +103,21 @@ public class ModBlockStateProvider extends BlockStateProvider {
         }));
     }
 
-    protected void machine(@NotNull Block block, Block frame, Block face, ResourceLocation overlay) {
-        machine(block, frame, frame, face, Blocks.BLACK_CONCRETE, frame, overlay);
+    protected void machine(@NotNull Block block, Block frame, Block face, String overlay, boolean splitActiveTextures) {
+        machine(block, frame, frame, face, Blocks.BLACK_CONCRETE, frame, overlay, splitActiveTextures);
     }
-    protected void machine(@NotNull Block block, Block frame, Block corner, Block face, Block inset, Block particle, ResourceLocation overlay) {
-        horizontalBlock(block, models()
-                .getBuilder(block.getRegistryName().getPath())
-                .parent(new ModelFile.UncheckedModelFile("mculib:block/machine"))
-                .texture("frame", blockTexture(frame))
-                .texture("corner", blockTexture(corner))
-                .texture("face", blockTexture(face))
-                .texture("inset", blockTexture(inset))
-                .texture("overlay", overlay)
-                .texture("particle", blockTexture(particle))
-        );
+    protected void machine(@NotNull Block block, Block frame, Block corner, Block face, Block inset, Block particle, String overlay, boolean splitActiveTextures) {
+        horizontalBlock(block, (blockstate -> {
+            boolean active = blockstate.getValue(AbstractMachineBlock.ACTIVE);
+            return models().getBuilder(block.getRegistryName().getPath() + (splitActiveTextures ? (active ? "_on" : "") : ""))
+                    .parent(new ModelFile.UncheckedModelFile("mculib:block/machine"))
+                    .texture("frame", blockTexture(frame))
+                    .texture("corner", blockTexture(corner))
+                    .texture("face", blockTexture(face))
+                    .texture("inset", blockTexture(inset))
+                    .texture("overlay", new ResourceLocation(ProcessEnhancement.MODID, overlay + (splitActiveTextures ? (active ? "_on" : "_off") : "")))
+                    .texture("particle", blockTexture(particle));
+        }
+        ));
     }
 }
