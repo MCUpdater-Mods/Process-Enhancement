@@ -43,5 +43,9 @@
     "block.processenhancement.intermediate_miner": "Intermediate Miner",
     "block.processenhancement.advanced_miner": "Advanced Miner",
     "block.processenhancement.industrial_miner": "Industrial Miner",
-    "item.processenhancement.plant_dust": "Macerated Biomass"
+    "item.processenhancement.plant_dust": "Macerated Biomass",
+    "block.processenhancement.basic_biogenerator": "Basic Biogenerator",
+    "block.processenhancement.industrial_biogenerator": "Industrial Biogenerator",
+    "block.processenhancement.advanced_biogenerator": "Advanced Biogenerator",
+    "block.processenhancement.intermediate_biogenerator": "Intermediate Biogenerator"
 }

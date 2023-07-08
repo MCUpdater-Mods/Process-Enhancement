@@ -48,6 +48,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         upgradeMachineRecipe(finishedRecipeConsumer, ADVLAVAGENERATOR_BLOCK.get(), INTERLAVAGENERATOR_BLOCK.get(), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Blocks.IRON_BLOCK));
         upgradeMachineRecipe(finishedRecipeConsumer, INDLAVAGENERATOR_BLOCK.get(), ADVLAVAGENERATOR_BLOCK.get(), Ingredient.of(Items.DIAMOND), Ingredient.of(Blocks.GOLD_BLOCK));
 
+        basicMachineRecipe(finishedRecipeConsumer, BASICBIOGENERATOR_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Blocks.DEEPSLATE_BRICKS), Ingredient.of(PLANT_DUST.get()));
+        upgradeMachineRecipe(finishedRecipeConsumer, INTERBIOGENERATOR_BLOCK.get(), BASICBIOGENERATOR_BLOCK.get(), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.COPPER_BLOCK));
+        upgradeMachineRecipe(finishedRecipeConsumer, ADVBIOGENERATOR_BLOCK.get(), INTERBIOGENERATOR_BLOCK.get(), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Blocks.IRON_BLOCK));
+        upgradeMachineRecipe(finishedRecipeConsumer, INDBIOGENERATOR_BLOCK.get(), ADVBIOGENERATOR_BLOCK.get(), Ingredient.of(Items.DIAMOND), Ingredient.of(Blocks.GOLD_BLOCK));
+
         basicMachineRecipe(finishedRecipeConsumer, BASICBATTERY_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(CAPACITOR.get()));
         upgradeBatteryRecipe(finishedRecipeConsumer, INTBATTERY_BLOCK.get(), BASICBATTERY_BLOCK.get(), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.COPPER_BLOCK));
         upgradeBatteryRecipe(finishedRecipeConsumer, ADVBATTERY_BLOCK.get(), INTBATTERY_BLOCK.get(), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Blocks.IRON_BLOCK));
@@ -301,6 +306,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         grinder_single("sugar_cane", Ingredient.of(Items.SUGAR_CANE), new ItemStack(PLANT_DUST.get(), 1), 50, 0.1f, finishedRecipeConsumer);
         grinder_single("bamboo", Ingredient.of(Items.BAMBOO), new ItemStack(PLANT_DUST.get(), 1), 50, 0.1f, finishedRecipeConsumer);
         grinder_single("kelp", Ingredient.of(Items.KELP), new ItemStack(PLANT_DUST.get(), 1), 50, 0.1f, finishedRecipeConsumer);
+        grinder_single("copper_ingot", Ingredient.of(Items.COPPER_INGOT), new ItemStack(COPPER_DUST.get(), 1), 50, 0f, finishedRecipeConsumer);
 
         cookOre(finishedRecipeConsumer, IRON_DUST.get(), Items.IRON_INGOT, 0.7f);
         cookOre(finishedRecipeConsumer, COPPER_DUST.get(), Items.COPPER_INGOT, 0.7f);

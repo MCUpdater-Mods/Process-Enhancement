@@ -1,6 +1,7 @@
 package com.mcupdater.procenhance.setup;
 
 import com.mcupdater.procenhance.blocks.battery.BatteryScreen;
+import com.mcupdater.procenhance.blocks.biogenerator.BiogeneratorScreen;
 import com.mcupdater.procenhance.blocks.buffer.BufferScreen;
 import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorScreen;
 import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceScreen;
@@ -32,6 +33,7 @@ public class ClientSetup {
         MenuScreens.register(Registration.CRUDEGENERATOR_MENU.get(), CrudeGeneratorScreen::new);
         MenuScreens.register(Registration.GENERATOR_MENU.get(), GeneratorScreen::new);
         MenuScreens.register(Registration.LAVAGENERATOR_MENU.get(), LavaGeneratorScreen::new);
+        MenuScreens.register(Registration.BIOGENERATOR_MENU.get(), BiogeneratorScreen::new);
         MenuScreens.register(Registration.BATTERY_MENU.get(), BatteryScreen::new);
         MenuScreens.register(Registration.FURNACE_MENU.get(), ElectricFurnaceScreen::new);
         MenuScreens.register(Registration.SAWMILL_MENU.get(), SawmillScreen::new);

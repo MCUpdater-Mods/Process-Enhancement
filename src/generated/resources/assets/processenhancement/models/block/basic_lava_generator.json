@@ -5,7 +5,7 @@
     "corner": "minecraft:block/copper_block",
     "face": "minecraft:block/nether_bricks",
     "inset": "minecraft:block/black_concrete",
-    "overlay": "processenhancement:block/generator",
+    "overlay": "processenhancement:block/generator_off",
     "particle": "minecraft:block/copper_block"
   }
 }

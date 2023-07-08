@@ -1,0 +1,46 @@
+{
+	"type": "processenhancement:grinder",
+	"conditions": [
+		{
+			"modid": "gemsnjewels",
+			"type": "forge:mod_loaded"
+		}
+	],
+	"ingredients": [
+		{
+			"tag": "forge:ores/dusk_emerald"
+		}
+	],
+	"outputs": [
+		{
+			"stack": {
+				"item": "gemsnjewels:emerald",
+				"count": 3
+			},
+			"weight": 55
+		},
+		{
+			"stack": {
+				"item": "gemsnjewels:emerald",
+				"count": 4
+			},
+			"weight": 25
+		},
+		{
+			"stack": {
+				"item": "gemsnjewels:emerald",
+				"count": 5
+			},
+			"weight": 18
+		},
+		{
+			"stack": {
+				"item": "gemsnjewels:emerald",
+				"count": 6
+			},
+			"weight": 2
+		}
+	],
+	"processTime": 200,
+	"experience": 0.05
+}

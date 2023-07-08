@@ -1,0 +1,46 @@
+{
+	"type": "processenhancement:grinder",
+	"conditions": [
+		{
+			"modid": "gemsnjewels",
+			"type": "forge:mod_loaded"
+		}
+	],
+	"ingredients": [
+		{
+			"tag": "forge:ores/aquamarine"
+		}
+	],
+	"outputs": [
+		{
+			"stack": {
+				"item": "gemsnjewels:aquamarine",
+				"count": 3
+			},
+			"weight": 55
+		},
+		{
+			"stack": {
+				"item": "gemsnjewels:aquamarine",
+				"count": 4
+			},
+			"weight": 25
+		},
+		{
+			"stack": {
+				"item": "gemsnjewels:aquamarine",
+				"count": 5
+			},
+			"weight": 18
+		},
+		{
+			"stack": {
+				"item": "gemsnjewels:aquamarine",
+				"count": 6
+			},
+			"weight": 2
+		}
+	],
+	"processTime": 200,
+	"experience": 0.05
+}

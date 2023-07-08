@@ -3,6 +3,7 @@ package com.mcupdater.procenhance.setup;
 import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.blocks.battery.*;
+import com.mcupdater.procenhance.blocks.biogenerator.*;
 import com.mcupdater.procenhance.blocks.buffer.BufferBlock;
 import com.mcupdater.procenhance.blocks.buffer.BufferEntity;
 import com.mcupdater.procenhance.blocks.buffer.BufferMenu;
@@ -112,6 +113,27 @@ public class Registration {
         LavaGeneratorEntity blockEntity = (LavaGeneratorEntity) world.getBlockEntity(pos);
         return new LavaGeneratorMenu(windowId, world, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
     }));
+
+    public static final RegistryObject<BiogeneratorBlockT1> BASICBIOGENERATOR_BLOCK = MACHINES.register("basic_biogenerator", BiogeneratorBlockT1::new);
+    public static final RegistryObject<Item> BASICBIOLGENERATOR_BLOCKITEM = ITEMS.register("basic_biogenerator", () -> new BlockItem(BASICBIOGENERATOR_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<BiogeneratorEntityT1>> BASICBIOGENERATOR_BLOCKENTITY = BLOCK_ENTITIES.register("basic_biogenerator", () -> BlockEntityType.Builder.of(BiogeneratorEntityT1::new, BASICBIOGENERATOR_BLOCK.get()).build(null));
+    public static final RegistryObject<BiogeneratorBlockT2> INTERBIOGENERATOR_BLOCK = MACHINES.register("intermediate_biogenerator", BiogeneratorBlockT2::new);
+    public static final RegistryObject<Item> INTERBIOGENERATOR_BLOCKITEM = ITEMS.register("intermediate_biogenerator", () -> new BlockItem(INTERBIOGENERATOR_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<BiogeneratorEntityT2>> INTERBIOGENERATOR_BLOCKENTITY = BLOCK_ENTITIES.register("intermediate_biogenerator", () -> BlockEntityType.Builder.of(BiogeneratorEntityT2::new, INTERBIOGENERATOR_BLOCK.get()).build(null));
+    public static final RegistryObject<BiogeneratorBlockT3> ADVBIOGENERATOR_BLOCK = MACHINES.register("advanced_biogenerator", BiogeneratorBlockT3::new);
+    public static final RegistryObject<Item> ADVBIOGENERATOR_BLOCKITEM = ITEMS.register("advanced_biogenerator", () -> new BlockItem(ADVBIOGENERATOR_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<BiogeneratorEntityT3>> ADVBIOGENERATOR_BLOCKENTITY = BLOCK_ENTITIES.register("advanced_biogenerator", () -> BlockEntityType.Builder.of(BiogeneratorEntityT3::new, ADVBIOGENERATOR_BLOCK.get()).build(null));
+    public static final RegistryObject<BiogeneratorBlockT4> INDBIOGENERATOR_BLOCK = MACHINES.register("industrial_biogenerator", BiogeneratorBlockT4::new);
+    public static final RegistryObject<Item> INDBIOGENERATOR_BLOCKITEM = ITEMS.register("industrial_biogenerator", () -> new BlockItem(INDBIOGENERATOR_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<BiogeneratorEntityT4>> INDBIOGENERATOR_BLOCKENTITY = BLOCK_ENTITIES.register("industrial_biogenerator", () -> BlockEntityType.Builder.of(BiogeneratorEntityT4::new, INDBIOGENERATOR_BLOCK.get()).build(null));
+
+    public static final RegistryObject<MenuType<BiogeneratorMenu>> BIOGENERATOR_MENU = CONTAINERS.register("biogenerator", () -> IForgeMenuType.create((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        Level world = inv.player.level;
+        BiogeneratorEntity blockEntity = (BiogeneratorEntity) world.getBlockEntity(pos);
+        return new BiogeneratorMenu(windowId, world, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
+    }));
+
     public static final RegistryObject<BatteryBlockT1> BASICBATTERY_BLOCK = BATTERIES.register("basic_battery", BatteryBlockT1::new);
     public static final RegistryObject<Item> BASICBATTERY_BLOCKITEM = ITEMS.register("basic_battery", () -> new BatteryBlockItem(BASICBATTERY_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP), 10000));
     public static final RegistryObject<BlockEntityType<BatteryEntityT1>> BASICBATTERY_BLOCKENTITY = BLOCK_ENTITIES.register("basic_battery", () -> BlockEntityType.Builder.of(BatteryEntityT1::new, BASICBATTERY_BLOCK.get()).build(null) );
