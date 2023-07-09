@@ -8,34 +8,34 @@
 	],
 	"ingredients": [
 		{
-			"item": "gemsnjewels:v_emerald_nether_ore_block"
+			"item": "gemsnjewels:ametrine_nether_ore_block"
 		}
 	],
 	"outputs": [
 		{
 			"stack": {
-				"item": "minecraft:emerald",
+				"item": "gemsnjewels:ametrine",
 				"count": 3
 			},
 			"weight": 55
 		},
 		{
 			"stack": {
-				"item": "minecraft:emerald",
+				"item": "gemsnjewels:ametrine",
 				"count": 4
 			},
 			"weight": 25
 		},
 		{
 			"stack": {
-				"item": "minecraft:emerald",
+				"item": "gemsnjewels:ametrine",
 				"count": 5
 			},
 			"weight": 18
 		},
 		{
 			"stack": {
-				"item": "minecraft:emerald",
+				"item": "gemsnjewels:ametrine",
 				"count": 6
 			},
 			"weight": 2
