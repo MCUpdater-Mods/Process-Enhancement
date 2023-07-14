@@ -60,6 +60,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         machine(Registration.MINERT2_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/miner", true);
         machine(Registration.MINERT3_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.GOLD_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/miner", true);
         machine(Registration.MINERT4_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/miner", true);
+        machine(Registration.DISENCHANTER_BLOCK.get(),Blocks.LAPIS_BLOCK,Blocks.AMETHYST_BLOCK, Blocks.POLISHED_BLACKSTONE, Blocks.NETHER_PORTAL, Blocks.LAPIS_BLOCK, "block/disenchanter", false);
 
         horizontalBlock(Registration.BASICBATTERY_BLOCK.get(), (blockState -> {
             int charge = blockState.getValue(BatteryBlock.CHARGE_LEVEL);
@@ -110,6 +111,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     protected void machine(@NotNull Block block, Block frame, Block face, String overlay, boolean splitActiveTextures) {
         machine(block, frame, frame, face, Blocks.BLACK_CONCRETE, frame, overlay, splitActiveTextures);
     }
+
     protected void machine(@NotNull Block block, Block frame, Block corner, Block face, Block inset, Block particle, String overlay, boolean splitActiveTextures) {
         horizontalBlock(block, (blockstate -> {
             boolean active = blockstate.getValue(AbstractMachineBlock.ACTIVE);

@@ -67,7 +67,6 @@ public abstract class GrinderEntity extends AbstractMachineBlockEntity {
     @Override
     protected boolean performWork() {
         ItemResourceHandler itemStorage = (ItemResourceHandler) this.configMap.get("items");
-        EnergyResourceHandler energyStorage = (EnergyResourceHandler) this.configMap.get("power");
         ItemStack inputStack = itemStorage.getItem(0);
         if (!inputStack.isEmpty()) {
             Recipe<?> recipe = this.level.getRecipeManager().getRecipeFor(GrinderRecipe.Type.INSTANCE, itemStorage, this.level).orElse(null);

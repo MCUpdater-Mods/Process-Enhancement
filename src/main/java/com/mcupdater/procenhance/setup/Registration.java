@@ -12,6 +12,9 @@ import com.mcupdater.procenhance.blocks.copper_wire.CopperWireEntity;
 import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorBlock;
 import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorEntity;
 import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorMenu;
+import com.mcupdater.procenhance.blocks.disenchanter.DisenchanterBlock;
+import com.mcupdater.procenhance.blocks.disenchanter.DisenchanterEntity;
+import com.mcupdater.procenhance.blocks.disenchanter.DisenchanterMenu;
 import com.mcupdater.procenhance.blocks.furnace.*;
 import com.mcupdater.procenhance.blocks.generator.*;
 import com.mcupdater.procenhance.blocks.grinder.*;
@@ -290,6 +293,16 @@ public class Registration {
         Level world = inv.player.level;
         MinerEntity blockEntity = (MinerEntity) world.getBlockEntity(pos);
         return new MinerMenu(windowId, world, pos, inv, inv.player, DataHelper.readDirectionMap(data));
+    })));
+
+    public static final RegistryObject<DisenchanterBlock> DISENCHANTER_BLOCK = MACHINES.register("disenchanter", DisenchanterBlock::new);
+    public static final RegistryObject<Item> DISENCHANTER_BLOCKITEM = ITEMS.register("disenchanter", () -> new BlockItem(DISENCHANTER_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<DisenchanterEntity>> DISENCHANTER_ENTITY = BLOCK_ENTITIES.register("disenchanter", () -> BlockEntityType.Builder.of(DisenchanterEntity::new, DISENCHANTER_BLOCK.get()).build(null));
+    public static final RegistryObject<MenuType<DisenchanterMenu>> DISENCHANTER_MENU = CONTAINERS.register("disenchanter", () -> IForgeMenuType.create(((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        Level world = inv.player.level;
+        DisenchanterEntity blockEntity = (DisenchanterEntity) world.getBlockEntity(pos);
+        return new DisenchanterMenu(windowId, world, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
     })));
 
     public static final RegistryObject<Item> IRON_DUST = ITEMS.register("iron_dust", () -> new Item(new Item.Properties().tab(MCULIB_ITEM_GROUP)));

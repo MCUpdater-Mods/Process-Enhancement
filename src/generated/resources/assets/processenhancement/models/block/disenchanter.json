@@ -1,0 +1,11 @@
+{
+  "parent": "mculib:block/machine",
+  "textures": {
+    "frame": "minecraft:block/lapis_block",
+    "corner": "minecraft:block/amethyst_block",
+    "face": "minecraft:block/polished_blackstone",
+    "inset": "minecraft:block/nether_portal",
+    "overlay": "processenhancement:block/disenchanter",
+    "particle": "minecraft:block/lapis_block"
+  }
+}

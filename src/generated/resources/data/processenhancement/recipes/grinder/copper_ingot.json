@@ -1,0 +1,18 @@
+{
+  "type": "processenhancement:grinder",
+  "ingredients": [
+    {
+      "item": "minecraft:copper_ingot"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "item": "processenhancement:copper_dust"
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 50,
+  "experience": 0.0
+}
