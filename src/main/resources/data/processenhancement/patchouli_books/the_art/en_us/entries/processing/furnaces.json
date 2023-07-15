@@ -1,0 +1,21 @@
+{
+  "name": "Tiered Furnaces",
+  "icon": "processenhancement:basic_furnace",
+  "category": "processenhancement:processing",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "These tiered furnaces will smelt anything you can smelt in a regular furnace. Each successive tier applies a multiplier that stacks with the $(l:processenhancement:concepts/overdrive)Overdrive$(/l) effect.$(br)$(li)Basic: 1x multiplier$(li)Intermediate: 2x multiplier$(li)Advanced: 4x multiplier$(li)Industrial: 8x multiplier"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:basic_furnace",
+      "recipe2": "processenhancement:intermediate_furnace"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:advanced_furnace",
+      "recipe2": "processenhancement:industrial_furnace"
+    }
+  ]
+}

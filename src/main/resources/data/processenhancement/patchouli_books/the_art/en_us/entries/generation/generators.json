@@ -1,0 +1,21 @@
+{
+  "name": "Tiered Generators",
+  "icon": "processenhancement:basic_generator",
+  "category": "processenhancement:generation",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "These tiered power generators will burn any valid furnace fuel. Each successive tier will burn fuel at the same speed while generating additional power.$(br)$(li)Basic: 1x power generation$(li)Intermediate: 2x power generation$(li)Advanced: 4x power generation$(li)Industrial: 8x power generation"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:basic_generator",
+      "recipe2": "processenhancement:intermediate_generator"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:advanced_generator",
+      "recipe2": "processenhancement:industrial_generator"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Gunpowder",
+  "icon": "minecraft:gunpowder",
+  "category": "processenhancement:items",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:gunpowder",
+      "link_recipe": true,
+      "text": "Gunpowder can be produced by grinding Flint"
+    }
+  ]
+}

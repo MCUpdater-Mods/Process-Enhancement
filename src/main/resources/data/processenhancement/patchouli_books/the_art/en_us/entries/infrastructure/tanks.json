@@ -1,0 +1,21 @@
+{
+  "name": "Tiered Tanks",
+  "icon": "processenhancement:basic_tank",
+  "category": "processenhancement:infrastructure",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "These tiered tanks will store your fluids. Each successive tier increases the capacity. $(br)$(li)Basic: 10k mB$(li)Intermediate: 100k mB$(li)Advanced: 1M mB$(li)Industrial: 10M mB"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:basic_tank",
+      "recipe2": "processenhancement:intermediate_tank"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:advanced_tank",
+      "recipe2": "processenhancement:industrial_tank"
+    }
+  ]
+}

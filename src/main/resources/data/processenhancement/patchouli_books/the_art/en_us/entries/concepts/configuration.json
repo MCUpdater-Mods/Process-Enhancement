@@ -1,0 +1,11 @@
+{
+  "name": "Machine Configuration",
+  "icon": "minecraft:book",
+  "category": "processenhancement:concepts",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Every machine can be configured based on what capabilities it has and each side can be configured for input or output independently.$(br2)The name of the block adjacent on each side of the machine will be displayed as well as icons for what capabilities those blocks have."
+    }
+  ]
+}

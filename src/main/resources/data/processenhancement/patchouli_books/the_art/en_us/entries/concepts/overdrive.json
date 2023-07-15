@@ -1,0 +1,15 @@
+{
+  "name": "Overdrive",
+  "icon": "minecraft:book",
+  "category": "processenhancement:concepts",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Machines that have power stored in excess will run faster.$(br2)$(li)Above 80%: Machine will progress 8 times per tick$(li)Above 50%: Machine will progress 4 times per tick$(li)Above 25%: Machine will progress 2 times per tick"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The machine will consume the same amount of power as it normally would per operation. If your power generation is not able to maintain consumption, the machine will slow down to a level that can be maintained."
+    }
+  ]
+}

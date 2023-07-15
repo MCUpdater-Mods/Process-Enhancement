@@ -1,0 +1,11 @@
+{
+  "name": "Power Sharing",
+  "icon": "mculib:mculib",
+  "category": "processenhancement:concepts",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Machines in this and other related mods will share power in excess of 50% of their capacity with their adjacent machines, eliminating the need to run cables to every machine separately."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "Dusts",
+  "icon": "processenhancement:plant_dust",
+  "category": "processenhancement:items",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Dusts can be produced in the Grinder by processing certain items"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "processenhancement:plant_dust",
+      "anchor": "plant_dust",
+      "link_recipe": true,
+      "text": "Macerated Biomass is produced by grinding up Sugar Cane, Bamboo, or Kelp"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "processenhancement:copper_dust",
+      "anchor": "copper_dust",
+      "link_recipe": true,
+      "text": "Copper Dust is produced by grinding up a Copper Ingot (1 each), Raw Copper (1-2 each), or any Copper Ore (3-6 each)"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "processenhancement:iron_dust",
+      "anchor": "iron_dust",
+      "link_recipe": true,
+      "text": "Iron Dust is produced by grinding up Raw Iron (1-2 each) or any Iron Ore (3-6 each)"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "processenhancement:gold_dust",
+      "anchor": "gold_dust",
+      "link_recipe": true,
+      "text": "Gold Dust is produced by grinding up Raw Gold (1-2 each) or any Gold Ore (3-6 each)"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "Tiered Grinders",
+  "icon": "processenhancement:basic_grinder",
+  "category": "processenhancement:processing",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "These tiered grinders will break down ores and other items. See JEI for a complete list of recipes. Each successive tier applies a multiplier that stacks with the $(l:processenhancement:concepts/overdrive)Overdrive$(/l) effect.$(br)$(li)Basic: 1x multiplier$(li)Intermediate: 2x multiplier$(li)Advanced: 4x multiplier$(li)Industrial: 8x multiplier"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:basic_grinder",
+      "recipe2": "processenhancement:intermediate_grinder"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:advanced_grinder",
+      "recipe2": "processenhancement:industrial_grinder"
+    }
+  ]
+}

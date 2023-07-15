@@ -1,0 +1,21 @@
+{
+  "name": "Tiered Miners",
+  "icon": "processenhancement:basic_miner",
+  "category": "processenhancement:processing",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "These tiered miners will dig a hole under it down to bedrock with the top layer remaining intact for safety. Each successive tier increases the range and applies a multiplier that stacks with the $(l:processenhancement:concepts/overdrive)Overdrive$(/l) effect.$(br)$(li)Basic: 3x3 area 1x multiplier$(li)Intermediate: 9x9 area 2x multiplier$(li)Advanced: 19x19 area 4x multiplier$(li)Industrial: 31x31 area 8x multiplier"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:basic_miner",
+      "recipe2": "processenhancement:intermediate_miner"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:advanced_miner",
+      "recipe2": "processenhancement:industrial_miner"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "Buffer",
+  "icon": "processenhancement:buffer",
+  "category": "processenhancement:infrastructure",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This simple machine is capable of storing and transferring a modest amount of fluid, items, and power"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:buffer"
+    }
+  ]
+}

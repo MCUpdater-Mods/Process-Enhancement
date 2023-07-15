@@ -10,7 +10,7 @@ import static com.mcupdater.procenhance.setup.Registration.PUMPT2_ENTITY;
 public class PumpEntityT2 extends PumpEntity {
 
     public PumpEntityT2(BlockPos blockPos, BlockState blockState) {
-        super(PUMPT2_ENTITY.get(), blockPos, blockState, 2, 3);
+        super(PUMPT2_ENTITY.get(), blockPos, blockState, 2, 4);
     }
     @Override
     protected Component getDefaultName() {

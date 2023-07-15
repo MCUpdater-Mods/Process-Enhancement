@@ -10,7 +10,7 @@ import static com.mcupdater.procenhance.setup.Registration.MINERT3_ENTITY;
 public class MinerEntityT3 extends MinerEntity {
 
     public MinerEntityT3(BlockPos blockPos, BlockState blockState) {
-        super(MINERT3_ENTITY.get(), blockPos, blockState, 4, 5);
+        super(MINERT3_ENTITY.get(), blockPos, blockState, 4, 9);
     }
     @Override
     protected Component getDefaultName() {

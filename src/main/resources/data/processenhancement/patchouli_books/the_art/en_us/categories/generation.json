@@ -1,0 +1,6 @@
+{
+  "name": "Power Generation",
+  "description": "Your machines will just look nice if they don't have power",
+  "icon": "processenhancement:crude_generator",
+  "sortnum": 1
+}

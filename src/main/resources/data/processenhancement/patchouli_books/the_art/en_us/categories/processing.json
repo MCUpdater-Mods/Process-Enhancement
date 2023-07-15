@@ -1,0 +1,6 @@
+{
+  "name": "Processing Machines",
+  "description": "Machines that turn stuff into other stuff",
+  "icon": "processenhancement:basic_furnace",
+  "sortnum": 1
+}

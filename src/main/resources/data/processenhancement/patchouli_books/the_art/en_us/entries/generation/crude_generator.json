@@ -1,0 +1,16 @@
+{
+  "name": "Crude Generator",
+  "icon": "processenhancement:crude_generator",
+  "category": "processenhancement:generation",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This is an entry-level power generator that passively generates as long as there is a source of heat below it."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:crude_generator",
+      "text": "Valid heat sources:$(li)Campfire$(li)Fire$(li)Lava$(li)Soul Campfire$(li)Soul Fire"
+    }
+  ]
+}

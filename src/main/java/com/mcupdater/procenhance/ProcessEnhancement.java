@@ -1,7 +1,9 @@
 package com.mcupdater.procenhance;
 
+import com.mcupdater.procenhance.integration.PatchouliConfig;
 import com.mcupdater.procenhance.setup.*;
 import com.mojang.logging.LogUtils;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -19,5 +21,6 @@ public class ProcessEnhancement {
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ModSetup::init);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
+        if (ModList.get().isLoaded("patchouli")) PatchouliConfig.register();
     }
 }

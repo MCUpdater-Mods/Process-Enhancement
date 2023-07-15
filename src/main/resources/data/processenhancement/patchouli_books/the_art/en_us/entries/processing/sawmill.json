@@ -1,0 +1,15 @@
+{
+  "name": "Sawmill",
+  "icon": "processenhancement:sawmill",
+  "category": "processenhancement:processing",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Functions similarly to the $(l:processenhancement:processing/stonecutter)Stonecutter$(/l), except for wood"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:sawmill"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "Electric Stonecutter",
+  "icon": "processenhancement:stonecutter",
+  "category": "processenhancement:processing",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Electric Stonecutter can make the same blocks as the non-powered variety, but automated"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:stonecutter"
+    }
+  ]
+}

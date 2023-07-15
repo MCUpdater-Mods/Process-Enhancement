@@ -1,0 +1,16 @@
+{
+  "name": "Disenchanter",
+  "icon": "processenhancement:disenchanter",
+  "category": "processenhancement:arcane",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Disenchanter will remove all enchantments from an item and write them to a book at the cost of 1 lapis lazuli per enchantment.  You will receive the unenchanted item back as well.  This machine does not use power on its own but is capable of passing power to adjacent machines"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:disenchanter",
+      "text": "Additionally, this will also remove the first stored enchantment from an Enchanted Book and write that to a new Enchanted Book also returning the original Enchanted Book without that enchantment."
+    }
+  ]
+}

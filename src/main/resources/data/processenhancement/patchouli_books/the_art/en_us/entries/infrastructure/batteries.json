@@ -1,0 +1,21 @@
+{
+  "name": "Tiered Batteries",
+  "icon": "processenhancement:basic_battery",
+  "category": "processenhancement:infrastructure",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "These tiered batteries will store your excess power for when you need it in bulk and will retain its charge when broken. Each successive tier increases the capacity. $(br)$(li)Basic: 10k FE$(li)Intermediate: 20k FE$(li)Advanced: 40k FE$(li)Industrial: 80k FE"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:basic_battery",
+      "recipe2": "processenhancement:intermediate_battery"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:advanced_battery",
+      "recipe2": "processenhancement:industrial_battery"
+    }
+  ]
+}

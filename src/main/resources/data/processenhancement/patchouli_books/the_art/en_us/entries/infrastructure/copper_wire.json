@@ -1,0 +1,15 @@
+{
+  "name": "Copper Wire",
+  "icon": "processenhancement:copper_wire",
+  "category": "processenhancement:infrastructure",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A simple copper wire that will take power from one place and transfer it to another.  Not recommended for long runs."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:copper_wire"
+    }
+  ]
+}

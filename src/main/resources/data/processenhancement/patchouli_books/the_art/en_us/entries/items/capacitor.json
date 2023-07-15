@@ -1,0 +1,15 @@
+{
+  "name": "Capacitor",
+  "icon": "processenhancement:capacitor",
+  "category": "processenhancement:items",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A small component that stores a charge used in the construction of electrical devices"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:capacitor"
+    }
+  ]
+}

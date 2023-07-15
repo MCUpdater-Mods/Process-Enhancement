@@ -1,0 +1,11 @@
+{
+  "name": "Resource Packs",
+  "icon": "minecraft:painting",
+  "category": "processenhancement:concepts",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This mod relies heavily on using vanilla block textures to create a seamless aesthetic.  Because of the way that these textures are used, most resource packs will similarly affect the way that the blocks in this mod appear to maintain this seamless aesthetic."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "Slime Balls",
+  "icon": "minecraft:slime_ball",
+  "category": "processenhancement:items",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A little bit of some plant matter and a thick liquid and you get a gooey substance"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "minecraft:slime_ball"
+    }
+  ]
+}

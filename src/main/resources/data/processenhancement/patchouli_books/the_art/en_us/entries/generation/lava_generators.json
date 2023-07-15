@@ -1,0 +1,21 @@
+{
+  "name": "Tiered Lava Generators",
+  "icon": "processenhancement:basic_lava_generator",
+  "category": "processenhancement:generation",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "These tiered power generators contain a tank for lava that will be consumed at a rate of 1 mB/tick. Each successive tier will burn fuel at the same speed while generating additional power.$(br)$(li)Basic: 1x power generation$(li)Intermediate: 2x power generation$(li)Advanced: 4x power generation$(li)Industrial: 8x power generation"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:basic_lava_generator",
+      "recipe2": "processenhancement:intermediate_lava_generator"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:advanced_lava_generator",
+      "recipe2": "processenhancement:industrial_lava_generator"
+    }
+  ]
+}
