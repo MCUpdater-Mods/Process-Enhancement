@@ -1,6 +1,7 @@
 package com.mcupdater.procenhance.datagen.loot;
 
 import com.mcupdater.procenhance.loot.functions.RetainEnergyFunction;
+import com.mcupdater.procenhance.loot.functions.RetainFluidFunction;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.level.block.Block;
@@ -30,6 +31,13 @@ public class ModBlockLootTables extends BlockLoot {
                             LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(entry.get()).apply(RetainEnergyFunction.getBuilder()))));
             this.add(entry.get(), builder);
         }
+        for (RegistryObject<Block> entry : Registration.TANKS.getEntries()){
+            LootTable.Builder builder = LootTable.lootTable().withPool(
+                    applyExplosionCondition(
+                            entry.get(),
+                            LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(entry.get()).apply(RetainFluidFunction.getBuilder()))));
+            this.add(entry.get(), builder);
+        }
     }
 
     @Override
@@ -38,6 +46,7 @@ public class ModBlockLootTables extends BlockLoot {
         Registration.MACHINES.getEntries().forEach(entry -> knownBlocks.add(entry.get()));
         Registration.BLOCKS.getEntries().forEach(entry -> knownBlocks.add(entry.get()));
         Registration.BATTERIES.getEntries().forEach(entry -> knownBlocks.add(entry.get()));
+        Registration.TANKS.getEntries().forEach(entry -> knownBlocks.add(entry.get()));
         return knownBlocks;
     }
 }

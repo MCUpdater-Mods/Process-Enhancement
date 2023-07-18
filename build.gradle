@@ -56,7 +56,7 @@ minecraft {
     //mappings channel: 'official', version: '1.18.2'
     mappings channel: 'parchment', version: '2022.11.06-1.18.2'
 
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
 
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
@@ -139,6 +139,8 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
             args '--mod', 'processenhancement', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 

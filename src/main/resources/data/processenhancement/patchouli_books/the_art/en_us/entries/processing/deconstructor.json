@@ -1,0 +1,15 @@
+{
+  "name": "Deconstructor",
+  "icon": "processenhancement:deconstructor",
+  "category": "processenhancement:processing",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Deconstructor will deconstruct items placed into it into the parts used to make it."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:deconstructor"
+    }
+  ]
+}

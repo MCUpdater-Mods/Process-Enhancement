@@ -3,7 +3,9 @@ package com.mcupdater.procenhance.datagen;
 import com.mcupdater.procenhance.datagen.custom.BatteryUpgradeRecipeBuilder;
 import com.mcupdater.procenhance.datagen.custom.GrinderRecipeBuilder;
 import com.mcupdater.procenhance.datagen.custom.SawmillRecipeBuilder;
+import com.mcupdater.procenhance.datagen.custom.TankUpgradeRecipeBuilder;
 import com.mcupdater.procenhance.recipe.BatteryUpgradeRecipe;
+import com.mcupdater.procenhance.recipe.TankUpgradeRecipe;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.*;
@@ -69,9 +71,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         upgradeMachineRecipe(finishedRecipeConsumer, GRINDERT4_BLOCK.get(), GRINDERT3_BLOCK.get(), Ingredient.of(Items.DIAMOND), Ingredient.of(Blocks.GOLD_BLOCK));
 
         basicMachineRecipe(finishedRecipeConsumer, TANKT1_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.GLASS));
-        upgradeMachineRecipe(finishedRecipeConsumer, TANKT2_BLOCK.get(), TANKT1_BLOCK.get(), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.COPPER_BLOCK));
-        upgradeMachineRecipe(finishedRecipeConsumer, TANKT3_BLOCK.get(), TANKT2_BLOCK.get(), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Blocks.IRON_BLOCK));
-        upgradeMachineRecipe(finishedRecipeConsumer, TANKT4_BLOCK.get(), TANKT3_BLOCK.get(), Ingredient.of(Items.DIAMOND), Ingredient.of(Blocks.GOLD_BLOCK));
+        upgradeTankRecipe(finishedRecipeConsumer, TANKT2_BLOCK.get(), TANKT1_BLOCK.get(), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.COPPER_BLOCK));
+        upgradeTankRecipe(finishedRecipeConsumer, TANKT3_BLOCK.get(), TANKT2_BLOCK.get(), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Blocks.IRON_BLOCK));
+        upgradeTankRecipe(finishedRecipeConsumer, TANKT4_BLOCK.get(), TANKT3_BLOCK.get(), Ingredient.of(Items.DIAMOND), Ingredient.of(Blocks.GOLD_BLOCK));
 
         basicMachineRecipe(finishedRecipeConsumer, PUMPT1_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Items.BUCKET));
         upgradeMachineRecipe(finishedRecipeConsumer, PUMPT2_BLOCK.get(), PUMPT1_BLOCK.get(), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.COPPER_BLOCK));
@@ -314,6 +316,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         ShapedRecipeBuilder.shaped(CAPACITOR.get()).define('B',Ingredient.of(Items.BLUE_DYE)).define('C',Ingredient.of(Items.COPPER_INGOT)).define('P',Ingredient.of(Items.PAPER)).define('I',Ingredient.of(Items.IRON_NUGGET)).pattern("BBB").pattern("CPC").pattern("I I").unlockedBy("automatic", has(Items.COPPER_INGOT)).save(finishedRecipeConsumer);
         ShapedRecipeBuilder.shaped(DISENCHANTER_BLOCK.get()).define('L',Ingredient.of(Items.LAPIS_LAZULI)).define('A',Ingredient.of(Items.AMETHYST_SHARD)).define('B',Ingredient.of(Blocks.POLISHED_BLACKSTONE)).define('E',Ingredient.of(Blocks.ENCHANTING_TABLE)).pattern("LBA").pattern("BEB").pattern("ABL").unlockedBy("automatic", has(Blocks.ENCHANTING_TABLE)).save(finishedRecipeConsumer);
+        ShapedRecipeBuilder.shaped(DECONSTRUCTOR_BLOCK.get()).define('A', Ingredient.of(Items.AMETHYST_BLOCK)).define('E', Ingredient.of(Items.EMERALD)).define('G', Ingredient.of(GRINDERT3_BLOCK.get())).pattern("AEA").pattern("EGE").pattern("AEA").unlockedBy("automatic", has(GRINDERT3_BLOCK.get())).save(finishedRecipeConsumer);
         ShapedRecipeBuilder.shaped(COPPERWIRE_BLOCKITEM.get(),16).define('C', Ingredient.of(Items.COPPER_INGOT)).pattern("CCC").unlockedBy("automatic",has(Items.COPPER_INGOT)).save(finishedRecipeConsumer);
         ShapelessRecipeBuilder.shapeless(Items.SLIME_BALL).requires(Items.MILK_BUCKET,1).requires(PLANT_DUST.get(),1).unlockedBy("automatic",has(PLANT_DUST.get())).save(finishedRecipeConsumer);
     }
@@ -362,6 +365,17 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(finishedRecipeConsumer);
     }
 
+    private void upgradeTankRecipe(Consumer<FinishedRecipe> finishedRecipeConsumer, ItemLike result, Block baseTank, Ingredient upgradeItem1, Ingredient upgradeItem2) {
+        TankUpgradeRecipeBuilder.shaped(result, TankUpgradeRecipe.SERIALIZER)
+                .define('T', Ingredient.of(baseTank))
+                .define('U', upgradeItem1)
+                .define('u', upgradeItem2)
+                .pattern("UuU")
+                .pattern("uTu")
+                .pattern("UuU")
+                .unlockedBy("has_tank", has(baseTank))
+                .save(finishedRecipeConsumer);
+    }
 
     public static void sawmill(Consumer<FinishedRecipe> consumer, Ingredient input, ItemLike output, int count, int processTime, float experience, ICondition condition) {
         new SawmillRecipeBuilder(input,output,count,processTime,experience).unlockedBy("has_sawmill", has(Registration.SAWMILL_BLOCK.get())).addCondition(condition).save(consumer);

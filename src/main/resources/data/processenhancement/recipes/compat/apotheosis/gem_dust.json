@@ -1,0 +1,25 @@
+{
+  "type": "processenhancement:grinder",
+  "conditions": [
+    {
+      "modid": "apotheosis",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "apotheosis:gem"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "item": "apotheosis:gem_dust",
+        "count": 1
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 200,
+  "experience": 0.05
+}

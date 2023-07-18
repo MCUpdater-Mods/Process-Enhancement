@@ -4,6 +4,7 @@ import com.mcupdater.procenhance.blocks.battery.BatteryScreen;
 import com.mcupdater.procenhance.blocks.biogenerator.BiogeneratorScreen;
 import com.mcupdater.procenhance.blocks.buffer.BufferScreen;
 import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorScreen;
+import com.mcupdater.procenhance.blocks.deconstructor.DeconstructorScreen;
 import com.mcupdater.procenhance.blocks.disenchanter.DisenchanterScreen;
 import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceScreen;
 import com.mcupdater.procenhance.blocks.generator.GeneratorScreen;
@@ -29,6 +30,9 @@ public class ClientSetup {
         for (RegistryObject<Block> machine : Registration.BATTERIES.getEntries()) {
             ItemBlockRenderTypes.setRenderLayer(machine.get(), RenderType.cutoutMipped());
         }
+        for (RegistryObject<Block> machine : Registration.TANKS.getEntries()) {
+            ItemBlockRenderTypes.setRenderLayer(machine.get(), RenderType.cutoutMipped());
+        }
         ItemBlockRenderTypes.setRenderLayer(Registration.COPPERWIRE_BLOCK.get(), RenderType.cutout());
 
         MenuScreens.register(Registration.CRUDEGENERATOR_MENU.get(), CrudeGeneratorScreen::new);
@@ -45,5 +49,6 @@ public class ClientSetup {
         MenuScreens.register(Registration.PUMP_MENU.get(), PumpScreen::new);
         MenuScreens.register(Registration.MINER_MENU.get(), MinerScreen::new);
         MenuScreens.register(Registration.DISENCHANTER_MENU.get(), DisenchanterScreen::new);
+        MenuScreens.register(Registration.DECONSTRUCTOR_MENU.get(), DeconstructorScreen::new);
     }
 }

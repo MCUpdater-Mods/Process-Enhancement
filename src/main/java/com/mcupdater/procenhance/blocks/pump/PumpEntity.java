@@ -50,28 +50,18 @@ public abstract class PumpEntity extends AbstractMachineBlockEntity {
                 for (int z = (initz - range); (z <= (initz + range)); z++) {
                     BlockPos blockPos = new BlockPos(x,y,z);
                     BlockState state = level.getBlockState(blockPos);
-                    //ProcessEnhancement.LOGGER.debug("Pos: {}  State: {}  FluidBlock? {}  FluidState: {}  Source: {}", blockPos, state, state.getBlock() instanceof IFluidBlock, state.getFluidState(), state.getFluidState().isSource());
                     if (((state.getBlock() instanceof IFluidBlock) || (state.getBlock() instanceof BucketPickup)) && state.getFluidState().isSource()) {
                         fluidBlocks.add(blockPos);
                     }
                 }
             }
         }
-        ProcessEnhancement.LOGGER.debug("Blocks found: {}", fluidBlocks.size());
-/*
-        level.getBlockStates(new AABB((double)(initx - range), (double)inity, (double)(initz - range), (double)(initx + range), (double)(inity - (range*2)), (double)(initz + range))).forEach(blockState -> {
-            if (blockState.getBlock() instanceof IFluidBlock && blockState.getFluidState().isSource()) {
-                fluidBlocks.add(blockState);
-            }
-        });
- */
     }
 
     @Override
     protected boolean performWork() {
         if (this.fluidResourceHandler.getInternalHandler().getFluidInTank(0).getAmount() < this.fluidResourceHandler.getInternalHandler().getTankCapacity(0)) {
             if (tick == 0) {
-                ProcessEnhancement.LOGGER.debug("Fluid Blocks: {}", this.fluidBlocks.size());
                 if (this.fluidBlocks.isEmpty()) {
                     initialize();
                 }
@@ -86,8 +76,6 @@ public abstract class PumpEntity extends AbstractMachineBlockEntity {
                         BlockState blockState = level.getBlockState(blockPos);
                         return (blockState.getFluidState().isSource() && (filter != null ? blockState.getFluidState().is(filter) : true));
                     }).toList();
-                    ProcessEnhancement.LOGGER.debug("Temp list size: {}", tempFluids.size());
-                    //Collections.shuffle(tempFluids);
                     if (!tempFluids.isEmpty()) {
                         BlockPos blockPos = tempFluids.get(0);
                         BlockState state = level.getBlockState(blockPos);

@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "automatic": {
+    "has_tank": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "automatic",
+      "has_tank",
       "has_the_recipe"
     ]
   ]

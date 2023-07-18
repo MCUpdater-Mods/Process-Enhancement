@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "processenhancement:intermediate_tank"
+      "processenhancement:deconstructor"
     ]
   },
   "criteria": {
-    "has_tank": {
+    "automatic": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "processenhancement:basic_tank"
+              "processenhancement:advanced_grinder"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "processenhancement:intermediate_tank"
+        "recipe": "processenhancement:deconstructor"
       }
     }
   },
   "requirements": [
     [
-      "has_tank",
+      "automatic",
       "has_the_recipe"
     ]
   ]

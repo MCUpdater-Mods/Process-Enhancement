@@ -1,0 +1,16 @@
+{
+  "name": "Reconstructor",
+  "icon": "reconstructor:reconstructor",
+  "category": "processenhancement:processing",
+  "flag": "mod:reconstructor",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Reconstructor repairs items that are placed into it.  The Reconstructor mod's config may restrict what can be repaired."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "reconstructor:reconstructor"
+    }
+  ]
+}

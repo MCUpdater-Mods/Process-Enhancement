@@ -48,5 +48,6 @@
     "block.processenhancement.industrial_biogenerator": "Industrial Biogenerator",
     "block.processenhancement.advanced_biogenerator": "Advanced Biogenerator",
     "block.processenhancement.intermediate_biogenerator": "Intermediate Biogenerator",
-    "block.processenhancement.disenchanter": "Disenchanter"
+    "block.processenhancement.disenchanter": "Disenchanter",
+    "block.processenhancement.deconstructor": "Deconstructor"
 }

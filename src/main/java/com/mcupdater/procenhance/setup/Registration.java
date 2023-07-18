@@ -12,6 +12,9 @@ import com.mcupdater.procenhance.blocks.copper_wire.CopperWireEntity;
 import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorBlock;
 import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorEntity;
 import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorMenu;
+import com.mcupdater.procenhance.blocks.deconstructor.DeconstructorBlock;
+import com.mcupdater.procenhance.blocks.deconstructor.DeconstructorEntity;
+import com.mcupdater.procenhance.blocks.deconstructor.DeconstructorMenu;
 import com.mcupdater.procenhance.blocks.disenchanter.DisenchanterBlock;
 import com.mcupdater.procenhance.blocks.disenchanter.DisenchanterEntity;
 import com.mcupdater.procenhance.blocks.disenchanter.DisenchanterMenu;
@@ -31,6 +34,7 @@ import com.mcupdater.procenhance.blocks.tank.*;
 import com.mcupdater.procenhance.recipe.BatteryUpgradeRecipe;
 import com.mcupdater.procenhance.recipe.GrinderRecipe;
 import com.mcupdater.procenhance.recipe.SawmillRecipe;
+import com.mcupdater.procenhance.recipe.TankUpgradeRecipe;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.inventory.MenuType;
@@ -52,6 +56,7 @@ import static com.mcupdater.procenhance.ProcessEnhancement.MODID;
 public class Registration {
     public static final DeferredRegister<Block> MACHINES = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Block> BATTERIES = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
+    public static final DeferredRegister<Block> TANKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, MODID);
@@ -62,6 +67,7 @@ public class Registration {
     public static void init(IEventBus modEventBus) {
         MACHINES.register(modEventBus);
         BATTERIES.register(modEventBus);
+        TANKS.register(modEventBus);
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         BLOCK_ENTITIES.register(modEventBus);
@@ -238,17 +244,17 @@ public class Registration {
         return new BufferMenu(windowId, level, pos, inv, inv.player, DataHelper.readDirectionMap(data));
     }));
 
-    public static final RegistryObject<TankBlockT1> TANKT1_BLOCK = MACHINES.register("basic_tank", TankBlockT1::new);
-    public static final RegistryObject<Item> TANKT1_BLOCKITEM = ITEMS.register("basic_tank", () -> new BlockItem(TANKT1_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<TankBlockT1> TANKT1_BLOCK = TANKS.register("basic_tank", TankBlockT1::new);
+    public static final RegistryObject<Item> TANKT1_BLOCKITEM = ITEMS.register("basic_tank", () -> new TankBlockItem(TANKT1_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP), 10000));
     public static final RegistryObject<BlockEntityType<TankEntityT1>> TANKT1_ENTITY = BLOCK_ENTITIES.register("basic_tank", () -> BlockEntityType.Builder.of(TankEntityT1::new, TANKT1_BLOCK.get()).build(null));
-    public static final RegistryObject<TankBlockT2> TANKT2_BLOCK = MACHINES.register("intermediate_tank", TankBlockT2::new);
-    public static final RegistryObject<Item> TANKT2_BLOCKITEM = ITEMS.register("intermediate_tank", () -> new BlockItem(TANKT2_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<TankBlockT2> TANKT2_BLOCK = TANKS.register("intermediate_tank", TankBlockT2::new);
+    public static final RegistryObject<Item> TANKT2_BLOCKITEM = ITEMS.register("intermediate_tank", () -> new TankBlockItem(TANKT2_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP),100000));
     public static final RegistryObject<BlockEntityType<TankEntityT2>> TANKT2_ENTITY = BLOCK_ENTITIES.register("intermediate_tank", () -> BlockEntityType.Builder.of(TankEntityT2::new, TANKT2_BLOCK.get()).build(null));
-    public static final RegistryObject<TankBlockT3> TANKT3_BLOCK = MACHINES.register("advanced_tank", TankBlockT3::new);
-    public static final RegistryObject<Item> TANKT3_BLOCKITEM = ITEMS.register("advanced_tank", () -> new BlockItem(TANKT3_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<TankBlockT3> TANKT3_BLOCK = TANKS.register("advanced_tank", TankBlockT3::new);
+    public static final RegistryObject<Item> TANKT3_BLOCKITEM = ITEMS.register("advanced_tank", () -> new TankBlockItem(TANKT3_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP),1000000));
     public static final RegistryObject<BlockEntityType<TankEntityT3>> TANKT3_ENTITY = BLOCK_ENTITIES.register("advanced_tank", () -> BlockEntityType.Builder.of(TankEntityT3::new, TANKT3_BLOCK.get()).build(null));
-    public static final RegistryObject<TankBlockT4> TANKT4_BLOCK = MACHINES.register("industrial_tank", TankBlockT4::new);
-    public static final RegistryObject<Item> TANKT4_BLOCKITEM = ITEMS.register("industrial_tank", () -> new BlockItem(TANKT4_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<TankBlockT4> TANKT4_BLOCK = TANKS.register("industrial_tank", TankBlockT4::new);
+    public static final RegistryObject<Item> TANKT4_BLOCKITEM = ITEMS.register("industrial_tank", () -> new TankBlockItem(TANKT4_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP),10000000));
     public static final RegistryObject<BlockEntityType<TankEntityT4>> TANKT4_ENTITY = BLOCK_ENTITIES.register("industrial_tank", () -> BlockEntityType.Builder.of(TankEntityT4::new, TANKT4_BLOCK.get()).build(null));
     public static final RegistryObject<MenuType<TankMenu>> TANK_MENU = CONTAINERS.register("tank", () -> IForgeMenuType.create(((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
@@ -256,6 +262,7 @@ public class Registration {
         TankEntity blockEntity = (TankEntity) world.getBlockEntity(pos);
         return new TankMenu(windowId, world, pos, inv, inv.player, DataHelper.readDirectionMap(data));
     })));
+    public static final RegistryObject<RecipeSerializer<TankUpgradeRecipe>> TANKUPGRADE_SERIALIZER = RECIPE_SERIALIZERS.register("tank_upgrade", () -> TankUpgradeRecipe.SERIALIZER);
 
     public static final RegistryObject<PumpBlockT1> PUMPT1_BLOCK = MACHINES.register("basic_pump", PumpBlockT1::new);
     public static final RegistryObject<Item> PUMPT1_BLOCKITEM = ITEMS.register("basic_pump", () -> new BlockItem(PUMPT1_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
@@ -303,6 +310,16 @@ public class Registration {
         Level world = inv.player.level;
         DisenchanterEntity blockEntity = (DisenchanterEntity) world.getBlockEntity(pos);
         return new DisenchanterMenu(windowId, world, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
+    })));
+
+    public static final RegistryObject<DeconstructorBlock> DECONSTRUCTOR_BLOCK = MACHINES.register("deconstructor", DeconstructorBlock::new);
+    public static final RegistryObject<Item> DECONSTRUCTOR_BLOCKITEM = ITEMS.register("deconstructor", () -> new BlockItem(DECONSTRUCTOR_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<DeconstructorEntity>> DECONSTRUCTOR_ENTITY = BLOCK_ENTITIES.register("deconstructor", () -> BlockEntityType.Builder.of(DeconstructorEntity::new, DECONSTRUCTOR_BLOCK.get()).build(null));
+    public static final RegistryObject<MenuType<DeconstructorMenu>> DECONSTRUCTOR_MENU = CONTAINERS.register("deconstructor", () -> IForgeMenuType.create(((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        Level world = inv.player.level;
+        DeconstructorEntity blockEntity = (DeconstructorEntity) world.getBlockEntity(pos);
+        return new DeconstructorMenu(windowId, world, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
     })));
 
     public static final RegistryObject<Item> IRON_DUST = ITEMS.register("iron_dust", () -> new Item(new Item.Properties().tab(MCULIB_ITEM_GROUP)));

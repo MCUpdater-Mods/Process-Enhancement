@@ -7,12 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "processenhancement:retain_fluid"
-            }
-          ],
-          "name": "processenhancement:basic_tank"
+          "name": "processenhancement:deconstructor"
         }
       ],
       "conditions": [

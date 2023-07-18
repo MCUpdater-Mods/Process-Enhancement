@@ -61,6 +61,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         machine(Registration.MINERT3_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.GOLD_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/miner", true);
         machine(Registration.MINERT4_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/miner", true);
         machine(Registration.DISENCHANTER_BLOCK.get(),Blocks.LAPIS_BLOCK,Blocks.AMETHYST_BLOCK, Blocks.POLISHED_BLACKSTONE, Blocks.NETHER_PORTAL, Blocks.LAPIS_BLOCK, "block/disenchanter", false);
+        machine(Registration.DECONSTRUCTOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.AMETHYST_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/deconstructor", false);
 
         horizontalBlock(Registration.BASICBATTERY_BLOCK.get(), (blockState -> {
             int charge = blockState.getValue(BatteryBlock.CHARGE_LEVEL);

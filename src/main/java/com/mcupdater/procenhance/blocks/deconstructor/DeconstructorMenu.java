@@ -1,4 +1,4 @@
-package com.mcupdater.procenhance.blocks.disenchanter;
+package com.mcupdater.procenhance.blocks.deconstructor;
 
 import com.mcupdater.mculib.block.AbstractMachineMenu;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
@@ -10,6 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
@@ -18,20 +19,24 @@ import net.minecraft.world.level.Level;
 
 import java.util.Map;
 
-public class DisenchanterMenu extends AbstractMachineMenu<DisenchanterEntity> {
-
-    public DisenchanterMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data, Map<Direction, Component> directionComponentMap) {
-        super((DisenchanterEntity) level.getBlockEntity(blockPos), Registration.DISENCHANTER_MENU.get(), windowId, level, blockPos, inventory, player, data, directionComponentMap);
+public class DeconstructorMenu extends AbstractMachineMenu<DeconstructorEntity> {
+    public DeconstructorMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data, Map<Direction, Component> adjacentNames) {
+        super((DeconstructorEntity) level.getBlockEntity(blockPos), Registration.DECONSTRUCTOR_MENU.get(), windowId, level, blockPos, inventory, player, data, adjacentNames);
     }
 
     @Override
     protected void addMachineSlots() {
         ItemResourceHandler resourceHandler = (ItemResourceHandler) this.machineEntity.getConfigMap().get("items");
-        this.addSlot(new MachineInputSlot(this.machineEntity, resourceHandler.getInternalHandler(), 0, 41, 37));
-        this.addSlot(new MachineInputSlot(this.machineEntity, resourceHandler.getInternalHandler(), 2, 62, 26));
-        this.addSlot(new MachineInputSlot(this.machineEntity, resourceHandler.getInternalHandler(), 1, 62, 45));
-        this.addSlot(new MachineOutputSlot(this.machineEntity, resourceHandler.getInternalHandler(), 3, 98, 26));
-        this.addSlot(new MachineOutputSlot(this.machineEntity, resourceHandler.getInternalHandler(), 4, 98, 45));
+        this.addSlot(new MachineInputSlot(this.machineEntity, resourceHandler.getInternalHandler(),0,44,37));
+        this.addSlot(new MachineOutputSlot(this.machineEntity, resourceHandler.getInternalHandler(),1,80,19));
+        this.addSlot(new MachineOutputSlot(this.machineEntity, resourceHandler.getInternalHandler(),2,98,19));
+        this.addSlot(new MachineOutputSlot(this.machineEntity, resourceHandler.getInternalHandler(),3,116,19));
+        this.addSlot(new MachineOutputSlot(this.machineEntity, resourceHandler.getInternalHandler(),4,80,37));
+        this.addSlot(new MachineOutputSlot(this.machineEntity, resourceHandler.getInternalHandler(),5,98,37));
+        this.addSlot(new MachineOutputSlot(this.machineEntity, resourceHandler.getInternalHandler(),6,116,37));
+        this.addSlot(new MachineOutputSlot(this.machineEntity, resourceHandler.getInternalHandler(),7,80,55));
+        this.addSlot(new MachineOutputSlot(this.machineEntity, resourceHandler.getInternalHandler(),8,98,55));
+        this.addSlot(new MachineOutputSlot(this.machineEntity, resourceHandler.getInternalHandler(),9,116,55));
     }
 
     @Override
@@ -47,20 +52,20 @@ public class DisenchanterMenu extends AbstractMachineMenu<DisenchanterEntity> {
         if (slot != null && slot.hasItem()) {
             ItemStack stackInSlot = slot.getItem();
             itemstack = stackInSlot.copy();
-            if (index != 0 && index != 1 && index != 2) {
+            if (index > 9) {
                 if (resourceHandler.canPlaceItem(0, stackInSlot) || resourceHandler.canPlaceItem(1, stackInSlot) || resourceHandler.canPlaceItem(2, stackInSlot)) {
-                    if (!this.moveItemStackTo(stackInSlot, 0, 3, false)) {
+                    if (!this.moveItemStackTo(stackInSlot, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
                 }
-                else if (index >= 5 && index < 32) {
-                    if (!this.moveItemStackTo(stackInSlot, 32, 41, false)) {
+                else if (index >= 10 && index < 37) {
+                    if (!this.moveItemStackTo(stackInSlot, 37, 46, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index >= 32 && index < 41 && !this.moveItemStackTo(stackInSlot, 5, 32, false)) {
+                } else if (index >= 37 && index < 46 && !this.moveItemStackTo(stackInSlot, 10, 37, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(stackInSlot, 5, 41, true)) {
+            } else if (!this.moveItemStackTo(stackInSlot, 10, 46, true)) {
                 return ItemStack.EMPTY;
             }
 

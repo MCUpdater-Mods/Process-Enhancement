@@ -1,12 +1,12 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "processenhancement:tank_upgrade",
   "pattern": [
     "UuU",
-    "uMu",
+    "uTu",
     "UuU"
   ],
   "key": {
-    "M": {
+    "T": {
       "item": "processenhancement:basic_tank"
     },
     "U": {

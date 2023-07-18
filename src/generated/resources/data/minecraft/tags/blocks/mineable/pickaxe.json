@@ -25,10 +25,6 @@
     "processenhancement:industrial_grinder",
     "processenhancement:stonecutter",
     "processenhancement:buffer",
-    "processenhancement:basic_tank",
-    "processenhancement:intermediate_tank",
-    "processenhancement:advanced_tank",
-    "processenhancement:industrial_tank",
     "processenhancement:basic_pump",
     "processenhancement:intermediate_pump",
     "processenhancement:advanced_pump",
@@ -38,10 +34,15 @@
     "processenhancement:advanced_miner",
     "processenhancement:industrial_miner",
     "processenhancement:disenchanter",
+    "processenhancement:deconstructor",
     "processenhancement:copper_wire",
     "processenhancement:basic_battery",
     "processenhancement:intermediate_battery",
     "processenhancement:advanced_battery",
-    "processenhancement:industrial_battery"
+    "processenhancement:industrial_battery",
+    "processenhancement:basic_tank",
+    "processenhancement:intermediate_tank",
+    "processenhancement:advanced_tank",
+    "processenhancement:industrial_tank"
   ]
 }

@@ -14,7 +14,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class TankScreen extends AbstractContainerScreen<TankMenu> {
 
-    private static final ResourceLocation GUI = new ResourceLocation(ProcessEnhancement.MODID, "textures/gui/blank.png");
+    private static final ResourceLocation GUI = new ResourceLocation(ProcessEnhancement.MODID, "textures/gui/tank.png");
     private ConfigPanel configPanel;
     private TabConfig configTab;
     private WidgetFluid fluidWidget;
@@ -26,7 +26,7 @@ public class TankScreen extends AbstractContainerScreen<TankMenu> {
     @Override
     protected void init() {
         super.init();
-        fluidWidget = this.addRenderableWidget(new WidgetFluid(this.leftPos + 5, this.topPos + 14, this.imageWidth - 10, 58, menu.getBlockEntity().getFluidHandler(), 0));
+        fluidWidget = this.addRenderableWidget(new WidgetFluid(this.leftPos + 30, this.topPos + 14, this.imageWidth - 35, 58, menu.getBlockEntity().getFluidHandler(), 0));
         this.configPanel = new ConfigPanel(this.menu, this.leftPos, this.topPos, this.imageWidth, this.imageHeight);
         this.configPanel.setVisible(false);
         this.configTab = this.addRenderableWidget(new TabConfig(this.leftPos - 22, this.topPos + 2, 22, 22, (mouseX, mouseY) -> {
