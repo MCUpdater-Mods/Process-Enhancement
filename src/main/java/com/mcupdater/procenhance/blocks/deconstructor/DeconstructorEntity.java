@@ -129,7 +129,7 @@ public class DeconstructorEntity extends AbstractMachineBlockEntity {
                 if (currentRecipe instanceof CraftingRecipe craftingRecipe) {
                     int slot = 1;
                     for (Ingredient ingredient : craftingRecipe.getIngredients()) {
-                        if (!ingredient.getItems()[0].hasContainerItem()) {
+                        if (!ingredient.isEmpty() && ingredient.getItems().length > 0 && !ingredient.getItems()[0].hasContainerItem()) {
                             itemResourceHandler.setItem(slot, Arrays.stream(ingredient.getItems()).findFirst().orElse(ItemStack.EMPTY).copy());
                         }
                         slot++;
