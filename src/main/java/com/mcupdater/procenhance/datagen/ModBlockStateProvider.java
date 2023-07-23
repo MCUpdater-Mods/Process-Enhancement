@@ -6,10 +6,13 @@ import com.mcupdater.procenhance.blocks.battery.BatteryBlock;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 
@@ -62,6 +65,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         machine(Registration.MINERT4_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/miner", true);
         machine(Registration.DISENCHANTER_BLOCK.get(),Blocks.LAPIS_BLOCK,Blocks.AMETHYST_BLOCK, Blocks.POLISHED_BLACKSTONE, Blocks.NETHER_PORTAL, Blocks.LAPIS_BLOCK, "block/disenchanter", false);
         machine(Registration.DECONSTRUCTOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.AMETHYST_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/deconstructor", false);
+        solidifier(Registration.COBBLESTONESOLIDIFIER_BLOCK.get(),Blocks.COPPER_BLOCK,blockTexture(Blocks.COBBLESTONE), "block/solidifier", new ResourceLocation("minecraft", "block/water_flow"), new ResourceLocation("minecraft", "block/lava_flow"));
+        solidifier(Registration.BASALTSOLIDIFIER_BLOCK.get(),Blocks.COPPER_BLOCK,new ResourceLocation("minecraft","block/basalt_side"), "block/solidifier", blockTexture(Blocks.BLUE_ICE), new ResourceLocation("minecraft", "block/lava_flow"));
 
         horizontalBlock(Registration.BASICBATTERY_BLOCK.get(), (blockState -> {
             int charge = blockState.getValue(BatteryBlock.CHARGE_LEVEL);
@@ -107,6 +112,26 @@ public class ModBlockStateProvider extends BlockStateProvider {
                     .texture("overlay", new ResourceLocation(ProcessEnhancement.MODID, "block/battery" + blockState.getValue(BatteryBlock.CHARGE_LEVEL)))
                     .texture("particle", blockTexture(Blocks.COPPER_BLOCK));
         }));
+    }
+
+    private void solidifier(Block block, Block frame, ResourceLocation face, String overlay, ResourceLocation left, ResourceLocation right) {
+        horizontalBlock(block, (blockstate -> {
+            return models().getBuilder(block.getRegistryName().getPath())
+                    .parent(new ModelFile.UncheckedModelFile("processenhancement:block/solidifier"))
+                    .texture("frame", blockTexture(frame))
+                    .texture("corner", blockTexture(frame))
+                    .texture("face", face)
+                    .texture("inset", blockTexture(Blocks.BLACK_CONCRETE))
+                    .texture("overlay", new ResourceLocation(ProcessEnhancement.MODID, overlay))
+                    .texture("overlay_left", left)
+                    .texture("overlay_right", right)
+                    .texture("particle", blockTexture(frame));
+        }));
+    }
+
+    public ResourceLocation itemTexture(Item item) {
+        ResourceLocation name = item.getRegistryName();
+        return new ResourceLocation(name.getNamespace(), ModelProvider.ITEM_FOLDER + "/" + name.getPath());
     }
 
     protected void machine(@NotNull Block block, Block frame, Block face, String overlay, boolean splitActiveTextures) {

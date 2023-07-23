@@ -7,12 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "processenhancement:retain_enchantments"
-            }
-          ],
-          "name": "processenhancement:intermediate_miner"
+          "name": "processenhancement:cobblestone_solidifier"
         }
       ],
       "conditions": [

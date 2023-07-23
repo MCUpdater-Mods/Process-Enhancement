@@ -21,6 +21,7 @@ public class ProcessEnhancement {
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ModSetup::init);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::registerColors);
         if (ModList.get().isLoaded("patchouli")) PatchouliConfig.register();
     }
 }

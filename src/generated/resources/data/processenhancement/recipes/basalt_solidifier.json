@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CBC",
+    "IPL",
+    "CSC"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:basalt"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "I": {
+      "item": "minecraft:blue_ice"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    },
+    "P": {
+      "item": "minecraft:iron_pickaxe"
+    },
+    "S": {
+      "item": "minecraft:soul_soil"
+    }
+  },
+  "result": {
+    "item": "processenhancement:basalt_solidifier"
+  }
+}

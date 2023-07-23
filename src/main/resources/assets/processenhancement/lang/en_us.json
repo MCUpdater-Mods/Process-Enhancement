@@ -49,5 +49,7 @@
     "block.processenhancement.advanced_biogenerator": "Advanced Biogenerator",
     "block.processenhancement.intermediate_biogenerator": "Intermediate Biogenerator",
     "block.processenhancement.disenchanter": "Disenchanter",
-    "block.processenhancement.deconstructor": "Deconstructor"
+    "block.processenhancement.deconstructor": "Deconstructor",
+    "block.processenhancement.cobblestone_solidifier": "Cobblestone Solidifier",
+    "block.processenhancement.basalt_solidifier": "Basalt Solidifier"
 }

@@ -7,6 +7,7 @@ import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -40,6 +41,7 @@ public abstract class MinerEntity extends AbstractMachineBlockEntity {
     private List<BlockPos> mineableBlocks = new ArrayList<>();
     private Queue<ItemStack> internalBuffer = new LinkedList<>();
     private int tick = 0;
+    private ListTag enchantments;
 
     public MinerEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, int multiplier, int range) {
         super(blockEntityType, blockPos, blockState, Config.MINER_ENERGY_PER_TICK.get() * 1000 * multiplier, Integer.MAX_VALUE, Config.MINER_ENERGY_PER_TICK.get(), multiplier);
@@ -124,6 +126,11 @@ public abstract class MinerEntity extends AbstractMachineBlockEntity {
                         BlockPos blockPos = tempBlocks.get(0);
                         BlockState state = level.getBlockState(blockPos);
                         ItemStack fakePickaxe = new ItemStack(Items.NETHERITE_PICKAXE);
+                        if (this.enchantments != null) {
+                            CompoundTag compoundTag = new CompoundTag();
+                            compoundTag.put("Enchantments", this.enchantments);
+                            fakePickaxe.setTag(compoundTag);
+                        }
                         List<ItemStack> miningResults = state.getDrops(new LootContext.Builder((ServerLevel) this.level)
                                 .withRandom(this.level.random)
                                 .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockPos))
@@ -189,5 +196,17 @@ public abstract class MinerEntity extends AbstractMachineBlockEntity {
 
     public ItemResourceHandler getItemResourceHandler() {
         return this.itemResourceHandler;
+    }
+
+    public void setEnchantments(ListTag enchantments) {
+        this.enchantments = enchantments;
+    }
+
+    public CompoundTag getEnchantmentTags() {
+        CompoundTag compoundTag = new CompoundTag();
+        if (this.enchantments != null) {
+            compoundTag.put("Enchantments", this.enchantments);
+        }
+        return compoundTag;
     }
 }

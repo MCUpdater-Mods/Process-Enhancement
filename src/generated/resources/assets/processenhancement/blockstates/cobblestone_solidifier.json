@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,lit=false": {
+      "model": "processenhancement:block/cobblestone_solidifier"
+    },
+    "facing=south,lit=false": {
+      "model": "processenhancement:block/cobblestone_solidifier",
+      "y": 180
+    },
+    "facing=west,lit=false": {
+      "model": "processenhancement:block/cobblestone_solidifier",
+      "y": 270
+    },
+    "facing=east,lit=false": {
+      "model": "processenhancement:block/cobblestone_solidifier",
+      "y": 90
+    },
+    "facing=north,lit=true": {
+      "model": "processenhancement:block/cobblestone_solidifier"
+    },
+    "facing=south,lit=true": {
+      "model": "processenhancement:block/cobblestone_solidifier",
+      "y": 180
+    },
+    "facing=west,lit=true": {
+      "model": "processenhancement:block/cobblestone_solidifier",
+      "y": 270
+    },
+    "facing=east,lit=true": {
+      "model": "processenhancement:block/cobblestone_solidifier",
+      "y": 90
+    }
+  }
+}

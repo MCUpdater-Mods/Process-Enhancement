@@ -29,12 +29,10 @@
     "processenhancement:intermediate_pump",
     "processenhancement:advanced_pump",
     "processenhancement:industrial_pump",
-    "processenhancement:basic_miner",
-    "processenhancement:intermediate_miner",
-    "processenhancement:advanced_miner",
-    "processenhancement:industrial_miner",
     "processenhancement:disenchanter",
     "processenhancement:deconstructor",
+    "processenhancement:cobblestone_solidifier",
+    "processenhancement:basalt_solidifier",
     "processenhancement:copper_wire",
     "processenhancement:basic_battery",
     "processenhancement:intermediate_battery",
@@ -43,6 +41,10 @@
     "processenhancement:basic_tank",
     "processenhancement:intermediate_tank",
     "processenhancement:advanced_tank",
-    "processenhancement:industrial_tank"
+    "processenhancement:industrial_tank",
+    "processenhancement:basic_miner",
+    "processenhancement:intermediate_miner",
+    "processenhancement:advanced_miner",
+    "processenhancement:industrial_miner"
   ]
 }

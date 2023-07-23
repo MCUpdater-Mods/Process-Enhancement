@@ -1,5 +1,6 @@
 package com.mcupdater.procenhance.setup;
 
+import com.mcupdater.procenhance.loot.functions.RetainEnchantmentsFunction;
 import com.mcupdater.procenhance.loot.functions.RetainEnergyFunction;
 import com.mcupdater.procenhance.loot.functions.RetainFluidFunction;
 import com.mcupdater.procenhance.network.ChannelRegistration;
@@ -11,5 +12,6 @@ public class ModSetup {
         ChannelRegistration.init();
         RetainEnergyFunction.load();
         RetainFluidFunction.load();
+        RetainEnchantmentsFunction.load();
     }
 }

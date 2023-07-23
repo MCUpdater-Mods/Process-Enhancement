@@ -6,6 +6,8 @@ import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.mculib.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -70,6 +72,10 @@ public abstract class MinerBlock extends AbstractMachineBlock {
             if (blockEntity instanceof AbstractConfigurableBlockEntity) {
                 ((AbstractConfigurableBlockEntity)blockEntity).setCustomName(pStack.getHoverName());
             }
+        }
+        CompoundTag compoundTag = pStack.getTag();
+        if (compoundTag != null && compoundTag.contains("Enchantments") && blockEntity instanceof MinerEntity miner) {
+            miner.setEnchantments(compoundTag.getList("Enchantments", Tag.TAG_COMPOUND));
         }
         super.setPlacedBy(pLevel, pPos, pState, pPlacer, pStack);
     }

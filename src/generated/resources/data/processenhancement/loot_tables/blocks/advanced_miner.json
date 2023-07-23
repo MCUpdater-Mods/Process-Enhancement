@@ -7,6 +7,11 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "processenhancement:retain_enchantments"
+            }
+          ],
           "name": "processenhancement:advanced_miner"
         }
       ],

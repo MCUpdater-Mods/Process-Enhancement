@@ -28,5 +28,8 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         for (RegistryObject<Block> entry : Registration.TANKS.getEntries()) {
             this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(entry.get());
         }
+        for (RegistryObject<Block> entry : Registration.MINERS.getEntries()) {
+            this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(entry.get());
+        }
     }
 }

@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "processenhancement:advanced_miner"
+      "processenhancement:cobblestone_solidifier"
     ]
   },
   "criteria": {
-    "has_miner": {
+    "automatic": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "processenhancement:intermediate_miner"
+              "minecraft:cobblestone"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "processenhancement:advanced_miner"
+        "recipe": "processenhancement:cobblestone_solidifier"
       }
     }
   },
   "requirements": [
     [
-      "has_miner",
+      "automatic",
       "has_the_recipe"
     ]
   ]

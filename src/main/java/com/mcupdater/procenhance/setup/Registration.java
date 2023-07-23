@@ -27,15 +27,12 @@ import com.mcupdater.procenhance.blocks.pump.*;
 import com.mcupdater.procenhance.blocks.sawmill.SawmillBlock;
 import com.mcupdater.procenhance.blocks.sawmill.SawmillEntity;
 import com.mcupdater.procenhance.blocks.sawmill.SawmillMenu;
+import com.mcupdater.procenhance.blocks.solidifier.*;
 import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterBlock;
 import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterEntity;
 import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterMenu;
 import com.mcupdater.procenhance.blocks.tank.*;
-import com.mcupdater.procenhance.recipe.BatteryUpgradeRecipe;
-import com.mcupdater.procenhance.recipe.GrinderRecipe;
-import com.mcupdater.procenhance.recipe.SawmillRecipe;
-import com.mcupdater.procenhance.recipe.TankUpgradeRecipe;
-import net.minecraft.client.renderer.item.ItemProperties;
+import com.mcupdater.procenhance.recipe.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
@@ -57,6 +54,7 @@ public class Registration {
     public static final DeferredRegister<Block> MACHINES = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Block> BATTERIES = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Block> TANKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
+    public static final DeferredRegister<Block> MINERS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, MODID);
@@ -68,6 +66,7 @@ public class Registration {
         MACHINES.register(modEventBus);
         BATTERIES.register(modEventBus);
         TANKS.register(modEventBus);
+        MINERS.register(modEventBus);
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         BLOCK_ENTITIES.register(modEventBus);
@@ -283,16 +282,16 @@ public class Registration {
         return new PumpMenu(windowId, world, pos, inv, inv.player, DataHelper.readDirectionMap(data));
     })));
 
-    public static final RegistryObject<MinerBlockT1> MINERT1_BLOCK = MACHINES.register("basic_miner", MinerBlockT1::new);
+    public static final RegistryObject<MinerBlockT1> MINERT1_BLOCK = MINERS.register("basic_miner", MinerBlockT1::new);
     public static final RegistryObject<Item> MINERT1_BLOCKITEM = ITEMS.register("basic_miner", () -> new BlockItem(MINERT1_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<BlockEntityType<MinerEntityT1>> MINERT1_ENTITY = BLOCK_ENTITIES.register("basic_miner", () -> BlockEntityType.Builder.of(MinerEntityT1::new, MINERT1_BLOCK.get()).build(null));
-    public static final RegistryObject<MinerBlockT2> MINERT2_BLOCK = MACHINES.register("intermediate_miner", MinerBlockT2::new);
+    public static final RegistryObject<MinerBlockT2> MINERT2_BLOCK = MINERS.register("intermediate_miner", MinerBlockT2::new);
     public static final RegistryObject<Item> MINERT2_BLOCKITEM = ITEMS.register("intermediate_miner", () -> new BlockItem(MINERT2_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<BlockEntityType<MinerEntityT2>> MINERT2_ENTITY = BLOCK_ENTITIES.register("intermediate_miner", () -> BlockEntityType.Builder.of(MinerEntityT2::new, MINERT2_BLOCK.get()).build(null));
-    public static final RegistryObject<MinerBlockT3> MINERT3_BLOCK = MACHINES.register("advanced_miner", MinerBlockT3::new);
+    public static final RegistryObject<MinerBlockT3> MINERT3_BLOCK = MINERS.register("advanced_miner", MinerBlockT3::new);
     public static final RegistryObject<Item> MINERT3_BLOCKITEM = ITEMS.register("advanced_miner", () -> new BlockItem(MINERT3_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<BlockEntityType<MinerEntityT3>> MINERT3_ENTITY = BLOCK_ENTITIES.register("advanced_miner", () -> BlockEntityType.Builder.of(MinerEntityT3::new, MINERT3_BLOCK.get()).build(null));
-    public static final RegistryObject<MinerBlockT4> MINERT4_BLOCK = MACHINES.register("industrial_miner", MinerBlockT4::new);
+    public static final RegistryObject<MinerBlockT4> MINERT4_BLOCK = MINERS.register("industrial_miner", MinerBlockT4::new);
     public static final RegistryObject<Item> MINERT4_BLOCKITEM = ITEMS.register("industrial_miner", () -> new BlockItem(MINERT4_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<BlockEntityType<MinerEntityT4>> MINERT4_ENTITY = BLOCK_ENTITIES.register("industrial_miner", () -> BlockEntityType.Builder.of(MinerEntityT4::new, MINERT4_BLOCK.get()).build(null));
     public static final RegistryObject<MenuType<MinerMenu>> MINER_MENU = CONTAINERS.register("miner", () -> IForgeMenuType.create(((windowId, inv, data) -> {
@@ -301,6 +300,7 @@ public class Registration {
         MinerEntity blockEntity = (MinerEntity) world.getBlockEntity(pos);
         return new MinerMenu(windowId, world, pos, inv, inv.player, DataHelper.readDirectionMap(data));
     })));
+    public static final RegistryObject<RecipeSerializer<MinerRecipe>> MINERRECIPE_SERIALIZER = RECIPE_SERIALIZERS.register("miner", () -> MinerRecipe.SERIALIZER);
 
     public static final RegistryObject<DisenchanterBlock> DISENCHANTER_BLOCK = MACHINES.register("disenchanter", DisenchanterBlock::new);
     public static final RegistryObject<Item> DISENCHANTER_BLOCKITEM = ITEMS.register("disenchanter", () -> new BlockItem(DISENCHANTER_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
@@ -320,6 +320,19 @@ public class Registration {
         Level world = inv.player.level;
         DeconstructorEntity blockEntity = (DeconstructorEntity) world.getBlockEntity(pos);
         return new DeconstructorMenu(windowId, world, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
+    })));
+
+    public static final RegistryObject<CobblestoneSolidifierBlock> COBBLESTONESOLIDIFIER_BLOCK = MACHINES.register("cobblestone_solidifier", CobblestoneSolidifierBlock::new);
+    public static final RegistryObject<Item> COBBLESTONESOLIDIFIER_BLOCKITEM = ITEMS.register("cobblestone_solidifier", () -> new BlockItem(COBBLESTONESOLIDIFIER_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<CobblestoneSolidifierEntity>> COBBLESTONESOLIDIFIER_ENTITY = BLOCK_ENTITIES.register("cobblestone_solidifier", () -> BlockEntityType.Builder.of(CobblestoneSolidifierEntity::new, COBBLESTONESOLIDIFIER_BLOCK.get()).build(null));
+    public static final RegistryObject<BasaltSolidifierBlock> BASALTSOLIDIFIER_BLOCK = MACHINES.register("basalt_solidifier", BasaltSolidifierBlock::new);
+    public static final RegistryObject<Item> BASALTSOLIDIFIER_BLOCKITEM = ITEMS.register("basalt_solidifier", () -> new BlockItem(BASALTSOLIDIFIER_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<BasaltSolidifierEntity>> BASALTSOLIDIFIER_ENTITY = BLOCK_ENTITIES.register("basalt_solidifier", () -> BlockEntityType.Builder.of(BasaltSolidifierEntity::new, BASALTSOLIDIFIER_BLOCK.get()).build(null));
+    public static final RegistryObject<MenuType<SolidifierMenu>> SOLIDIFIER_MENU = CONTAINERS.register("solidifier", () -> IForgeMenuType.create(((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        Level world = inv.player.level;
+        AbstractSolidifierEntity blockEntity = (AbstractSolidifierEntity) world.getBlockEntity(pos);
+        return new SolidifierMenu(windowId, world, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
     })));
 
     public static final RegistryObject<Item> IRON_DUST = ITEMS.register("iron_dust", () -> new Item(new Item.Properties().tab(MCULIB_ITEM_GROUP)));

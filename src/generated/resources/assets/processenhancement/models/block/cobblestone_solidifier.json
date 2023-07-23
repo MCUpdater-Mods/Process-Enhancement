@@ -1,0 +1,13 @@
+{
+  "parent": "processenhancement:block/solidifier",
+  "textures": {
+    "frame": "minecraft:block/copper_block",
+    "corner": "minecraft:block/copper_block",
+    "face": "minecraft:block/cobblestone",
+    "inset": "minecraft:block/black_concrete",
+    "overlay": "processenhancement:block/solidifier",
+    "overlay_left": "minecraft:block/water_flow",
+    "overlay_right": "minecraft:block/lava_flow",
+    "particle": "minecraft:block/copper_block"
+  }
+}

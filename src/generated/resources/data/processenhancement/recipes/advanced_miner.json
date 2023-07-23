@@ -1,12 +1,12 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "processenhancement:miner",
   "pattern": [
     "UuU",
-    "uMu",
+    "uBu",
     "UuU"
   ],
   "key": {
-    "M": {
+    "B": {
       "item": "processenhancement:intermediate_miner"
     },
     "U": {
