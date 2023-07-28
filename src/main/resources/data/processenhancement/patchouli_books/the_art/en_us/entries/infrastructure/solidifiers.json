@@ -1,0 +1,16 @@
+{
+  "name": "Solidifiers",
+  "icon": "processenhancement:cobblestone_solidifier",
+  "category": "processenhancement:infrastructure",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "These machines use a small amount of power to automate the creation of cobblestone or basalt."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:cobblestone_solidifier",
+      "recipe2": "processenhancement:basalt_solidifier"
+    }
+  ]
+}

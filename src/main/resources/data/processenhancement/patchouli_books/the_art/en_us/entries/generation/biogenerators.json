@@ -5,7 +5,11 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "These tiered power generators are fueled by a combination of $(l:processenhancement:items/dusts#plant_dust)Macerated Biomass$(/l), $(l:processenhancement:items/dusts#copper_dust)Copper Dust$(/l), and $(l:processenhancement:items/gunpowder)Gunpowder$(/l). Each successive tier will burn fuels at the same rates while generating additional power.$(br)$(li)Basic: 1x power generation$(li)Intermediate: 2x power generation$(li)Advanced: 4x power generation$(li)Industrial: 8x power generation"
+      "text": "These tiered power generators are fueled by a combination of $(l:processenhancement:items/dusts#plant_dust)Macerated Biomass$(/l), $(l:processenhancement:items/dusts#copper_dust)Copper Dust$(/l), and $(l:processenhancement:items/gunpowder)Gunpowder$(/l). Each successive tier will burn fuels at the same rates while generating additional power."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)Basic: 1x power generation$(li)Intermediate: 2x power generation$(li)Advanced: 4x power generation$(li)Industrial: 8x power generation"
     },
     {
       "type": "patchouli:crafting",

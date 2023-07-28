@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "These tiered tanks will store your fluids. Each successive tier increases the capacity. $(br)$(li)Basic: 10k mB$(li)Intermediate: 100k mB$(li)Advanced: 1M mB$(li)Industrial: 10M mB"
+      "text": "These tiered tanks will store your fluids and retain their contents when broken. Each successive tier increases the capacity. $(br)$(li)Basic: 10k mB$(li)Intermediate: 100k mB$(li)Advanced: 1M mB$(li)Industrial: 10M mB"
     },
     {
       "type": "patchouli:crafting",
