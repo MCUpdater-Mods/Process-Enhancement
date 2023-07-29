@@ -73,6 +73,7 @@ public class Registration {
         CONTAINERS.register(modEventBus);
         RECIPE_SERIALIZERS.register(modEventBus);
     }
+
     public static final RegistryObject<CrudeGeneratorBlock> CRUDEGENERATOR_BLOCK = MACHINES.register("crude_generator", CrudeGeneratorBlock::new);
     public static final RegistryObject<Item> CRUDEGENERATOR_BLOCKITEM = ITEMS.register("crude_generator", () -> new BlockItem(CRUDEGENERATOR_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<BlockEntityType<CrudeGeneratorEntity>> CRUDEGENERATOR_BLOCKENTITY = BLOCK_ENTITIES.register("crude_generator", () -> BlockEntityType.Builder.of(CrudeGeneratorEntity::new, CRUDEGENERATOR_BLOCK.get()).build(null));

@@ -1,5 +1,10 @@
 {
   "type": "processenhancement:grinder",
+  "conditions": [
+    {
+      "type": "processenhancement:config"
+    }
+  ],
   "ingredients": [
     {
       "item": "minecraft:basalt"

@@ -2,6 +2,7 @@ package com.mcupdater.procenhance.datagen;
 
 import com.mcupdater.procenhance.datagen.custom.*;
 import com.mcupdater.procenhance.recipe.BatteryUpgradeRecipe;
+import com.mcupdater.procenhance.recipe.ConfigCondition;
 import com.mcupdater.procenhance.recipe.MinerRecipe;
 import com.mcupdater.procenhance.recipe.TankUpgradeRecipe;
 import com.mcupdater.procenhance.setup.Registration;
@@ -17,8 +18,8 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.crafting.conditions.ICondition;
-import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
+import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.common.crafting.conditions.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -224,7 +225,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         // Grinder recipes
         grinder("cobblestone",Ingredient.of(Blocks.COBBLESTONE),200,0.01f).addOutput(new ItemStack(Blocks.GRAVEL,1), 1).save(finishedRecipeConsumer);
-        grinder("gravel",Ingredient.of(Blocks.GRAVEL), 200, 0.01f)
+        /*
+        // Disabled recipe generation.  Generated recipes moved to resources
+        grinder("gravel_noresources",Ingredient.of(Blocks.GRAVEL), 200, 0.01f)
+                .addCondition(new NotCondition(TrueCondition.INSTANCE))
+                .addOutput(new ItemStack(Items.FLINT, 1), 1)
+                .save(finishedRecipeConsumer);
+        grinder("gravel_resources",Ingredient.of(Blocks.GRAVEL), 200, 0.01f)
+                .addCondition(TrueCondition.INSTANCE)
                 .addOutput(new ItemStack(Blocks.DIRT,1), 40)
                 .addOutput(new ItemStack(Blocks.SAND,1), 40)
                 .addOutput(new ItemStack(Items.FLINT, 1), 20)
@@ -237,6 +245,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .addOutput(new ItemStack(Items.DIAMOND, 1), 2)
                 .save(finishedRecipeConsumer);
         grinder("basalt",Ingredient.of(Blocks.BASALT), 200, 0.1f)
+                .addCondition(TrueCondition.INSTANCE)
                 .addOutput(new ItemStack(Blocks.NETHERRACK, 1), 40)
                 .addOutput(new ItemStack(Blocks.BLACKSTONE, 1), 40)
                 .addOutput(new ItemStack(Blocks.SOUL_SAND, 1), 30)
@@ -247,6 +256,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .addOutput(new ItemStack(Blocks.GILDED_BLACKSTONE, 1), 5)
                 .addOutput(new ItemStack(Items.NETHERITE_SCRAP, 1), 1)
                 .save(finishedRecipeConsumer);
+         */
         grinder("soul_soil",Ingredient.of(Blocks.SOUL_SOIL), 200, 0.1f)
                 .addOutput(new ItemStack(Blocks.WARPED_ROOTS, 1), 30)
                 .addOutput(new ItemStack(Blocks.CRIMSON_ROOTS, 1), 30)

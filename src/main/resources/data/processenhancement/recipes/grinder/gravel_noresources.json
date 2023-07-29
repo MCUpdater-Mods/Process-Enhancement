@@ -1,0 +1,26 @@
+{
+  "type": "processenhancement:grinder",
+  "conditions": [
+    {
+      "value": {
+        "type": "processenhancement:config"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:gravel"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "item": "minecraft:flint"
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 200,
+  "experience": 0.01
+}

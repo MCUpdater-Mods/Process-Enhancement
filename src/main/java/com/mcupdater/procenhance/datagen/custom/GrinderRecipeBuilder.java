@@ -9,6 +9,7 @@ import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.core.Registry;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
@@ -18,6 +19,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.common.crafting.conditions.ICondition;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ public class GrinderRecipeBuilder implements RecipeBuilder {
     private final List<Tuple<ItemStack,Integer>> outputs;
     private final int processTime;
     private final float experience;
+    protected final List<ICondition> conditions = new ArrayList<>();
     private final Advancement.Builder advancement = Advancement.Builder.advancement();
 
     public GrinderRecipeBuilder(String recipeName, Ingredient input, int processTime, float experience) {
@@ -56,6 +60,13 @@ public class GrinderRecipeBuilder implements RecipeBuilder {
         return Items.BARRIER;
     }
 
+    public GrinderRecipeBuilder addCondition(@Nullable ICondition condition) {
+        if (condition != null) {
+            this.conditions.add(condition);
+        }
+        return this;
+    }
+
     public GrinderRecipeBuilder addOutput(ItemStack itemStack, Integer weight) {
         this.outputs.add(this.outputs.size(), new Tuple<>(itemStack, weight));
         return this;
@@ -69,7 +80,7 @@ public class GrinderRecipeBuilder implements RecipeBuilder {
         finishedRecipeConsumer.accept(new GrinderRecipeBuilder.Result(recipeId, recipeName, this.input, this.outputs, this.processTime, this.experience, this.advancement, new ResourceLocation(recipeId.getNamespace(),"recipes/grinder/" + this.recipeName)));
     }
 
-    public static class Result implements FinishedRecipe {
+    public class Result implements FinishedRecipe {
         private final ResourceLocation recipeId;
         private final String recipeName;
         private final Ingredient input;
@@ -88,6 +99,21 @@ public class GrinderRecipeBuilder implements RecipeBuilder {
             this.experience = experience;
             this.advancement = advancement;
             this.advancementId = advancementId;
+        }
+
+        @Override
+        public JsonObject serializeRecipe() {
+           JsonObject jsonobject = new JsonObject();
+           jsonobject.addProperty("type", Registry.RECIPE_SERIALIZER.getKey(this.getType()).toString());
+           if (!conditions.isEmpty()) {
+               JsonArray conditionsArray = new JsonArray();
+               for (ICondition condition : conditions) {
+                   conditionsArray.add(CraftingHelper.serialize(condition));
+               }
+               jsonobject.add("conditions", conditionsArray);
+           }
+           this.serializeRecipeData(jsonobject);
+           return jsonobject;
         }
 
         @Override
