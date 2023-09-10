@@ -1,0 +1,20 @@
+{
+  "type": "processenhancement:sawmill",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "byg"
+    }
+  ],
+  "experience": 0.05,
+  "ingredients": [
+    {
+      "item": "byg:cika_log"
+    }
+  ],
+  "processTime": 32,
+  "result": {
+    "count": 4,
+    "item": "byg:cika_fence"
+  }
+}

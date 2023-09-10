@@ -1,0 +1,20 @@
+{
+  "type": "processenhancement:sawmill",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "byg"
+    }
+  ],
+  "experience": 0.0,
+  "ingredients": [
+    {
+      "item": "byg:blue_enchanted_boat"
+    }
+  ],
+  "processTime": 32,
+  "result": {
+    "count": 5,
+    "item": "byg:blue_enchanted_planks"
+  }
+}

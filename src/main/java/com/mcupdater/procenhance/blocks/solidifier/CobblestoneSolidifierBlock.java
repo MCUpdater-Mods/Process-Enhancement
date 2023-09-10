@@ -42,7 +42,7 @@ public class CobblestoneSolidifierBlock extends AbstractMachineBlock {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
             if (blockEntity instanceof CobblestoneSolidifierEntity cobblestoneSolidifier) {
                 Map<Direction, Component> adjacentNames = DataHelper.getAdjacentNames(pLevel, pPos);
-                NetworkHooks.openGui((ServerPlayer)pPlayer, cobblestoneSolidifier, (buf) -> {
+                NetworkHooks.openScreen((ServerPlayer)pPlayer, cobblestoneSolidifier, (buf) -> {
                     buf.writeBlockPos(pPos);
                     DataHelper.writeDirectionMap(buf, adjacentNames);
                 });

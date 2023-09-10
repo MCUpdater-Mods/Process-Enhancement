@@ -1,5 +1,6 @@
 {
   "type": "processenhancement:grinder",
+  "experience": 0.05,
   "ingredients": [
     {
       "tag": "minecraft:diamond_ores"
@@ -8,33 +9,32 @@
   "outputs": [
     {
       "stack": {
-        "item": "minecraft:diamond",
-        "count": 3
+        "count": 3,
+        "item": "minecraft:diamond"
       },
       "weight": 55
     },
     {
       "stack": {
-        "item": "minecraft:diamond",
-        "count": 4
+        "count": 4,
+        "item": "minecraft:diamond"
       },
       "weight": 25
     },
     {
       "stack": {
-        "item": "minecraft:diamond",
-        "count": 5
+        "count": 5,
+        "item": "minecraft:diamond"
       },
       "weight": 18
     },
     {
       "stack": {
-        "item": "minecraft:diamond",
-        "count": 6
+        "count": 6,
+        "item": "minecraft:diamond"
       },
       "weight": 2
     }
   ],
-  "processTime": 200,
-  "experience": 0.05
+  "processTime": 200
 }

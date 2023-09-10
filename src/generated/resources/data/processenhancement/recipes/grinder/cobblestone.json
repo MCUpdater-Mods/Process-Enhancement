@@ -1,5 +1,6 @@
 {
   "type": "processenhancement:grinder",
+  "experience": 0.01,
   "ingredients": [
     {
       "item": "minecraft:cobblestone"
@@ -13,6 +14,5 @@
       "weight": 1
     }
   ],
-  "processTime": 200,
-  "experience": 0.01
+  "processTime": 200
 }

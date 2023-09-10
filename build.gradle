@@ -1,22 +1,9 @@
-buildscript {
-    repositories {
-        // These repositories are only for Gradle plugins, put any other repositories in the repository block further below
-        maven { url = 'https://maven.minecraftforge.net' }
-        maven { url = 'https://maven.parchmentmc.org'}
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath 'org.parchmentmc:librarian:1.+'
-    }
-}
-// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 plugins {
     id 'eclipse'
     id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 }
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
 
 group = 'com.mcupdater.procenhance' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "${mod_name}-${mc_version}"
@@ -54,7 +41,7 @@ minecraft {
     // Use non-default mappings at your own risk. They may not always work.
     // Simply re-run your setup task after changing the mappings to update your workspace.
     //mappings channel: 'official', version: '1.18.2'
-    mappings channel: 'parchment', version: '2022.11.06-1.18.2'
+    mappings channel: 'parchment', version: '2022.11.27-1.19.2'
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
 
@@ -160,10 +147,14 @@ repositories {
     // Put repositories for dependencies here
     // ForgeGradle automatically adds the Forge maven and Maven Central for you
     //maven {
-    //    // location of the maven that hosts JEI files
+        // location of the maven that hosts JEI files
     //    name = "Progwml6 maven"
     //    url = "https://dvs1.progwml6.com/files/maven/"
     //}
+    maven {
+        name = "Jared's maven"
+        url = "https://maven.blamejared.com/"
+    }
     maven {
         // location of a maven mirror for JEI files, as a fallback
         name = "ModMaven"
@@ -177,6 +168,14 @@ repositories {
         name = "Patchouli"
         url = "https://maven.blamejared.com"
     }
+    maven {
+        name = "CurseForge Maven"
+        url 'https://cursemaven.com'
+        content {
+            includeGroup "curse.maven"
+        }
+        // implementation fg.deobf('curse.maven:descriptor-ProjectID:FileID')
+    }
 
     // If you have mod jar dependencies in ./libs, you can declare them as a repository like so:
     flatDir {
@@ -188,23 +187,24 @@ dependencies {
     // Specify the version of Minecraft to use. If this is any group other than 'net.minecraft', it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.18.2-40.2.10'
+    minecraft 'net.minecraftforge:forge:1.19.2-43.2.21'
 
     // Real mod deobf dependency examples - these get remapped to your current mappings
-    compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
-    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a runtime dependency
+    compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
     implementation fg.deobf(project.dependencies.create("mcjty.theoneprobe:theoneprobe:${top_version}") { transitive = false})
-    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.18.2-71.1:api")
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.18.2-71.1")
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.19.2-77:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.19.2-77")
     // implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency
 
     // Examples using mod jars from ./libs
-    implementation fg.deobf("blank:MCULib-1.18.2:1.3.1")
+    implementation fg.deobf("blank:MCULib-1.19.2:1.4.0a")
 
     // Mods for testing
-    runtimeOnly fg.deobf("blank:mcwroofs:1.0")
-    runtimeOnly fg.deobf("blank:mcwwindows:1.0")
-    runtimeOnly fg.deobf("blank:nbttool:2.1.0")
+    runtimeOnly fg.deobf("curse.maven:mcwroofs-352039:4590028")
+    runtimeOnly fg.deobf("curse.maven:mcwwindows-363569:4203423")
+    //runtimeOnly fg.deobf("blank:nbttool:2.1.0")
 
     // Mods for integration
     //implementation fg.deobf("blank:ars_nouveau:1.0")
@@ -212,6 +212,10 @@ dependencies {
     //implementation fg.deobf("blank:integrateddynamics:1.0")
     //runtimeOnly fg.deobf("blank:quark:1.0")
     //implementation fg.deobf("blank:twilightforest:1.0")
+    implementation fg.deobf("curse.maven:byg-247560:4602115")
+    implementation fg.deobf("curse.maven:geckolib-388172:4407241")
+    implementation fg.deobf("curse.maven:corgilib-693313:4554111")
+    implementation fg.deobf("curse.maven:terrablender-563928:4618490")
 
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html

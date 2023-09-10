@@ -107,6 +107,12 @@ public class TankMenu extends AbstractContainerMenu implements IConfigurableMenu
     }
 
     @Override
+    public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
+        //TODO
+        return null;
+    }
+
+    @Override
     public void removed(Player pPlayer) {
         super.removed(pPlayer);
         ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos()).execute((level, blockPos) -> {

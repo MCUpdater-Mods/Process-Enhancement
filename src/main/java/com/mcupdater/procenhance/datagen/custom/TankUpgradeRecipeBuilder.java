@@ -17,6 +17,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.compress.utils.Lists;
 import org.jetbrains.annotations.Nullable;
 
@@ -151,7 +152,7 @@ public class TankUpgradeRecipeBuilder implements RecipeBuilder {
             pJson.add("key", ingredientMap);
 
             JsonObject resultObject = new JsonObject();
-            resultObject.addProperty("item", this.result.getRegistryName().toString());
+            resultObject.addProperty("item", ForgeRegistries.ITEMS.getKey(this.result).toString());
             pJson.add("result", resultObject);
         }
 

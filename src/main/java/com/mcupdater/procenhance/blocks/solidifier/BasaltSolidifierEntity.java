@@ -3,7 +3,6 @@ package com.mcupdater.procenhance.blocks.solidifier;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,7 +18,7 @@ public class BasaltSolidifierEntity extends AbstractSolidifierEntity {
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("block.processenhancement.basalt_solidifier");
+        return Component.translatable("block.processenhancement.basalt_solidifier");
     }
 
     @Override

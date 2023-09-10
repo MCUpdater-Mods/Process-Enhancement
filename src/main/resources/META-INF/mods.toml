@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[40,)"
+loaderVersion="[41,)"
 license="Apache License Version 2.0"
 issueTrackerURL="https://github.com/MCUpdater-Mods/Process-Enhancement/issues"
 [[mods]]
@@ -13,6 +13,6 @@ Yet another technology mod, but this one is from the developers of MCUpdater
 [[dependencies.processenhancement]]
 modId="mculib"
 mandatory=true
-versionRange="[1.2,)"
+versionRange="[1.4,)"
 ordering="NONE"
 side="BOTH"

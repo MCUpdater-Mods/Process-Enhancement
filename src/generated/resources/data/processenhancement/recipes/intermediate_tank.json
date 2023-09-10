@@ -1,10 +1,5 @@
 {
   "type": "processenhancement:tank_upgrade",
-  "pattern": [
-    "UuU",
-    "uTu",
-    "UuU"
-  ],
   "key": {
     "T": {
       "item": "processenhancement:basic_tank"
@@ -16,6 +11,11 @@
       "item": "minecraft:copper_block"
     }
   },
+  "pattern": [
+    "UuU",
+    "uTu",
+    "UuU"
+  ],
   "result": {
     "item": "processenhancement:intermediate_tank"
   }

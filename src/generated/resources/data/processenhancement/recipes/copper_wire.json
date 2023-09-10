@@ -1,15 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "CCC"
-  ],
   "key": {
     "C": {
       "item": "minecraft:copper_ingot"
     }
   },
+  "pattern": [
+    "CCC"
+  ],
   "result": {
-    "item": "processenhancement:copper_wire",
-    "count": 16
+    "count": 16,
+    "item": "processenhancement:copper_wire"
   }
 }

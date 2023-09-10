@@ -1,14 +1,14 @@
 {
   "type": "processenhancement:sawmill",
+  "experience": 0.01,
   "ingredients": [
     {
       "tag": "minecraft:planks"
     }
   ],
-  "result": {
-    "item": "minecraft:stick",
-    "count": 3
-  },
   "processTime": 16,
-  "experience": 0.01
+  "result": {
+    "count": 3,
+    "item": "minecraft:stick"
+  }
 }

@@ -14,7 +14,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -40,7 +39,7 @@ public abstract class TankBlock extends AbstractMachineBlock {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
             if (blockEntity instanceof TankEntity tankEntity) {
                 Map<Direction, Component> adjacentNames = DataHelper.getAdjacentNames(pLevel, pPos);
-                NetworkHooks.openGui((ServerPlayer) pPlayer, (MenuProvider) blockEntity, (buf) -> {
+                NetworkHooks.openScreen((ServerPlayer) pPlayer, (MenuProvider) blockEntity, (buf) -> {
                     buf.writeBlockPos(pPos);
                     DataHelper.writeDirectionMap(buf, adjacentNames);
                 });

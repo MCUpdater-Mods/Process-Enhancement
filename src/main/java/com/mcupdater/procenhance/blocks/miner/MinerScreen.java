@@ -2,7 +2,6 @@ package com.mcupdater.procenhance.blocks.miner;
 
 import com.mcupdater.mculib.gui.ConfigPanel;
 import com.mcupdater.mculib.gui.TabConfig;
-import com.mcupdater.mculib.gui.WidgetFluid;
 import com.mcupdater.mculib.gui.WidgetPower;
 import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -52,7 +51,7 @@ public class MinerScreen extends AbstractContainerScreen<MinerMenu> {
         int i = this.leftPos;
         int j = this.topPos;
         this.renderBg(pPoseStack, pPartialTick, pMouseX, pMouseY);
-        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.ContainerScreenEvent.DrawBackground(this, pPoseStack, pMouseX, pMouseY));
+        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.ContainerScreenEvent.Render.Background(this, pPoseStack, pMouseX, pMouseY));
         RenderSystem.disableDepthTest();
         for(Widget widget : this.renderables) {
             widget.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
@@ -63,7 +62,7 @@ public class MinerScreen extends AbstractContainerScreen<MinerMenu> {
         RenderSystem.applyModelViewMatrix();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         this.renderLabels(pPoseStack, pMouseX, pMouseY);
-        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.ContainerScreenEvent.DrawForeground(this, pPoseStack, pMouseX, pMouseY));
+        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.ContainerScreenEvent.Render.Foreground(this, pPoseStack, pMouseX, pMouseY));
         posestack.popPose();
         RenderSystem.applyModelViewMatrix();
         RenderSystem.enableDepthTest();

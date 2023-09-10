@@ -1,27 +1,27 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "CSC",
-    "WPL",
-    "CSC"
-  ],
   "key": {
-    "S": {
-      "item": "minecraft:cobblestone"
-    },
     "C": {
       "item": "minecraft:copper_ingot"
-    },
-    "W": {
-      "item": "minecraft:water_bucket"
     },
     "L": {
       "item": "minecraft:lava_bucket"
     },
     "P": {
       "item": "minecraft:iron_pickaxe"
+    },
+    "S": {
+      "item": "minecraft:cobblestone"
+    },
+    "W": {
+      "item": "minecraft:water_bucket"
     }
   },
+  "pattern": [
+    "CSC",
+    "WPL",
+    "CSC"
+  ],
   "result": {
     "item": "processenhancement:cobblestone_solidifier"
   }

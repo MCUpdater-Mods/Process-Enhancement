@@ -4,7 +4,6 @@ import com.mcupdater.procenhance.recipe.GrinderRecipe;
 import mezz.jei.api.gui.ingredient.IRecipeSlotTooltipCallback;
 import mezz.jei.api.gui.ingredient.IRecipeSlotView;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.item.ItemStack;
 
@@ -28,6 +27,6 @@ public class GrinderTooltipCallback implements IRecipeSlotTooltipCallback {
             totalPool += tuple.getB();
         }
         double chance = ((double) this.weight / (double) totalPool) * 100;
-        tooltip.add(new TextComponent(String.format("Chance: %.2f%%", chance)));
+        tooltip.add(Component.literal(String.format("Chance: %.2f%%", chance)));
     }
 }

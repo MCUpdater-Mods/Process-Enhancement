@@ -178,6 +178,7 @@ public class TankUpgradeRecipe extends ShapedRecipe {
             pBuffer.writeItem(pRecipe.getResultItem());
         }
 
+        /*
         @Override
         public RecipeSerializer<?> setRegistryName(ResourceLocation name) {
             return TankUpgradeRecipe.SERIALIZER;
@@ -193,6 +194,7 @@ public class TankUpgradeRecipe extends ShapedRecipe {
         public Class<RecipeSerializer<?>> getRegistryType() {
             return Serializer.castClass(RecipeSerializer.class);
         }
+         */
 
         private static <G> Class<G> castClass(Class<?> cls) {
             return (Class<G>)cls;

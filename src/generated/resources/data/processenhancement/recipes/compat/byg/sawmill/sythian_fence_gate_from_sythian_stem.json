@@ -1,0 +1,20 @@
+{
+  "type": "processenhancement:sawmill",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "byg"
+    }
+  ],
+  "experience": 0.05,
+  "ingredients": [
+    {
+      "item": "byg:sythian_stem"
+    }
+  ],
+  "processTime": 32,
+  "result": {
+    "count": 2,
+    "item": "byg:sythian_fence_gate"
+  }
+}

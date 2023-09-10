@@ -1,14 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "LBA",
-    "BEB",
-    "ABL"
-  ],
   "key": {
-    "L": {
-      "item": "minecraft:lapis_lazuli"
-    },
     "A": {
       "item": "minecraft:amethyst_shard"
     },
@@ -17,8 +9,16 @@
     },
     "E": {
       "item": "minecraft:enchanting_table"
+    },
+    "L": {
+      "item": "minecraft:lapis_lazuli"
     }
   },
+  "pattern": [
+    "LBA",
+    "BEB",
+    "ABL"
+  ],
   "result": {
     "item": "processenhancement:disenchanter"
   }

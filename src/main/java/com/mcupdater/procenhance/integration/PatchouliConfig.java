@@ -7,7 +7,7 @@ public class PatchouliConfig {
     public static void register() {
         PatchouliAPI.IPatchouliAPI api = PatchouliAPI.get();
         if (!api.isStub()) {
-            api.setConfigFlag("mculib:overdrive", Config.OVERDRIVE_ENABLED.get());
+            //api.setConfigFlag("mculib:overdrive", Config.OVERDRIVE_ENABLED.get());
         }
     }
 }

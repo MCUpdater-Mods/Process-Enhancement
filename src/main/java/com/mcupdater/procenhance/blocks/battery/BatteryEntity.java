@@ -5,7 +5,6 @@ import com.mcupdater.mculib.capabilities.EnergyResourceHandler;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;

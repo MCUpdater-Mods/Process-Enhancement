@@ -1,9 +1,24 @@
 {
   "variants": {
+    "facing=east,lit=false": {
+      "model": "processenhancement:block/sawmill",
+      "y": 90
+    },
+    "facing=east,lit=true": {
+      "model": "processenhancement:block/sawmill",
+      "y": 90
+    },
     "facing=north,lit=false": {
       "model": "processenhancement:block/sawmill"
     },
+    "facing=north,lit=true": {
+      "model": "processenhancement:block/sawmill"
+    },
     "facing=south,lit=false": {
+      "model": "processenhancement:block/sawmill",
+      "y": 180
+    },
+    "facing=south,lit=true": {
       "model": "processenhancement:block/sawmill",
       "y": 180
     },
@@ -11,24 +26,9 @@
       "model": "processenhancement:block/sawmill",
       "y": 270
     },
-    "facing=east,lit=false": {
-      "model": "processenhancement:block/sawmill",
-      "y": 90
-    },
-    "facing=north,lit=true": {
-      "model": "processenhancement:block/sawmill"
-    },
-    "facing=south,lit=true": {
-      "model": "processenhancement:block/sawmill",
-      "y": 180
-    },
     "facing=west,lit=true": {
       "model": "processenhancement:block/sawmill",
       "y": 270
-    },
-    "facing=east,lit=true": {
-      "model": "processenhancement:block/sawmill",
-      "y": 90
     }
   }
 }

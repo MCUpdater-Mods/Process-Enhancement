@@ -1,0 +1,15 @@
+{
+  "name": "AutoPackager",
+  "icon": "processenhancement:autopackager",
+  "category": "processenhancement:processing",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Automatically crafts recipes using a single ingredient based on the patterns provided. Patterns can be pulled for free from the interface and can be changed by right-clicking with it in your hand.  It is strongly recommended to fully automate the input and output of this machine."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:autopackager"
+    }
+  ]
+}

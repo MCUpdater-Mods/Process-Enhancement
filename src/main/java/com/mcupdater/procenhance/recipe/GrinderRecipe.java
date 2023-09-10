@@ -3,7 +3,6 @@ package com.mcupdater.procenhance.recipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mcupdater.procenhance.ProcessEnhancement;
-import com.mcupdater.procenhance.blocks.grinder.GrinderEntity;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -32,6 +31,10 @@ public class GrinderRecipe implements Recipe<Container> {
 
     @Override
     public boolean matches(Container container, Level level) {
+        if (level.isClientSide()) {
+            return false;
+        }
+
         return ingredients.get(0).test(container.getItem(0));
     }
 
@@ -143,6 +146,7 @@ public class GrinderRecipe implements Recipe<Container> {
             buf.writeFloat(recipe.getExperience());
         }
 
+        /*
         @Override
         public RecipeSerializer<?> setRegistryName(ResourceLocation name) {
             return INSTANCE;
@@ -158,6 +162,7 @@ public class GrinderRecipe implements Recipe<Container> {
         public Class<RecipeSerializer<?>> getRegistryType() {
             return Serializer.castClass(RecipeSerializer.class);
         }
+        */
 
         @SuppressWarnings("unchecked")
         private static <G> Class<G> castClass(Class<?> cls) {

@@ -2,8 +2,6 @@ package com.mcupdater.procenhance.blocks.tank;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -35,6 +33,6 @@ public class TankBlockItem extends BlockItem {
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
 
-        pStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).ifPresent(fluidStorage -> pTooltip.add(new TextComponent("Contains: ").append(fluidStorage.getFluidInTank(0).isEmpty() ? new TextComponent("Empty") : new TranslatableComponent(fluidStorage.getFluidInTank(0).getFluid().getAttributes().getTranslationKey()))));
+        pStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).ifPresent(fluidStorage -> pTooltip.add(Component.literal("Contains: ").append(fluidStorage.getFluidInTank(0).isEmpty() ? Component.literal("Empty") : Component.translatable(fluidStorage.getFluidInTank(0).getFluid().getFluidType().getDescriptionId()))));
     }
 }

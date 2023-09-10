@@ -20,7 +20,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.conditions.ICondition;
-import org.apache.logging.log4j.core.jackson.JsonConstants;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -120,7 +120,7 @@ public class SawmillRecipeBuilder implements RecipeBuilder {
             ingredientsArray.add(input.toJson());
             jsonObject.add("ingredients", ingredientsArray);
             JsonObject resultObject = new JsonObject();
-            resultObject.addProperty("item", this.output.getRegistryName().toString());
+            resultObject.addProperty("item", ForgeRegistries.ITEMS.getKey(this.output).toString());
             if (this.count > 1) {
                 resultObject.addProperty("count", this.count);
             }
@@ -131,12 +131,12 @@ public class SawmillRecipeBuilder implements RecipeBuilder {
 
         @Override
         public ResourceLocation getId() {
-            String source = this.input.getItems()[0].getItem().getRegistryName().getPath();
+            String source = ForgeRegistries.ITEMS.getKey(this.input.getItems()[0].getItem()).getPath();
             if (source.equals("barrier")) {
                 ItemStack firstIngredient = Arrays.stream(this.input.getItems()).findFirst().get();
                 source = "tag-" + firstIngredient.getTag().getCompound("display").getString("Name").split(":")[3].replace("\"}","");
             }
-            return new ResourceLocation(ProcessEnhancement.MODID, "sawmill/" + this.output.getRegistryName().getPath() + "_from_" + source);
+            return new ResourceLocation(ProcessEnhancement.MODID, "sawmill/" + ForgeRegistries.ITEMS.getKey(this.output).getPath() + "_from_" + source);
         }
 
         @Override

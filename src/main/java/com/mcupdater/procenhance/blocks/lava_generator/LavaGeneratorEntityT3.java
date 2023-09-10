@@ -2,7 +2,6 @@ package com.mcupdater.procenhance.blocks.lava_generator;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.block.state.BlockState;
 
 import static com.mcupdater.procenhance.setup.Config.BASIC_LAVA_GENERATOR_PER_TICK;
@@ -16,6 +15,6 @@ public class LavaGeneratorEntityT3 extends LavaGeneratorEntity {
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("block.processenhancement.advanced_lava_generator");
+        return Component.translatable("block.processenhancement.advanced_lava_generator");
     }
 }

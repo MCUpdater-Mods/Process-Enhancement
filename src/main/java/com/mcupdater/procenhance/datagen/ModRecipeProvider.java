@@ -2,7 +2,6 @@ package com.mcupdater.procenhance.datagen;
 
 import com.mcupdater.procenhance.datagen.custom.*;
 import com.mcupdater.procenhance.recipe.BatteryUpgradeRecipe;
-import com.mcupdater.procenhance.recipe.ConfigCondition;
 import com.mcupdater.procenhance.recipe.MinerRecipe;
 import com.mcupdater.procenhance.recipe.TankUpgradeRecipe;
 import com.mcupdater.procenhance.setup.Registration;
@@ -18,8 +17,9 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.common.crafting.conditions.*;
+import net.minecraftforge.common.crafting.conditions.ICondition;
+import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -38,6 +38,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         basicMachineRecipe(finishedRecipeConsumer, SAWMILL_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(ItemTags.PLANKS), Ingredient.of(Items.IRON_AXE));
         basicMachineRecipe(finishedRecipeConsumer, STONECUTTER_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Blocks.STONE_BRICKS), Ingredient.of(Blocks.STONECUTTER));
         basicMachineRecipe(finishedRecipeConsumer, BUFFER_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Tags.Items.CHESTS), Ingredient.of(Items.GLASS_BOTTLE));
+        basicMachineRecipe(finishedRecipeConsumer, AUTOPACKAGER_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Blocks.PISTON), Ingredient.of(Blocks.CRAFTING_TABLE));
 
         basicMachineRecipe(finishedRecipeConsumer, BASICGENERATOR_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Blocks.BRICKS), Ingredient.of(Blocks.FURNACE));
         upgradeMachineRecipe(finishedRecipeConsumer, INTERGENERATOR_BLOCK.get(), BASICGENERATOR_BLOCK.get(), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.COPPER_BLOCK));
@@ -186,6 +187,22 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         sawmill(finishedRecipeConsumer, Ingredient.of(Blocks.SPRUCE_PLANKS),Blocks.SPRUCE_SLAB,2,16,0.01f, null);
         sawmill(finishedRecipeConsumer, Ingredient.of(Blocks.SPRUCE_PLANKS),Blocks.SPRUCE_BUTTON,4,16,0.01f, null);
 
+        sawmill(finishedRecipeConsumer, Ingredient.of(ItemTags.MANGROVE_LOGS),Blocks.MANGROVE_PLANKS,6,32,0.05f, null);
+        sawmill(finishedRecipeConsumer, Ingredient.of(ItemTags.MANGROVE_LOGS),Blocks.MANGROVE_STAIRS,6,32,0.05f, null);
+        sawmill(finishedRecipeConsumer, Ingredient.of(ItemTags.MANGROVE_LOGS),Blocks.MANGROVE_SLAB,12,32,0.05f, null);
+        sawmill(finishedRecipeConsumer, Ingredient.of(ItemTags.MANGROVE_LOGS),Blocks.MANGROVE_PRESSURE_PLATE,3,32,0.05f, null);
+        sawmill(finishedRecipeConsumer, Ingredient.of(ItemTags.MANGROVE_LOGS),Items.MANGROVE_SIGN,3,32,0.05f, null);
+        sawmill(finishedRecipeConsumer, Ingredient.of(ItemTags.MANGROVE_LOGS),Blocks.MANGROVE_DOOR,3,32,0.05f, null);
+        sawmill(finishedRecipeConsumer, Ingredient.of(ItemTags.MANGROVE_LOGS),Blocks.MANGROVE_TRAPDOOR,2,32,0.05f, null);
+        sawmill(finishedRecipeConsumer, Ingredient.of(ItemTags.MANGROVE_LOGS),Blocks.STRIPPED_MANGROVE_LOG,1,16,0.01f, null);
+        sawmill(finishedRecipeConsumer, Ingredient.of(ItemTags.MANGROVE_LOGS),Blocks.STRIPPED_MANGROVE_WOOD,1,16,0.01f, null);
+        sawmill(finishedRecipeConsumer, Ingredient.of(ItemTags.MANGROVE_LOGS),Blocks.MANGROVE_FENCE,4,32,0.05f, null);
+        sawmill(finishedRecipeConsumer, Ingredient.of(ItemTags.MANGROVE_LOGS),Blocks.MANGROVE_FENCE_GATE,2,32,0.05f, null);
+        sawmill(finishedRecipeConsumer, Ingredient.of(ItemTags.MANGROVE_LOGS),Items.MANGROVE_BOAT,1,32,0.05f, null);
+        sawmill(finishedRecipeConsumer, Ingredient.of(Blocks.MANGROVE_PLANKS),Blocks.MANGROVE_STAIRS,1,16,0.01f, null);
+        sawmill(finishedRecipeConsumer, Ingredient.of(Blocks.MANGROVE_PLANKS),Blocks.MANGROVE_SLAB,2,16,0.01f, null);
+        sawmill(finishedRecipeConsumer, Ingredient.of(Blocks.MANGROVE_PLANKS),Blocks.MANGROVE_BUTTON,4,16,0.01f, null);
+
         sawmill(finishedRecipeConsumer, Ingredient.of(ItemTags.CRIMSON_STEMS),Blocks.CRIMSON_PLANKS,6,32,0.05f, null);
         sawmill(finishedRecipeConsumer, Ingredient.of(ItemTags.CRIMSON_STEMS),Blocks.CRIMSON_STAIRS,6,32,0.05f, null);
         sawmill(finishedRecipeConsumer, Ingredient.of(ItemTags.CRIMSON_STEMS),Blocks.CRIMSON_SLAB,12,32,0.05f, null);
@@ -222,6 +239,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         sawmill(finishedRecipeConsumer, Ingredient.of(Items.JUNGLE_BOAT),Blocks.JUNGLE_PLANKS,5,32,0f, null);
         sawmill(finishedRecipeConsumer, Ingredient.of(Items.OAK_BOAT),Blocks.OAK_PLANKS,5,32,0f, null);
         sawmill(finishedRecipeConsumer, Ingredient.of(Items.SPRUCE_BOAT),Blocks.SPRUCE_PLANKS,5,32,0f, null);
+        sawmill(finishedRecipeConsumer, Ingredient.of(Items.MANGROVE_BOAT),Blocks.MANGROVE_PLANKS,5,32,0f, null);
 
         // Grinder recipes
         grinder("cobblestone",Ingredient.of(Blocks.COBBLESTONE),200,0.01f).addOutput(new ItemStack(Blocks.GRAVEL,1), 1).save(finishedRecipeConsumer);
@@ -347,8 +365,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     }
 
     private void cookOre(Consumer<FinishedRecipe> finishedRecipeConsumer, Item input, Item output, float experience) {
-        SimpleCookingRecipeBuilder.cooking(Ingredient.of(input),output,experience,200,RecipeSerializer.SMELTING_RECIPE).unlockedBy("has_" + Objects.requireNonNull(input.getRegistryName()).getPath(), has(input)).save(finishedRecipeConsumer, Objects.requireNonNull(output.getRegistryName()).getPath() + "_from_smelting_" + input.getRegistryName().getPath());
-        SimpleCookingRecipeBuilder.cooking(Ingredient.of(input),output,experience,100,RecipeSerializer.BLASTING_RECIPE).unlockedBy("has_" + input.getRegistryName().getPath(), has(input)).save(finishedRecipeConsumer, output.getRegistryName().getPath() + "_from_blasting_" + input.getRegistryName().getPath());
+        SimpleCookingRecipeBuilder.cooking(Ingredient.of(input), output,experience, 200, RecipeSerializer.SMELTING_RECIPE).unlockedBy("has_" + Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(input)).getPath(), has(input)).save(finishedRecipeConsumer, Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(output).getPath() + "_from_smelting_" + ForgeRegistries.ITEMS.getKey(input).getPath()));
+        SimpleCookingRecipeBuilder.cooking(Ingredient.of(input),output,experience,100,RecipeSerializer.BLASTING_RECIPE).unlockedBy("has_" + ForgeRegistries.ITEMS.getKey(input).getPath(), has(input)).save(finishedRecipeConsumer, ForgeRegistries.ITEMS.getKey(output).getPath() + "_from_blasting_" + ForgeRegistries.ITEMS.getKey(input).getPath());
     }
 
     protected static void crudeMachineRecipe(Consumer<FinishedRecipe> finishedRecipeConsumer, ItemLike result, Ingredient corner, Ingredient face, Ingredient core) {

@@ -1,14 +1,14 @@
 {
   "type": "processenhancement:sawmill",
+  "experience": 0.01,
   "ingredients": [
     {
       "item": "minecraft:jungle_planks"
     }
   ],
-  "result": {
-    "item": "minecraft:jungle_slab",
-    "count": 2
-  },
   "processTime": 16,
-  "experience": 0.01
+  "result": {
+    "count": 2,
+    "item": "minecraft:jungle_slab"
+  }
 }

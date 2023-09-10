@@ -1,0 +1,20 @@
+{
+  "type": "processenhancement:sawmill",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "byg"
+    }
+  ],
+  "experience": 0.05,
+  "ingredients": [
+    {
+      "item": "byg:willow_log"
+    }
+  ],
+  "processTime": 32,
+  "result": {
+    "count": 3,
+    "item": "byg:willow_sign"
+  }
+}

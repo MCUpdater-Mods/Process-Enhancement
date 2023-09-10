@@ -19,7 +19,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.*;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -179,6 +178,7 @@ public class BatteryUpgradeRecipe extends ShapedRecipe {
             pBuffer.writeItem(pRecipe.getResultItem());
         }
 
+        /*
         @Override
         public RecipeSerializer<?> setRegistryName(ResourceLocation name) {
             return BatteryUpgradeRecipe.SERIALIZER;
@@ -194,6 +194,7 @@ public class BatteryUpgradeRecipe extends ShapedRecipe {
         public Class<RecipeSerializer<?>> getRegistryType() {
             return Serializer.castClass(RecipeSerializer.class);
         }
+        */
 
         private static <G> Class<G> castClass(Class<?> cls) {
             return (Class<G>)cls;

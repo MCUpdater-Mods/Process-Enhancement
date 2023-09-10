@@ -1,154 +1,154 @@
 {
   "variants": {
+    "charge=0,facing=east,lit=false": {
+      "model": "processenhancement:block/advanced_battery",
+      "y": 90
+    },
+    "charge=0,facing=east,lit=true": {
+      "model": "processenhancement:block/advanced_battery",
+      "y": 90
+    },
     "charge=0,facing=north,lit=false": {
       "model": "processenhancement:block/advanced_battery"
     },
-    "charge=1,facing=north,lit=false": {
-      "model": "processenhancement:block/advanced_battery1"
-    },
-    "charge=2,facing=north,lit=false": {
-      "model": "processenhancement:block/advanced_battery2"
-    },
-    "charge=3,facing=north,lit=false": {
-      "model": "processenhancement:block/advanced_battery3"
-    },
-    "charge=4,facing=north,lit=false": {
-      "model": "processenhancement:block/advanced_battery4"
+    "charge=0,facing=north,lit=true": {
+      "model": "processenhancement:block/advanced_battery"
     },
     "charge=0,facing=south,lit=false": {
       "model": "processenhancement:block/advanced_battery",
       "y": 180
     },
-    "charge=1,facing=south,lit=false": {
-      "model": "processenhancement:block/advanced_battery1",
-      "y": 180
-    },
-    "charge=2,facing=south,lit=false": {
-      "model": "processenhancement:block/advanced_battery2",
-      "y": 180
-    },
-    "charge=3,facing=south,lit=false": {
-      "model": "processenhancement:block/advanced_battery3",
-      "y": 180
-    },
-    "charge=4,facing=south,lit=false": {
-      "model": "processenhancement:block/advanced_battery4",
+    "charge=0,facing=south,lit=true": {
+      "model": "processenhancement:block/advanced_battery",
       "y": 180
     },
     "charge=0,facing=west,lit=false": {
       "model": "processenhancement:block/advanced_battery",
       "y": 270
     },
-    "charge=1,facing=west,lit=false": {
-      "model": "processenhancement:block/advanced_battery1",
-      "y": 270
-    },
-    "charge=2,facing=west,lit=false": {
-      "model": "processenhancement:block/advanced_battery2",
-      "y": 270
-    },
-    "charge=3,facing=west,lit=false": {
-      "model": "processenhancement:block/advanced_battery3",
-      "y": 270
-    },
-    "charge=4,facing=west,lit=false": {
-      "model": "processenhancement:block/advanced_battery4",
-      "y": 270
-    },
-    "charge=0,facing=east,lit=false": {
-      "model": "processenhancement:block/advanced_battery",
-      "y": 90
-    },
-    "charge=1,facing=east,lit=false": {
-      "model": "processenhancement:block/advanced_battery1",
-      "y": 90
-    },
-    "charge=2,facing=east,lit=false": {
-      "model": "processenhancement:block/advanced_battery2",
-      "y": 90
-    },
-    "charge=3,facing=east,lit=false": {
-      "model": "processenhancement:block/advanced_battery3",
-      "y": 90
-    },
-    "charge=4,facing=east,lit=false": {
-      "model": "processenhancement:block/advanced_battery4",
-      "y": 90
-    },
-    "charge=0,facing=north,lit=true": {
-      "model": "processenhancement:block/advanced_battery"
-    },
-    "charge=1,facing=north,lit=true": {
-      "model": "processenhancement:block/advanced_battery1"
-    },
-    "charge=2,facing=north,lit=true": {
-      "model": "processenhancement:block/advanced_battery2"
-    },
-    "charge=3,facing=north,lit=true": {
-      "model": "processenhancement:block/advanced_battery3"
-    },
-    "charge=4,facing=north,lit=true": {
-      "model": "processenhancement:block/advanced_battery4"
-    },
-    "charge=0,facing=south,lit=true": {
-      "model": "processenhancement:block/advanced_battery",
-      "y": 180
-    },
-    "charge=1,facing=south,lit=true": {
-      "model": "processenhancement:block/advanced_battery1",
-      "y": 180
-    },
-    "charge=2,facing=south,lit=true": {
-      "model": "processenhancement:block/advanced_battery2",
-      "y": 180
-    },
-    "charge=3,facing=south,lit=true": {
-      "model": "processenhancement:block/advanced_battery3",
-      "y": 180
-    },
-    "charge=4,facing=south,lit=true": {
-      "model": "processenhancement:block/advanced_battery4",
-      "y": 180
-    },
     "charge=0,facing=west,lit=true": {
       "model": "processenhancement:block/advanced_battery",
       "y": 270
     },
-    "charge=1,facing=west,lit=true": {
+    "charge=1,facing=east,lit=false": {
       "model": "processenhancement:block/advanced_battery1",
-      "y": 270
-    },
-    "charge=2,facing=west,lit=true": {
-      "model": "processenhancement:block/advanced_battery2",
-      "y": 270
-    },
-    "charge=3,facing=west,lit=true": {
-      "model": "processenhancement:block/advanced_battery3",
-      "y": 270
-    },
-    "charge=4,facing=west,lit=true": {
-      "model": "processenhancement:block/advanced_battery4",
-      "y": 270
-    },
-    "charge=0,facing=east,lit=true": {
-      "model": "processenhancement:block/advanced_battery",
       "y": 90
     },
     "charge=1,facing=east,lit=true": {
       "model": "processenhancement:block/advanced_battery1",
       "y": 90
     },
+    "charge=1,facing=north,lit=false": {
+      "model": "processenhancement:block/advanced_battery1"
+    },
+    "charge=1,facing=north,lit=true": {
+      "model": "processenhancement:block/advanced_battery1"
+    },
+    "charge=1,facing=south,lit=false": {
+      "model": "processenhancement:block/advanced_battery1",
+      "y": 180
+    },
+    "charge=1,facing=south,lit=true": {
+      "model": "processenhancement:block/advanced_battery1",
+      "y": 180
+    },
+    "charge=1,facing=west,lit=false": {
+      "model": "processenhancement:block/advanced_battery1",
+      "y": 270
+    },
+    "charge=1,facing=west,lit=true": {
+      "model": "processenhancement:block/advanced_battery1",
+      "y": 270
+    },
+    "charge=2,facing=east,lit=false": {
+      "model": "processenhancement:block/advanced_battery2",
+      "y": 90
+    },
     "charge=2,facing=east,lit=true": {
       "model": "processenhancement:block/advanced_battery2",
+      "y": 90
+    },
+    "charge=2,facing=north,lit=false": {
+      "model": "processenhancement:block/advanced_battery2"
+    },
+    "charge=2,facing=north,lit=true": {
+      "model": "processenhancement:block/advanced_battery2"
+    },
+    "charge=2,facing=south,lit=false": {
+      "model": "processenhancement:block/advanced_battery2",
+      "y": 180
+    },
+    "charge=2,facing=south,lit=true": {
+      "model": "processenhancement:block/advanced_battery2",
+      "y": 180
+    },
+    "charge=2,facing=west,lit=false": {
+      "model": "processenhancement:block/advanced_battery2",
+      "y": 270
+    },
+    "charge=2,facing=west,lit=true": {
+      "model": "processenhancement:block/advanced_battery2",
+      "y": 270
+    },
+    "charge=3,facing=east,lit=false": {
+      "model": "processenhancement:block/advanced_battery3",
       "y": 90
     },
     "charge=3,facing=east,lit=true": {
       "model": "processenhancement:block/advanced_battery3",
       "y": 90
     },
+    "charge=3,facing=north,lit=false": {
+      "model": "processenhancement:block/advanced_battery3"
+    },
+    "charge=3,facing=north,lit=true": {
+      "model": "processenhancement:block/advanced_battery3"
+    },
+    "charge=3,facing=south,lit=false": {
+      "model": "processenhancement:block/advanced_battery3",
+      "y": 180
+    },
+    "charge=3,facing=south,lit=true": {
+      "model": "processenhancement:block/advanced_battery3",
+      "y": 180
+    },
+    "charge=3,facing=west,lit=false": {
+      "model": "processenhancement:block/advanced_battery3",
+      "y": 270
+    },
+    "charge=3,facing=west,lit=true": {
+      "model": "processenhancement:block/advanced_battery3",
+      "y": 270
+    },
+    "charge=4,facing=east,lit=false": {
+      "model": "processenhancement:block/advanced_battery4",
+      "y": 90
+    },
     "charge=4,facing=east,lit=true": {
       "model": "processenhancement:block/advanced_battery4",
       "y": 90
+    },
+    "charge=4,facing=north,lit=false": {
+      "model": "processenhancement:block/advanced_battery4"
+    },
+    "charge=4,facing=north,lit=true": {
+      "model": "processenhancement:block/advanced_battery4"
+    },
+    "charge=4,facing=south,lit=false": {
+      "model": "processenhancement:block/advanced_battery4",
+      "y": 180
+    },
+    "charge=4,facing=south,lit=true": {
+      "model": "processenhancement:block/advanced_battery4",
+      "y": 180
+    },
+    "charge=4,facing=west,lit=false": {
+      "model": "processenhancement:block/advanced_battery4",
+      "y": 270
+    },
+    "charge=4,facing=west,lit=true": {
+      "model": "processenhancement:block/advanced_battery4",
+      "y": 270
     }
   }
 }

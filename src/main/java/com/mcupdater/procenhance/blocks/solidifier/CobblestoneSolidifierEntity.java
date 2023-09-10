@@ -1,10 +1,8 @@
 package com.mcupdater.procenhance.blocks.solidifier;
 
-import com.mcupdater.mculib.helpers.InventoryHelper;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,7 +18,7 @@ public class CobblestoneSolidifierEntity extends AbstractSolidifierEntity {
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("block.processenhancement.cobblestone_solidifier");
+        return Component.translatable("block.processenhancement.cobblestone_solidifier");
     }
 
     @Override

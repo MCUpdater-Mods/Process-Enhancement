@@ -1,14 +1,14 @@
 {
   "type": "processenhancement:sawmill",
+  "experience": 0.05,
   "ingredients": [
     {
       "tag": "minecraft:spruce_logs"
     }
   ],
-  "result": {
-    "item": "minecraft:spruce_planks",
-    "count": 6
-  },
   "processTime": 32,
-  "experience": 0.05
+  "result": {
+    "count": 6,
+    "item": "minecraft:spruce_planks"
+  }
 }

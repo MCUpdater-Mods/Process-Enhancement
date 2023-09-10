@@ -1,11 +1,7 @@
 package com.mcupdater.procenhance.blocks.furnace;
 
 import com.mcupdater.mculib.block.AbstractMachineScreen;
-import com.mcupdater.mculib.gui.WidgetPower;
 import com.mcupdater.procenhance.ProcessEnhancement;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;

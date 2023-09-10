@@ -2,7 +2,6 @@ package com.mcupdater.procenhance.blocks.generator;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.block.state.BlockState;
 
 import static com.mcupdater.procenhance.setup.Config.BASIC_GENERATOR_PER_TICK;
@@ -17,6 +16,6 @@ public class GeneratorEntityT1 extends GeneratorEntity {
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("block.processenhancement.basic_generator");
+        return Component.translatable("block.processenhancement.basic_generator");
     }
 }

@@ -1,24 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "CFC",
-    "F#F",
-    "CRC"
-  ],
   "key": {
+    "#": {
+      "item": "minecraft:blast_furnace"
+    },
     "C": {
       "item": "minecraft:copper_ingot"
     },
     "F": {
       "item": "minecraft:nether_bricks"
     },
-    "#": {
-      "item": "minecraft:blast_furnace"
-    },
     "R": {
       "item": "minecraft:redstone"
     }
   },
+  "pattern": [
+    "CFC",
+    "F#F",
+    "CRC"
+  ],
   "result": {
     "item": "processenhancement:basic_lava_generator"
   }

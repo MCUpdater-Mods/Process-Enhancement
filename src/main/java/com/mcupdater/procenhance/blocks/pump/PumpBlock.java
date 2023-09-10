@@ -9,6 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -27,7 +28,6 @@ import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
-import java.util.Random;
 
 public abstract class PumpBlock extends AbstractMachineBlock {
     public PumpBlock() {
@@ -35,7 +35,7 @@ public abstract class PumpBlock extends AbstractMachineBlock {
     }
 
     @Override
-    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, Random pRandom) {
+    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
         super.animateTick(pState, pLevel, pPos, pRandom);
         if (pState.getValue(ACTIVE)) {
             double x = (double) pPos.getX() + 0.5D;
@@ -51,7 +51,7 @@ public abstract class PumpBlock extends AbstractMachineBlock {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
             if (blockEntity instanceof PumpEntity pumpEntity) {
                 Map<Direction, Component> adjacentNames = DataHelper.getAdjacentNames(pLevel, pPos);
-                NetworkHooks.openGui((ServerPlayer) pPlayer, (MenuProvider) blockEntity, (buf) -> {
+                NetworkHooks.openScreen((ServerPlayer) pPlayer, (MenuProvider) blockEntity, (buf) -> {
                     buf.writeBlockPos(pPos);
                     DataHelper.writeDirectionMap(buf, adjacentNames);
                 });

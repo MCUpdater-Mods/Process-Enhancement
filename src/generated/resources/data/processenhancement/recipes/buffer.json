@@ -1,24 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "CFC",
-    "F#F",
-    "CRC"
-  ],
   "key": {
+    "#": {
+      "item": "minecraft:glass_bottle"
+    },
     "C": {
       "item": "minecraft:copper_ingot"
     },
     "F": {
       "tag": "forge:chests"
     },
-    "#": {
-      "item": "minecraft:glass_bottle"
-    },
     "R": {
       "item": "minecraft:redstone"
     }
   },
+  "pattern": [
+    "CFC",
+    "F#F",
+    "CRC"
+  ],
   "result": {
     "item": "processenhancement:buffer"
   }

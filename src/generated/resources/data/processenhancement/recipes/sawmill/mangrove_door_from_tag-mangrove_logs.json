@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "experience": 0.05,
+  "ingredients": [
+    {
+      "tag": "minecraft:mangrove_logs"
+    }
+  ],
+  "processTime": 32,
+  "result": {
+    "count": 3,
+    "item": "minecraft:mangrove_door"
+  }
+}

@@ -1,5 +1,6 @@
 {
   "type": "processenhancement:grinder",
+  "experience": 0.05,
   "ingredients": [
     {
       "tag": "minecraft:copper_ores"
@@ -8,33 +9,32 @@
   "outputs": [
     {
       "stack": {
-        "item": "processenhancement:copper_dust",
-        "count": 6
+        "count": 6,
+        "item": "processenhancement:copper_dust"
       },
       "weight": 55
     },
     {
       "stack": {
-        "item": "processenhancement:copper_dust",
-        "count": 8
+        "count": 8,
+        "item": "processenhancement:copper_dust"
       },
       "weight": 25
     },
     {
       "stack": {
-        "item": "processenhancement:copper_dust",
-        "count": 10
+        "count": 10,
+        "item": "processenhancement:copper_dust"
       },
       "weight": 18
     },
     {
       "stack": {
-        "item": "processenhancement:copper_dust",
-        "count": 12
+        "count": 12,
+        "item": "processenhancement:copper_dust"
       },
       "weight": 2
     }
   ],
-  "processTime": 200,
-  "experience": 0.05
+  "processTime": 200
 }

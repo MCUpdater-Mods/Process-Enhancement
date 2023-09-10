@@ -21,6 +21,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.conditions.ICondition;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -103,17 +104,17 @@ public class GrinderRecipeBuilder implements RecipeBuilder {
 
         @Override
         public JsonObject serializeRecipe() {
-           JsonObject jsonobject = new JsonObject();
-           jsonobject.addProperty("type", Registry.RECIPE_SERIALIZER.getKey(this.getType()).toString());
-           if (!conditions.isEmpty()) {
-               JsonArray conditionsArray = new JsonArray();
-               for (ICondition condition : conditions) {
-                   conditionsArray.add(CraftingHelper.serialize(condition));
-               }
-               jsonobject.add("conditions", conditionsArray);
-           }
-           this.serializeRecipeData(jsonobject);
-           return jsonobject;
+            JsonObject jsonobject = new JsonObject();
+            jsonobject.addProperty("type", Registry.RECIPE_SERIALIZER.getKey(this.getType()).toString());
+            if (!conditions.isEmpty()) {
+                JsonArray conditionsArray = new JsonArray();
+                for (ICondition condition : conditions) {
+                    conditionsArray.add(CraftingHelper.serialize(condition));
+                }
+                jsonobject.add("conditions", conditionsArray);
+            }
+            this.serializeRecipeData(jsonobject);
+            return jsonobject;
         }
 
         @Override
@@ -125,7 +126,7 @@ public class GrinderRecipeBuilder implements RecipeBuilder {
             for (Tuple<ItemStack,Integer> tuple : this.outputs) {
                 JsonObject entry = new JsonObject();
                 JsonObject itemStackJson = new JsonObject();
-                itemStackJson.addProperty("item", tuple.getA().getItem().getRegistryName().toString());
+                itemStackJson.addProperty("item", ForgeRegistries.ITEMS.getKey(tuple.getA().getItem()).toString());
                 if (tuple.getA().getCount() > 1) {
                     itemStackJson.addProperty("count", tuple.getA().getCount());
                 }

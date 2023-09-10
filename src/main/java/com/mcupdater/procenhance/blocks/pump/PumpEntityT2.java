@@ -2,7 +2,6 @@ package com.mcupdater.procenhance.blocks.pump;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.block.state.BlockState;
 
 import static com.mcupdater.procenhance.setup.Registration.PUMPT2_ENTITY;
@@ -14,6 +13,6 @@ public class PumpEntityT2 extends PumpEntity {
     }
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("block.processenhancement.intermediate_pump");
+        return Component.translatable("block.processenhancement.intermediate_pump");
     }
 }

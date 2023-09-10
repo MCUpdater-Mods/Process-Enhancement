@@ -1,24 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "CFC",
-    "F#F",
-    "CRC"
-  ],
   "key": {
+    "#": {
+      "item": "minecraft:iron_axe"
+    },
     "C": {
       "item": "minecraft:copper_ingot"
     },
     "F": {
       "tag": "minecraft:planks"
     },
-    "#": {
-      "item": "minecraft:iron_axe"
-    },
     "R": {
       "item": "minecraft:redstone"
     }
   },
+  "pattern": [
+    "CFC",
+    "F#F",
+    "CRC"
+  ],
   "result": {
     "item": "processenhancement:sawmill"
   }

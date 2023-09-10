@@ -1,13 +1,13 @@
 {
   "type": "processenhancement:sawmill",
+  "experience": 0.01,
   "ingredients": [
     {
       "tag": "minecraft:warped_stems"
     }
   ],
+  "processTime": 16,
   "result": {
     "item": "minecraft:stripped_warped_hyphae"
-  },
-  "processTime": 16,
-  "experience": 0.01
+  }
 }

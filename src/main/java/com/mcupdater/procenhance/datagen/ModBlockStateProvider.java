@@ -7,13 +7,13 @@ import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 public class ModBlockStateProvider extends BlockStateProvider {
@@ -65,12 +65,13 @@ public class ModBlockStateProvider extends BlockStateProvider {
         machine(Registration.MINERT4_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/miner", true);
         machine(Registration.DISENCHANTER_BLOCK.get(),Blocks.LAPIS_BLOCK,Blocks.AMETHYST_BLOCK, Blocks.POLISHED_BLACKSTONE, Blocks.NETHER_PORTAL, Blocks.LAPIS_BLOCK, "block/disenchanter", false);
         machine(Registration.DECONSTRUCTOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.AMETHYST_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/deconstructor", false);
+        machine(Registration.AUTOPACKAGER_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.COPPER_BLOCK,Blocks.SMOOTH_STONE,Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/crafter", false);
         solidifier(Registration.COBBLESTONESOLIDIFIER_BLOCK.get(),Blocks.COPPER_BLOCK,blockTexture(Blocks.COBBLESTONE), "block/solidifier", new ResourceLocation("minecraft", "block/water_flow"), new ResourceLocation("minecraft", "block/lava_flow"));
         solidifier(Registration.BASALTSOLIDIFIER_BLOCK.get(),Blocks.COPPER_BLOCK,new ResourceLocation("minecraft","block/basalt_side"), "block/solidifier", blockTexture(Blocks.BLUE_ICE), new ResourceLocation("minecraft", "block/lava_flow"));
 
         horizontalBlock(Registration.BASICBATTERY_BLOCK.get(), (blockState -> {
             int charge = blockState.getValue(BatteryBlock.CHARGE_LEVEL);
-            return models().getBuilder(Registration.BASICBATTERY_BLOCK.get().getRegistryName().getPath() + (charge > 0 ? Integer.toString(charge) : ""))
+            return models().getBuilder(ForgeRegistries.BLOCKS.getKey(Registration.BASICBATTERY_BLOCK.get()).getPath() + (charge > 0 ? Integer.toString(charge) : ""))
                     .parent(new ModelFile.UncheckedModelFile("mculib:block/machine"))
                     .texture("frame", blockTexture(Blocks.COPPER_BLOCK))
                     .texture("corner", blockTexture(Blocks.COPPER_BLOCK))
@@ -81,7 +82,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         }));
         horizontalBlock(Registration.INTBATTERY_BLOCK.get(), (blockState -> {
             int charge = blockState.getValue(BatteryBlock.CHARGE_LEVEL);
-            return models().getBuilder(Registration.INTBATTERY_BLOCK.get().getRegistryName().getPath() + (charge > 0 ? Integer.toString(charge) : ""))
+            return models().getBuilder(ForgeRegistries.BLOCKS.getKey(Registration.INTBATTERY_BLOCK.get()).getPath() + (charge > 0 ? Integer.toString(charge) : ""))
                     .parent(new ModelFile.UncheckedModelFile("mculib:block/machine"))
                     .texture("frame", blockTexture(Blocks.COPPER_BLOCK))
                     .texture("corner", blockTexture(Blocks.IRON_BLOCK))
@@ -92,7 +93,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         }));
         horizontalBlock(Registration.ADVBATTERY_BLOCK.get(), (blockState -> {
             int charge = blockState.getValue(BatteryBlock.CHARGE_LEVEL);
-            return models().getBuilder(Registration.ADVBATTERY_BLOCK.get().getRegistryName().getPath() + (charge > 0 ? Integer.toString(charge) : ""))
+            return models().getBuilder(ForgeRegistries.BLOCKS.getKey(Registration.ADVBATTERY_BLOCK.get()).getPath() + (charge > 0 ? Integer.toString(charge) : ""))
                     .parent(new ModelFile.UncheckedModelFile("mculib:block/machine"))
                     .texture("frame", blockTexture(Blocks.COPPER_BLOCK))
                     .texture("corner", blockTexture(Blocks.GOLD_BLOCK))
@@ -103,7 +104,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         }));
         horizontalBlock(Registration.INDBATTERY_BLOCK.get(), (blockState -> {
             int charge = blockState.getValue(BatteryBlock.CHARGE_LEVEL);
-            return models().getBuilder(Registration.INDBATTERY_BLOCK.get().getRegistryName().getPath() + (charge > 0 ? Integer.toString(charge) : ""))
+            return models().getBuilder(ForgeRegistries.BLOCKS.getKey(Registration.INDBATTERY_BLOCK.get()).getPath() + (charge > 0 ? Integer.toString(charge) : ""))
                     .parent(new ModelFile.UncheckedModelFile("mculib:block/machine"))
                     .texture("frame", blockTexture(Blocks.COPPER_BLOCK))
                     .texture("corner", blockTexture(Blocks.DIAMOND_BLOCK))
@@ -116,7 +117,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     private void solidifier(Block block, Block frame, ResourceLocation face, String overlay, ResourceLocation left, ResourceLocation right) {
         horizontalBlock(block, (blockstate -> {
-            return models().getBuilder(block.getRegistryName().getPath())
+            return models().getBuilder(ForgeRegistries.BLOCKS.getKey(block).getPath())
                     .parent(new ModelFile.UncheckedModelFile("processenhancement:block/solidifier"))
                     .texture("frame", blockTexture(frame))
                     .texture("corner", blockTexture(frame))
@@ -130,7 +131,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     }
 
     public ResourceLocation itemTexture(Item item) {
-        ResourceLocation name = item.getRegistryName();
+        ResourceLocation name = ForgeRegistries.ITEMS.getKey(item);
         return new ResourceLocation(name.getNamespace(), ModelProvider.ITEM_FOLDER + "/" + name.getPath());
     }
 
@@ -141,7 +142,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     protected void machine(@NotNull Block block, Block frame, Block corner, Block face, Block inset, Block particle, String overlay, boolean splitActiveTextures) {
         horizontalBlock(block, (blockstate -> {
             boolean active = blockstate.getValue(AbstractMachineBlock.ACTIVE);
-            return models().getBuilder(block.getRegistryName().getPath() + (splitActiveTextures ? (active ? "_on" : "") : ""))
+            return models().getBuilder(ForgeRegistries.BLOCKS.getKey(block).getPath() + (splitActiveTextures ? (active ? "_on" : "") : ""))
                     .parent(new ModelFile.UncheckedModelFile("mculib:block/machine"))
                     .texture("frame", blockTexture(frame))
                     .texture("corner", blockTexture(corner))

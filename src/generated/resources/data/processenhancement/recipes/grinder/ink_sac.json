@@ -1,5 +1,6 @@
 {
   "type": "processenhancement:grinder",
+  "experience": 0.0,
   "ingredients": [
     {
       "item": "minecraft:ink_sac"
@@ -8,12 +9,11 @@
   "outputs": [
     {
       "stack": {
-        "item": "minecraft:black_dye",
-        "count": 3
+        "count": 3,
+        "item": "minecraft:black_dye"
       },
       "weight": 1
     }
   ],
-  "processTime": 50,
-  "experience": 0.0
+  "processTime": 50
 }

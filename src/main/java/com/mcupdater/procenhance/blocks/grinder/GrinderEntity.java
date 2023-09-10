@@ -1,7 +1,6 @@
 package com.mcupdater.procenhance.blocks.grinder;
 
 import com.mcupdater.mculib.block.AbstractMachineBlockEntity;
-import com.mcupdater.mculib.capabilities.EnergyResourceHandler;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.procenhance.recipe.GrinderRecipe;

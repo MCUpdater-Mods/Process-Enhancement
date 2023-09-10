@@ -42,7 +42,7 @@ public class BasaltSolidifierBlock extends AbstractMachineBlock {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
             if (blockEntity instanceof BasaltSolidifierEntity basaltSolidifier) {
                 Map<Direction, Component> adjacentNames = DataHelper.getAdjacentNames(pLevel, pPos);
-                NetworkHooks.openGui((ServerPlayer)pPlayer, basaltSolidifier, (buf) -> {
+                NetworkHooks.openScreen((ServerPlayer)pPlayer, basaltSolidifier, (buf) -> {
                     buf.writeBlockPos(pPos);
                     DataHelper.writeDirectionMap(buf, adjacentNames);
                 });

@@ -14,9 +14,8 @@ public class ConfigCondition implements ICondition {
         return ID;
     }
 
-    @SuppressWarnings("removal")
     @Override
-    public boolean test() {
+    public boolean test(IContext context) {
         return Config.GRINDER_RESOURCES.get();
     }
 

@@ -1,5 +1,6 @@
 {
   "type": "processenhancement:grinder",
+  "experience": 0.1,
   "ingredients": [
     {
       "item": "minecraft:vine"
@@ -8,12 +9,11 @@
   "outputs": [
     {
       "stack": {
-        "item": "minecraft:green_dye",
-        "count": 2
+        "count": 2,
+        "item": "minecraft:green_dye"
       },
       "weight": 1
     }
   ],
-  "processTime": 50,
-  "experience": 0.1
+  "processTime": 50
 }

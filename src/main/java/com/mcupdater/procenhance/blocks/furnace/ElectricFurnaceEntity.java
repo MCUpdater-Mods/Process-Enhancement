@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
-
 import java.util.Arrays;
 
 public abstract class ElectricFurnaceEntity extends AbstractMachineBlockEntity {

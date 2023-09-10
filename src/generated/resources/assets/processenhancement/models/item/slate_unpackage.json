@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "processenhancement:item/slate_unpackage"
+  }
+}

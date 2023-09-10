@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "UuU",
-    "uMu",
-    "UuU"
-  ],
   "key": {
     "M": {
       "item": "processenhancement:advanced_lava_generator"
@@ -16,6 +11,11 @@
       "item": "minecraft:gold_block"
     }
   },
+  "pattern": [
+    "UuU",
+    "uMu",
+    "UuU"
+  ],
   "result": {
     "item": "processenhancement:industrial_lava_generator"
   }

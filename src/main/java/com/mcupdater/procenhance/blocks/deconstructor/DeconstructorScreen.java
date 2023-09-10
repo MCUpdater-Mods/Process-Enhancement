@@ -3,8 +3,6 @@ package com.mcupdater.procenhance.blocks.deconstructor;
 import com.mcupdater.mculib.block.AbstractMachineMenu;
 import com.mcupdater.mculib.block.AbstractMachineScreen;
 import com.mcupdater.procenhance.ProcessEnhancement;
-import com.mcupdater.procenhance.blocks.disenchanter.DisenchanterEntity;
-import com.mcupdater.procenhance.blocks.disenchanter.DisenchanterMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;

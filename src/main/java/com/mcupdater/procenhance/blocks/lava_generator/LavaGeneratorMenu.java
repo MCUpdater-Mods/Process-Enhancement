@@ -4,7 +4,6 @@ import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
 import com.mcupdater.mculib.block.IConfigurableMenu;
 import com.mcupdater.mculib.capabilities.PowerTrackingMenu;
 import com.mcupdater.mculib.inventory.BucketSlot;
-import com.mcupdater.mculib.inventory.FuelSlot;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

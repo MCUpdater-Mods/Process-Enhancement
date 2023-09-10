@@ -2,7 +2,6 @@ package com.mcupdater.procenhance.blocks.miner;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.block.state.BlockState;
 
 import static com.mcupdater.procenhance.setup.Registration.MINERT4_ENTITY;
@@ -14,6 +13,6 @@ public class MinerEntityT4 extends MinerEntity {
     }
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("block.processenhancement.industrial_miner");
+        return Component.translatable("block.processenhancement.industrial_miner");
     }
 }

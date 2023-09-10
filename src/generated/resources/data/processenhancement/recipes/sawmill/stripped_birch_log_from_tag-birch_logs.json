@@ -1,13 +1,13 @@
 {
   "type": "processenhancement:sawmill",
+  "experience": 0.01,
   "ingredients": [
     {
       "tag": "minecraft:birch_logs"
     }
   ],
+  "processTime": 16,
   "result": {
     "item": "minecraft:stripped_birch_log"
-  },
-  "processTime": 16,
-  "experience": 0.01
+  }
 }

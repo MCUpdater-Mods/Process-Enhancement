@@ -9,7 +9,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -159,7 +158,7 @@ public class ElectricStonecutterEntity extends AbstractMachineBlockEntity {
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("block.processenhancement.stonecutter");
+        return Component.translatable("block.processenhancement.stonecutter");
     }
 
     @Nullable

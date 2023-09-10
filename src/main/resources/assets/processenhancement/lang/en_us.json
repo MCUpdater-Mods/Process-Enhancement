@@ -51,5 +51,15 @@
     "block.processenhancement.disenchanter": "Disenchanter",
     "block.processenhancement.deconstructor": "Deconstructor",
     "block.processenhancement.cobblestone_solidifier": "Cobblestone Solidifier",
-    "block.processenhancement.basalt_solidifier": "Basalt Solidifier"
+    "block.processenhancement.basalt_solidifier": "Basalt Solidifier",
+    "item.processenhancement.slate_2x2": "Pattern Slate: 2x2",
+    "item.processenhancement.slate_3x3": "Pattern Slate: 3x3",
+    "item.processenhancement.slate_cross": "Pattern Slate: Cross",
+    "item.processenhancement.slate_door": "Pattern Slate: Door",
+    "item.processenhancement.slate_hollow": "Pattern Slate: Hollow",
+    "item.processenhancement.slate_slab": "Pattern Slate: Slab",
+    "item.processenhancement.slate_stair": "Pattern Slate: Stair",
+    "item.processenhancement.slate_unpackage": "Pattern Slate: Unpackage",
+    "item.processenhancement.slate_wall": "Pattern Slate: Wall",
+    "block.processenhancement.autopackager": "AutoPackager"
 }

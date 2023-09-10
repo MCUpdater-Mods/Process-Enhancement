@@ -186,6 +186,7 @@ public class MinerRecipe extends ShapedRecipe {
             pBuffer.writeItem(pRecipe.getResultItem());
         }
 
+        /*
         @Override
         public RecipeSerializer<?> setRegistryName(ResourceLocation name) {
             return MinerRecipe.SERIALIZER;
@@ -201,6 +202,7 @@ public class MinerRecipe extends ShapedRecipe {
         public Class<RecipeSerializer<?>> getRegistryType() {
             return Serializer.castClass(RecipeSerializer.class);
         }
+        */
 
         private static <G> Class<G> castClass(Class<?> cls) {
             return (Class<G>)cls;

@@ -1,5 +1,6 @@
 package com.mcupdater.procenhance.setup;
 
+import com.mcupdater.procenhance.blocks.autopackager.PackagerScreen;
 import com.mcupdater.procenhance.blocks.battery.BatteryScreen;
 import com.mcupdater.procenhance.blocks.biogenerator.BiogeneratorScreen;
 import com.mcupdater.procenhance.blocks.buffer.BufferScreen;
@@ -13,25 +14,17 @@ import com.mcupdater.procenhance.blocks.lava_generator.LavaGeneratorScreen;
 import com.mcupdater.procenhance.blocks.miner.MinerScreen;
 import com.mcupdater.procenhance.blocks.pump.PumpScreen;
 import com.mcupdater.procenhance.blocks.sawmill.SawmillScreen;
-import com.mcupdater.procenhance.blocks.solidifier.CobblestoneSolidifierBlock;
 import com.mcupdater.procenhance.blocks.solidifier.SolidifierScreen;
 import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterScreen;
 import com.mcupdater.procenhance.blocks.tank.TankScreen;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.RegistryObject;
-import org.jetbrains.annotations.Nullable;
 
 public class ClientSetup {
     public static void init(final FMLClientSetupEvent event) {
@@ -65,22 +58,20 @@ public class ClientSetup {
         MenuScreens.register(Registration.DISENCHANTER_MENU.get(), DisenchanterScreen::new);
         MenuScreens.register(Registration.DECONSTRUCTOR_MENU.get(), DeconstructorScreen::new);
         MenuScreens.register(Registration.SOLIDIFIER_MENU.get(), SolidifierScreen::new);
+        MenuScreens.register(Registration.AUTOPACKAGER_MENU.get(), PackagerScreen::new);
     }
 
-    public static void registerColors(ColorHandlerEvent.Block event) {
-        event.getBlockColors().register(new BlockColor() {
-            @Override
-            public int getColor(BlockState blockState, @Nullable BlockAndTintGetter level, @Nullable BlockPos blockPos, int index) {
-                if (level != null) {
-                    if (blockPos != null) {
-                        switch (index) {
-                            case 1:
-                                return BiomeColors.getAverageWaterColor(level, blockPos);
-                        }
+    public static void registerColors(RegisterColorHandlersEvent.Block event) {
+        event.register((blockState, level, blockPos, index) -> {
+            if (level != null) {
+                if (blockPos != null) {
+                    switch (index) {
+                        case 1:
+                            return BiomeColors.getAverageWaterColor(level, blockPos);
                     }
                 }
-                return -1;
             }
+            return -1;
         }, Registration.COBBLESTONESOLIDIFIER_BLOCK.get());
     }
 }

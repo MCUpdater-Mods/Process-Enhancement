@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "CBC",
-    "IPL",
-    "CSC"
-  ],
   "key": {
     "B": {
       "item": "minecraft:basalt"
@@ -25,6 +20,11 @@
       "item": "minecraft:soul_soil"
     }
   },
+  "pattern": [
+    "CBC",
+    "IPL",
+    "CSC"
+  ],
   "result": {
     "item": "processenhancement:basalt_solidifier"
   }

@@ -3,13 +3,11 @@ package com.mcupdater.procenhance.recipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mcupdater.procenhance.ProcessEnhancement;
-import com.mcupdater.procenhance.blocks.sawmill.SawmillEntity;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
@@ -125,6 +123,7 @@ public class SawmillRecipe implements Recipe<Container> {
             buf.writeItemStack(recipe.getResultItem(), false);
         }
 
+        /*
         @Override
         public RecipeSerializer<?> setRegistryName(ResourceLocation name) {
             return INSTANCE;
@@ -140,6 +139,7 @@ public class SawmillRecipe implements Recipe<Container> {
         public Class<RecipeSerializer<?>> getRegistryType() {
             return Serializer.castClass(RecipeSerializer.class);
         }
+        */
 
         @SuppressWarnings("unchecked")
         private static <G> Class<G> castClass(Class<?> cls) {

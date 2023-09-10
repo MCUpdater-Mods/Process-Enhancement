@@ -1,13 +1,13 @@
 {
   "type": "processenhancement:sawmill",
+  "experience": 0.01,
   "ingredients": [
     {
       "tag": "minecraft:dark_oak_logs"
     }
   ],
+  "processTime": 16,
   "result": {
     "item": "minecraft:stripped_dark_oak_wood"
-  },
-  "processTime": 16,
-  "experience": 0.01
+  }
 }

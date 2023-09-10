@@ -1,13 +1,11 @@
 package com.mcupdater.procenhance;
 
 import com.mcupdater.procenhance.integration.PatchouliConfig;
-import com.mcupdater.procenhance.recipe.ConfigCondition;
-import com.mcupdater.procenhance.setup.*;
+import com.mcupdater.procenhance.setup.ClientSetup;
+import com.mcupdater.procenhance.setup.Config;
+import com.mcupdater.procenhance.setup.ModSetup;
+import com.mcupdater.procenhance.setup.Registration;
 import com.mojang.logging.LogUtils;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;

@@ -1,24 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "CFC",
-    "F#F",
-    "CRC"
-  ],
   "key": {
+    "#": {
+      "item": "processenhancement:plant_dust"
+    },
     "C": {
       "item": "minecraft:copper_ingot"
     },
     "F": {
       "item": "minecraft:deepslate_bricks"
     },
-    "#": {
-      "item": "processenhancement:plant_dust"
-    },
     "R": {
       "item": "minecraft:redstone"
     }
   },
+  "pattern": [
+    "CFC",
+    "F#F",
+    "CRC"
+  ],
   "result": {
     "item": "processenhancement:basic_biogenerator"
   }

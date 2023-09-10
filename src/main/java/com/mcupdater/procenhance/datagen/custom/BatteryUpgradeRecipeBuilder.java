@@ -1,7 +1,5 @@
 package com.mcupdater.procenhance.datagen.custom;
 
-import com.electronwill.nightconfig.core.UnmodifiableConfig;
-import com.electronwill.nightconfig.core.utils.ObservedMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
@@ -11,18 +9,15 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.advancements.RequirementsStrategy;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
-import net.minecraft.core.Registry;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ambient.Bat;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.compress.utils.Lists;
 import org.jetbrains.annotations.Nullable;
 
@@ -157,7 +152,7 @@ public class BatteryUpgradeRecipeBuilder implements RecipeBuilder {
             pJson.add("key", ingredientMap);
 
             JsonObject resultObject = new JsonObject();
-            resultObject.addProperty("item", this.result.getRegistryName().toString());
+            resultObject.addProperty("item", ForgeRegistries.ITEMS.getKey(this.result).toString());
             pJson.add("result", resultObject);
         }
 

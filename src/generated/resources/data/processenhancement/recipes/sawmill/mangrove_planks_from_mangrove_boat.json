@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "experience": 0.0,
+  "ingredients": [
+    {
+      "item": "minecraft:mangrove_boat"
+    }
+  ],
+  "processTime": 32,
+  "result": {
+    "count": 5,
+    "item": "minecraft:mangrove_planks"
+  }
+}

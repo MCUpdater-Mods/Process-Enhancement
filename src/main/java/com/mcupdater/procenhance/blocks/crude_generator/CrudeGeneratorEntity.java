@@ -10,7 +10,6 @@ import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -71,7 +70,7 @@ public class CrudeGeneratorEntity extends AbstractConfigurableBlockEntity {
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("block.processenhancement.crude_generator");
+        return Component.translatable("block.processenhancement.crude_generator");
     }
 
     @Nullable

@@ -1,10 +1,5 @@
 {
   "type": "processenhancement:miner",
-  "pattern": [
-    "UuU",
-    "uBu",
-    "UuU"
-  ],
   "key": {
     "B": {
       "item": "processenhancement:intermediate_miner"
@@ -16,6 +11,11 @@
       "item": "minecraft:iron_block"
     }
   },
+  "pattern": [
+    "UuU",
+    "uBu",
+    "UuU"
+  ],
   "result": {
     "item": "processenhancement:advanced_miner"
   }

@@ -4,13 +4,11 @@ import com.mcupdater.mculib.block.AbstractMachineBlockEntity;
 import com.mcupdater.mculib.capabilities.AbstractResourceHandler;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
-import com.mcupdater.procenhance.ProcessEnhancement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -18,7 +16,6 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
-import org.apache.commons.compress.utils.Lists;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
@@ -77,7 +74,7 @@ public class DisenchanterEntity extends AbstractMachineBlockEntity {
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("block.processenhancement.disenchanter");
+        return Component.translatable("block.processenhancement.disenchanter");
     }
 
     public boolean stillValid(Player player) {

@@ -9,14 +9,14 @@ import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public class GrinderRecipeCategory implements IRecipeCategory<GrinderRecipe> {
-    public static final ResourceLocation UID = new ResourceLocation(ProcessEnhancement.MODID, "grinder");
+    public static final RecipeType<GrinderRecipe> TYPE = RecipeType.create(ProcessEnhancement.MODID, "grinder", GrinderRecipe.class);
     public static final ResourceLocation TEXTURE = new ResourceLocation(ProcessEnhancement.MODID, "textures/jei/grinder.png");
 
     private final IDrawable background;
@@ -28,8 +28,13 @@ public class GrinderRecipeCategory implements IRecipeCategory<GrinderRecipe> {
     }
 
     @Override
+    public RecipeType<GrinderRecipe> getRecipeType() {
+        return TYPE;
+    }
+
+    @Override
     public Component getTitle() {
-        return new TranslatableComponent("block.processenhancement.grinder");
+        return Component.translatable("block.processenhancement.grinder");
     }
 
     @Override
@@ -40,16 +45,6 @@ public class GrinderRecipeCategory implements IRecipeCategory<GrinderRecipe> {
     @Override
     public IDrawable getIcon() {
         return this.icon;
-    }
-
-    @Override
-    public ResourceLocation getUid() {
-        return UID;
-    }
-
-    @Override
-    public Class<? extends GrinderRecipe> getRecipeClass() {
-        return GrinderRecipe.class;
     }
 
     @Override

@@ -1,24 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "CFC",
-    "F#F",
-    "CRC"
-  ],
   "key": {
+    "#": {
+      "item": "minecraft:stonecutter"
+    },
     "C": {
       "item": "minecraft:copper_ingot"
     },
     "F": {
       "item": "minecraft:iron_ingot"
     },
-    "#": {
-      "item": "minecraft:stonecutter"
-    },
     "R": {
       "item": "minecraft:redstone"
     }
   },
+  "pattern": [
+    "CFC",
+    "F#F",
+    "CRC"
+  ],
   "result": {
     "item": "processenhancement:basic_grinder"
   }

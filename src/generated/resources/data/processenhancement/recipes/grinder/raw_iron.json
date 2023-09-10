@@ -1,5 +1,6 @@
 {
   "type": "processenhancement:grinder",
+  "experience": 0.05,
   "ingredients": [
     {
       "item": "minecraft:raw_iron"
@@ -14,12 +15,11 @@
     },
     {
       "stack": {
-        "item": "processenhancement:iron_dust",
-        "count": 2
+        "count": 2,
+        "item": "processenhancement:iron_dust"
       },
       "weight": 1
     }
   ],
-  "processTime": 200,
-  "experience": 0.05
+  "processTime": 200
 }

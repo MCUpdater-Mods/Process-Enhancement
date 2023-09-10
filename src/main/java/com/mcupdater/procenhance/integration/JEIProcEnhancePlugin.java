@@ -7,7 +7,6 @@ import com.mcupdater.procenhance.setup.Registration;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
-import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
@@ -34,12 +33,12 @@ public class JEIProcEnhancePlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(new ItemStack(Registration.SAWMILL_BLOCK.get()), new RecipeType<>(SawmillRecipeCategory.UID, SawmillRecipe.class));
+        registration.addRecipeCatalyst(new ItemStack(Registration.SAWMILL_BLOCK.get()), SawmillRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(Registration.STONECUTTER_BLOCK.get()), RecipeTypes.STONECUTTING);
-        registration.addRecipeCatalyst(new ItemStack(Registration.GRINDERT1_BLOCK.get()), new RecipeType<>(GrinderRecipeCategory.UID, GrinderRecipe.class));
-        registration.addRecipeCatalyst(new ItemStack(Registration.GRINDERT2_BLOCK.get()), new RecipeType<>(GrinderRecipeCategory.UID, GrinderRecipe.class));
-        registration.addRecipeCatalyst(new ItemStack(Registration.GRINDERT3_BLOCK.get()), new RecipeType<>(GrinderRecipeCategory.UID, GrinderRecipe.class));
-        registration.addRecipeCatalyst(new ItemStack(Registration.GRINDERT4_BLOCK.get()), new RecipeType<>(GrinderRecipeCategory.UID, GrinderRecipe.class));
+        registration.addRecipeCatalyst(new ItemStack(Registration.GRINDERT1_BLOCK.get()), GrinderRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(Registration.GRINDERT2_BLOCK.get()), GrinderRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(Registration.GRINDERT3_BLOCK.get()), GrinderRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(Registration.GRINDERT4_BLOCK.get()), GrinderRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(Registration.FURNACET1_BLOCK.get()), RecipeTypes.SMELTING);
         registration.addRecipeCatalyst(new ItemStack(Registration.FURNACET2_BLOCK.get()), RecipeTypes.SMELTING);
         registration.addRecipeCatalyst(new ItemStack(Registration.FURNACET3_BLOCK.get()), RecipeTypes.SMELTING);
@@ -51,7 +50,7 @@ public class JEIProcEnhancePlugin implements IModPlugin {
         RecipeManager recipeManager = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
         List<SawmillRecipe> sawmillRecipes = recipeManager.getAllRecipesFor(SawmillRecipe.Type.INSTANCE);
         List<GrinderRecipe> grinderRecipes = recipeManager.getAllRecipesFor(GrinderRecipe.Type.INSTANCE);
-        registration.addRecipes(new RecipeType<>(SawmillRecipeCategory.UID, SawmillRecipe.class), sawmillRecipes);
-        registration.addRecipes(new RecipeType<>(GrinderRecipeCategory.UID, GrinderRecipe.class), grinderRecipes);
+        registration.addRecipes(SawmillRecipeCategory.TYPE, sawmillRecipes);
+        registration.addRecipes(GrinderRecipeCategory.TYPE, grinderRecipes);
     }
 }

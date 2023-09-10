@@ -1,5 +1,6 @@
 {
   "type": "processenhancement:grinder",
+  "experience": 0.0,
   "ingredients": [
     {
       "item": "minecraft:orange_tulip"
@@ -8,12 +9,11 @@
   "outputs": [
     {
       "stack": {
-        "item": "minecraft:orange_dye",
-        "count": 3
+        "count": 3,
+        "item": "minecraft:orange_dye"
       },
       "weight": 1
     }
   ],
-  "processTime": 50,
-  "experience": 0.0
+  "processTime": 50
 }

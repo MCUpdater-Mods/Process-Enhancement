@@ -1,10 +1,5 @@
 {
   "type": "processenhancement:battery_upgrade",
-  "pattern": [
-    "UuU",
-    "uBu",
-    "UuU"
-  ],
   "key": {
     "B": {
       "item": "processenhancement:intermediate_battery"
@@ -16,6 +11,11 @@
       "item": "minecraft:iron_block"
     }
   },
+  "pattern": [
+    "UuU",
+    "uBu",
+    "UuU"
+  ],
   "result": {
     "item": "processenhancement:advanced_battery"
   }

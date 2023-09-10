@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "UuU",
-    "uMu",
-    "UuU"
-  ],
   "key": {
     "M": {
       "item": "processenhancement:intermediate_biogenerator"
@@ -16,6 +11,11 @@
       "item": "minecraft:iron_block"
     }
   },
+  "pattern": [
+    "UuU",
+    "uMu",
+    "UuU"
+  ],
   "result": {
     "item": "processenhancement:advanced_biogenerator"
   }

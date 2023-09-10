@@ -106,10 +106,10 @@ public abstract class GeneratorEntity extends AbstractConfigurableBlockEntity {
             if (this.burnCurrent == 0 && !itemStorage.getItem(0).isEmpty()) {
                 int newBurnTime = ForgeHooks.getBurnTime(itemStorage.getItem(0), RecipeType.SMELTING);
                 if (newBurnTime > 0) {
-                    if (itemStorage.getItem(0).hasContainerItem()) {
-                        if ((itemStorage.getItem(0).getContainerItem().sameItem(itemStorage.getItem(1)) && itemStorage.getItem(1).getCount() < itemStorage.getItem(1).getMaxStackSize()) || itemStorage.getItem(1).isEmpty()) {
+                    if (itemStorage.getItem(0).hasCraftingRemainingItem()) {
+                        if ((itemStorage.getItem(0).getCraftingRemainingItem().sameItem(itemStorage.getItem(1)) && itemStorage.getItem(1).getCount() < itemStorage.getItem(1).getMaxStackSize()) || itemStorage.getItem(1).isEmpty()) {
                             if (itemStorage.getItem(1).isEmpty()) {
-                                itemStorage.setItem(1, itemStorage.getItem(0).getContainerItem());
+                                itemStorage.setItem(1, itemStorage.getItem(0).getCraftingRemainingItem());
                             } else {
                                 itemStorage.getItem(1).grow(1);
                             }

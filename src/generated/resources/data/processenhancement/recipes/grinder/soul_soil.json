@@ -1,5 +1,6 @@
 {
   "type": "processenhancement:grinder",
+  "experience": 0.1,
   "ingredients": [
     {
       "item": "minecraft:soul_soil"
@@ -25,6 +26,5 @@
       "weight": 1
     }
   ],
-  "processTime": 200,
-  "experience": 0.1
+  "processTime": 200
 }

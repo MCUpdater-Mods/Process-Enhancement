@@ -9,14 +9,14 @@ import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public class SawmillRecipeCategory implements IRecipeCategory<SawmillRecipe> {
-    public static final ResourceLocation UID = new ResourceLocation(ProcessEnhancement.MODID, "sawmill");
+    public static final RecipeType<SawmillRecipe> TYPE = RecipeType.create(ProcessEnhancement.MODID, "sawmill", SawmillRecipe.class);
     public static final ResourceLocation TEXTURE = new ResourceLocation(ProcessEnhancement.MODID, "textures/gui/machine.png");
 
     private final IDrawable background;
@@ -28,8 +28,13 @@ public class SawmillRecipeCategory implements IRecipeCategory<SawmillRecipe> {
     }
 
     @Override
+    public RecipeType<SawmillRecipe> getRecipeType() {
+        return TYPE;
+    }
+
+    @Override
     public Component getTitle() {
-        return new TranslatableComponent("block.processenhancement.sawmill");
+        return Component.translatable("block.processenhancement.sawmill");
     }
 
     @Override
@@ -40,16 +45,6 @@ public class SawmillRecipeCategory implements IRecipeCategory<SawmillRecipe> {
     @Override
     public IDrawable getIcon() {
         return this.icon;
-    }
-
-    @Override
-    public ResourceLocation getUid() {
-        return UID;
-    }
-
-    @Override
-    public Class<? extends SawmillRecipe> getRecipeClass() {
-        return SawmillRecipe.class;
     }
 
     @Override

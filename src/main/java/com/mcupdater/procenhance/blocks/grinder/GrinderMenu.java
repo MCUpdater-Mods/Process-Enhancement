@@ -12,7 +12,6 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
 
 import java.util.Map;
-import java.util.Objects;
 
 public class GrinderMenu extends AbstractMachineMenu<GrinderEntity> {
 

@@ -1,14 +1,14 @@
 {
   "type": "processenhancement:sawmill",
+  "experience": 0.05,
   "ingredients": [
     {
       "tag": "minecraft:jungle_logs"
     }
   ],
-  "result": {
-    "item": "minecraft:jungle_door",
-    "count": 3
-  },
   "processTime": 32,
-  "experience": 0.05
+  "result": {
+    "count": 3,
+    "item": "minecraft:jungle_door"
+  }
 }

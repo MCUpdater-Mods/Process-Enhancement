@@ -10,7 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -66,7 +65,7 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
     };
 
     public SawmillEntity(BlockPos blockPos, BlockState blockState) {
-        super(SAWMILL_BLOCKENTITY.get(), blockPos, blockState, 20000, Integer.MAX_VALUE, Config.SAWMILL_ENERGY_PER_TICK.get(), 1);
+        super(SAWMILL_BLOCKENTITY.get(), blockPos, blockState, Config.SAWMILL_ENERGY_PER_TICK.get() * 1000, Integer.MAX_VALUE, Config.SAWMILL_ENERGY_PER_TICK.get(), 1);
         ItemResourceHandler itemResourceHandler = new ItemResourceHandler(this.level, 3, new int[]{0,1}, new int[]{0}, new int[]{1}, this::stillValid);
         itemResourceHandler.setInsertFunction(this::canPlaceItem);
         this.configMap.put("items", itemResourceHandler);
@@ -158,7 +157,7 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
 
     @Override
     public Component getDefaultName() {
-        return new TranslatableComponent("block.processenhancement.sawmill");
+        return Component.translatable("block.processenhancement.sawmill");
     }
 
     @Nullable

@@ -2,7 +2,6 @@ package com.mcupdater.procenhance.blocks.battery;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.block.state.BlockState;
 
 import static com.mcupdater.procenhance.setup.Registration.BASICBATTERY_BLOCKENTITY;
@@ -16,6 +15,6 @@ public class BatteryEntityT1 extends BatteryEntity {
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("block.processenhancement.basic_battery");
+        return Component.translatable("block.processenhancement.basic_battery");
     }
 }

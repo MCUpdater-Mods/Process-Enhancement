@@ -1,24 +1,24 @@
 {
   "type": "processenhancement:miner",
-  "pattern": [
-    "CFC",
-    "F#F",
-    "CRC"
-  ],
   "key": {
+    "#": {
+      "item": "minecraft:diamond_pickaxe"
+    },
     "C": {
       "item": "minecraft:copper_ingot"
     },
     "F": {
       "item": "minecraft:iron_ingot"
     },
-    "#": {
-      "item": "minecraft:diamond_pickaxe"
-    },
     "R": {
       "item": "minecraft:redstone"
     }
   },
+  "pattern": [
+    "CFC",
+    "F#F",
+    "CRC"
+  ],
   "result": {
     "item": "processenhancement:basic_miner"
   }

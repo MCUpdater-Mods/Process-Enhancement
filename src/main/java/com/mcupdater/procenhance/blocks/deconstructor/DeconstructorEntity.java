@@ -8,7 +8,6 @@ import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -77,7 +76,7 @@ public class DeconstructorEntity extends AbstractMachineBlockEntity {
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("block.processenhancement.deconstructor");
+        return Component.translatable("block.processenhancement.deconstructor");
     }
 
     public boolean stillValid(Player player) {
@@ -129,7 +128,7 @@ public class DeconstructorEntity extends AbstractMachineBlockEntity {
                 if (currentRecipe instanceof CraftingRecipe craftingRecipe) {
                     int slot = 1;
                     for (Ingredient ingredient : craftingRecipe.getIngredients()) {
-                        if (!ingredient.isEmpty() && ingredient.getItems().length > 0 && !ingredient.getItems()[0].hasContainerItem()) {
+                        if (!ingredient.isEmpty() && ingredient.getItems().length > 0 && !ingredient.getItems()[0].hasCraftingRemainingItem()) {
                             itemResourceHandler.setItem(slot, Arrays.stream(ingredient.getItems()).findFirst().orElse(ItemStack.EMPTY).copy());
                         }
                         slot++;

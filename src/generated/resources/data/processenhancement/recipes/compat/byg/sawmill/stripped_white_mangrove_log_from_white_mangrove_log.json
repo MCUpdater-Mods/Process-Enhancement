@@ -1,0 +1,19 @@
+{
+  "type": "processenhancement:sawmill",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "byg"
+    }
+  ],
+  "experience": 0.01,
+  "ingredients": [
+    {
+      "item": "byg:white_mangrove_log"
+    }
+  ],
+  "processTime": 16,
+  "result": {
+    "item": "byg:stripped_white_mangrove_log"
+  }
+}

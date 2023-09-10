@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "experience": 0.01,
+  "ingredients": [
+    {
+      "item": "minecraft:mangrove_planks"
+    }
+  ],
+  "processTime": 16,
+  "result": {
+    "count": 4,
+    "item": "minecraft:mangrove_button"
+  }
+}

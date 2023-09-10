@@ -1,9 +1,9 @@
 {
   "parent": "mculib:block/machine",
   "textures": {
-    "frame": "minecraft:block/copper_block",
     "corner": "minecraft:block/diamond_block",
     "face": "minecraft:block/bricks",
+    "frame": "minecraft:block/copper_block",
     "inset": "minecraft:block/black_concrete",
     "overlay": "processenhancement:block/generator_off",
     "particle": "minecraft:block/copper_block"

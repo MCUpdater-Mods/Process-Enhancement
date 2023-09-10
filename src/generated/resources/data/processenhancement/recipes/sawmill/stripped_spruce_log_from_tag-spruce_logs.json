@@ -1,13 +1,13 @@
 {
   "type": "processenhancement:sawmill",
+  "experience": 0.01,
   "ingredients": [
     {
       "tag": "minecraft:spruce_logs"
     }
   ],
+  "processTime": 16,
   "result": {
     "item": "minecraft:stripped_spruce_log"
-  },
-  "processTime": 16,
-  "experience": 0.01
+  }
 }

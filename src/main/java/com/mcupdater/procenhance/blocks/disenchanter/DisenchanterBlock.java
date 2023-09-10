@@ -1,7 +1,6 @@
 package com.mcupdater.procenhance.blocks.disenchanter;
 
 import com.mcupdater.mculib.block.AbstractMachineBlock;
-import com.mcupdater.procenhance.blocks.grinder.GrinderEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
 import net.minecraft.world.level.Level;

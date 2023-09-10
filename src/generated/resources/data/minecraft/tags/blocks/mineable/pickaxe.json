@@ -1,5 +1,4 @@
 {
-  "replace": false,
   "values": [
     "processenhancement:crude_generator",
     "processenhancement:basic_generator",
@@ -33,6 +32,7 @@
     "processenhancement:deconstructor",
     "processenhancement:cobblestone_solidifier",
     "processenhancement:basalt_solidifier",
+    "processenhancement:autopackager",
     "processenhancement:copper_wire",
     "processenhancement:basic_battery",
     "processenhancement:intermediate_battery",

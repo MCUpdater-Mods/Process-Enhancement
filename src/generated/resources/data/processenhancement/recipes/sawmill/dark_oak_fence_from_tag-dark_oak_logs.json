@@ -1,14 +1,14 @@
 {
   "type": "processenhancement:sawmill",
+  "experience": 0.05,
   "ingredients": [
     {
       "tag": "minecraft:dark_oak_logs"
     }
   ],
-  "result": {
-    "item": "minecraft:dark_oak_fence",
-    "count": 4
-  },
   "processTime": 32,
-  "experience": 0.05
+  "result": {
+    "count": 4,
+    "item": "minecraft:dark_oak_fence"
+  }
 }

@@ -1,14 +1,14 @@
 {
   "type": "processenhancement:sawmill",
+  "experience": 0.01,
   "ingredients": [
     {
       "item": "minecraft:crimson_planks"
     }
   ],
-  "result": {
-    "item": "minecraft:crimson_slab",
-    "count": 2
-  },
   "processTime": 16,
-  "experience": 0.01
+  "result": {
+    "count": 2,
+    "item": "minecraft:crimson_slab"
+  }
 }

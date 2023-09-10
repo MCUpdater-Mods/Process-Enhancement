@@ -3,7 +3,6 @@ package com.mcupdater.procenhance.blocks.pump;
 import com.mcupdater.mculib.block.AbstractMachineBlockEntity;
 import com.mcupdater.mculib.capabilities.FluidResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
-import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -11,11 +10,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -23,7 +21,6 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class PumpEntity extends AbstractMachineBlockEntity {
@@ -90,7 +87,7 @@ public abstract class PumpEntity extends AbstractMachineBlockEntity {
                         } else if (state.getBlock() instanceof BucketPickup bucketBlock) {
                             Fluid fluid = state.getFluidState().getType();
                             if (state.getFluidState().isSource() && (fluidResourceHandler.getInternalHandler().getFluidInTank(0).isEmpty() || fluid.isSame(this.fluidResourceHandler.getInternalHandler().getFluidInTank(0).getFluid()))) {
-                                FluidStack fluidStack = new FluidStack(fluid, FluidAttributes.BUCKET_VOLUME);
+                                FluidStack fluidStack = new FluidStack(fluid, 1000);
                                 int val = this.fluidResourceHandler.getInternalHandler().forceFill(0, fluidStack, IFluidHandler.FluidAction.SIMULATE);
                                 if (val == fluidStack.getAmount()) {
                                     if (!bucketBlock.pickupBlock(level, blockPos, state).isEmpty()) {

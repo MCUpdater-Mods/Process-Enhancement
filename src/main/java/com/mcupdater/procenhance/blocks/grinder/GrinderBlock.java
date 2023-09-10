@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SoundType;
@@ -16,8 +17,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Random;
-
 public abstract class GrinderBlock extends AbstractMachineBlock {
 
     public GrinderBlock() {
@@ -25,7 +24,7 @@ public abstract class GrinderBlock extends AbstractMachineBlock {
     }
 
     @Override
-    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, Random pRandom) {
+    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
         if (pState.getValue(ACTIVE)) {
             double x = (double) pPos.getX() + 0.5D;
             double y = (double) pPos.getY();

@@ -32,6 +32,8 @@ import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterBlock;
 import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterEntity;
 import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterMenu;
 import com.mcupdater.procenhance.blocks.tank.*;
+import com.mcupdater.procenhance.blocks.autopackager.*;
+import com.mcupdater.procenhance.items.autopackager.*;
 import com.mcupdater.procenhance.recipe.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.inventory.MenuType;
@@ -57,8 +59,9 @@ public class Registration {
     public static final DeferredRegister<Block> MINERS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, MODID);
-    public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MODID);
+    public static final DeferredRegister<Item> PATTERNS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, MODID);
+    public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, MODID);
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, ProcessEnhancement.MODID);
 
 
@@ -69,15 +72,16 @@ public class Registration {
         MINERS.register(modEventBus);
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
+        PATTERNS.register(modEventBus);
         BLOCK_ENTITIES.register(modEventBus);
-        CONTAINERS.register(modEventBus);
+        MENUS.register(modEventBus);
         RECIPE_SERIALIZERS.register(modEventBus);
     }
 
     public static final RegistryObject<CrudeGeneratorBlock> CRUDEGENERATOR_BLOCK = MACHINES.register("crude_generator", CrudeGeneratorBlock::new);
     public static final RegistryObject<Item> CRUDEGENERATOR_BLOCKITEM = ITEMS.register("crude_generator", () -> new BlockItem(CRUDEGENERATOR_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<BlockEntityType<CrudeGeneratorEntity>> CRUDEGENERATOR_BLOCKENTITY = BLOCK_ENTITIES.register("crude_generator", () -> BlockEntityType.Builder.of(CrudeGeneratorEntity::new, CRUDEGENERATOR_BLOCK.get()).build(null));
-    public static final RegistryObject<MenuType<CrudeGeneratorMenu>> CRUDEGENERATOR_MENU = CONTAINERS.register("crude_generator", () -> IForgeMenuType.create((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<CrudeGeneratorMenu>> CRUDEGENERATOR_MENU = MENUS.register("crude_generator", () -> IForgeMenuType.create((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.level;
         return new CrudeGeneratorMenu(windowId, world, pos, inv, inv.player, DataHelper.readDirectionMap(data));
@@ -96,7 +100,7 @@ public class Registration {
     public static final RegistryObject<Item> INDGENERATOR_BLOCKITEM = ITEMS.register("industrial_generator", () -> new BlockItem(INDGENERATOR_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<BlockEntityType<GeneratorEntityT4>> INDGENERATOR_BLOCKENTITY = BLOCK_ENTITIES.register("industrial_generator", () -> BlockEntityType.Builder.of(GeneratorEntityT4::new, INDGENERATOR_BLOCK.get()).build(null));
 
-    public static final RegistryObject<MenuType<GeneratorMenu>> GENERATOR_MENU = CONTAINERS.register("generator", () -> IForgeMenuType.create((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<GeneratorMenu>> GENERATOR_MENU = MENUS.register("generator", () -> IForgeMenuType.create((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.level;
         GeneratorEntity blockEntity = (GeneratorEntity) world.getBlockEntity(pos);
@@ -116,7 +120,7 @@ public class Registration {
     public static final RegistryObject<Item> INDLAVAGENERATOR_BLOCKITEM = ITEMS.register("industrial_lava_generator", () -> new BlockItem(INDLAVAGENERATOR_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<BlockEntityType<LavaGeneratorEntityT4>> INDLAVAGENERATOR_BLOCKENTITY = BLOCK_ENTITIES.register("industrial_lava_generator", () -> BlockEntityType.Builder.of(LavaGeneratorEntityT4::new, INDLAVAGENERATOR_BLOCK.get()).build(null));
 
-    public static final RegistryObject<MenuType<LavaGeneratorMenu>> LAVAGENERATOR_MENU = CONTAINERS.register("lava_generator", () -> IForgeMenuType.create((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<LavaGeneratorMenu>> LAVAGENERATOR_MENU = MENUS.register("lava_generator", () -> IForgeMenuType.create((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.level;
         LavaGeneratorEntity blockEntity = (LavaGeneratorEntity) world.getBlockEntity(pos);
@@ -136,7 +140,7 @@ public class Registration {
     public static final RegistryObject<Item> INDBIOGENERATOR_BLOCKITEM = ITEMS.register("industrial_biogenerator", () -> new BlockItem(INDBIOGENERATOR_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<BlockEntityType<BiogeneratorEntityT4>> INDBIOGENERATOR_BLOCKENTITY = BLOCK_ENTITIES.register("industrial_biogenerator", () -> BlockEntityType.Builder.of(BiogeneratorEntityT4::new, INDBIOGENERATOR_BLOCK.get()).build(null));
 
-    public static final RegistryObject<MenuType<BiogeneratorMenu>> BIOGENERATOR_MENU = CONTAINERS.register("biogenerator", () -> IForgeMenuType.create((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<BiogeneratorMenu>> BIOGENERATOR_MENU = MENUS.register("biogenerator", () -> IForgeMenuType.create((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.level;
         BiogeneratorEntity blockEntity = (BiogeneratorEntity) world.getBlockEntity(pos);
@@ -155,7 +159,7 @@ public class Registration {
     public static final RegistryObject<BatteryBlockT4> INDBATTERY_BLOCK = BATTERIES.register("industrial_battery", BatteryBlockT4::new);
     public static final RegistryObject<Item> INDBATTERY_BLOCKITEM = ITEMS.register("industrial_battery", () -> new BatteryBlockItem(INDBATTERY_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP), 80000));
     public static final RegistryObject<BlockEntityType<BatteryEntityT4>> INDBATTERY_BLOCKENTITY = BLOCK_ENTITIES.register("industrial_battery", () -> BlockEntityType.Builder.of(BatteryEntityT4::new, INDBATTERY_BLOCK.get()).build(null) );
-    public static final RegistryObject<MenuType<BatteryMenu>> BATTERY_MENU = CONTAINERS.register("battery", () -> IForgeMenuType.create(((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<BatteryMenu>> BATTERY_MENU = MENUS.register("battery", () -> IForgeMenuType.create(((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level level = inv.player.level;
         return new BatteryMenu(windowId, level, pos, inv, inv.player, DataHelper.readDirectionMap(data));
@@ -182,7 +186,7 @@ public class Registration {
     public static final RegistryObject<BlockEntityType<ElectricFurnaceEntityT4>> FURNACET4_BLOCKENTITY = BLOCK_ENTITIES.register("industrial_furnace", () -> {
         return BlockEntityType.Builder.of(ElectricFurnaceEntityT4::new, FURNACET4_BLOCK.get()).build(null);
     });
-    public static final RegistryObject<MenuType<ElectricFurnaceMenu>> FURNACE_MENU = CONTAINERS.register("electric_furnace", () -> IForgeMenuType.create((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<ElectricFurnaceMenu>> FURNACE_MENU = MENUS.register("electric_furnace", () -> IForgeMenuType.create((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.level;
         ElectricFurnaceEntity blockEntity = (ElectricFurnaceEntity) world.getBlockEntity(pos);
@@ -192,7 +196,7 @@ public class Registration {
     public static final RegistryObject<SawmillBlock> SAWMILL_BLOCK = MACHINES.register("sawmill", SawmillBlock::new);
     public static final RegistryObject<Item> SAWMILL_BLOCKITEM = ITEMS.register("sawmill", () -> new BlockItem(SAWMILL_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<BlockEntityType<SawmillEntity>> SAWMILL_BLOCKENTITY = BLOCK_ENTITIES.register("sawmill", () -> BlockEntityType.Builder.of(SawmillEntity::new, SAWMILL_BLOCK.get()).build(null));
-    public static final RegistryObject<MenuType<SawmillMenu>> SAWMILL_MENU = CONTAINERS.register("sawmill", () -> IForgeMenuType.create((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<SawmillMenu>> SAWMILL_MENU = MENUS.register("sawmill", () -> IForgeMenuType.create((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.level;
         SawmillEntity blockEntity = (SawmillEntity) world.getBlockEntity(pos);
@@ -212,7 +216,7 @@ public class Registration {
     public static final RegistryObject<GrinderBlockT4> GRINDERT4_BLOCK = MACHINES.register("industrial_grinder", GrinderBlockT4::new);
     public static final RegistryObject<Item> GRINDERT4_BLOCKITEM = ITEMS.register("industrial_grinder", () -> new BlockItem(GRINDERT4_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<BlockEntityType<GrinderEntityT4>> GRINDERT4_BLOCKENTITY = BLOCK_ENTITIES.register("industrial_grinder", () -> BlockEntityType.Builder.of(GrinderEntityT4::new, GRINDERT4_BLOCK.get()).build(null));
-    public static final RegistryObject<MenuType<GrinderMenu>> GRINDER_MENU = CONTAINERS.register("grinder", () -> IForgeMenuType.create(((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<GrinderMenu>> GRINDER_MENU = MENUS.register("grinder", () -> IForgeMenuType.create(((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.level;
         GrinderEntity blockEntity = (GrinderEntity) world.getBlockEntity(pos);
@@ -223,7 +227,7 @@ public class Registration {
     public static final RegistryObject<ElectricStonecutterBlock> STONECUTTER_BLOCK = MACHINES.register("stonecutter", ElectricStonecutterBlock::new);
     public static final RegistryObject<Item> STONECUTTER_BLOCKITEM = ITEMS.register("stonecutter", () -> new BlockItem(STONECUTTER_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<BlockEntityType<ElectricStonecutterEntity>> STONECUTTER_ENTITY = BLOCK_ENTITIES.register("stonecutter", () -> BlockEntityType.Builder.of(ElectricStonecutterEntity::new, STONECUTTER_BLOCK.get()).build(null));
-    public static final RegistryObject<MenuType<ElectricStonecutterMenu>> STONECUTTER_MENU = CONTAINERS.register("stonecutter", () -> IForgeMenuType.create((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<ElectricStonecutterMenu>> STONECUTTER_MENU = MENUS.register("stonecutter", () -> IForgeMenuType.create((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level level = inv.player.level;
         ElectricStonecutterEntity blockEntity = (ElectricStonecutterEntity) level.getBlockEntity(pos);
@@ -237,7 +241,7 @@ public class Registration {
     public static final RegistryObject<BufferBlock> BUFFER_BLOCK = MACHINES.register("buffer", BufferBlock::new);
     public static final RegistryObject<Item> BUFFER_BLOCKITEM = ITEMS.register("buffer", () -> new BlockItem(BUFFER_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<BlockEntityType<BufferEntity>> BUFFER_ENTITY = BLOCK_ENTITIES.register("buffer", () -> BlockEntityType.Builder.of(BufferEntity::new, BUFFER_BLOCK.get()).build(null));
-    public static final RegistryObject<MenuType<BufferMenu>> BUFFER_MENU = CONTAINERS.register("buffer", () -> IForgeMenuType.create((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<BufferMenu>> BUFFER_MENU = MENUS.register("buffer", () -> IForgeMenuType.create((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level level = inv.player.level;
         BufferEntity blockEntity = (BufferEntity) level.getBlockEntity(pos);
@@ -256,7 +260,7 @@ public class Registration {
     public static final RegistryObject<TankBlockT4> TANKT4_BLOCK = TANKS.register("industrial_tank", TankBlockT4::new);
     public static final RegistryObject<Item> TANKT4_BLOCKITEM = ITEMS.register("industrial_tank", () -> new TankBlockItem(TANKT4_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP),10000000));
     public static final RegistryObject<BlockEntityType<TankEntityT4>> TANKT4_ENTITY = BLOCK_ENTITIES.register("industrial_tank", () -> BlockEntityType.Builder.of(TankEntityT4::new, TANKT4_BLOCK.get()).build(null));
-    public static final RegistryObject<MenuType<TankMenu>> TANK_MENU = CONTAINERS.register("tank", () -> IForgeMenuType.create(((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<TankMenu>> TANK_MENU = MENUS.register("tank", () -> IForgeMenuType.create(((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.level;
         TankEntity blockEntity = (TankEntity) world.getBlockEntity(pos);
@@ -276,7 +280,7 @@ public class Registration {
     public static final RegistryObject<PumpBlockT4> PUMPT4_BLOCK = MACHINES.register("industrial_pump", PumpBlockT4::new);
     public static final RegistryObject<Item> PUMPT4_BLOCKITEM = ITEMS.register("industrial_pump", () -> new BlockItem(PUMPT4_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<BlockEntityType<PumpEntityT4>> PUMPT4_ENTITY = BLOCK_ENTITIES.register("industrial_pump", () -> BlockEntityType.Builder.of(PumpEntityT4::new, PUMPT4_BLOCK.get()).build(null));
-    public static final RegistryObject<MenuType<PumpMenu>> PUMP_MENU = CONTAINERS.register("pump", () -> IForgeMenuType.create(((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<PumpMenu>> PUMP_MENU = MENUS.register("pump", () -> IForgeMenuType.create(((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.level;
         PumpEntity blockEntity = (PumpEntity) world.getBlockEntity(pos);
@@ -295,7 +299,7 @@ public class Registration {
     public static final RegistryObject<MinerBlockT4> MINERT4_BLOCK = MINERS.register("industrial_miner", MinerBlockT4::new);
     public static final RegistryObject<Item> MINERT4_BLOCKITEM = ITEMS.register("industrial_miner", () -> new BlockItem(MINERT4_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<BlockEntityType<MinerEntityT4>> MINERT4_ENTITY = BLOCK_ENTITIES.register("industrial_miner", () -> BlockEntityType.Builder.of(MinerEntityT4::new, MINERT4_BLOCK.get()).build(null));
-    public static final RegistryObject<MenuType<MinerMenu>> MINER_MENU = CONTAINERS.register("miner", () -> IForgeMenuType.create(((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<MinerMenu>> MINER_MENU = MENUS.register("miner", () -> IForgeMenuType.create(((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.level;
         MinerEntity blockEntity = (MinerEntity) world.getBlockEntity(pos);
@@ -306,7 +310,7 @@ public class Registration {
     public static final RegistryObject<DisenchanterBlock> DISENCHANTER_BLOCK = MACHINES.register("disenchanter", DisenchanterBlock::new);
     public static final RegistryObject<Item> DISENCHANTER_BLOCKITEM = ITEMS.register("disenchanter", () -> new BlockItem(DISENCHANTER_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<BlockEntityType<DisenchanterEntity>> DISENCHANTER_ENTITY = BLOCK_ENTITIES.register("disenchanter", () -> BlockEntityType.Builder.of(DisenchanterEntity::new, DISENCHANTER_BLOCK.get()).build(null));
-    public static final RegistryObject<MenuType<DisenchanterMenu>> DISENCHANTER_MENU = CONTAINERS.register("disenchanter", () -> IForgeMenuType.create(((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<DisenchanterMenu>> DISENCHANTER_MENU = MENUS.register("disenchanter", () -> IForgeMenuType.create(((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.level;
         DisenchanterEntity blockEntity = (DisenchanterEntity) world.getBlockEntity(pos);
@@ -316,7 +320,7 @@ public class Registration {
     public static final RegistryObject<DeconstructorBlock> DECONSTRUCTOR_BLOCK = MACHINES.register("deconstructor", DeconstructorBlock::new);
     public static final RegistryObject<Item> DECONSTRUCTOR_BLOCKITEM = ITEMS.register("deconstructor", () -> new BlockItem(DECONSTRUCTOR_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<BlockEntityType<DeconstructorEntity>> DECONSTRUCTOR_ENTITY = BLOCK_ENTITIES.register("deconstructor", () -> BlockEntityType.Builder.of(DeconstructorEntity::new, DECONSTRUCTOR_BLOCK.get()).build(null));
-    public static final RegistryObject<MenuType<DeconstructorMenu>> DECONSTRUCTOR_MENU = CONTAINERS.register("deconstructor", () -> IForgeMenuType.create(((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<DeconstructorMenu>> DECONSTRUCTOR_MENU = MENUS.register("deconstructor", () -> IForgeMenuType.create(((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.level;
         DeconstructorEntity blockEntity = (DeconstructorEntity) world.getBlockEntity(pos);
@@ -329,7 +333,7 @@ public class Registration {
     public static final RegistryObject<BasaltSolidifierBlock> BASALTSOLIDIFIER_BLOCK = MACHINES.register("basalt_solidifier", BasaltSolidifierBlock::new);
     public static final RegistryObject<Item> BASALTSOLIDIFIER_BLOCKITEM = ITEMS.register("basalt_solidifier", () -> new BlockItem(BASALTSOLIDIFIER_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<BlockEntityType<BasaltSolidifierEntity>> BASALTSOLIDIFIER_ENTITY = BLOCK_ENTITIES.register("basalt_solidifier", () -> BlockEntityType.Builder.of(BasaltSolidifierEntity::new, BASALTSOLIDIFIER_BLOCK.get()).build(null));
-    public static final RegistryObject<MenuType<SolidifierMenu>> SOLIDIFIER_MENU = CONTAINERS.register("solidifier", () -> IForgeMenuType.create(((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<SolidifierMenu>> SOLIDIFIER_MENU = MENUS.register("solidifier", () -> IForgeMenuType.create(((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.level;
         AbstractSolidifierEntity blockEntity = (AbstractSolidifierEntity) world.getBlockEntity(pos);
@@ -342,4 +346,23 @@ public class Registration {
     public static final RegistryObject<Item> CAPACITOR = ITEMS.register("capacitor", () -> new Item(new Item.Properties().tab(MCULIB_ITEM_GROUP)));
     public static final RegistryObject<Item> PLANT_DUST = ITEMS.register("plant_dust", () -> new Item(new Item.Properties().tab(MCULIB_ITEM_GROUP)));
 
+
+    public static final RegistryObject<PackagerBlock> AUTOPACKAGER_BLOCK = MACHINES.register("autopackager", PackagerBlock::new);
+    public static final RegistryObject<Item> AUTOPACKAGER_BLOCKITEM = ITEMS.register("autopackager", () -> new BlockItem(AUTOPACKAGER_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<PackagerEntity>> AUTOPACKAGER_ENTITY = BLOCK_ENTITIES.register("autopackager", () -> BlockEntityType.Builder.of(PackagerEntity::new, AUTOPACKAGER_BLOCK.get()).build(null));
+    public static final RegistryObject<MenuType<PackagerMenu>> AUTOPACKAGER_MENU = MENUS.register("autopackager", () -> IForgeMenuType.create(((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        Level world = inv.player.level;
+        PackagerEntity blockEntity = (PackagerEntity) world.getBlockEntity(pos);
+        return new PackagerMenu(windowId, world, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
+    })));
+    public static final RegistryObject<Item> SLATE_2x2 = PATTERNS.register("slate_2x2", () -> new Pattern2x2Item(new Item.Properties().tab(MCULIB_ITEM_GROUP).stacksTo(1)));
+    public static final RegistryObject<Item> SLATE_3x3 = PATTERNS.register("slate_3x3", () -> new Pattern3x3Item(new Item.Properties().tab(MCULIB_ITEM_GROUP).stacksTo(1)));
+    public static final RegistryObject<Item> SLATE_CROSS = PATTERNS.register("slate_cross", () -> new PatternCrossItem(new Item.Properties().tab(MCULIB_ITEM_GROUP).stacksTo(1)));
+    public static final RegistryObject<Item> SLATE_DOOR = PATTERNS.register("slate_door", () -> new PatternDoorItem(new Item.Properties().tab(MCULIB_ITEM_GROUP).stacksTo(1)));
+    public static final RegistryObject<Item> SLATE_HOLLOW = PATTERNS.register("slate_hollow", () -> new PatternHollowItem(new Item.Properties().tab(MCULIB_ITEM_GROUP).stacksTo(1)));
+    public static final RegistryObject<Item> SLATE_SLAB = PATTERNS.register("slate_slab", () -> new PatternSlabItem(new Item.Properties().tab(MCULIB_ITEM_GROUP).stacksTo(1)));
+    public static final RegistryObject<Item> SLATE_STAIR = PATTERNS.register("slate_stair", () -> new PatternStairItem(new Item.Properties().tab(MCULIB_ITEM_GROUP).stacksTo(1)));
+    public static final RegistryObject<Item> SLATE_UNPACKAGE = PATTERNS.register("slate_unpackage", () -> new PatternUnpackageItem(new Item.Properties().tab(MCULIB_ITEM_GROUP).stacksTo(1)));
+    public static final RegistryObject<Item> SLATE_WALL = PATTERNS.register("slate_wall", () -> new PatternWallItem(new Item.Properties().tab(MCULIB_ITEM_GROUP).stacksTo(1)));
 }

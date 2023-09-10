@@ -1,0 +1,19 @@
+{
+  "type": "processenhancement:sawmill",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "byg"
+    }
+  ],
+  "experience": 0.01,
+  "ingredients": [
+    {
+      "item": "byg:mahogany_planks"
+    }
+  ],
+  "processTime": 16,
+  "result": {
+    "item": "byg:mahogany_stairs"
+  }
+}

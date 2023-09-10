@@ -4,7 +4,6 @@ import com.mcupdater.procenhance.capabilities.InternalEnergyStorage;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -38,7 +37,7 @@ public class BatteryBlockItem extends BlockItem {
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
 
-        pStack.getCapability(CapabilityEnergy.ENERGY, null).ifPresent(energyStorage -> pTooltip.add(new TextComponent(String.format("%d / %d FE",energyStorage.getEnergyStored(),energyStorage.getMaxEnergyStored()))));
+        pStack.getCapability(CapabilityEnergy.ENERGY, null).ifPresent(energyStorage -> pTooltip.add(Component.literal(String.format("%d / %d FE",energyStorage.getEnergyStored(),energyStorage.getMaxEnergyStored()))));
     }
 
     private class BatteryCapabilityProvider implements ICapabilityProvider {

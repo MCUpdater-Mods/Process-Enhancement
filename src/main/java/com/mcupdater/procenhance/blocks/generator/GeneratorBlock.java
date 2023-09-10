@@ -9,6 +9,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -26,9 +27,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 
-import javax.annotation.Nullable;
 import java.util.Map;
-import java.util.Random;
 
 public abstract class GeneratorBlock extends AbstractMachineBlock {
     public GeneratorBlock() {
@@ -43,7 +42,7 @@ public abstract class GeneratorBlock extends AbstractMachineBlock {
             BlockEntity blockEntity =pLevel.getBlockEntity(pPos);
             if (blockEntity instanceof GeneratorEntity) {
                 Map<Direction, Component> adjacentNames = DataHelper.getAdjacentNames(pLevel, pPos);
-                NetworkHooks.openGui((ServerPlayer)pPlayer, (MenuProvider)blockEntity, (buf) -> {
+                NetworkHooks.openScreen((ServerPlayer)pPlayer, (MenuProvider)blockEntity, (buf) -> {
                     buf.writeBlockPos(pPos);
                     DataHelper.writeDirectionMap(buf, adjacentNames);
                 });
@@ -55,7 +54,7 @@ public abstract class GeneratorBlock extends AbstractMachineBlock {
     }
 
     @Override
-    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, Random pRandom) {
+    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
         if (pState.getValue(ACTIVE)) {
             double x = (double) pPos.getX() + 0.5D;
             double y = (double) pPos.getY();
