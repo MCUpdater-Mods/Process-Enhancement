@@ -1,0 +1,18 @@
+{
+  "type": "processenhancement:grinder",
+  "experience": 0.1,
+  "ingredients": [
+    {
+      "item": "minecraft:smooth_basalt"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "item": "minecraft:basalt"
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 50
+}

@@ -335,6 +335,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         grinder_single("bamboo", Ingredient.of(Items.BAMBOO), new ItemStack(PLANT_DUST.get(), 1), 50, 0.1f, finishedRecipeConsumer);
         grinder_single("kelp", Ingredient.of(Items.KELP), new ItemStack(PLANT_DUST.get(), 1), 50, 0.1f, finishedRecipeConsumer);
         grinder_single("copper_ingot", Ingredient.of(Items.COPPER_INGOT), new ItemStack(COPPER_DUST.get(), 1), 50, 0f, finishedRecipeConsumer);
+        grinder_single("smooth_basalt", Ingredient.of(Blocks.SMOOTH_BASALT), new ItemStack(Blocks.BASALT, 1), 50, 0.1f, finishedRecipeConsumer);
 
         cookOre(finishedRecipeConsumer, IRON_DUST.get(), Items.IRON_INGOT, 0.7f);
         cookOre(finishedRecipeConsumer, COPPER_DUST.get(), Items.COPPER_INGOT, 0.7f);

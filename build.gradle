@@ -176,6 +176,10 @@ repositories {
         }
         // implementation fg.deobf('curse.maven:descriptor-ProjectID:FileID')
     }
+    maven {
+        name = "Local repository"
+        url "file:///${project.projectDir}/../mcmodsrepo"
+    }
 
     // If you have mod jar dependencies in ./libs, you can declare them as a repository like so:
     flatDir {
@@ -199,7 +203,7 @@ dependencies {
     // implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency
 
     // Examples using mod jars from ./libs
-    implementation fg.deobf("blank:MCULib-1.19.2:1.4.0a")
+    implementation fg.deobf("com.mcupdater.mculib:MCULib:1.4.0a")
 
     // Mods for testing
     runtimeOnly fg.deobf("curse.maven:mcwroofs-352039:4590028")

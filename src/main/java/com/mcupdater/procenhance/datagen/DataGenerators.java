@@ -20,7 +20,9 @@ public class DataGenerators {
         dataGenerator.addProvider(true, new ModLootTableProvider(dataGenerator));
         dataGenerator.addProvider(true, new ModBlockStateProvider(dataGenerator,existingFileHelper));
         dataGenerator.addProvider(true, new ModItemModelProvider(dataGenerator,existingFileHelper));
-        dataGenerator.addProvider(true, new ModBlockTagsProvider(dataGenerator, ProcessEnhancement.MODID, existingFileHelper));
+        ModBlockTagsProvider modBlockTagsProvider = new ModBlockTagsProvider(dataGenerator, ProcessEnhancement.MODID, existingFileHelper);
+        dataGenerator.addProvider(true, modBlockTagsProvider);
+        dataGenerator.addProvider(true, new ModItemTagsProvider(dataGenerator, modBlockTagsProvider, ProcessEnhancement.MODID, existingFileHelper));
 
         dataGenerator.addProvider(true, new BYGCompat(dataGenerator));
 

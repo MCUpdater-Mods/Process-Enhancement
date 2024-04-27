@@ -1,5 +1,6 @@
 package com.mcupdater.procenhance.setup;
 
+import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.blocks.autopackager.PackagerScreen;
 import com.mcupdater.procenhance.blocks.battery.BatteryScreen;
 import com.mcupdater.procenhance.blocks.biogenerator.BiogeneratorScreen;
@@ -22,10 +23,14 @@ import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.RegistryObject;
 
+@Mod.EventBusSubscriber(modid = ProcessEnhancement.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientSetup {
     public static void init(final FMLClientSetupEvent event) {
         for (RegistryObject<Block> machine : Registration.MACHINES.getEntries()) {
@@ -61,6 +66,7 @@ public class ClientSetup {
         MenuScreens.register(Registration.AUTOPACKAGER_MENU.get(), PackagerScreen::new);
     }
 
+    @SubscribeEvent
     public static void registerColors(RegisterColorHandlersEvent.Block event) {
         event.register((blockState, level, blockPos, index) -> {
             if (level != null) {
