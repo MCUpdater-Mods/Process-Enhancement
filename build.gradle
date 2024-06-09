@@ -188,42 +188,42 @@ repositories {
 }
 
 dependencies {
-    // Specify the version of Minecraft to use. If this is any group other than 'net.minecraft', it is assumed
-    // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
-    // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.19.2-43.2.21'
+// Specify the version of Minecraft to use. If this is any group other than 'net.minecraft', it is assumed
+// that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
+// The userdev artifact is a special name and will get all sorts of transformations applied to it.
+minecraft 'net.minecraftforge:forge:1.19.2-43.2.21'
 
-    // Real mod deobf dependency examples - these get remapped to your current mappings
-    compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
-    compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
-    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
-    implementation fg.deobf(project.dependencies.create("mcjty.theoneprobe:theoneprobe:${top_version}") { transitive = false})
-    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.19.2-77:api")
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.19.2-77")
-    // implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency
+// Real mod deobf dependency examples - these get remapped to your current mappings
+compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
+compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
+runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
+implementation fg.deobf(project.dependencies.create("mcjty.theoneprobe:theoneprobe:${top_version}") { transitive = false})
+compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.19.2-77:api")
+runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.19.2-77")
+// implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency
 
-    // Examples using mod jars from ./libs
-    implementation fg.deobf("com.mcupdater.mculib:MCULib:1.4.0a")
+// Examples using mod jars from ./libs
+implementation fg.deobf("com.mcupdater.mculib:mculib:1.4.1")
 
-    // Mods for testing
-    runtimeOnly fg.deobf("curse.maven:mcwroofs-352039:4590028")
-    runtimeOnly fg.deobf("curse.maven:mcwwindows-363569:4203423")
-    //runtimeOnly fg.deobf("blank:nbttool:2.1.0")
+// Mods for testing
+runtimeOnly fg.deobf("curse.maven:mcwroofs-352039:4590028")
+runtimeOnly fg.deobf("curse.maven:mcwwindows-363569:4203423")
+//runtimeOnly fg.deobf("blank:nbttool:2.1.0")
 
-    // Mods for integration
-    //implementation fg.deobf("blank:ars_nouveau:1.0")
-    //implementation fg.deobf("blank:cyclopscore:1.0")
-    //implementation fg.deobf("blank:integrateddynamics:1.0")
-    //runtimeOnly fg.deobf("blank:quark:1.0")
-    //implementation fg.deobf("blank:twilightforest:1.0")
-    implementation fg.deobf("curse.maven:byg-247560:4602115")
-    implementation fg.deobf("curse.maven:geckolib-388172:4407241")
-    implementation fg.deobf("curse.maven:corgilib-693313:4554111")
-    implementation fg.deobf("curse.maven:terrablender-563928:4618490")
+// Mods for integration
+//implementation fg.deobf("blank:ars_nouveau:1.0")
+//implementation fg.deobf("blank:cyclopscore:1.0")
+//implementation fg.deobf("blank:integrateddynamics:1.0")
+//runtimeOnly fg.deobf("blank:quark:1.0")
+//implementation fg.deobf("blank:twilightforest:1.0")
+implementation fg.deobf("curse.maven:byg-247560:4602115")
+implementation fg.deobf("curse.maven:geckolib-388172:4407241")
+implementation fg.deobf("curse.maven:corgilib-693313:4554111")
+implementation fg.deobf("curse.maven:terrablender-563928:4618490")
 
-    // For more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
+// For more info...
+// http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
+// http://www.gradle.org/docs/current/userguide/dependency_management.html
 }
 
 // Example for how to get properties into the manifest for reading at runtime.
