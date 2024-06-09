@@ -15,8 +15,8 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.items.IItemHandler;
@@ -47,9 +47,9 @@ public class TankMenu extends AbstractContainerMenu implements IConfigurableMenu
         this.addSlot(new Slot(this.transientSlots,0,8,16){
             @Override
             public boolean mayPlace(ItemStack pStack) {
-                if (pStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent()) {
+                if (pStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent()) {
                     IFluidHandler tankFluidHandler = TankMenu.this.tileEntity.getFluidHandler();
-                    IFluidHandlerItem itemFluidHandler = pStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
+                    IFluidHandlerItem itemFluidHandler = pStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(null);
                     return tankFluidHandler.isFluidValid(0, itemFluidHandler.getFluidInTank(0));
                 }
                 return false;
@@ -124,8 +124,8 @@ public class TankMenu extends AbstractContainerMenu implements IConfigurableMenu
     public void slotsChanged(Container pContainer) {
         super.slotsChanged(pContainer);
         if (pContainer == this.transientSlots) {
-            if (!this.transientSlots.getItem(0).isEmpty() && this.transientSlots.getItem(1).isEmpty() && this.transientSlots.getItem(0).getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent()) {
-                IFluidHandlerItem itemFluidHandler = this.transientSlots.getItem(0).getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
+            if (!this.transientSlots.getItem(0).isEmpty() && this.transientSlots.getItem(1).isEmpty() && this.transientSlots.getItem(0).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent()) {
+                IFluidHandlerItem itemFluidHandler = this.transientSlots.getItem(0).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(null);
                 IFluidHandler tankFluidHandler = TankMenu.this.tileEntity.getFluidHandler();
                 if (itemFluidHandler.getFluidInTank(0).isEmpty()) {
                     // Fill item

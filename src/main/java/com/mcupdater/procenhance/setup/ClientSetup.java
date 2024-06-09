@@ -20,32 +20,15 @@ import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterScreen;
 import com.mcupdater.procenhance.blocks.tank.TankScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.BiomeColors;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.registries.RegistryObject;
 
 @Mod.EventBusSubscriber(modid = ProcessEnhancement.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientSetup {
     public static void init(final FMLClientSetupEvent event) {
-        for (RegistryObject<Block> machine : Registration.MACHINES.getEntries()) {
-            ItemBlockRenderTypes.setRenderLayer(machine.get(), RenderType.cutoutMipped());
-        }
-        for (RegistryObject<Block> machine : Registration.BATTERIES.getEntries()) {
-            ItemBlockRenderTypes.setRenderLayer(machine.get(), RenderType.cutoutMipped());
-        }
-        for (RegistryObject<Block> machine : Registration.TANKS.getEntries()) {
-            ItemBlockRenderTypes.setRenderLayer(machine.get(), RenderType.cutoutMipped());
-        }
-        for (RegistryObject<Block> machine : Registration.MINERS.getEntries()) {
-            ItemBlockRenderTypes.setRenderLayer(machine.get(), RenderType.cutoutMipped());
-        }
-        ItemBlockRenderTypes.setRenderLayer(Registration.COPPERWIRE_BLOCK.get(), RenderType.cutout());
 
         MenuScreens.register(Registration.CRUDEGENERATOR_MENU.get(), CrudeGeneratorScreen::new);
         MenuScreens.register(Registration.GENERATOR_MENU.get(), GeneratorScreen::new);

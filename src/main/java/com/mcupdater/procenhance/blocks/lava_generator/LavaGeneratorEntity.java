@@ -21,8 +21,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
@@ -120,7 +120,7 @@ public abstract class LavaGeneratorEntity extends AbstractConfigurableBlockEntit
                 this.notifyClients();
             }
             if (!itemStorage.getItem(0).isEmpty()) {
-                IFluidHandlerItem fluidHandlerItem = itemStorage.getItem(0).getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).orElse(null);
+                IFluidHandlerItem fluidHandlerItem = itemStorage.getItem(0).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
                 if (fluidHandlerItem != null && fluidHandlerItem.getFluidInTank(0).getFluid().isSame(Fluids.LAVA)) {
                     FluidStack insertFluidStack = fluidHandlerItem.drain(fluidStorage.getInternalHandler().getTankCapacity(0) - fluidStorage.getInternalHandler().getFluidInTank(0).getAmount(), IFluidHandler.FluidAction.EXECUTE);
                     fluidStorage.getInternalHandler().fill(insertFluidStack, IFluidHandler.FluidAction.EXECUTE);
@@ -166,7 +166,7 @@ public abstract class LavaGeneratorEntity extends AbstractConfigurableBlockEntit
     }
 
     public boolean canPlaceItem(int slot, ItemStack stack) {
-        return slot == 0 ? stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent() && stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null).getFluidInTank(0).getFluid().isSame(Fluids.LAVA) : false;
+        return slot == 0 ? stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent() && stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(null).getFluidInTank(0).getFluid().isSame(Fluids.LAVA) : false;
     }
 
 
