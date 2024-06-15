@@ -3,6 +3,7 @@ package com.mcupdater.procenhance.setup;
 import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.items.autopackager.AbstractPatternItem;
 import com.mcupdater.procenhance.recipe.GrinderRecipe;
+import com.mcupdater.procenhance.recipe.HydratorRecipe;
 import com.mcupdater.procenhance.recipe.SawmillRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -21,6 +22,7 @@ public class ModEventBusHandlers {
         event.register(ForgeRegistries.Keys.RECIPE_TYPES, helper -> {
             helper.register(new ResourceLocation(ProcessEnhancement.MODID, SawmillRecipe.Type.ID), SawmillRecipe.Type.INSTANCE);
             helper.register(new ResourceLocation(ProcessEnhancement.MODID, GrinderRecipe.Type.ID), GrinderRecipe.Type.INSTANCE);
+            helper.register(new ResourceLocation(ProcessEnhancement.MODID, HydratorRecipe.Type.ID), HydratorRecipe.Type.INSTANCE);
         });
     }
 

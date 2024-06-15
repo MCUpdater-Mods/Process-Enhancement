@@ -7,8 +7,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -33,6 +33,6 @@ public class TankBlockItem extends BlockItem {
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
 
-        pStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).ifPresent(fluidStorage -> pTooltip.add(Component.literal("Contains: ").append(fluidStorage.getFluidInTank(0).isEmpty() ? Component.literal("Empty") : Component.translatable(fluidStorage.getFluidInTank(0).getFluid().getFluidType().getDescriptionId()))));
+        pStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).ifPresent(fluidStorage -> pTooltip.add(Component.literal("Contains: ").append(fluidStorage.getFluidInTank(0).isEmpty() ? Component.literal("Empty") : Component.translatable(fluidStorage.getFluidInTank(0).getFluid().getFluidType().getDescriptionId()))));
     }
 }

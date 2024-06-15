@@ -7,6 +7,7 @@ import com.mcupdater.procenhance.recipe.TankUpgradeRecipe;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.*;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -16,9 +17,12 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
@@ -337,6 +341,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         grinder_single("copper_ingot", Ingredient.of(Items.COPPER_INGOT), new ItemStack(COPPER_DUST.get(), 1), 50, 0f, finishedRecipeConsumer);
         grinder_single("smooth_basalt", Ingredient.of(Blocks.SMOOTH_BASALT), new ItemStack(Blocks.BASALT, 1), 50, 0.1f, finishedRecipeConsumer);
 
+        hydrator(finishedRecipeConsumer, Ingredient.of(ItemTags.DIRT), new FluidStack(Fluids.WATER,100), Blocks.MUD, 1, 32, null);
+        hydrator(finishedRecipeConsumer, Ingredient.of(Blocks.COBBLESTONE), new FluidStack(Fluids.WATER,100), Blocks.MOSS_BLOCK, 1, 32, null);
+
         cookOre(finishedRecipeConsumer, IRON_DUST.get(), Items.IRON_INGOT, 0.7f);
         cookOre(finishedRecipeConsumer, COPPER_DUST.get(), Items.COPPER_INGOT, 0.7f);
         cookOre(finishedRecipeConsumer, GOLD_DUST.get(), Items.GOLD_INGOT, 1.0f);
@@ -348,6 +355,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapedRecipeBuilder.shaped(BASALTSOLIDIFIER_BLOCK.get()).define('B',Ingredient.of(Blocks.BASALT)).define('C', Ingredient.of(Items.COPPER_INGOT)).define('I', Ingredient.of(Blocks.BLUE_ICE)).define('L',Ingredient.of(Items.LAVA_BUCKET)).define('P', Ingredient.of(Items.IRON_PICKAXE)).define('S', Ingredient.of(Blocks.SOUL_SOIL)).pattern("CBC").pattern("IPL").pattern("CSC").unlockedBy("automatic", has(Blocks.BLUE_ICE)).save(finishedRecipeConsumer);
         ShapedRecipeBuilder.shaped(COPPERWIRE_BLOCKITEM.get(),16).define('C', Ingredient.of(Items.COPPER_INGOT)).pattern("CCC").unlockedBy("automatic",has(Items.COPPER_INGOT)).save(finishedRecipeConsumer);
         ShapelessRecipeBuilder.shapeless(Items.SLIME_BALL).requires(Items.MILK_BUCKET,1).requires(PLANT_DUST.get(),1).unlockedBy("automatic",has(PLANT_DUST.get())).save(finishedRecipeConsumer);
+    }
+
+    private void hydrator(Consumer<FinishedRecipe> consumer, Ingredient itemInput, FluidStack fluidInput, ItemLike output, int count, int processTime, ICondition condition) {
+        new HydratorRecipeBuilder(itemInput,fluidInput,output,count,processTime).unlockedBy("has_hydrator", has(Registration.HYDRATOR_BLOCK.get())).addCondition(condition).save(consumer);
     }
 
     private void grinder_oreblock(String recipeName, Ingredient input, int multiplier, int processTime, float experience, Item output, Consumer<FinishedRecipe> finishedRecipeConsumer) {

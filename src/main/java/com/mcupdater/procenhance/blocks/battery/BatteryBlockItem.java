@@ -10,9 +10,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -37,7 +37,7 @@ public class BatteryBlockItem extends BlockItem {
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
 
-        pStack.getCapability(CapabilityEnergy.ENERGY, null).ifPresent(energyStorage -> pTooltip.add(Component.literal(String.format("%d / %d FE",energyStorage.getEnergyStored(),energyStorage.getMaxEnergyStored()))));
+        pStack.getCapability(ForgeCapabilities.ENERGY, null).ifPresent(energyStorage -> pTooltip.add(Component.literal(String.format("%d / %d FE",energyStorage.getEnergyStored(),energyStorage.getMaxEnergyStored()))));
     }
 
     private class BatteryCapabilityProvider implements ICapabilityProvider {
@@ -54,7 +54,7 @@ public class BatteryBlockItem extends BlockItem {
         @NotNull
         @Override
         public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-            return cap == CapabilityEnergy.ENERGY ? capability.cast() : LazyOptional.empty();
+            return cap == ForgeCapabilities.ENERGY ? capability.cast() : LazyOptional.empty();
         }
     }
 }

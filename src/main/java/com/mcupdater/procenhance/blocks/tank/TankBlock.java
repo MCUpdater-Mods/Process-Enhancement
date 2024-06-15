@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -58,7 +58,7 @@ public abstract class TankBlock extends AbstractMachineBlock {
                 ((AbstractConfigurableBlockEntity)blockEntity).setCustomName(pStack.getHoverName());
             }
         }
-        pStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent(fluidStorage -> {
+        pStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).ifPresent(fluidStorage -> {
             if (pLevel.getBlockEntity(pPos) instanceof TankEntity tankEntity) {
                 for (int tank = 0; tank < fluidStorage.getTanks(); tank++) {
                     tankEntity.getFluidHandler().fill(fluidStorage.getFluidInTank(tank), IFluidHandler.FluidAction.EXECUTE);

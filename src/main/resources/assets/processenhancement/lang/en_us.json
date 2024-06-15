@@ -61,5 +61,6 @@
     "item.processenhancement.slate_stair": "Pattern Slate: Stair",
     "item.processenhancement.slate_unpackage": "Pattern Slate: Unpackage",
     "item.processenhancement.slate_wall": "Pattern Slate: Wall",
-    "block.processenhancement.autopackager": "AutoPackager"
+    "block.processenhancement.autopackager": "AutoPackager",
+    "block.processenhancement.hydrator": "Hydrator"
 }

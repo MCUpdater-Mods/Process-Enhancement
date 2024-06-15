@@ -22,7 +22,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import org.jetbrains.annotations.Nullable;
 
 public class CopperWireBlock extends BaseEntityBlock {
@@ -94,7 +94,7 @@ public class CopperWireBlock extends BaseEntityBlock {
 
     private boolean isSideValid(Level pLevel, BlockPos pPos, Direction side) {
         BlockEntity neighborEntity = pLevel.getBlockEntity(pPos.relative(side));
-        return neighborEntity != null && neighborEntity.getCapability(CapabilityEnergy.ENERGY, side.getOpposite()).isPresent();
+        return neighborEntity != null && neighborEntity.getCapability(ForgeCapabilities.ENERGY, side.getOpposite()).isPresent();
     }
 
     public BooleanProperty getSideProperty(Direction side) {

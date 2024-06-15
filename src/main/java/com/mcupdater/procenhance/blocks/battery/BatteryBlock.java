@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
@@ -87,7 +87,7 @@ public abstract class BatteryBlock extends AbstractMachineBlock {
                 ((BatteryEntity)blockEntity).setCustomName(pStack.getHoverName());
             }
         }
-        pStack.getCapability(CapabilityEnergy.ENERGY).ifPresent(energyStorage -> {
+        pStack.getCapability(ForgeCapabilities.ENERGY).ifPresent(energyStorage -> {
             if (pLevel.getBlockEntity(pPos) instanceof BatteryEntity batteryEntity) {
                 batteryEntity.getEnergyStorage().setEnergy(energyStorage.getEnergyStored());
             }

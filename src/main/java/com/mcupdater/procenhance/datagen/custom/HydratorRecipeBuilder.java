@@ -120,8 +120,10 @@ public class HydratorRecipeBuilder implements RecipeBuilder {
 			JsonArray ingredientsArray = new JsonArray();
 			ingredientsArray.add(inputItem.toJson());
 			jsonObject.add("itemIngredients", ingredientsArray);
-			jsonObject.addProperty("fluid", ForgeRegistries.FLUIDS.getKey(inputFluid.getFluid()).toString());
-			jsonObject.addProperty("fluidAmount", inputFluid.getAmount());
+			JsonObject fluidIngredient = new JsonObject();
+			fluidIngredient.addProperty("fluid", ForgeRegistries.FLUIDS.getKey(inputFluid.getFluid()).toString());
+			fluidIngredient.addProperty("fluidAmount", inputFluid.getAmount());
+			jsonObject.add("fluidIngredient", fluidIngredient);
 			JsonObject resultObject = new JsonObject();
 			resultObject.addProperty("item", ForgeRegistries.ITEMS.getKey(this.output).toString());
 			if (this.count > 1) {

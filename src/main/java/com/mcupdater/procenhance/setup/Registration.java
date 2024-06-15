@@ -21,6 +21,9 @@ import com.mcupdater.procenhance.blocks.disenchanter.DisenchanterMenu;
 import com.mcupdater.procenhance.blocks.furnace.*;
 import com.mcupdater.procenhance.blocks.generator.*;
 import com.mcupdater.procenhance.blocks.grinder.*;
+import com.mcupdater.procenhance.blocks.hydrator.HydratorBlock;
+import com.mcupdater.procenhance.blocks.hydrator.HydratorEntity;
+import com.mcupdater.procenhance.blocks.hydrator.HydratorMenu;
 import com.mcupdater.procenhance.blocks.lava_generator.*;
 import com.mcupdater.procenhance.blocks.miner.*;
 import com.mcupdater.procenhance.blocks.pump.*;
@@ -365,4 +368,15 @@ public class Registration {
     public static final RegistryObject<Item> SLATE_STAIR = PATTERNS.register("slate_stair", () -> new PatternStairItem(new Item.Properties().tab(MCULIB_ITEM_GROUP).stacksTo(1)));
     public static final RegistryObject<Item> SLATE_UNPACKAGE = PATTERNS.register("slate_unpackage", () -> new PatternUnpackageItem(new Item.Properties().tab(MCULIB_ITEM_GROUP).stacksTo(1)));
     public static final RegistryObject<Item> SLATE_WALL = PATTERNS.register("slate_wall", () -> new PatternWallItem(new Item.Properties().tab(MCULIB_ITEM_GROUP).stacksTo(1)));
+
+    public static final RegistryObject<HydratorBlock> HYDRATOR_BLOCK = MACHINES.register("hydrator", HydratorBlock::new);
+    public static final RegistryObject<Item> HYDRATOR_BLOCKITEM = ITEMS.register("hydrator", () -> new BlockItem(HYDRATOR_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<HydratorEntity>> HYDRATOR_ENTITY = BLOCK_ENTITIES.register("hydrator", () -> BlockEntityType.Builder.of(HydratorEntity::new, HYDRATOR_BLOCK.get()).build(null));
+    public static final RegistryObject<MenuType<HydratorMenu>> HYDRATOR_MENU = MENUS.register("hydrator", () -> IForgeMenuType.create(((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        Level world = inv.player.level;
+        HydratorEntity blockEntity = (HydratorEntity) world.getBlockEntity(pos);
+        return new HydratorMenu(windowId, world, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
+    })));
+    public static final RegistryObject<RecipeSerializer<HydratorRecipe>> HYDRATOR_SERIALIZER = RECIPE_SERIALIZERS.register("hydrator",() -> HydratorRecipe.Serializer.INSTANCE);
 }

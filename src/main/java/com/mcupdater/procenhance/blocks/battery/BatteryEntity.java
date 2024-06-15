@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.Nullable;
 
@@ -56,8 +56,8 @@ public abstract class BatteryEntity extends AbstractConfigurableBlockEntity {
 
     private void chargeItem(ItemStack itemStack) {
         EnergyResourceHandler energyStorage = (EnergyResourceHandler) this.configMap.get("power");
-        if (itemStack.getCapability(CapabilityEnergy.ENERGY).isPresent()) {
-            IEnergyStorage itemEnergyHandler = itemStack.getCapability(CapabilityEnergy.ENERGY).resolve().get();
+        if (itemStack.getCapability(ForgeCapabilities.ENERGY).isPresent()) {
+            IEnergyStorage itemEnergyHandler = itemStack.getCapability(ForgeCapabilities.ENERGY).resolve().get();
             if (itemEnergyHandler.canReceive()) {
                 int energyTransferred = itemEnergyHandler.receiveEnergy(Math.min(2000,energyStorage.getInternalHandler().getEnergyStored()),false);
                 energyStorage.getInternalHandler().extractEnergy(energyTransferred,false);
@@ -72,14 +72,14 @@ public abstract class BatteryEntity extends AbstractConfigurableBlockEntity {
     }
 
     public boolean canPlaceItem(int slot, ItemStack pStack) {
-        return pStack.getCapability(CapabilityEnergy.ENERGY).isPresent();
+        return pStack.getCapability(ForgeCapabilities.ENERGY).isPresent();
     }
 
     public boolean canTakeItem(int slot, ItemStack pStack) {
-        if (!pStack.getCapability(CapabilityEnergy.ENERGY).isPresent()) {
+        if (!pStack.getCapability(ForgeCapabilities.ENERGY).isPresent()) {
             return true;
         } else {
-            IEnergyStorage itemEnergyHandler = pStack.getCapability(CapabilityEnergy.ENERGY).resolve().get();
+            IEnergyStorage itemEnergyHandler = pStack.getCapability(ForgeCapabilities.ENERGY).resolve().get();
             return itemEnergyHandler.getEnergyStored() == itemEnergyHandler.getMaxEnergyStored() || !itemEnergyHandler.canReceive();
         }
     }

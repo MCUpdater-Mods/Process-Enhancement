@@ -35,8 +35,8 @@ public class HydratorRecipe implements Recipe<MachineContainer> {
 		if (pLevel.isClientSide()) {
 			return false;
 		}
-
-		return itemIngredients.get(0).test(pContainer.getItem(0)) && fluidIngredient.containsFluid(pContainer.getFluidHandler().getFluidInTank(0));
+		//ProcessEnhancement.LOGGER.debug("Machine has - inputItem: {}, inputFluid: {}",pContainer.getItem(0),pContainer.getFluidHandler().getFluidInTank(0));
+		return itemIngredients.get(0).test(pContainer.getItem(0)) && pContainer.getFluidHandler().getFluidInTank(0).containsFluid(fluidIngredient);
 	}
 
 	public NonNullList<Ingredient> getItemIngredients() {

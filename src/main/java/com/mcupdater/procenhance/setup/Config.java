@@ -19,6 +19,8 @@ public class Config {
     public static ForgeConfigSpec.IntValue DECONSTRUCTOR_ENERGY_PER_TICK;
     public static ForgeConfigSpec.IntValue SOLIDIFIER_ENERGY_PER_TICK;
     public static ForgeConfigSpec.IntValue AUTOPACKAGER_ENERGY_PER_TICK;
+    public static ForgeConfigSpec.IntValue HYDRATOR_ENERGY_PER_TICK;
+    public static ForgeConfigSpec.IntValue DEHYDRATOR_ENERGY_PER_TICK;
 
     static {
         ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
@@ -37,6 +39,8 @@ public class Config {
         DECONSTRUCTOR_ENERGY_PER_TICK = COMMON_BUILDER.comment("Deconstructor: How much energy is required per tick").defineInRange("DeconstructorEnergyUse", 20, 0, Integer.MAX_VALUE);
         SOLIDIFIER_ENERGY_PER_TICK = COMMON_BUILDER.comment("Solidifiers: How much energy is required per tick").defineInRange("SolidifierEnergyUser", 5, 0, Integer.MAX_VALUE);
         AUTOPACKAGER_ENERGY_PER_TICK = COMMON_BUILDER.comment("AutoPackager: How much energy is required per tick").defineInRange("AutoPackagerEnergyUse", 10, 0, Integer.MAX_VALUE);
+        HYDRATOR_ENERGY_PER_TICK = COMMON_BUILDER.comment("Hydrator: How much energy is required per tick").defineInRange("HydratorEnergyUse", 10, 0, Integer.MAX_VALUE);
+        DEHYDRATOR_ENERGY_PER_TICK = COMMON_BUILDER.comment("Dehydrator: How much energy is required per tick").defineInRange("DehydratorEnergyUse", 10, 0, Integer.MAX_VALUE);
 
         COMMON_CONFIG = COMMON_BUILDER.build();
     }

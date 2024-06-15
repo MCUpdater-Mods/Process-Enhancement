@@ -109,7 +109,7 @@ public class TankMenu extends AbstractContainerMenu implements IConfigurableMenu
     @Override
     public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
         //TODO
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override
