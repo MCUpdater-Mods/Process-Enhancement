@@ -19,6 +19,7 @@ import com.mcupdater.procenhance.blocks.solidifier.SolidifierScreen;
 import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterScreen;
 import com.mcupdater.procenhance.blocks.tank.TankScreen;
 import com.mcupdater.procenhance.blocks.hydrator.HydratorScreen;
+import com.mcupdater.procenhance.blocks.dehydrator.DehydratorScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraftforge.api.distmarker.Dist;
@@ -49,7 +50,7 @@ public class ClientSetup {
         MenuScreens.register(Registration.SOLIDIFIER_MENU.get(), SolidifierScreen::new);
         MenuScreens.register(Registration.AUTOPACKAGER_MENU.get(), PackagerScreen::new);
         MenuScreens.register(Registration.HYDRATOR_MENU.get(), HydratorScreen::new);
-        //MenuScreens.register(Registration.DEHYDRATOR_MENU.get(), DehydratorScreen::new);
+        MenuScreens.register(Registration.DEHYDRATOR_MENU.get(), DehydratorScreen::new);
     }
 
     @SubscribeEvent

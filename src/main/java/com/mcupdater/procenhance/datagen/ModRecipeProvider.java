@@ -344,6 +344,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         hydrator(finishedRecipeConsumer, Ingredient.of(ItemTags.DIRT), new FluidStack(Fluids.WATER,100), Blocks.MUD, 1, 32, null);
         hydrator(finishedRecipeConsumer, Ingredient.of(Blocks.COBBLESTONE), new FluidStack(Fluids.WATER,100), Blocks.MOSS_BLOCK, 1, 32, null);
 
+        dehydrator(finishedRecipeConsumer, Ingredient.of(Blocks.MUD), new FluidStack(Fluids.WATER, 100), Blocks.CLAY, 1, 32, null);
+        dehydrator(finishedRecipeConsumer, Ingredient.of(Blocks.CLAY), FluidStack.EMPTY, Blocks.TERRACOTTA, 1, 32, null);
+        dehydrator(finishedRecipeConsumer, Ingredient.of(Blocks.MAGMA_BLOCK), new FluidStack(Fluids.LAVA, 250), Blocks.BLACKSTONE, 1, 64, null);
+
         cookOre(finishedRecipeConsumer, IRON_DUST.get(), Items.IRON_INGOT, 0.7f);
         cookOre(finishedRecipeConsumer, COPPER_DUST.get(), Items.COPPER_INGOT, 0.7f);
         cookOre(finishedRecipeConsumer, GOLD_DUST.get(), Items.GOLD_INGOT, 1.0f);
@@ -356,10 +360,15 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapedRecipeBuilder.shaped(COPPERWIRE_BLOCKITEM.get(),16).define('C', Ingredient.of(Items.COPPER_INGOT)).pattern("CCC").unlockedBy("automatic",has(Items.COPPER_INGOT)).save(finishedRecipeConsumer);
         ShapelessRecipeBuilder.shapeless(Items.SLIME_BALL).requires(Items.MILK_BUCKET,1).requires(PLANT_DUST.get(),1).unlockedBy("automatic",has(PLANT_DUST.get())).save(finishedRecipeConsumer);
         basicMachineRecipe(finishedRecipeConsumer,HYDRATOR_BLOCK.get(),Ingredient.of(Items.COPPER_INGOT),Ingredient.of(Items.IRON_INGOT),Ingredient.of(Items.GLASS_BOTTLE));
+        basicMachineRecipe(finishedRecipeConsumer,DEHYDRATOR_BLOCK.get(),Ingredient.of(Items.COPPER_INGOT),Ingredient.of(Items.IRON_INGOT),Ingredient.of(Items.POINTED_DRIPSTONE));
     }
 
     private void hydrator(Consumer<FinishedRecipe> consumer, Ingredient itemInput, FluidStack fluidInput, ItemLike output, int count, int processTime, ICondition condition) {
         new HydratorRecipeBuilder(itemInput,fluidInput,output,count,processTime).unlockedBy("has_hydrator", has(Registration.HYDRATOR_BLOCK.get())).addCondition(condition).save(consumer);
+    }
+
+    private void dehydrator(Consumer<FinishedRecipe> consumer, Ingredient itemInput, FluidStack fluidOutput, ItemLike output, int count, int processTime, ICondition condition) {
+        new DehydratorRecipeBuilder(itemInput,fluidOutput,output,count,processTime).unlockedBy("has_dehydrator", has(Registration.DEHYDRATOR_BLOCK.get())).addCondition(condition).save(consumer);
     }
 
     private void grinder_oreblock(String recipeName, Ingredient input, int multiplier, int processTime, float experience, Item output, Consumer<FinishedRecipe> finishedRecipeConsumer) {

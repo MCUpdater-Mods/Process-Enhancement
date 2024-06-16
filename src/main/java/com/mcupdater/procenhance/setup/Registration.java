@@ -15,6 +15,9 @@ import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorMenu;
 import com.mcupdater.procenhance.blocks.deconstructor.DeconstructorBlock;
 import com.mcupdater.procenhance.blocks.deconstructor.DeconstructorEntity;
 import com.mcupdater.procenhance.blocks.deconstructor.DeconstructorMenu;
+import com.mcupdater.procenhance.blocks.dehydrator.DehydratorBlock;
+import com.mcupdater.procenhance.blocks.dehydrator.DehydratorEntity;
+import com.mcupdater.procenhance.blocks.dehydrator.DehydratorMenu;
 import com.mcupdater.procenhance.blocks.disenchanter.DisenchanterBlock;
 import com.mcupdater.procenhance.blocks.disenchanter.DisenchanterEntity;
 import com.mcupdater.procenhance.blocks.disenchanter.DisenchanterMenu;
@@ -379,4 +382,15 @@ public class Registration {
         return new HydratorMenu(windowId, world, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
     })));
     public static final RegistryObject<RecipeSerializer<HydratorRecipe>> HYDRATOR_SERIALIZER = RECIPE_SERIALIZERS.register("hydrator",() -> HydratorRecipe.Serializer.INSTANCE);
+
+    public static final RegistryObject<DehydratorBlock> DEHYDRATOR_BLOCK = MACHINES.register("dehydrator", DehydratorBlock::new);
+    public static final RegistryObject<Item> DEHYDRATOR_BLOCKITEM = ITEMS.register("dehydrator", () -> new BlockItem(DEHYDRATOR_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<DehydratorEntity>> DEHYDRATOR_ENTITY = BLOCK_ENTITIES.register("dehydrator", () -> BlockEntityType.Builder.of(DehydratorEntity::new, DEHYDRATOR_BLOCK.get()).build(null));
+    public static final RegistryObject<MenuType<DehydratorMenu>> DEHYDRATOR_MENU = MENUS.register("dehydrator", () -> IForgeMenuType.create(((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        Level world = inv.player.level;
+        DehydratorEntity blockEntity = (DehydratorEntity) world.getBlockEntity(pos);
+        return new DehydratorMenu(windowId, world, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
+    })));
+    public static final RegistryObject<RecipeSerializer<DehydratorRecipe>> DEHYDRATOR_SERIALIZER = RECIPE_SERIALIZERS.register("dehydrator",() -> DehydratorRecipe.Serializer.INSTANCE);
 }

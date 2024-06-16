@@ -1,0 +1,15 @@
+{
+  "name": "Dehydrator",
+  "icon": "processenhancement:dehydrator",
+  "category": "processenhancement:processing",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Dehydrator extracts a fluid from blocks and items, such as turning mud into clay and water or magma blocks into blackstone and lava."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:dehydrator"
+    }
+  ]
+}

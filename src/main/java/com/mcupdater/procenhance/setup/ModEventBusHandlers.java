@@ -2,6 +2,7 @@ package com.mcupdater.procenhance.setup;
 
 import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.items.autopackager.AbstractPatternItem;
+import com.mcupdater.procenhance.recipe.DehydratorRecipe;
 import com.mcupdater.procenhance.recipe.GrinderRecipe;
 import com.mcupdater.procenhance.recipe.HydratorRecipe;
 import com.mcupdater.procenhance.recipe.SawmillRecipe;
@@ -23,6 +24,7 @@ public class ModEventBusHandlers {
             helper.register(new ResourceLocation(ProcessEnhancement.MODID, SawmillRecipe.Type.ID), SawmillRecipe.Type.INSTANCE);
             helper.register(new ResourceLocation(ProcessEnhancement.MODID, GrinderRecipe.Type.ID), GrinderRecipe.Type.INSTANCE);
             helper.register(new ResourceLocation(ProcessEnhancement.MODID, HydratorRecipe.Type.ID), HydratorRecipe.Type.INSTANCE);
+            helper.register(new ResourceLocation(ProcessEnhancement.MODID, DehydratorRecipe.Type.ID), DehydratorRecipe.Type.INSTANCE);
         });
     }
 
