@@ -1,9 +1,10 @@
 package com.mcupdater.procenhance.integration;
 
 import com.mcupdater.procenhance.ProcessEnhancement;
-import com.mcupdater.procenhance.recipe.SawmillRecipe;
+import com.mcupdater.procenhance.recipe.HydratorRecipe;
 import com.mcupdater.procenhance.setup.Registration;
 import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -15,26 +16,26 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-public class SawmillRecipeCategory implements IRecipeCategory<SawmillRecipe> {
-    public static final RecipeType<SawmillRecipe> TYPE = RecipeType.create(ProcessEnhancement.MODID, "sawmill", SawmillRecipe.class);
-    public static final ResourceLocation TEXTURE = new ResourceLocation(ProcessEnhancement.MODID, "textures/jei/machine.png");
+public class HydratorRecipeCategory implements IRecipeCategory<HydratorRecipe> {
+    public static final RecipeType<HydratorRecipe> TYPE = RecipeType.create(ProcessEnhancement.MODID, "hydrator", HydratorRecipe.class);
+    public static final ResourceLocation TEXTURE = new ResourceLocation(ProcessEnhancement.MODID, "textures/jei/hydrator.png");
 
     private final IDrawable background;
     private final IDrawable icon;
 
-    public SawmillRecipeCategory(IGuiHelper helper) {
+    public HydratorRecipeCategory(IGuiHelper helper) {
         this.background = helper.createDrawable(TEXTURE, 0,0,80,26);
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Registration.SAWMILL_BLOCK.get()));
+        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Registration.HYDRATOR_BLOCK.get()));
     }
 
     @Override
-    public RecipeType<SawmillRecipe> getRecipeType() {
+    public RecipeType<HydratorRecipe> getRecipeType() {
         return TYPE;
     }
 
     @Override
     public Component getTitle() {
-        return Component.translatable("block.processenhancement.sawmill");
+        return Component.translatable("block.processenhancement.hydrator");
     }
 
     @Override
@@ -48,8 +49,9 @@ public class SawmillRecipeCategory implements IRecipeCategory<SawmillRecipe> {
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, SawmillRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 17,5).addIngredients(recipe.getIngredients().get(0));
+    public void setRecipe(IRecipeLayoutBuilder builder, HydratorRecipe recipe, IFocusGroup focuses) {
+        builder.addSlot(RecipeIngredientRole.INPUT, 17,5).addIngredients(recipe.getItemIngredients().get(0));
+        builder.addSlot(RecipeIngredientRole.INPUT, 4, 3).setFluidRenderer(1000, true,5,19).addIngredient(ForgeTypes.FLUID_STACK, recipe.getFluidIngredient());
         builder.addSlot(RecipeIngredientRole.OUTPUT, 53, 5).addItemStack(recipe.getResultItem());
     }
 

@@ -1,0 +1,15 @@
+{
+  "name": "Hydrator",
+  "icon": "processenhancement:hydrator",
+  "category": "processenhancement:processing",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Hydrator applies a fluid to blocks and items, such as turning dirt into mud or cobblestone into moss blocks."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:hydrator"
+    }
+  ]
+}

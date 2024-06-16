@@ -2,6 +2,7 @@ package com.mcupdater.procenhance.integration;
 
 import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.recipe.GrinderRecipe;
+import com.mcupdater.procenhance.recipe.HydratorRecipe;
 import com.mcupdater.procenhance.recipe.SawmillRecipe;
 import com.mcupdater.procenhance.setup.Registration;
 import mezz.jei.api.IModPlugin;
@@ -29,6 +30,7 @@ public class JEIProcEnhancePlugin implements IModPlugin {
     public void registerCategories(IRecipeCategoryRegistration registration) {
         registration.addRecipeCategories(new SawmillRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new GrinderRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new HydratorRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
@@ -43,6 +45,7 @@ public class JEIProcEnhancePlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(Registration.FURNACET2_BLOCK.get()), RecipeTypes.SMELTING);
         registration.addRecipeCatalyst(new ItemStack(Registration.FURNACET3_BLOCK.get()), RecipeTypes.SMELTING);
         registration.addRecipeCatalyst(new ItemStack(Registration.FURNACET4_BLOCK.get()), RecipeTypes.SMELTING);
+        registration.addRecipeCatalyst(new ItemStack(Registration.HYDRATOR_BLOCK.get()), HydratorRecipeCategory.TYPE);
     }
 
     @Override
@@ -50,7 +53,9 @@ public class JEIProcEnhancePlugin implements IModPlugin {
         RecipeManager recipeManager = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
         List<SawmillRecipe> sawmillRecipes = recipeManager.getAllRecipesFor(SawmillRecipe.Type.INSTANCE);
         List<GrinderRecipe> grinderRecipes = recipeManager.getAllRecipesFor(GrinderRecipe.Type.INSTANCE);
+        List<HydratorRecipe> hydratorRecipes = recipeManager.getAllRecipesFor(HydratorRecipe.Type.INSTANCE);
         registration.addRecipes(SawmillRecipeCategory.TYPE, sawmillRecipes);
         registration.addRecipes(GrinderRecipeCategory.TYPE, grinderRecipes);
+        registration.addRecipes(HydratorRecipeCategory.TYPE, hydratorRecipes);
     }
 }
