@@ -7,7 +7,6 @@ import com.mcupdater.procenhance.recipe.TankUpgradeRecipe;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.*;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -22,7 +21,6 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 

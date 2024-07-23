@@ -1,8 +1,6 @@
 package com.mcupdater.procenhance.blocks.dehydrator;
 
 import com.mcupdater.mculib.block.AbstractMachineMenu;
-import com.mcupdater.procenhance.recipe.DehydratorRecipe;
-import com.mcupdater.procenhance.recipe.HydratorRecipe;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

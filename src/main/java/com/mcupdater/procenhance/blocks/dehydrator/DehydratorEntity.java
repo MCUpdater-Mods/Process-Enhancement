@@ -6,9 +6,7 @@ import com.mcupdater.mculib.capabilities.FluidResourceHandler;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.mculib.inventory.MachineContainer;
-import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.recipe.DehydratorRecipe;
-import com.mcupdater.procenhance.recipe.HydratorRecipe;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -22,7 +20,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;

@@ -2,6 +2,9 @@ package com.mcupdater.procenhance.setup;
 
 import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.procenhance.ProcessEnhancement;
+import com.mcupdater.procenhance.blocks.autoharvester.HarvesterBlock;
+import com.mcupdater.procenhance.blocks.autoharvester.HarvesterEntity;
+import com.mcupdater.procenhance.blocks.autoharvester.HarvesterMenu;
 import com.mcupdater.procenhance.blocks.battery.*;
 import com.mcupdater.procenhance.blocks.biogenerator.*;
 import com.mcupdater.procenhance.blocks.buffer.BufferBlock;
@@ -393,4 +396,14 @@ public class Registration {
         return new DehydratorMenu(windowId, world, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
     })));
     public static final RegistryObject<RecipeSerializer<DehydratorRecipe>> DEHYDRATOR_SERIALIZER = RECIPE_SERIALIZERS.register("dehydrator",() -> DehydratorRecipe.Serializer.INSTANCE);
+
+    public static final RegistryObject<HarvesterBlock> HARVESTER_BLOCK = MACHINES.register("autoharvester", HarvesterBlock::new);
+    public static final RegistryObject<Item> HARVESTER_BLOCKITEM = ITEMS.register("autoharvester", () -> new BlockItem(HARVESTER_BLOCK.get(), new Item.Properties().tab(MCULIB_ITEM_GROUP)));
+    public static final RegistryObject<BlockEntityType<HarvesterEntity>> HARVESTER_ENTITY = BLOCK_ENTITIES.register("harvester", () -> BlockEntityType.Builder.of(HarvesterEntity::new, HARVESTER_BLOCK.get()).build(null));
+    public static final RegistryObject<MenuType<HarvesterMenu>> HARVESTER_MENU = MENUS.register("autoharvester", () -> IForgeMenuType.create(((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        Level world = inv.player.level;
+        HarvesterEntity blockEntity = (HarvesterEntity) world.getBlockEntity(pos);
+        return new HarvesterMenu(windowId, world, pos, inv, inv.player, blockEntity.data, DataHelper.readDirectionMap(data));
+    })));
 }

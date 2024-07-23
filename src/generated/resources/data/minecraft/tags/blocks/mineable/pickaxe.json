@@ -35,6 +35,7 @@
     "processenhancement:autopackager",
     "processenhancement:hydrator",
     "processenhancement:dehydrator",
+    "processenhancement:autoharvester",
     "processenhancement:copper_wire",
     "processenhancement:basic_battery",
     "processenhancement:intermediate_battery",
