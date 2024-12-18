@@ -1,21 +1,20 @@
 package com.mcupdater.procenhance.blocks.tank;
 
 import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
+import com.mcupdater.mculib.block.IMachineGuiProvider;
 import com.mcupdater.mculib.capabilities.FluidResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class TankEntity extends AbstractConfigurableBlockEntity {
+public abstract class TankEntity extends AbstractConfigurableBlockEntity implements IMachineGuiProvider {
 
     public TankEntity(BlockEntityType<?> pType, BlockPos blockPos, BlockState blockState, int multiplier) {
         super(pType, blockPos, blockState);
@@ -32,24 +31,8 @@ public abstract class TankEntity extends AbstractConfigurableBlockEntity {
         }
     }
 
-    @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
-        if (compound.contains("CustomName", 8)) {
-            this.name = Component.Serializer.fromJson(compound.getString("CustomName"));
-        }
-    }
-
     public void tick(Level pLevel, BlockPos pPos, BlockState pBlockState) {
         super.tick();
-    }
-
-    @Override
-    public void saveAdditional(CompoundTag compound) {
-        if (this.name != null) {
-            compound.putString("CustomName", Component.Serializer.toJson(this.name));
-        }
-        super.saveAdditional(compound);
     }
 
     @Nullable

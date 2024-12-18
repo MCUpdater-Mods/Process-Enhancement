@@ -2,31 +2,36 @@ package com.mcupdater.procenhance.blocks.tank;
 
 import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
 import com.mcupdater.mculib.block.IConfigurableMenu;
+import com.mcupdater.mculib.helpers.DataHelper;
+import com.mcupdater.procenhance.blocks.autopackager.PackagerEntity;
+import com.mcupdater.procenhance.blocks.autopackager.PackagerMenu;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
 public class TankMenu extends AbstractContainerMenu implements IConfigurableMenu {
-    private final Map<Direction, Component> adjacentNames;
+    private final Map<Direction, String> adjacentNames;
     private final Player player;
     private final IItemHandler playerInventory;
     private final AbstractConfigurableBlockEntity tileEntity;
@@ -38,7 +43,7 @@ public class TankMenu extends AbstractContainerMenu implements IConfigurableMenu
         }
     };
 
-    public TankMenu(int pContainerId, Level level, BlockPos worldPosition, Inventory pPlayerInventory, Player pPlayer, Map<Direction, Component> adjacentNames) {
+    public TankMenu(int pContainerId, Level level, BlockPos worldPosition, Inventory pPlayerInventory, Player pPlayer, Map<Direction, String> adjacentNames) {
         super(Registration.TANK_MENU.get(), pContainerId);
         this.tileEntity = level.getBlockEntity(worldPosition) instanceof TankEntity ? (TankEntity) level.getBlockEntity(worldPosition) : null;
         this.adjacentNames = adjacentNames;
@@ -47,9 +52,9 @@ public class TankMenu extends AbstractContainerMenu implements IConfigurableMenu
         this.addSlot(new Slot(this.transientSlots,0,8,16){
             @Override
             public boolean mayPlace(ItemStack pStack) {
-                if (pStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent()) {
-                    IFluidHandler tankFluidHandler = TankMenu.this.tileEntity.getFluidHandler();
-                    IFluidHandlerItem itemFluidHandler = pStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(null);
+                @Nullable IFluidHandlerItem itemFluidHandler = pStack.getCapability(Capabilities.FluidHandler.ITEM, null);
+                if (itemFluidHandler != null) {
+                    IFluidHandler tankFluidHandler = TankMenu.this.tileEntity.getFluidHandler().getInternalHandler();
                     return tankFluidHandler.isFluidValid(0, itemFluidHandler.getFluidInTank(0));
                 }
                 return false;
@@ -63,6 +68,13 @@ public class TankMenu extends AbstractContainerMenu implements IConfigurableMenu
         });
 
         layoutPlayerInventorySlots(8, 84);
+    }
+
+    public static TankMenu factory(int containerId, Inventory playerInv, FriendlyByteBuf extraData) {
+        BlockPos pos = extraData.readBlockPos();
+        Level world = playerInv.player.level();
+        TankEntity te = (TankEntity) world.getBlockEntity(pos);
+        return new TankMenu(containerId, world, pos, playerInv, playerInv.player, DataHelper.readDirectionMap(extraData));
     }
 
     private void layoutPlayerInventorySlots(int leftCol, int topRow) {
@@ -97,7 +109,7 @@ public class TankMenu extends AbstractContainerMenu implements IConfigurableMenu
     }
 
     @Override
-    public Component getSideName(Direction direction) {
+    public String getSideName(Direction direction) {
         return this.adjacentNames.get(direction);
     }
 
@@ -124,9 +136,9 @@ public class TankMenu extends AbstractContainerMenu implements IConfigurableMenu
     public void slotsChanged(Container pContainer) {
         super.slotsChanged(pContainer);
         if (pContainer == this.transientSlots) {
-            if (!this.transientSlots.getItem(0).isEmpty() && this.transientSlots.getItem(1).isEmpty() && this.transientSlots.getItem(0).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent()) {
-                IFluidHandlerItem itemFluidHandler = this.transientSlots.getItem(0).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(null);
-                IFluidHandler tankFluidHandler = TankMenu.this.tileEntity.getFluidHandler();
+            IFluidHandlerItem itemFluidHandler = this.transientSlots.getItem(0).getCapability(Capabilities.FluidHandler.ITEM, null);
+            if (!this.transientSlots.getItem(0).isEmpty() && this.transientSlots.getItem(1).isEmpty() && itemFluidHandler != null) {
+                IFluidHandler tankFluidHandler = TankMenu.this.tileEntity.getFluidHandler().getInternalHandler();
                 if (itemFluidHandler.getFluidInTank(0).isEmpty()) {
                     // Fill item
                     FluidStack testFluidStack = tankFluidHandler.drain(tankFluidHandler.getTankCapacity(0), IFluidHandler.FluidAction.SIMULATE);

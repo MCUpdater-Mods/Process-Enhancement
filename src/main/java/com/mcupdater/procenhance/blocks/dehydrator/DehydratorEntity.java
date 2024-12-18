@@ -8,6 +8,7 @@ import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.mculib.inventory.MachineContainer;
 import com.mcupdater.procenhance.recipe.DehydratorRecipe;
 import com.mcupdater.procenhance.setup.Config;
+import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
@@ -16,10 +17,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -29,7 +31,7 @@ import static com.mcupdater.procenhance.setup.Registration.DEHYDRATOR_ENTITY;
 public class DehydratorEntity extends AbstractMachineBlockEntity {
 
 	private final ItemResourceHandler itemResourceHandler;
-	private DehydratorRecipe currentRecipe = null;
+	private RecipeHolder<DehydratorRecipe> currentRecipe = null;
 
 	public ContainerData data = new ContainerData() {
 		@Override
@@ -74,9 +76,9 @@ public class DehydratorEntity extends AbstractMachineBlockEntity {
 
 	private boolean canPlaceItem(int slot, ItemStack pStack) {
 		return this.level.getRecipeManager().
-				getAllRecipesFor(DehydratorRecipe.Type.INSTANCE).stream().
-				anyMatch(recipe -> Arrays.stream(recipe.getItemIngredients().get(0).getItems()).
-						anyMatch(inputStack -> inputStack.sameItem(pStack)));
+				getAllRecipesFor(Registration.DEHYDRATOR_RECIPE.get()).stream().
+				anyMatch(recipeHolder -> Arrays.stream(recipeHolder.value().getItemIngredients().get(0).getItems()).
+						anyMatch(inputStack -> ItemStack.isSameItem(inputStack,pStack)));
 	}
 
 	private Boolean stillValid(Player player) {
@@ -96,11 +98,11 @@ public class DehydratorEntity extends AbstractMachineBlockEntity {
 		ItemStack inputStack = itemStorage.getItem(0);
 		FluidStack outputFluid = fluidStorage.getInternalHandler().getFluidInTank(0);
 		if (!inputStack.isEmpty()) {
-			DehydratorRecipe recipe = this.level.getRecipeManager().getRecipeFor(DehydratorRecipe.Type.INSTANCE, machineContainer, this.level).orElse(null);
-			if (this.currentRecipe == null || !this.currentRecipe.equals(recipe)) {
-				if (recipe != null) {
-					this.currentRecipe = recipe;
-					this.workTotal = this.currentRecipe.getProcessTime();
+			RecipeHolder<DehydratorRecipe> recipeHolder = this.level.getRecipeManager().getRecipeFor(Registration.DEHYDRATOR_RECIPE.get(), machineContainer, this.level).orElse(null);
+			if (this.currentRecipe == null || !this.currentRecipe.equals(recipeHolder)) {
+				if (recipeHolder != null) {
+					this.currentRecipe = recipeHolder;
+					this.workTotal = this.currentRecipe.value().getProcessTime();
 				}
 				this.workProgress = 0;
 			}
@@ -108,10 +110,10 @@ public class DehydratorEntity extends AbstractMachineBlockEntity {
 			this.currentRecipe = null;
 		}
 		ItemStack outputSlot = itemStorage.getItem(1);
-		if (this.currentRecipe != null && energyStorage.getStoredEnergy() >= Config.DEHYDRATOR_ENERGY_PER_TICK.get() && (outputFluid.isEmpty() || outputFluid.isFluidEqual(currentRecipe.getFluidOutput())) && (outputSlot.isEmpty() || (outputSlot.sameItem(currentRecipe.getResultItem()) && outputSlot.getCount() < outputSlot.getMaxStackSize()))) {
+		if (this.currentRecipe != null && energyStorage.getStoredEnergy() >= Config.DEHYDRATOR_ENERGY_PER_TICK.get() && (outputFluid.isEmpty() || FluidStack.isSameFluid(outputFluid,currentRecipe.value().getFluidOutput())) && (outputSlot.isEmpty() || (ItemStack.isSameItem(outputSlot,currentRecipe.value().getResultItem(level.registryAccess())) && outputSlot.getCount() < outputSlot.getMaxStackSize()))) {
 			this.workProgress++;
 			if (this.workProgress >= this.workTotal) {
-				ItemStack result = this.currentRecipe.assemble(machineContainer);
+				ItemStack result = this.currentRecipe.value().assemble(machineContainer, level.registryAccess());
 				if (outputSlot.isEmpty()) {
 					itemStorage.setItem(1,result.copy());
 				} else if (outputSlot.is(result.getItem())) {
@@ -119,7 +121,7 @@ public class DehydratorEntity extends AbstractMachineBlockEntity {
 				}
 				this.workProgress = 0;
 				itemStorage.getItem(0).shrink(1);
-				fluidStorage.getInternalHandler().forceFill(0, this.currentRecipe.getFluidOutput().copy(), IFluidHandler.FluidAction.EXECUTE);
+				fluidStorage.getInternalHandler().forceFill(0, this.currentRecipe.value().getFluidOutput().copy(), IFluidHandler.FluidAction.EXECUTE);
 			}
 			return true;
 		}

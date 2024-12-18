@@ -2,6 +2,7 @@ package com.mcupdater.procenhance.blocks.stonecutter;
 
 import com.mcupdater.mculib.block.AbstractMachineBlock;
 import com.mcupdater.mculib.setup.Registration;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -11,17 +12,23 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import org.jetbrains.annotations.Nullable;
 
 public class ElectricStonecutterBlock extends AbstractMachineBlock {
-    public ElectricStonecutterBlock() {
-        super(Properties.of(Material.STONE).sound(SoundType.STONE).strength(5.0f));
+    public static final MapCodec<ElectricStonecutterBlock> CODEC = simpleCodec(ElectricStonecutterBlock::new);
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
+    public ElectricStonecutterBlock(Properties properties) {
+        super(properties);
     }
 
     @Nullable
@@ -54,16 +61,10 @@ public class ElectricStonecutterBlock extends AbstractMachineBlock {
     }
 
     @Override
-    public void onRemove(BlockState pOldState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
-        if (pOldState.getBlock() != pNewState.getBlock()) {
-            BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-
-            if (blockEntity instanceof ElectricStonecutterEntity machineEntity) {
-                machineEntity.getInventory().setItem(2, ItemStack.EMPTY); // Clear phantom slot before dropping contents
-                Containers.dropContents(pLevel, pPos, machineEntity.getInventory());
-                pLevel.updateNeighbourForOutputSignal(pPos, this);
-            }
-            super.onRemove(pOldState, pLevel, pPos, pNewState, pIsMoving);
+    protected void dropInventory(Level pLevel, BlockPos pPos) {
+        if (pLevel.getBlockEntity(pPos) instanceof ElectricStonecutterEntity entity) {
+            Containers.dropItemStack(pLevel, pPos.getX(), pPos.getY(), pPos.getZ(), entity.getInventory().getItem(0));
+            Containers.dropItemStack(pLevel, pPos.getX(), pPos.getY(), pPos.getZ(), entity.getInventory().getItem(1));
         }
     }
 

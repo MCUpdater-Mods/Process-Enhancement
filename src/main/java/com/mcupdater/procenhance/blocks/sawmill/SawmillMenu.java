@@ -1,28 +1,31 @@
 package com.mcupdater.procenhance.blocks.sawmill;
 
 import com.mcupdater.mculib.block.AbstractMachineMenu;
+import com.mcupdater.mculib.helpers.DataHelper;
+import com.mcupdater.mculib.inventory.MachineContainer;
 import com.mcupdater.mculib.inventory.MachineInputSlot;
 import com.mcupdater.mculib.inventory.MachineOutputSlot;
 import com.mcupdater.mculib.inventory.PhantomSlot;
 import com.mcupdater.procenhance.ProcessEnhancement;
+import com.mcupdater.procenhance.blocks.generator.GeneratorEntity;
+import com.mcupdater.procenhance.blocks.generator.GeneratorMenu;
 import com.mcupdater.procenhance.network.ChannelRegistration;
-import com.mcupdater.procenhance.network.RecipeChangePacket;
+import com.mcupdater.procenhance.network.RecipeChange;
 import com.mcupdater.procenhance.recipe.SawmillRecipe;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.DataSlot;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.wrapper.InvWrapper;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,14 +33,14 @@ import java.util.Map;
 import java.util.Objects;
 
 public class SawmillMenu extends AbstractMachineMenu<SawmillEntity> {
-    private List<SawmillRecipe> recipes = new ArrayList<>();
+    private List<RecipeHolder<SawmillRecipe>> recipes = new ArrayList<>();
     private Slot phantomSlot;
 
     Runnable slotUpdateListener = () -> {};
     DataSlot selectedRecipeIndexData = new DataSlot() {
         @Override
         public int get() {
-            int slotNum = SawmillMenu.this.machineEntity.getCurrentRecipe() != null ? recipes.indexOf(recipes.stream().filter(recipe -> recipe.getId().equals(SawmillMenu.this.machineEntity.getCurrentRecipe().getId())).findFirst().orElse(null)) : -1;
+            int slotNum = SawmillMenu.this.machineEntity.getCurrentRecipe() != null ? recipes.indexOf(recipes.stream().filter(recipe -> recipe.id().equals(SawmillMenu.this.machineEntity.getCurrentRecipe().id())).findFirst().orElse(null)) : -1;
             return slotNum;
         }
 
@@ -45,16 +48,23 @@ public class SawmillMenu extends AbstractMachineMenu<SawmillEntity> {
         public void set(int pValue) {
             ResourceLocation recipeId;
             if (pValue >= 0) {
-                recipeId = recipes.get(pValue).getId();
+                recipeId = recipes.get(pValue).id();
             } else {
-                recipeId = new ResourceLocation(ProcessEnhancement.MODID, "invalid_recipe");
+                recipeId = ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "invalid_recipe");
             }
-            ChannelRegistration.RECIPE_CHANGE.sendToServer(new RecipeChangePacket(SawmillMenu.this.machineEntity.getBlockPos(), recipeId));
+            PacketDistributor.sendToServer(new RecipeChange(SawmillMenu.this.machineEntity.getBlockPos(), recipeId));
         }
     };
 
-    public SawmillMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data, Map<Direction, Component> directionComponentMap) {
+    public SawmillMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data, Map<Direction, String> directionComponentMap) {
         super((SawmillEntity) level.getBlockEntity(blockPos), Registration.SAWMILL_MENU.get(), windowId, level, blockPos, inventory, player, data, directionComponentMap);
+    }
+
+    public static SawmillMenu factory(int containerId, Inventory playerInv, FriendlyByteBuf extraData) {
+        BlockPos pos = extraData.readBlockPos();
+        Level world = playerInv.player.level();
+        SawmillEntity te = (SawmillEntity) world.getBlockEntity(pos);
+        return new SawmillMenu(containerId, world, pos, playerInv, playerInv.player, new SimpleContainerData(2), DataHelper.readDirectionMap(extraData));
     }
 
     @Override
@@ -127,11 +137,11 @@ public class SawmillMenu extends AbstractMachineMenu<SawmillEntity> {
     private void setupRecipeList(ItemStack itemStack) {
         this.recipes.clear();
         if (!itemStack.isEmpty()) {
-            this.recipes = this.machineEntity.getLevel().getRecipeManager().getRecipesFor(SawmillRecipe.Type.INSTANCE, this.machineEntity.getInventory(), this.machineEntity.getLevel());
+            this.recipes = this.machineEntity.getLevel().getRecipeManager().getRecipesFor(Registration.SAWMILL_RECIPE.get(), new MachineContainer(this.machineEntity), this.machineEntity.getLevel());
         }
     }
 
-    public List<SawmillRecipe> getRecipes() {
+    public List<RecipeHolder<SawmillRecipe>> getRecipes() {
         return this.recipes;
     }
 

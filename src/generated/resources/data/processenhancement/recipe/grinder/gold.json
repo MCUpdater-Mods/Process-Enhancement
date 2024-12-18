@@ -1,0 +1,40 @@
+{
+  "type": "processenhancement:grinder",
+  "experience": 0.05,
+  "ingredients": [
+    {
+      "tag": "minecraft:gold_ores"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "count": 3,
+        "id": "processenhancement:gold_dust"
+      },
+      "weight": 55
+    },
+    {
+      "stack": {
+        "count": 4,
+        "id": "processenhancement:gold_dust"
+      },
+      "weight": 25
+    },
+    {
+      "stack": {
+        "count": 5,
+        "id": "processenhancement:gold_dust"
+      },
+      "weight": 18
+    },
+    {
+      "stack": {
+        "count": 6,
+        "id": "processenhancement:gold_dust"
+      },
+      "weight": 2
+    }
+  ],
+  "processTime": 200
+}

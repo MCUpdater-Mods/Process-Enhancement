@@ -1,11 +1,9 @@
 package com.mcupdater.procenhance.loot.functions;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
 import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
-import com.mcupdater.procenhance.ProcessEnhancement;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
+import com.mcupdater.procenhance.setup.Registration;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -13,45 +11,38 @@ import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunct
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class RetainFluidFunction extends LootItemConditionalFunction {
-    public static final LootItemFunctionType RETAIN_FLUID_TYPE = Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(ProcessEnhancement.MODID, "retain_fluid"), new LootItemFunctionType(new RetainFluidFunction.Serializer()));
-    protected RetainFluidFunction(LootItemCondition[] pConditions) {
-        super(pConditions);
+    public static final MapCodec<RetainFluidFunction> CODEC = RecordCodecBuilder.mapCodec(inst -> commonFields(inst).apply(inst, RetainFluidFunction::new));
+
+    protected RetainFluidFunction(List<LootItemCondition> conditions) {
+        super(conditions);
     }
 
     public static Builder<?> getBuilder() {
         return simpleBuilder((RetainFluidFunction::new));
     }
 
-    public static void load() {}
-
     @Override
     protected ItemStack run(ItemStack pStack, LootContext pContext) {
-        pStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(null); // Attempt to force the caps to populate
         BlockEntity blockEntity = pContext.getParamOrNull(LootContextParams.BLOCK_ENTITY);
         if (blockEntity instanceof AbstractConfigurableBlockEntity configurableBlockEntity) {
-            pStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).ifPresent(fluidStorage -> {
-                for (int tank = 0; tank < configurableBlockEntity.getFluidHandler().getTanks(); tank++) {
-                    fluidStorage.fill(configurableBlockEntity.getFluidHandler().getFluidInTank(tank), IFluidHandler.FluidAction.EXECUTE);
+            @Nullable IFluidHandlerItem fluidStorage = pStack.getCapability(Capabilities.FluidHandler.ITEM);
+                for (int tank = 0; tank < configurableBlockEntity.getFluidHandler().getInternalHandler().getTanks(); tank++) {
+                    fluidStorage.fill(configurableBlockEntity.getFluidHandler().getInternalHandler().getFluidInTank(tank), IFluidHandler.FluidAction.EXECUTE);
                 }
-            });
-        }
+            }
         return pStack;
     }
 
     @Override
     public LootItemFunctionType getType() {
-        return RETAIN_FLUID_TYPE;
-    }
-
-    public static class Serializer extends LootItemConditionalFunction.Serializer<RetainFluidFunction> {
-
-        @Override
-        public RetainFluidFunction deserialize(JsonObject pObject, JsonDeserializationContext pDeserializationContext, LootItemCondition[] pConditions) {
-            return new RetainFluidFunction(pConditions);
-        }
+        return Registration.RETAIN_FLUID.get();
     }
 }

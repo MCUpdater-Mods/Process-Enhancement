@@ -1,0 +1,19 @@
+{
+  "type": "processenhancement:grinder",
+  "experience": 0.1,
+  "ingredients": [
+    {
+      "item": "minecraft:bamboo"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "count": 1,
+        "id": "processenhancement:plant_dust"
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 50
+}

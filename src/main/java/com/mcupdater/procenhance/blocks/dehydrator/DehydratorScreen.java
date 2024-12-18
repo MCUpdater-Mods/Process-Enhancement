@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class DehydratorScreen extends AbstractMachineScreen<DehydratorEntity, DehydratorMenu> {
-	private static final ResourceLocation GUI = new ResourceLocation(ProcessEnhancement.MODID, "textures/gui/machine_tank.png");
+	private static final ResourceLocation GUI = ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "textures/gui/machine_tank.png");
 	private WidgetFluid fluidWidget;
 
 	public DehydratorScreen(DehydratorMenu menu, Inventory inventory, Component name) {
@@ -17,7 +17,8 @@ public class DehydratorScreen extends AbstractMachineScreen<DehydratorEntity, De
 
 	@Override
 	public void registerWidgets() {
-		fluidWidget = this.addRenderableWidget(new WidgetFluid(this.leftPos + 5, this.topPos + 14, 18, 58, menu.getBlockEntity().getFluidHandler(), 0));
+		super.registerWidgets();
+		fluidWidget = this.addRenderableWidget(new WidgetFluid(this.leftPos + 5, this.topPos + 14, 18, 58, menu.getBlockEntity().getFluidHandler().getInternalHandler(), 0));
 		this.addExtraWidget(fluidWidget);
 	}
 

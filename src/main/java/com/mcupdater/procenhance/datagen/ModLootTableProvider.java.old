@@ -1,0 +1,30 @@
+package com.mcupdater.procenhance.datagen;
+
+import com.google.common.collect.ImmutableList;
+import com.mcupdater.procenhance.datagen.loot.ModBlockLootSubProvider;
+import com.mojang.datafixers.util.Pair;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.LootTables;
+import net.minecraft.world.level.storage.loot.ValidationContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+
+public class ModLootTableProvider extends LootTableProvider {
+
+    private final List<SubProviderEntry> loot_tables = ImmutableList.of(Pair.of(ModBlockLootSubProvider::new, LootContextParamSets.BLOCK));
+
+    public ModLootTableProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(packOutput, Set.of(), List.of(), lookupProvider);
+    }
+
+    @Override
+    protected void validate(Map<ResourceLocation, LootTable> map, ValidationContext validationtracker) {
+        map.forEach((id, table) -> LootTables.validate(validationtracker, id, table));
+    }
+}

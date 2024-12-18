@@ -1,0 +1,24 @@
+{
+  "type": "processenhancement:battery_upgrade",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "processenhancement:intermediate_battery"
+    },
+    "U": {
+      "item": "minecraft:gold_ingot"
+    },
+    "u": {
+      "item": "minecraft:iron_block"
+    }
+  },
+  "pattern": [
+    "UuU",
+    "uBu",
+    "UuU"
+  ],
+  "result": {
+    "count": 1,
+    "id": "processenhancement:advanced_battery"
+  }
+}

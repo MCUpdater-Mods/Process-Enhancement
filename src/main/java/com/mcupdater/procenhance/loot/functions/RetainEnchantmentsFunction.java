@@ -1,53 +1,49 @@
 package com.mcupdater.procenhance.loot.functions;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.blocks.miner.MinerEntity;
-import net.minecraft.core.Registry;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import com.mcupdater.procenhance.setup.Registration;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import net.minecraft.core.Holder;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class RetainEnchantmentsFunction extends LootItemConditionalFunction {
-    public static final LootItemFunctionType RETAIN_ENCHANTMENTS_TYPE = Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(ProcessEnhancement.MODID, "retain_enchantments"), new LootItemFunctionType(new RetainEnchantmentsFunction.Serializer()));
-    protected RetainEnchantmentsFunction(LootItemCondition[] pConditions) {
-        super(pConditions);
+    public static final MapCodec<RetainEnchantmentsFunction> CODEC = RecordCodecBuilder.mapCodec(inst -> commonFields(inst).apply(inst, RetainEnchantmentsFunction::new));
+
+    protected RetainEnchantmentsFunction(List<LootItemCondition> conditions) {
+        super(conditions);
+    }
+
+    @Override
+    public LootItemFunctionType<? extends LootItemConditionalFunction> getType() {
+        return Registration.RETAIN_ENCHANTMENTS.get();
     }
 
     public static LootItemConditionalFunction.Builder<?> getBuilder() {
         return simpleBuilder((RetainEnchantmentsFunction::new));
     }
 
-    public static void load() {
-    }
-
     @Override
-    protected ItemStack run(ItemStack pStack, LootContext pContext) {
+    protected @NotNull ItemStack run(@NotNull ItemStack pStack, LootContext pContext) {
         BlockEntity blockEntity = pContext.getParamOrNull(LootContextParams.BLOCK_ENTITY);
         if (blockEntity instanceof MinerEntity miner) {
-            CompoundTag compoundTag = miner.getEnchantmentTags();
-            pStack.setTag(compoundTag);
+            ItemEnchantments enchantments = miner.getEnchantments();
+            for (Object2IntMap.Entry<Holder<Enchantment>> enchant : enchantments.entrySet()) {
+                pStack.enchant(enchant.getKey(), enchant.getIntValue());
+            }
         }
         return pStack;
-    }
-
-    @Override
-    public LootItemFunctionType getType() {
-        return RETAIN_ENCHANTMENTS_TYPE;
-    }
-
-    public static class Serializer extends LootItemConditionalFunction.Serializer<RetainEnchantmentsFunction> {
-
-        @Override
-        public RetainEnchantmentsFunction deserialize(JsonObject pObject, JsonDeserializationContext pDeserializationContext, LootItemCondition[] pConditions) {
-            return new RetainEnchantmentsFunction(pConditions);
-        }
     }
 }

@@ -1,28 +1,29 @@
 package com.mcupdater.procenhance.recipe;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.mcupdater.procenhance.ProcessEnhancement;
+import com.mcupdater.mculib.inventory.MachineContainer;
+import com.mcupdater.procenhance.setup.Registration;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.Tuple;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
+import net.neoforged.neoforge.common.conditions.ICondition;
+import org.jetbrains.annotations.NotNull;
 
-public class GrinderRecipe implements Recipe<Container> {
-    private final ResourceLocation id;
+import java.util.List;
+
+public class GrinderRecipe implements Recipe<MachineContainer> {
     private final NonNullList<Ingredient> ingredients;
     private final NonNullList<Tuple<ItemStack,Integer>> outputs;
     private final int processTime;
     private final float experience;
 
-    public GrinderRecipe(ResourceLocation id, NonNullList<Tuple<ItemStack,Integer>> outputs, int processTime, float experience, NonNullList<Ingredient> ingredients) {
-        this.id = id;
+    public GrinderRecipe(NonNullList<Tuple<ItemStack,Integer>> outputs, int processTime, float experience, NonNullList<Ingredient> ingredients) {
         this.outputs = outputs;
         this.processTime = processTime;
         this.experience = experience;
@@ -30,21 +31,21 @@ public class GrinderRecipe implements Recipe<Container> {
     }
 
     @Override
-    public boolean matches(Container container, Level level) {
+    public boolean matches(@NotNull MachineContainer container, Level level) {
         if (level.isClientSide()) {
             return false;
         }
 
-        return ingredients.get(0).test(container.getItem(0));
+        return ingredients.getFirst().test(container.getItem(0));
     }
 
     @Override
-    public NonNullList<Ingredient> getIngredients() {
+    public @NotNull NonNullList<Ingredient> getIngredients() {
         return ingredients;
     }
 
     @Override
-    public ItemStack assemble(Container container) {
+    public @NotNull ItemStack assemble(@NotNull MachineContainer container, HolderLookup.@NotNull Provider pRegistries) {
         return ItemStack.EMPTY;
     }
 
@@ -54,23 +55,18 @@ public class GrinderRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider pRegistries) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    public ResourceLocation getId() {
-        return id;
+    public @NotNull RecipeSerializer<?> getSerializer() {
+        return Registration.GRINDER_SERIALIZER.get();
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
-        return Serializer.INSTANCE;
-    }
-
-    @Override
-    public RecipeType<?> getType() {
-        return Type.INSTANCE;
+    public @NotNull RecipeType<?> getType() {
+        return Registration.GRINDER_RECIPE.get();
     }
 
     public int getProcessTime() {
@@ -85,91 +81,79 @@ public class GrinderRecipe implements Recipe<Container> {
         return this.outputs;
     }
 
-    public static class Type implements RecipeType<GrinderRecipe> {
-        private Type() {}
-
-        public static final Type INSTANCE = new Type();
-
-        public static final String ID = "grinder";
-    }
-
     public static class Serializer implements RecipeSerializer<GrinderRecipe> {
-        public static final Serializer INSTANCE = new Serializer();
-        public static final ResourceLocation ID = new ResourceLocation(ProcessEnhancement.MODID,"grinder");
+
+        public static final Codec<Tuple<ItemStack,Integer>> TUPLE_CODEC = RecordCodecBuilder.create(inst -> inst.group(
+                ItemStack.CODEC.fieldOf("stack").forGetter(Tuple::getA),
+                Codec.INT.fieldOf("weight").forGetter(Tuple::getB)
+        ).apply(inst, Tuple::new));
+
+        public static final MapCodec<GrinderRecipe> CODEC = RecordCodecBuilder.mapCodec(
+                inst -> inst.group(
+                        // NonNullList<Tuple<ItemStack,Integer>> outputs, int processTime, float experience, NonNullList<Ingredient> ingredients
+                        NonNullList.codecOf(TUPLE_CODEC).fieldOf("outputs").forGetter(GrinderRecipe::getOutputs),
+                        Codec.INT.fieldOf("processTime").forGetter(GrinderRecipe::getProcessTime),
+                        Codec.FLOAT.fieldOf("experience").forGetter(GrinderRecipe::getExperience),
+                        NonNullList.codecOf(Ingredient.CODEC).fieldOf("ingredients").forGetter(GrinderRecipe::getIngredients)
+                )
+                        .apply(inst,GrinderRecipe::new)
+        );
+
+        public static final StreamCodec<RegistryFriendlyByteBuf, GrinderRecipe> STREAM_CODEC = StreamCodec.of(
+                GrinderRecipe.Serializer::toNetwork,
+                GrinderRecipe.Serializer::fromNetwork
+        );
 
         @Override
-        public GrinderRecipe fromJson(ResourceLocation id, JsonObject json) {
-            JsonArray outputsArray = GsonHelper.getAsJsonArray(json, "outputs");
-            NonNullList<Tuple<ItemStack,Integer>> outputs = NonNullList.withSize(outputsArray.size(),new Tuple<>(ItemStack.EMPTY,0));
-            for (int index1 = 0; index1 < outputs.size(); index1++) {
-                JsonObject entry = (JsonObject) outputsArray.get(index1);
-                outputs.set(index1,new Tuple<>(ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(entry,"stack")),GsonHelper.getAsInt(entry, "weight")));
-            }
-            JsonArray ingredientArray = GsonHelper.getAsJsonArray(json, "ingredients");
-            NonNullList<Ingredient> ingredients = NonNullList.withSize(ingredientArray.size(),Ingredient.EMPTY);
-            for (int index2 = 0; index2 < ingredients.size(); index2++) {
-                ingredients.set(index2,Ingredient.fromJson(ingredientArray.get(index2)));
-            }
-            int processTime = GsonHelper.getAsInt(json,"processTime");
-            float experience = GsonHelper.getAsFloat(json,"experience");
-            return new GrinderRecipe(id, outputs, processTime, experience, ingredients);
+        public @NotNull MapCodec<GrinderRecipe> codec() {
+            return CODEC;
         }
 
-        @Nullable
         @Override
-        public GrinderRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
+        public @NotNull StreamCodec<RegistryFriendlyByteBuf, GrinderRecipe> streamCodec() {
+            return STREAM_CODEC;
+        }
+
+
+        public static @NotNull GrinderRecipe fromNetwork(RegistryFriendlyByteBuf buf) {
             NonNullList<Ingredient> ingredients = NonNullList.withSize(buf.readInt(), Ingredient.EMPTY);
-            for (int index1 = 0; index1 < ingredients.size(); index1++) {
-                ingredients.set(index1, Ingredient.fromNetwork(buf));
-            }
+            ingredients.replaceAll(ignored -> Ingredient.CONTENTS_STREAM_CODEC.decode(buf));
             NonNullList<Tuple<ItemStack,Integer>> outputs = NonNullList.withSize(buf.readInt(), new Tuple<>(ItemStack.EMPTY,0));
-            for (int index2 = 0; index2 < outputs.size(); index2++) {
-                outputs.set(index2, new Tuple<>(buf.readItem(),buf.readInt()));
-            }
+            outputs.replaceAll(ignored -> new Tuple<>(ItemStack.STREAM_CODEC.decode(buf), buf.readInt()));
             int processTime = buf.readInt();
             float experience = buf.readFloat();
-            return new GrinderRecipe(id, outputs, processTime, experience, ingredients);
+            return new GrinderRecipe(outputs, processTime, experience, ingredients);
         }
 
-        @Override
-        public void toNetwork(FriendlyByteBuf buf, GrinderRecipe recipe) {
+        public static void toNetwork(RegistryFriendlyByteBuf buf, GrinderRecipe recipe) {
             buf.writeInt(recipe.getIngredients().size());
             for(Ingredient ingredient : recipe.getIngredients()) {
-                ingredient.toNetwork(buf);
+                Ingredient.CONTENTS_STREAM_CODEC.encode(buf, ingredient);
             }
             buf.writeInt(recipe.getOutputs().size());
             for(Tuple<ItemStack,Integer> entry : recipe.getOutputs()) {
-                buf.writeItemStack(entry.getA(), false);
+                ItemStack.STREAM_CODEC.encode(buf,entry.getA());
                 buf.writeInt(entry.getB());
             }
             buf.writeInt(recipe.getProcessTime());
             buf.writeFloat(recipe.getExperience());
         }
-
-        /*
-        @Override
-        public RecipeSerializer<?> setRegistryName(ResourceLocation name) {
-            return INSTANCE;
-        }
-
-        @Nullable
-        @Override
-        public ResourceLocation getRegistryName() {
-            return ID;
-        }
-
-        @Override
-        public Class<RecipeSerializer<?>> getRegistryType() {
-            return Serializer.castClass(RecipeSerializer.class);
-        }
-        */
-
-        @SuppressWarnings("unchecked")
-        private static <G> Class<G> castClass(Class<?> cls) {
-            return (Class<G>)cls;
-        }
     }
 
+    /*
+    public static class TupleCodec implements Codec<Tuple<ItemStack,Integer>> {
 
+        @Override
+        public <T> DataResult<Pair<Tuple<ItemStack, Integer>, T>> decode(DynamicOps<T> ops, T input) {
+            return ItemStack.CODEC.decode(ops, input).flatMap(p1 ->
+                    Codec.INT.decode(ops, p1.getSecond()).map(p2 ->
+                            Pair.of(new Tuple<>(p1.getFirst(), p2.getFirst()), p2.getSecond())));
+        }
 
+        @Override
+        public <T> DataResult<T> encode(Tuple<ItemStack, Integer> input, DynamicOps<T> ops, T prefix) {
+            return Codec.INT.encode(input.getB(), ops, prefix).flatMap(f -> ItemStack.CODEC.encode(input.getA(), ops, f));
+        }
+    }
+     */
 }

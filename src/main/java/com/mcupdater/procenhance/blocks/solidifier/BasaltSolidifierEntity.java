@@ -6,8 +6,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class BasaltSolidifierEntity extends AbstractSolidifierEntity {
 
@@ -23,7 +22,7 @@ public class BasaltSolidifierEntity extends AbstractSolidifierEntity {
 
     @Override
     protected boolean performWork() {
-        IItemHandler itemHandler = new InvWrapper(itemResourceHandler);
+        IItemHandler itemHandler = itemResourceHandler.getInternalHandler();
         if (itemHandler.getStackInSlot(0).getCount() < itemHandler.getSlotLimit(0)) {
             this.workProgress++;
             if (this.workProgress >= this.workTotal) {

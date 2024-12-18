@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:furnace"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "F": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "CFC",
+    "F#F",
+    "CFC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "processenhancement:basic_furnace"
+  }
+}

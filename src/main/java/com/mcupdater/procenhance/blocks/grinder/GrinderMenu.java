@@ -1,21 +1,23 @@
 package com.mcupdater.procenhance.blocks.grinder;
 
 import com.mcupdater.mculib.block.AbstractMachineMenu;
+import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.level.Level;
 
 import java.util.Map;
 
 public class GrinderMenu extends AbstractMachineMenu<GrinderEntity> {
 
-    public GrinderMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data, Map<Direction, Component> directionComponentMap) {
+    public GrinderMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data, Map<Direction, String> directionComponentMap) {
         super((GrinderEntity) level.getBlockEntity(blockPos), Registration.GRINDER_MENU.get(), windowId, level, blockPos, inventory, player, data, directionComponentMap);
     }
 
@@ -24,4 +26,10 @@ public class GrinderMenu extends AbstractMachineMenu<GrinderEntity> {
         return ContainerLevelAccess.create(machineEntity.getLevel(), machineEntity.getBlockPos()).evaluate((level, blockPos) -> playerIn.distanceToSqr((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.5D, (double)blockPos.getZ() + 0.5D) <= 64.0D, true);
     }
 
+    public static GrinderMenu factory(int containerId, Inventory playerInv, FriendlyByteBuf extraData) {
+        BlockPos pos = extraData.readBlockPos();
+        Level world = playerInv.player.level();
+        GrinderEntity te = (GrinderEntity) world.getBlockEntity(pos);
+        return new GrinderMenu(containerId, world, pos, playerInv, playerInv.player, new SimpleContainerData(2), DataHelper.readDirectionMap(extraData));
+    }
 }

@@ -5,9 +5,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
@@ -27,7 +29,7 @@ public class Pattern3x3Item extends AbstractPatternItem {
         if (stack.getCount() >= ingredientCount) {
             Ingredient ingredient = Ingredient.of(stack.getItem());
             if (!RECIPES.containsKey(ingredient)) {
-                CraftingContainer testContainer = new CraftingContainer(new AbstractContainerMenu(MenuType.CRAFTING, -1) {
+                CraftingContainer testContainer = new TransientCraftingContainer(new AbstractContainerMenu(MenuType.CRAFTING, -1) {
 
                     @Override
                     public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
@@ -44,9 +46,9 @@ public class Pattern3x3Item extends AbstractPatternItem {
                 for (int slot = 0; slot < 9; slot++) {
                     testContainer.setItem(slot, testStack);
                 }
-                Optional<CraftingRecipe> recipe = level.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, testContainer, level);
-                if (recipe.isPresent()) {
-                    RECIPES.put(ingredient, recipe.get());
+                Optional<RecipeHolder<CraftingRecipe>> recipeHolder = level.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, testContainer.asCraftInput(), level, (RecipeHolder<CraftingRecipe>) null);
+                if (recipeHolder.isPresent()) {
+                    RECIPES.put(ingredient, recipeHolder.get().value());
                 } else {
                     RECIPES.put(ingredient, null);
                 }

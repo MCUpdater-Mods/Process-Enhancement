@@ -3,25 +3,43 @@ package com.mcupdater.procenhance.blocks.autoharvester;
 import com.mcupdater.mculib.block.AbstractMachineBlockEntity;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
-import com.mcupdater.procenhance.items.autopackager.AbstractPatternItem;
+import com.mcupdater.mculib.helpers.RenderHelper;
+import com.mcupdater.procenhance.blocks.miner.BlockDistanceComparator;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import org.jetbrains.annotations.Nullable;
 
-import static com.mcupdater.procenhance.setup.Registration.AUTOPACKAGER_ENTITY;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.stream.IntStream;
+
+import static com.mcupdater.procenhance.setup.Registration.HARVESTER_ENTITY;
 
 public class HarvesterEntity extends AbstractMachineBlockEntity {
 
     private final ItemResourceHandler itemResourceHandler;
+    private List<BlockPos> harvestableBlocks = new ArrayList<>();
+    private int tick;
+    private Queue<ItemStack> internalBuffer = new LinkedList<>();
 
     public ContainerData data = new ContainerData() {
         @Override
@@ -41,32 +59,10 @@ public class HarvesterEntity extends AbstractMachineBlockEntity {
     };
 
     public HarvesterEntity(BlockPos blockPos, BlockState blockState) {
-        super(AUTOPACKAGER_ENTITY.get(), blockPos, blockState, Config.AUTOPACKAGER_ENERGY_PER_TICK.get() * 1000, Integer.MAX_VALUE, Config.AUTOPACKAGER_ENERGY_PER_TICK.get(), 1);
-        itemResourceHandler = new ItemResourceHandler(this.level, 10, new int[]{0,1},new int[]{0}, new int[]{1}, this::stillValid);
-        itemResourceHandler.setInsertFunction(this::canPlaceItem);
+        super(HARVESTER_ENTITY.get(), blockPos, blockState, Config.AUTOHARVESTER_ENERGY_PER_TICK.get() * 1000, Integer.MAX_VALUE, Config.AUTOHARVESTER_ENERGY_PER_TICK.get(), 1);
+        int[] slots = IntStream.rangeClosed(0,5).toArray();
+        itemResourceHandler = new ItemResourceHandler(this.level, 6, slots, IntStream.empty().toArray(), slots, this::stillValid);
         this.configMap.put("items", itemResourceHandler);
-        this.workTotal=10;
-    }
-
-    private boolean canPlaceItem(int slot, ItemStack pStack) {
-        if (!this.level.isClientSide()) {
-            if (slot == 0) {
-                for (int patSlot = 2; patSlot < itemResourceHandler.getContainerSize(); patSlot++) {
-                    ItemStack patternStack = itemResourceHandler.getItem(patSlot).copy();
-                    if (patternStack.getItem() instanceof AbstractPatternItem pattern) {
-                        if (pattern.matchingRecipe(pStack, this.level) != null) {
-                            return true;
-                        }
-                    }
-                }
-            }
-            if (slot >= 2) {
-                if (pStack.getItem() instanceof AbstractPatternItem) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     private Boolean stillValid(Player player) {
@@ -77,9 +73,83 @@ public class HarvesterEntity extends AbstractMachineBlockEntity {
         }
     }
 
+    private void buildHarvestablesList() {
+        Direction facing = this.getBlockState().getValue(HarvesterBlock.FACING);
+        BlockPos startPos = this.worldPosition.relative(facing.getOpposite(),9).relative(facing.getClockWise(),4);
+        BlockPos endPos = this.worldPosition.relative(facing.getOpposite(),1).relative(facing.getCounterClockWise(),4);
+        int y = startPos.getY();
+        for (int x = Math.min(startPos.getX(),endPos.getX()); x <= Math.max(startPos.getX(), endPos.getX()); x++) {
+            for (int z = Math.min(startPos.getZ(), endPos.getZ()); z <= Math.max(startPos.getZ(), endPos.getZ()); z++) {
+                BlockPos blockPos = new BlockPos(x,y,z);
+                BlockState state = level.getBlockState(blockPos);
+                if (state.getBlock() instanceof BushBlock || state.getBlock().equals(Blocks.MELON) || state.getBlock().equals(Blocks.PUMPKIN)) {
+                    harvestableBlocks.add(blockPos);
+                }
+                if (state.getBlock() instanceof BambooStalkBlock || state.getBlock() instanceof SugarCaneBlock || state.getBlock() instanceof CactusBlock) {
+                    harvestableBlocks.add(blockPos.above());
+                }
+            }
+        }
+        harvestableBlocks.sort(new BlockDistanceComparator(this.worldPosition));
+    }
+
     @Override
     protected boolean performWork() {
         if (!level.isClientSide()) {
+            // Clear the internal buffer
+            if (!this.internalBuffer.isEmpty()) {
+                //ProcessEnhancement.LOGGER.info("Buffer not empty - transferring contents");
+                List<ItemStack> tempBuffer = this.internalBuffer.stream().toList();
+                for (ItemStack stack : tempBuffer) {
+                    boolean success = false;
+                    for (int slot = 0; slot < this.itemResourceHandler.getInternalHandler().getSlots(); slot++) {
+                        ItemStack result = this.itemResourceHandler.getInternalHandler().insertItem(slot, stack, false);
+                        if (result == ItemStack.EMPTY) {
+                            internalBuffer.remove(stack);
+                            success = true;
+                            break;
+                        }
+                    }
+                    if (success = true) {
+                        break;
+                    }
+                    internalBuffer.remove(stack);
+                    internalBuffer.add(stack);
+                }
+            }
+
+            // If collection buffer still has contents, turn off harvester
+            if (!internalBuffer.isEmpty()){
+                //ProcessEnhancement.LOGGER.info("Buffer not empty - turning off harvester");
+                return false;
+            }
+
+            // When tick delay reaches 0, do work
+            if (tick == 0) {
+                // Check if queue is empty and rebuild if needed
+                if (this.harvestableBlocks.isEmpty()) {
+                    buildHarvestablesList();
+                }
+                // If queue is not empty, try harvesting
+                if (!this.harvestableBlocks.isEmpty()) {
+                    BlockPos toHarvest = this.harvestableBlocks.removeFirst();
+                    BlockState state = level.getBlockState(toHarvest);
+                    if (readyToFullHarvest(state)){
+                        List<ItemStack> drops = state.getDrops(new LootParams.Builder((ServerLevel) this.level).withParameter(LootContextParams.ORIGIN,this.worldPosition.getBottomCenter()).withParameter(LootContextParams.TOOL,new ItemStack(Items.NETHERITE_HOE)));
+                        level.setBlock(toHarvest, Blocks.AIR.defaultBlockState(), 3);
+                        RenderHelper.sendParticles((ServerLevel) level, ParticleTypes.INSTANT_EFFECT, toHarvest.getX() + 0.5D, toHarvest.getY() + 0.1D, toHarvest.getZ() + 0.5D, 3,0,0, 0, 0);
+                        level.playSound(null, toHarvest, SoundEvents.CROP_BREAK, SoundSource.BLOCKS, 1, 1);
+                        internalBuffer.addAll(drops);
+                        //ProcessEnhancement.LOGGER.info("Harvested: {} @ {} Drops: {}", state.getBlock(), toHarvest, drops);
+                        tick += 20;
+                        return true;
+                    }
+                }
+            } else {
+                tick--;
+                return true;
+            }
+            /*
             if (!itemResourceHandler.getItem(0).isEmpty() && itemResourceHandler.getItem(1).isEmpty()) {
                 this.workProgress++;
                 if (this.workProgress >= this.workTotal) {
@@ -103,18 +173,21 @@ public class HarvesterEntity extends AbstractMachineBlockEntity {
                 workProgress = 0;
                 return false;
             }
+             */
         }
         return false;
     }
 
-    @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
-    }
-
-    @Override
-    public void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    public boolean readyToFullHarvest(BlockState state) {
+        return
+                (state.getBlock() instanceof CropBlock && ((CropBlock) state.getBlock()).isMaxAge(state)) ||
+                        state.getBlock().equals(Blocks.MELON) ||
+                        state.getBlock().equals(Blocks.PUMPKIN) ||
+                        state.getBlock() instanceof BambooStalkBlock ||
+                        state.getBlock() instanceof SugarCaneBlock ||
+                        state.getBlock() instanceof CactusBlock ||
+                        (state.getBlock() instanceof NetherWartBlock && state.getValue(NetherWartBlock.AGE) == NetherWartBlock.MAX_AGE)
+                ;
     }
 
     @Override

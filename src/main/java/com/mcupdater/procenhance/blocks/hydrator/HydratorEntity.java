@@ -9,7 +9,9 @@ import com.mcupdater.mculib.inventory.MachineContainer;
 import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.recipe.HydratorRecipe;
 import com.mcupdater.procenhance.setup.Config;
+import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -17,12 +19,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -32,7 +33,7 @@ import static com.mcupdater.procenhance.setup.Registration.HYDRATOR_ENTITY;
 public class HydratorEntity extends AbstractMachineBlockEntity {
 
 	private final ItemResourceHandler itemResourceHandler;
-	private HydratorRecipe currentRecipe = null;
+	private RecipeHolder<HydratorRecipe> currentRecipe = null;
 
 	public ContainerData data = new ContainerData() {
 		@Override
@@ -77,17 +78,16 @@ public class HydratorEntity extends AbstractMachineBlockEntity {
 	}
 
 	public boolean validateFluid(int tank, FluidStack fluidStack) {
-		ProcessEnhancement.LOGGER.info("Validating fluid: {}", ForgeRegistries.FLUIDS.getResourceKey(fluidStack.getFluid()).get());
 		return this.level.getRecipeManager().
-				getAllRecipesFor(HydratorRecipe.Type.INSTANCE).stream().
-				anyMatch(recipe -> recipe.getFluidIngredient().getFluid().isSame(fluidStack.getFluid()));
+				getAllRecipesFor(Registration.HYDRATOR_RECIPE.get()).stream().
+				anyMatch(recipeHolder -> recipeHolder.value().getFluidIngredient().getFluid().isSame(fluidStack.getFluid()));
 	}
 
 	private boolean canPlaceItem(int slot, ItemStack pStack) {
 		return this.level.getRecipeManager().
-				getAllRecipesFor(HydratorRecipe.Type.INSTANCE).stream().
-				anyMatch(recipe -> Arrays.stream(recipe.getItemIngredients().get(0).getItems()).
-						anyMatch(inputStack -> inputStack.sameItem(pStack)));
+				getAllRecipesFor(Registration.HYDRATOR_RECIPE.get()).stream().
+				anyMatch(recipeHolder -> Arrays.stream(recipeHolder.value().getItemIngredients().get(0).getItems()).
+						anyMatch(inputStack -> ItemStack.isSameItem(inputStack,pStack)));
 	}
 
 	private Boolean stillValid(Player player) {
@@ -107,11 +107,11 @@ public class HydratorEntity extends AbstractMachineBlockEntity {
 		ItemStack inputStack = itemStorage.getItem(0);
 		FluidStack inputFluid = fluidStorage.getInternalHandler().getFluidInTank(0);
 		if (!inputStack.isEmpty() && !inputFluid.isEmpty()) {
-			HydratorRecipe recipe = this.level.getRecipeManager().getRecipeFor(HydratorRecipe.Type.INSTANCE, machineContainer, this.level).orElse(null);
+			RecipeHolder<HydratorRecipe> recipe = this.level.getRecipeManager().getRecipeFor(Registration.HYDRATOR_RECIPE.get(), machineContainer, this.level).orElse(null);
 			if (this.currentRecipe == null || !this.currentRecipe.equals(recipe)) {
 				if (recipe != null) {
 					this.currentRecipe = recipe;
-					this.workTotal = this.currentRecipe.getProcessTime();
+					this.workTotal = this.currentRecipe.value().getProcessTime();
 				}
 				this.workProgress = 0;
 			}
@@ -119,10 +119,10 @@ public class HydratorEntity extends AbstractMachineBlockEntity {
 			this.currentRecipe = null;
 		}
 		ItemStack outputSlot = itemStorage.getItem(1);
-		if (this.currentRecipe != null && energyStorage.getStoredEnergy() >= Config.HYDRATOR_ENERGY_PER_TICK.get() && (outputSlot.isEmpty() || (outputSlot.sameItem(currentRecipe.getResultItem()) && outputSlot.getCount() < outputSlot.getMaxStackSize()))) {
+		if (this.currentRecipe != null && energyStorage.getStoredEnergy() >= Config.HYDRATOR_ENERGY_PER_TICK.get() && (outputSlot.isEmpty() || (ItemStack.isSameItem(outputSlot,currentRecipe.value().getResultItem(level.registryAccess())) && outputSlot.getCount() < outputSlot.getMaxStackSize()))) {
 			this.workProgress++;
 			if (this.workProgress >= this.workTotal) {
-				ItemStack result = this.currentRecipe.assemble(machineContainer);
+				ItemStack result = this.currentRecipe.value().assemble(machineContainer, level.registryAccess());
 				if (outputSlot.isEmpty()) {
 					itemStorage.setItem(1,result.copy());
 				} else if (outputSlot.is(result.getItem())) {
@@ -130,7 +130,7 @@ public class HydratorEntity extends AbstractMachineBlockEntity {
 				}
 				this.workProgress = 0;
 				itemStorage.getItem(0).shrink(1);
-				fluidStorage.getInternalHandler().drain(0, this.currentRecipe.getFluidIngredient().copy(), IFluidHandler.FluidAction.EXECUTE);
+				fluidStorage.getInternalHandler().drain(0, this.currentRecipe.value().getFluidIngredient().copy(), IFluidHandler.FluidAction.EXECUTE);
 			}
 			return true;
 		}

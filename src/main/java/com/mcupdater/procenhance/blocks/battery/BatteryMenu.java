@@ -3,19 +3,23 @@ package com.mcupdater.procenhance.blocks.battery;
 import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
 import com.mcupdater.mculib.block.IConfigurableMenu;
 import com.mcupdater.mculib.capabilities.PowerTrackingMenu;
+import com.mcupdater.mculib.helpers.DataHelper;
+import com.mcupdater.procenhance.blocks.autopackager.PackagerEntity;
+import com.mcupdater.procenhance.blocks.autopackager.PackagerMenu;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
 
 import java.util.Map;
 
@@ -23,9 +27,9 @@ public class BatteryMenu extends PowerTrackingMenu implements IConfigurableMenu 
     private final BatteryEntity localBlockEntity;
     private final Player player;
     private final IItemHandler playerInventory;
-    private final Map<Direction, Component> adjacentNames;
+    private final Map<Direction, String> adjacentNames;
 
-    public BatteryMenu(int pContainerId, Level level, BlockPos worldPosition, Inventory pPlayerInventory, Player pPlayer, Map<Direction, Component> adjacentNames) {
+    public BatteryMenu(int pContainerId, Level level, BlockPos worldPosition, Inventory pPlayerInventory, Player pPlayer, Map<Direction, String> adjacentNames) {
         super(Registration.BATTERY_MENU.get(), pContainerId);
         this.adjacentNames = adjacentNames;
         this.localBlockEntity = level.getBlockEntity(worldPosition) instanceof BatteryEntity ? (BatteryEntity) level.getBlockEntity(worldPosition) : null;
@@ -38,6 +42,13 @@ public class BatteryMenu extends PowerTrackingMenu implements IConfigurableMenu 
         }
         layoutPlayerInventorySlots(8,84);
         trackPower();
+    }
+
+    public static BatteryMenu factory(int containerId, Inventory playerInv, FriendlyByteBuf extraData) {
+        BlockPos pos = extraData.readBlockPos();
+        Level world = playerInv.player.level();
+        BatteryEntity te = (BatteryEntity) world.getBlockEntity(pos);
+        return new BatteryMenu(containerId, world, pos, playerInv, playerInv.player, DataHelper.readDirectionMap(extraData));
     }
 
     private void layoutPlayerInventorySlots(int leftCol, int topRow) {
@@ -117,7 +128,7 @@ public class BatteryMenu extends PowerTrackingMenu implements IConfigurableMenu 
     }
 
     @Override
-    public Component getSideName(Direction direction) {
+    public String getSideName(Direction direction) {
         return this.adjacentNames.get(direction);
     }
 }

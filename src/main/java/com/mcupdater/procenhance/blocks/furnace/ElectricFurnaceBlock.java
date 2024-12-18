@@ -15,11 +15,18 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 
 public abstract class ElectricFurnaceBlock extends AbstractMachineBlock {
-    public ElectricFurnaceBlock() {
-        super(Properties.of(Material.STONE).sound(SoundType.STONE).strength(5.0f));
+    public static Properties defaultProperties() {
+        return Properties.of()
+                .mapColor(MapColor.STONE)
+                .sound(SoundType.STONE)
+                .strength(5.0f)
+                .requiresCorrectToolForDrops();
+    }
+    public ElectricFurnaceBlock(Properties properties) {
+        super(properties);
     }
 
     @Override

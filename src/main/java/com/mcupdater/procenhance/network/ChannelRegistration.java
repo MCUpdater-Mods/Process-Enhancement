@@ -1,22 +1,15 @@
 package com.mcupdater.procenhance.network;
 
+
 import com.mcupdater.procenhance.ProcessEnhancement;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 public class ChannelRegistration {
-    private static final String PROTOCOL = "1";
-    public static SimpleChannel RECIPE_CHANGE;
-
-    public static void init() {
-        RECIPE_CHANGE = NetworkRegistry.newSimpleChannel(new ResourceLocation(ProcessEnhancement.MODID, "recipe_change"), () -> PROTOCOL, PROTOCOL::equals, PROTOCOL::equals);
-
-        RECIPE_CHANGE.registerMessage(0,
-                RecipeChangePacket.class,
-                RecipeChangePacket::toBytes,
-                RecipeChangePacket::fromBytes,
-                RecipeChangePacket::handle
-                );
+    @SubscribeEvent
+    public static void register(RegisterPayloadHandlersEvent event) {
+        PayloadRegistrar registrar = event.registrar(ProcessEnhancement.MODID).versioned("1.0");
+        registrar.playBidirectional(RecipeChange.TYPE, RecipeChange.STREAM_CODEC, RecipeChange.PayloadHandler::handle);
     }
 }

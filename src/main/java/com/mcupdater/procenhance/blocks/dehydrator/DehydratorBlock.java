@@ -1,54 +1,32 @@
 package com.mcupdater.procenhance.blocks.dehydrator;
 
 import com.mcupdater.mculib.block.AbstractMachineBlock;
-import com.mcupdater.mculib.helpers.DataHelper;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Map;
-
 public class DehydratorBlock extends AbstractMachineBlock {
-	public DehydratorBlock() {
-		super(Properties.of(Material.METAL).sound(SoundType.METAL).strength(10.0f));
+	public static final MapCodec<DehydratorBlock> CODEC = simpleCodec(DehydratorBlock::new);
+
+	@Override
+	protected MapCodec<? extends BaseEntityBlock> codec() {
+		return CODEC;
+	}
+
+	public DehydratorBlock(Properties properties) {
+		super(properties);
 	}
 
 	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
 		return new DehydratorEntity(pPos, pState);
-	}
-
-	@Override
-	public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult trace) {
-		if (!pLevel.isClientSide) {
-			BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-			if (blockEntity instanceof DehydratorEntity) {
-				Map<Direction, Component> adjacentNames = DataHelper.getAdjacentNames(pLevel, pPos);
-				NetworkHooks.openScreen((ServerPlayer) pPlayer, (MenuProvider) blockEntity, buf -> {
-					buf.writeBlockPos(pPos);
-					DataHelper.writeDirectionMap(buf, adjacentNames);
-				});
-			} else {
-				return InteractionResult.FAIL;
-			}
-		}
-		return InteractionResult.SUCCESS;
 	}
 
 	@Override

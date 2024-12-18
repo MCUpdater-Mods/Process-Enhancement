@@ -1,0 +1,27 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "processenhancement:config"
+      }
+    }
+  ],
+  "type": "processenhancement:grinder",
+  "experience": 0.01,
+  "ingredients": [
+    {
+      "item": "minecraft:gravel"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "count": 1,
+        "id": "minecraft:flint"
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 200
+}

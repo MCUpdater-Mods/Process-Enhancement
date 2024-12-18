@@ -5,26 +5,15 @@ import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.procenhance.items.autopackager.AbstractPatternItem;
 import com.mcupdater.procenhance.setup.Config;
-import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import static com.mcupdater.procenhance.setup.Registration.AUTOPACKAGER_ENTITY;
@@ -115,16 +104,6 @@ public class PackagerEntity extends AbstractMachineBlockEntity {
             }
         }
         return false;
-    }
-
-    @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
-    }
-
-    @Override
-    public void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
     }
 
     @Override

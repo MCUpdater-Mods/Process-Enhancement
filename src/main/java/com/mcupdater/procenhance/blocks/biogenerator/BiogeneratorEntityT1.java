@@ -5,12 +5,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.state.BlockState;
 
 import static com.mcupdater.procenhance.setup.Config.BASIC_BIOGENERATOR_PER_TICK;
-import static com.mcupdater.procenhance.setup.Registration.BASICBIOGENERATOR_BLOCKENTITY;
+import static com.mcupdater.procenhance.setup.Registration.BIOGENERATORT1_ENTITY;
 
 public class BiogeneratorEntityT1 extends BiogeneratorEntity {
 
     public BiogeneratorEntityT1(BlockPos blockPos, BlockState blockState) {
-        super(BASICBIOGENERATOR_BLOCKENTITY.get(), blockPos, blockState);
+        super(BIOGENERATORT1_ENTITY.get(), blockPos, blockState);
         setup(BASIC_BIOGENERATOR_PER_TICK.get());
     }
 

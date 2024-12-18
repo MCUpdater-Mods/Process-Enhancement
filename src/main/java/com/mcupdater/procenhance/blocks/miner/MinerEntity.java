@@ -3,14 +3,21 @@ package com.mcupdater.procenhance.blocks.miner;
 import com.mcupdater.mculib.block.AbstractMachineBlockEntity;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
+import com.mcupdater.mculib.helpers.RenderHelper;
 import com.mcupdater.procenhance.setup.Config;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.network.chat.Component;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.*;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
@@ -20,9 +27,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LightBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -41,7 +52,8 @@ public abstract class MinerEntity extends AbstractMachineBlockEntity {
     private List<BlockPos> mineableBlocks = new ArrayList<>();
     private Queue<ItemStack> internalBuffer = new LinkedList<>();
     private int tick = 0;
-    private ListTag enchantments;
+    private ItemEnchantments enchantments = ItemEnchantments.EMPTY;
+    public static BlockState LIGHT = Blocks.LIGHT.defaultBlockState().setValue(LightBlock.LEVEL,15);
 
     public MinerEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, int multiplier, int range) {
         super(blockEntityType, blockPos, blockState, Config.MINER_ENERGY_PER_TICK.get() * 1000 * multiplier, Integer.MAX_VALUE, Config.MINER_ENERGY_PER_TICK.get(), multiplier);
@@ -80,7 +92,7 @@ public abstract class MinerEntity extends AbstractMachineBlockEntity {
     @Override
     protected boolean performWork() {
         // Collect floating items in the mining area (i.e. spilled from broken chests) and add to the collection buffer
-        List<ItemEntity> items = level.getEntitiesOfClass(ItemEntity.class, new AABB(worldPosition.below(2).east(range).north(range), worldPosition.west(range).south(range).below(512)), EntitySelector.ENTITY_STILL_ALIVE);
+        List<ItemEntity> items = level.getEntitiesOfClass(ItemEntity.class, AABB.encapsulatingFullBlocks(worldPosition.below(2).east(range).north(range), worldPosition.west(range).south(range).below(512)), EntitySelector.ENTITY_STILL_ALIVE);
         for (ItemEntity item : items) {
             this.internalBuffer.add(item.getItem().copy());
             item.remove(Entity.RemovalReason.DISCARDED);
@@ -127,23 +139,26 @@ public abstract class MinerEntity extends AbstractMachineBlockEntity {
                         BlockState state = level.getBlockState(blockPos);
                         ItemStack fakePickaxe = new ItemStack(Items.NETHERITE_PICKAXE);
                         if (this.enchantments != null) {
-                            CompoundTag compoundTag = new CompoundTag();
-                            compoundTag.put("Enchantments", this.enchantments);
-                            fakePickaxe.setTag(compoundTag);
+                            for (Object2IntMap.Entry<Holder<Enchantment>> enchantment : this.enchantments.entrySet()) {
+                                fakePickaxe.enchant(enchantment.getKey(), enchantment.getIntValue());
+                            }
                         }
-                        List<ItemStack> miningResults = state.getDrops(new LootContext.Builder((ServerLevel) this.level)
-                                .withRandom(this.level.random)
+                        List<ItemStack> miningResults = state.getDrops(new LootParams.Builder((ServerLevel) this.level)
                                 .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockPos))
                                 .withParameter(LootContextParams.TOOL, fakePickaxe)
                         );
                         this.internalBuffer.addAll(miningResults);
                         this.level.removeBlock(blockPos, false);
+                        RenderHelper.sendParticles((ServerLevel) level, ParticleTypes.REVERSE_PORTAL, blockPos.getX()+0.5D, blockPos.getY()+0.5D, blockPos.getZ()+0.5D, 5,0,0.1D,0,0.01D);
+                        level.playSound(null,blockPos, SoundEvents.STONE_BREAK, SoundSource.BLOCKS,1.0f,1.0f);
+                        if (blockPos.getX() % 5 == 0 && blockPos.getY() % 5 == 0 && blockPos.getZ() % 5 == 0) {
+                            this.level.setBlock(blockPos, LIGHT, 3);
+                        }
                         this.mineableBlocks.remove(blockPos);
                         tick += 200;
                         return true;
                     }
                 }
-                tick += 200;
             } else {
                 // If mining queue is still empty, shut down and sleep longer
                 tick -= 4000;
@@ -162,30 +177,39 @@ public abstract class MinerEntity extends AbstractMachineBlockEntity {
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
-        if (compound.contains("CustomName", 8)) {
-            this.name = Component.Serializer.fromJson(compound.getString("CustomName"));
-        }
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider pRegistries) {
+        super.loadAdditional(compound, pRegistries);
         if (compound.contains("buffer", Tag.TAG_COMPOUND)) {
             NonNullList<ItemStack> buffer = NonNullList.withSize(0,ItemStack.EMPTY);
-            ContainerHelper.loadAllItems(compound.getCompound("buffer"), buffer);
+            ContainerHelper.loadAllItems(compound.getCompound("buffer"), buffer, pRegistries);
             this.internalBuffer.addAll(buffer.stream().filter(itemstack -> itemstack != ItemStack.EMPTY).toList());
+            ListTag enchants = compound.getList("enchantments", Tag.TAG_COMPOUND);
+            ItemEnchantments.Mutable enchantsMutable = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
+            enchants.stream().forEach(entry -> {
+                CompoundTag enchant = (CompoundTag) entry;
+                enchantsMutable.set(level.holderOrThrow(ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.parse(enchant.getString("enchantment")))),enchant.getInt("level"));
+            });
+            this.enchantments = enchantsMutable.toImmutable();
         }
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound) {
-        if (this.name != null) {
-            compound.putString("CustomName", Component.Serializer.toJson(this.name));
-        }
+    public void saveAdditional(CompoundTag compound, HolderLookup.Provider pRegistries) {
         if (!this.internalBuffer.isEmpty()) {
             NonNullList<ItemStack> buffer = NonNullList.of(ItemStack.EMPTY, this.internalBuffer.toArray(new ItemStack[0]));
             CompoundTag compoundBuffer = new CompoundTag();
-            ContainerHelper.saveAllItems(compoundBuffer, buffer);
+            ContainerHelper.saveAllItems(compoundBuffer, buffer, pRegistries);
             compound.put("buffer", compoundBuffer);
+            ListTag listEnchants = new ListTag();
+            for (Object2IntMap.Entry<Holder<Enchantment>> entry : this.enchantments.entrySet()) {
+                CompoundTag enchant = new CompoundTag();
+                enchant.put("enchantment", StringTag.valueOf(entry.getKey().getKey().location().toString()));
+                enchant.put("level", IntTag.valueOf(entry.getIntValue()));
+                listEnchants.add(enchant);
+            }
+            compound.put("enchantments", listEnchants);
         }
-        super.saveAdditional(compound);
+        super.saveAdditional(compound, pRegistries);
     }
 
     @Nullable
@@ -198,15 +222,11 @@ public abstract class MinerEntity extends AbstractMachineBlockEntity {
         return this.itemResourceHandler;
     }
 
-    public void setEnchantments(ListTag enchantments) {
+    public void setEnchantments(ItemEnchantments enchantments) {
         this.enchantments = enchantments;
     }
 
-    public CompoundTag getEnchantmentTags() {
-        CompoundTag compoundTag = new CompoundTag();
-        if (this.enchantments != null) {
-            compoundTag.put("Enchantments", this.enchantments);
-        }
-        return compoundTag;
+    public ItemEnchantments getEnchantments() {
+        return this.enchantments;
     }
 }

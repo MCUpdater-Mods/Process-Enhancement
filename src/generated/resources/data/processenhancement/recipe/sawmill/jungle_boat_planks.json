@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "experience": 0.0,
+  "ingredients": [
+    {
+      "item": "minecraft:jungle_boat"
+    }
+  ],
+  "processTime": 32,
+  "result": {
+    "count": 5,
+    "id": "minecraft:jungle_planks"
+  }
+}

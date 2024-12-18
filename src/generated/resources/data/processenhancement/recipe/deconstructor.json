@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:amethyst_block"
+    },
+    "E": {
+      "item": "minecraft:emerald"
+    },
+    "G": {
+      "item": "processenhancement:advanced_grinder"
+    }
+  },
+  "pattern": [
+    "AEA",
+    "EGE",
+    "AEA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "processenhancement:deconstructor"
+  }
+}

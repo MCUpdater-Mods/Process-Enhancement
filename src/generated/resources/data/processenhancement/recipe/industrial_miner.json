@@ -1,0 +1,24 @@
+{
+  "type": "processenhancement:miner",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "processenhancement:advanced_miner"
+    },
+    "U": {
+      "item": "minecraft:diamond"
+    },
+    "u": {
+      "item": "minecraft:gold_block"
+    }
+  },
+  "pattern": [
+    "UuU",
+    "uBu",
+    "UuU"
+  ],
+  "result": {
+    "count": 1,
+    "id": "processenhancement:industrial_miner"
+  }
+}

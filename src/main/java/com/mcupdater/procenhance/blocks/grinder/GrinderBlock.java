@@ -14,13 +14,21 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class GrinderBlock extends AbstractMachineBlock {
 
-    public GrinderBlock() {
-        super(Properties.of(Material.METAL).sound(SoundType.METAL).strength(10.0f));
+    public GrinderBlock(Properties properties) {
+        super(properties);
+    }
+
+    public static Properties defaultProperties() {
+        return Properties.of()
+                .mapColor(MapColor.METAL)
+                .sound(SoundType.METAL)
+                .strength(10.0f, 200.0f)
+                .requiresCorrectToolForDrops();
     }
 
     @Override

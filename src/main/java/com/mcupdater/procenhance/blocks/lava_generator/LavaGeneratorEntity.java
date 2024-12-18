@@ -2,6 +2,7 @@ package com.mcupdater.procenhance.blocks.lava_generator;
 
 import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
 import com.mcupdater.mculib.block.AbstractMachineBlock;
+import com.mcupdater.mculib.block.IMachineGuiProvider;
 import com.mcupdater.mculib.capabilities.EnergyResourceHandler;
 import com.mcupdater.mculib.capabilities.FluidResourceHandler;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
@@ -10,8 +11,8 @@ import com.mcupdater.mculib.inventory.InputOutputSettings;
 import com.mcupdater.mculib.inventory.SideSetting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -21,14 +22,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class LavaGeneratorEntity extends AbstractConfigurableBlockEntity {
+import java.util.Objects;
+
+public abstract class LavaGeneratorEntity extends AbstractConfigurableBlockEntity implements IMachineGuiProvider {
     int burnCurrent;
     int burnTotal;
     public ContainerData data = new ContainerData() {
@@ -120,7 +123,7 @@ public abstract class LavaGeneratorEntity extends AbstractConfigurableBlockEntit
                 this.notifyClients();
             }
             if (!itemStorage.getItem(0).isEmpty()) {
-                IFluidHandlerItem fluidHandlerItem = itemStorage.getItem(0).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM, null).orElse(null);
+                IFluidHandlerItem fluidHandlerItem = itemStorage.getItem(0).getCapability(Capabilities.FluidHandler.ITEM, null);
                 if (fluidHandlerItem != null && fluidHandlerItem.getFluidInTank(0).getFluid().isSame(Fluids.LAVA)) {
                     FluidStack insertFluidStack = fluidHandlerItem.drain(fluidStorage.getInternalHandler().getTankCapacity(0) - fluidStorage.getInternalHandler().getFluidInTank(0).getAmount(), IFluidHandler.FluidAction.EXECUTE);
                     fluidStorage.getInternalHandler().fill(insertFluidStack, IFluidHandler.FluidAction.EXECUTE);
@@ -129,7 +132,7 @@ public abstract class LavaGeneratorEntity extends AbstractConfigurableBlockEntit
                 }
                 if (fluidHandlerItem.getFluidInTank(0).isEmpty()) {
                     itemStorage.setItem(0, fluidHandlerItem.getContainer());
-                    if ((itemStorage.getItem(0).sameItem(itemStorage.getItem(1)) && itemStorage.getItem(1).getCount() < itemStorage.getItem(1).getMaxStackSize()) || itemStorage.getItem(1).isEmpty()) {
+                    if ((ItemStack.isSameItem(itemStorage.getItem(0),itemStorage.getItem(1)) && itemStorage.getItem(1).getCount() < itemStorage.getItem(1).getMaxStackSize()) || itemStorage.getItem(1).isEmpty()) {
                         ItemStack stack = itemStorage.removeItem(0, 1);
                         if (itemStorage.getItem(1).isEmpty()) {
                             itemStorage.setItem(1, stack);
@@ -144,17 +147,17 @@ public abstract class LavaGeneratorEntity extends AbstractConfigurableBlockEntit
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider pRegistries) {
+        super.loadAdditional(compound, pRegistries);
         this.burnTotal = compound.getInt("burnTotal");
         this.burnCurrent = compound.getInt("burnCurrent");
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound) {
+    public void saveAdditional(CompoundTag compound, HolderLookup.Provider pRegistries) {
         compound.putInt("burnTotal", this.burnTotal);
         compound.putInt("burnCurrent", this.burnCurrent);
-        super.saveAdditional(compound);
+        super.saveAdditional(compound, pRegistries);
     }
 
     public boolean stillValid(Player player) {
@@ -166,7 +169,7 @@ public abstract class LavaGeneratorEntity extends AbstractConfigurableBlockEntit
     }
 
     public boolean canPlaceItem(int slot, ItemStack stack) {
-        return slot == 0 ? stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent() && stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(null).getFluidInTank(0).getFluid().isSame(Fluids.LAVA) : false;
+        return slot == 0 && stack.getCapability(Capabilities.FluidHandler.ITEM) != null && Objects.requireNonNull(stack.getCapability(Capabilities.FluidHandler.ITEM)).getFluidInTank(0).getFluid().isSame(Fluids.LAVA);
     }
 
 
@@ -174,10 +177,6 @@ public abstract class LavaGeneratorEntity extends AbstractConfigurableBlockEntit
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
         return new LavaGeneratorMenu(windowId, this.level, this.worldPosition, inventory, player, this.data, DataHelper.getAdjacentNames(this.level, this.worldPosition));
-    }
-
-    public Container getInventory() {
-        return (ItemResourceHandler) this.configMap.get("items");
     }
 
 }

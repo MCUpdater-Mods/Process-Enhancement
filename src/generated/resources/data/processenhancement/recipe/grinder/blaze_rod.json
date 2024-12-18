@@ -1,0 +1,19 @@
+{
+  "type": "processenhancement:grinder",
+  "experience": 0.0,
+  "ingredients": [
+    {
+      "item": "minecraft:blaze_rod"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "count": 4,
+        "id": "minecraft:blaze_powder"
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 50
+}

@@ -1,26 +1,26 @@
 package com.mcupdater.procenhance.blocks.buffer;
 
 import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
+import com.mcupdater.mculib.block.IMachineGuiProvider;
 import com.mcupdater.mculib.capabilities.EnergyResourceHandler;
 import com.mcupdater.mculib.capabilities.FluidResourceHandler;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.IntStream;
 
 import static com.mcupdater.procenhance.setup.Registration.BUFFER_ENTITY;
 
-public class BufferEntity extends AbstractConfigurableBlockEntity {
+public class BufferEntity extends AbstractConfigurableBlockEntity implements IMachineGuiProvider {
     public BufferEntity(BlockPos pPos, BlockState pState) {
         super(BUFFER_ENTITY.get(), pPos, pState);
         EnergyResourceHandler energyResourceHandler = new EnergyResourceHandler(this.level, 10000, Integer.MAX_VALUE, false);
@@ -41,24 +41,8 @@ public class BufferEntity extends AbstractConfigurableBlockEntity {
         }
     }
 
-    @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
-        if (compound.contains("CustomName", 8)) {
-            this.name = Component.Serializer.fromJson(compound.getString("CustomName"));
-        }
-    }
-
     public void tick(Level pLevel, BlockPos pPos, BlockState pBlockState) {
         super.tick();
-    }
-
-    @Override
-    public void saveAdditional(CompoundTag compound) {
-        if (this.name != null) {
-            compound.putString("CustomName", Component.Serializer.toJson(this.name));
-        }
-        super.saveAdditional(compound);
     }
 
     @Override

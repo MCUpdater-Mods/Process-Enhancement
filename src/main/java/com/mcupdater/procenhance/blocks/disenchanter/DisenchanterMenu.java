@@ -2,16 +2,18 @@ package com.mcupdater.procenhance.blocks.disenchanter;
 
 import com.mcupdater.mculib.block.AbstractMachineMenu;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
+import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.mculib.inventory.MachineInputSlot;
 import com.mcupdater.mculib.inventory.MachineOutputSlot;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -20,8 +22,15 @@ import java.util.Map;
 
 public class DisenchanterMenu extends AbstractMachineMenu<DisenchanterEntity> {
 
-    public DisenchanterMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data, Map<Direction, Component> directionComponentMap) {
+    public DisenchanterMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data, Map<Direction, String> directionComponentMap) {
         super((DisenchanterEntity) level.getBlockEntity(blockPos), Registration.DISENCHANTER_MENU.get(), windowId, level, blockPos, inventory, player, data, directionComponentMap);
+    }
+
+    public static DisenchanterMenu factory(int containerId, Inventory playerInv, FriendlyByteBuf extraData) {
+        BlockPos pos = extraData.readBlockPos();
+        Level world = playerInv.player.level();
+        DisenchanterEntity te = (DisenchanterEntity) world.getBlockEntity(pos);
+        return new DisenchanterMenu(containerId, world, pos, playerInv, playerInv.player, new SimpleContainerData(2), DataHelper.readDirectionMap(extraData));
     }
 
     @Override

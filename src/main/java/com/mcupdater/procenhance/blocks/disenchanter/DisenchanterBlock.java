@@ -1,20 +1,27 @@
 package com.mcupdater.procenhance.blocks.disenchanter;
 
 import com.mcupdater.mculib.block.AbstractMachineBlock;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import org.jetbrains.annotations.Nullable;
 
 public class DisenchanterBlock extends AbstractMachineBlock {
-    public DisenchanterBlock() {
-        super(Properties.of(Material.STONE).sound(SoundType.STONE).strength(15.0f).lightLevel((blockState) -> 7));
+    public static final MapCodec<DisenchanterBlock> CODEC = simpleCodec(DisenchanterBlock::new);
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
+    public DisenchanterBlock(Properties properties) {
+        super(properties);
     }
 
     @Override
@@ -23,7 +30,7 @@ public class DisenchanterBlock extends AbstractMachineBlock {
             BlockEntity blockEntity = level.getBlockEntity(blockPos);
 
             if (blockEntity instanceof DisenchanterEntity disenchanterEntity) {
-                Containers.dropContents(level, blockPos, disenchanterEntity.getInventory());
+                Containers.dropContents(level, blockPos, disenchanterEntity.getItemHandler());
                 level.updateNeighbourForOutputSignal(blockPos, this);
             }
             super.onRemove(oldState, level, blockPos, newState, isMoving);

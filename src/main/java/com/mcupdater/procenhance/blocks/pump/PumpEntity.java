@@ -5,8 +5,6 @@ import com.mcupdater.mculib.capabilities.FluidResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -14,10 +12,10 @@ import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidBlock;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraft.world.level.material.FluidState;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -47,7 +45,7 @@ public abstract class PumpEntity extends AbstractMachineBlockEntity {
                 for (int z = (initz - range); (z <= (initz + range)); z++) {
                     BlockPos blockPos = new BlockPos(x,y,z);
                     BlockState state = level.getBlockState(blockPos);
-                    if (((state.getBlock() instanceof IFluidBlock) || (state.getBlock() instanceof BucketPickup)) && state.getFluidState().isSource()) {
+                    if (state.getBlock() instanceof BucketPickup && state.getFluidState().isSource()) {
                         fluidBlocks.add(blockPos);
                     }
                 }
@@ -75,22 +73,14 @@ public abstract class PumpEntity extends AbstractMachineBlockEntity {
                     }).toList();
                     if (!tempFluids.isEmpty()) {
                         BlockPos blockPos = tempFluids.get(0);
-                        BlockState state = level.getBlockState(blockPos);
-                        if (state.getBlock() instanceof IFluidBlock fluidBlock) {
-                            FluidStack testFluid = fluidBlock.drain(level, blockPos, IFluidHandler.FluidAction.SIMULATE);
-                            if (fluidResourceHandler.getInternalHandler().fill(testFluid, IFluidHandler.FluidAction.SIMULATE) == testFluid.getAmount()) {
-                                fluidResourceHandler.getInternalHandler().fill(((IFluidBlock) state.getBlock()).drain(level, blockPos, IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
-                                this.fluidBlocks.remove(blockPos);
-                                tick += 200;
-                                return true;
-                            }
-                        } else if (state.getBlock() instanceof BucketPickup bucketBlock) {
-                            Fluid fluid = state.getFluidState().getType();
-                            if (state.getFluidState().isSource() && (fluidResourceHandler.getInternalHandler().getFluidInTank(0).isEmpty() || fluid.isSame(this.fluidResourceHandler.getInternalHandler().getFluidInTank(0).getFluid()))) {
+                        BlockState blockState = level.getBlockState(blockPos);
+                        if (blockState.getBlock() instanceof BucketPickup bucketBlock) {
+                            Fluid fluid = blockState.getFluidState().getType();
+                            if (blockState.getFluidState().isSource() && (fluidResourceHandler.getInternalHandler().getFluidInTank(0).isEmpty() || fluid.isSame(this.fluidResourceHandler.getInternalHandler().getFluidInTank(0).getFluid()))) {
                                 FluidStack fluidStack = new FluidStack(fluid, 1000);
                                 int val = this.fluidResourceHandler.getInternalHandler().forceFill(0, fluidStack, IFluidHandler.FluidAction.SIMULATE);
                                 if (val == fluidStack.getAmount()) {
-                                    if (!bucketBlock.pickupBlock(level, blockPos, state).isEmpty()) {
+                                    if (!bucketBlock.pickupBlock(null, level, blockPos, blockState).isEmpty()) {
                                         this.fluidResourceHandler.getInternalHandler().forceFill(0, fluidStack, IFluidHandler.FluidAction.EXECUTE);
                                         this.fluidBlocks.remove(blockPos);
                                         tick += 200;
@@ -116,22 +106,6 @@ public abstract class PumpEntity extends AbstractMachineBlockEntity {
         } else {
             return false;
         }
-    }
-
-    @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
-        if (compound.contains("CustomName", 8)) {
-            this.name = Component.Serializer.fromJson(compound.getString("CustomName"));
-        }
-    }
-
-    @Override
-    public void saveAdditional(CompoundTag compound) {
-        if (this.name != null) {
-            compound.putString("CustomName", Component.Serializer.toJson(this.name));
-        }
-        super.saveAdditional(compound);
     }
 
     @Nullable

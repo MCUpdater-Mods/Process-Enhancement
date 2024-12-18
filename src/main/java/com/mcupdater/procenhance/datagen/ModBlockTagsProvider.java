@@ -1,34 +1,37 @@
 package com.mcupdater.procenhance.datagen;
 
 import com.mcupdater.procenhance.setup.Registration;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.concurrent.CompletableFuture;
+
 public class ModBlockTagsProvider extends BlockTagsProvider {
-    public ModBlockTagsProvider(DataGenerator pGenerator, String modId, @Nullable ExistingFileHelper existingFileHelper) {
-        super(pGenerator, modId, existingFileHelper);
+    public ModBlockTagsProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, String modId, @Nullable ExistingFileHelper existingFileHelper) {
+        super(packOutput, lookupProvider, modId, existingFileHelper);
     }
 
     @Override
-    protected void addTags() {
-        for (RegistryObject<Block> entry : Registration.MACHINES.getEntries()) {
+    protected void addTags(HolderLookup.Provider lookupProvider) {
+        for (DeferredHolder<Block, ? extends Block> entry : Registration.MACHINES.getEntries()) {
             this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(entry.get());
         }
-        for (RegistryObject<Block> entry : Registration.BLOCKS.getEntries()) {
+        for (DeferredHolder<Block, ? extends Block> entry : Registration.BLOCKS.getEntries()) {
             this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(entry.get());
         }
-        for (RegistryObject<Block> entry : Registration.BATTERIES.getEntries()) {
+        for (DeferredHolder<Block, ? extends Block> entry : Registration.BATTERIES.getEntries()) {
             this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(entry.get());
         }
-        for (RegistryObject<Block> entry : Registration.TANKS.getEntries()) {
+        for (DeferredHolder<Block, ? extends Block> entry : Registration.TANKS.getEntries()) {
             this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(entry.get());
         }
-        for (RegistryObject<Block> entry : Registration.MINERS.getEntries()) {
+        for (DeferredHolder<Block, ? extends Block> entry : Registration.MINERS.getEntries()) {
             this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(entry.get());
         }
     }

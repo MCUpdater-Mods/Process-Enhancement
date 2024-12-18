@@ -1,0 +1,19 @@
+{
+  "type": "processenhancement:grinder",
+  "experience": 0.0,
+  "ingredients": [
+    {
+      "item": "minecraft:poppy"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "count": 3,
+        "id": "minecraft:red_dye"
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 50
+}

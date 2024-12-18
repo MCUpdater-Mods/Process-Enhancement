@@ -1,6 +1,7 @@
 package com.mcupdater.procenhance.blocks.battery;
 
 import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
+import com.mcupdater.mculib.block.IMachineGuiProvider;
 import com.mcupdater.mculib.capabilities.EnergyResourceHandler;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
@@ -15,11 +16,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class BatteryEntity extends AbstractConfigurableBlockEntity {
+public abstract class BatteryEntity extends AbstractConfigurableBlockEntity implements IMachineGuiProvider {
     public ContainerData data = new SimpleContainerData(0);
 
     public BatteryEntity(BlockEntityType<?> pBlockEntityType, BlockPos pPos, BlockState pState) {
@@ -56,8 +57,8 @@ public abstract class BatteryEntity extends AbstractConfigurableBlockEntity {
 
     private void chargeItem(ItemStack itemStack) {
         EnergyResourceHandler energyStorage = (EnergyResourceHandler) this.configMap.get("power");
-        if (itemStack.getCapability(ForgeCapabilities.ENERGY).isPresent()) {
-            IEnergyStorage itemEnergyHandler = itemStack.getCapability(ForgeCapabilities.ENERGY).resolve().get();
+        @Nullable IEnergyStorage itemEnergyHandler = itemStack.getCapability(Capabilities.EnergyStorage.ITEM);
+        if (itemEnergyHandler != null) {
             if (itemEnergyHandler.canReceive()) {
                 int energyTransferred = itemEnergyHandler.receiveEnergy(Math.min(2000,energyStorage.getInternalHandler().getEnergyStored()),false);
                 energyStorage.getInternalHandler().extractEnergy(energyTransferred,false);
@@ -72,14 +73,14 @@ public abstract class BatteryEntity extends AbstractConfigurableBlockEntity {
     }
 
     public boolean canPlaceItem(int slot, ItemStack pStack) {
-        return pStack.getCapability(ForgeCapabilities.ENERGY).isPresent();
+        return pStack.getCapability(Capabilities.EnergyStorage.ITEM) != null;
     }
 
     public boolean canTakeItem(int slot, ItemStack pStack) {
-        if (!pStack.getCapability(ForgeCapabilities.ENERGY).isPresent()) {
+        IEnergyStorage itemEnergyHandler = pStack.getCapability(Capabilities.EnergyStorage.ITEM);
+        if (itemEnergyHandler == null) {
             return true;
         } else {
-            IEnergyStorage itemEnergyHandler = pStack.getCapability(ForgeCapabilities.ENERGY).resolve().get();
             return itemEnergyHandler.getEnergyStored() == itemEnergyHandler.getMaxEnergyStored() || !itemEnergyHandler.canReceive();
         }
     }

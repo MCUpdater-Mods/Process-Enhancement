@@ -15,9 +15,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
+import static com.mcupdater.procenhance.integration.JEIProcEnhancePlugin.getLookupProvider;
+
 public class SawmillRecipeCategory implements IRecipeCategory<SawmillRecipe> {
     public static final RecipeType<SawmillRecipe> TYPE = RecipeType.create(ProcessEnhancement.MODID, "sawmill", SawmillRecipe.class);
-    public static final ResourceLocation TEXTURE = new ResourceLocation(ProcessEnhancement.MODID, "textures/jei/machine.png");
+    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "textures/jei/machine.png");
 
     private final IDrawable background;
     private final IDrawable icon;
@@ -50,7 +52,7 @@ public class SawmillRecipeCategory implements IRecipeCategory<SawmillRecipe> {
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, SawmillRecipe recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 17,5).addIngredients(recipe.getIngredients().get(0));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 53, 5).addItemStack(recipe.getResultItem());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 53, 5).addItemStack(recipe.getResultItem(getLookupProvider()));
     }
 
 }

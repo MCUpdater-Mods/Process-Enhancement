@@ -1,0 +1,80 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "processenhancement:config"
+    }
+  ],
+  "type": "processenhancement:grinder",
+  "experience": 0.1,
+  "ingredients": [
+    {
+      "item": "minecraft:basalt"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "count": 1,
+        "id": "minecraft:netherrack"
+      },
+      "weight": 40
+    },
+    {
+      "stack": {
+        "count": 1,
+        "id": "minecraft:blackstone"
+      },
+      "weight": 40
+    },
+    {
+      "stack": {
+        "count": 1,
+        "id": "minecraft:soul_sand"
+      },
+      "weight": 30
+    },
+    {
+      "stack": {
+        "count": 1,
+        "id": "minecraft:soul_soil"
+      },
+      "weight": 30
+    },
+    {
+      "stack": {
+        "count": 1,
+        "id": "minecraft:quartz"
+      },
+      "weight": 20
+    },
+    {
+      "stack": {
+        "count": 1,
+        "id": "processenhancement:gold_dust"
+      },
+      "weight": 10
+    },
+    {
+      "stack": {
+        "count": 1,
+        "id": "minecraft:glowstone_dust"
+      },
+      "weight": 10
+    },
+    {
+      "stack": {
+        "count": 1,
+        "id": "minecraft:gilded_blackstone"
+      },
+      "weight": 5
+    },
+    {
+      "stack": {
+        "count": 1,
+        "id": "minecraft:netherite_scrap"
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 200
+}

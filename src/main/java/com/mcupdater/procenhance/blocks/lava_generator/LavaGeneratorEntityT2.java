@@ -5,11 +5,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.state.BlockState;
 
 import static com.mcupdater.procenhance.setup.Config.BASIC_LAVA_GENERATOR_PER_TICK;
-import static com.mcupdater.procenhance.setup.Registration.INTERLAVAGENERATOR_BLOCKENTITY;
+import static com.mcupdater.procenhance.setup.Registration.LAVAGENERATORT2_ENTITY;
 
 public class LavaGeneratorEntityT2 extends LavaGeneratorEntity {
     public LavaGeneratorEntityT2(BlockPos blockPos, BlockState blockState) {
-        super(INTERLAVAGENERATOR_BLOCKENTITY.get(), blockPos, blockState);
+        super(LAVAGENERATORT2_ENTITY.get(), blockPos, blockState);
         setup(BASIC_LAVA_GENERATOR_PER_TICK.get() * 2);
     }
 

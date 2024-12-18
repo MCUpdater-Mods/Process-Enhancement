@@ -17,7 +17,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class GrinderRecipeCategory implements IRecipeCategory<GrinderRecipe> {
     public static final RecipeType<GrinderRecipe> TYPE = RecipeType.create(ProcessEnhancement.MODID, "grinder", GrinderRecipe.class);
-    public static final ResourceLocation TEXTURE = new ResourceLocation(ProcessEnhancement.MODID, "textures/jei/grinder.png");
+    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "textures/jei/grinder.png");
 
     private final IDrawable background;
     private final IDrawable icon;
@@ -52,7 +52,7 @@ public class GrinderRecipeCategory implements IRecipeCategory<GrinderRecipe> {
         builder.addSlot(RecipeIngredientRole.INPUT, 3,3).addIngredients(recipe.getIngredients().get(0));
 
         for (int i = 0; i < recipe.getOutputs().size(); i++) {
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 32 + (i % 7 * 18), 3 + i / 7 * 18).addItemStack(recipe.getOutputs().get(i).getA()).addTooltipCallback(new GrinderTooltipCallback(recipe,recipe.getOutputs().get(i)));
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 32 + (i % 7 * 18), 3 + i / 7 * 18).addItemStack(recipe.getOutputs().get(i).getA()).addRichTooltipCallback(new GrinderRichTooltipCallback(recipe,recipe.getOutputs().get(i)));
         }
     }
 }

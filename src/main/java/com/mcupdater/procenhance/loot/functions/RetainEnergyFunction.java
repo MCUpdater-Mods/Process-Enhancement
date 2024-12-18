@@ -1,12 +1,10 @@
 package com.mcupdater.procenhance.loot.functions;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
 import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
-import com.mcupdater.procenhance.ProcessEnhancement;
-import com.mcupdater.procenhance.capabilities.InternalEnergyStorage;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
+import com.mcupdater.procenhance.capabilities.ItemEnergyStorage;
+import com.mcupdater.procenhance.setup.Registration;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -14,42 +12,37 @@ import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunct
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class RetainEnergyFunction extends LootItemConditionalFunction {
-    public static final LootItemFunctionType RETAIN_ENERGY_TYPE = Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(ProcessEnhancement.MODID, "retain_energy"), new LootItemFunctionType(new RetainEnergyFunction.Serializer()));
-    protected RetainEnergyFunction(LootItemCondition[] pConditions) {
-        super(pConditions);
+    public static final MapCodec<RetainEnergyFunction> CODEC = RecordCodecBuilder.mapCodec(inst -> commonFields(inst).apply(inst, RetainEnergyFunction::new));
+
+    protected RetainEnergyFunction(List<LootItemCondition> conditions) {
+        super(conditions);
     }
 
     public static LootItemConditionalFunction.Builder<?> getBuilder() {
         return simpleBuilder((RetainEnergyFunction::new));
     }
 
-    public static void load() {}
-
     @Override
-    protected ItemStack run(ItemStack pStack, LootContext pContext) {
-        pStack.getCapability(ForgeCapabilities.ENERGY).orElse(null); // Attempt to force the caps to populate
+    protected @NotNull ItemStack run(ItemStack pStack, LootContext pContext) {
         BlockEntity blockEntity = pContext.getParamOrNull(LootContextParams.BLOCK_ENTITY);
         if (blockEntity instanceof AbstractConfigurableBlockEntity configurableBlockEntity) {
-            pStack.getCapability(ForgeCapabilities.ENERGY).ifPresent(energyStorage -> {
-                ((InternalEnergyStorage) energyStorage).setStoredEnergy(configurableBlockEntity.getEnergyStorage().getStoredEnergy());
-            });
+            @Nullable IEnergyStorage energyStorage = pStack.getCapability(Capabilities.EnergyStorage.ITEM, null);
+            ((ItemEnergyStorage) energyStorage).setStoredEnergy(configurableBlockEntity.getEnergyStorage().getStoredEnergy());
         }
         return pStack;
     }
 
     @Override
     public LootItemFunctionType getType() {
-        return RETAIN_ENERGY_TYPE;
+        return Registration.RETAIN_ENERGY.get();
     }
 
-    public static class Serializer extends LootItemConditionalFunction.Serializer<RetainEnergyFunction> {
-
-        @Override
-        public RetainEnergyFunction deserialize(JsonObject pObject, JsonDeserializationContext pDeserializationContext, LootItemCondition[] pConditions) {
-            return new RetainEnergyFunction(pConditions);
-        }
-    }
 }

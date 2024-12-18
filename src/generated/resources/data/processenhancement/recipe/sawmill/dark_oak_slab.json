@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "experience": 0.05,
+  "ingredients": [
+    {
+      "tag": "minecraft:dark_oak_logs"
+    }
+  ],
+  "processTime": 32,
+  "result": {
+    "count": 12,
+    "id": "minecraft:dark_oak_slab"
+  }
+}

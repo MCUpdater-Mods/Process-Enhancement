@@ -4,9 +4,12 @@ import com.mcupdater.mculib.block.AbstractMachineBlockEntity;
 import com.mcupdater.mculib.capabilities.EnergyResourceHandler;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
+import com.mcupdater.mculib.inventory.MachineContainer;
 import com.mcupdater.procenhance.recipe.SawmillRecipe;
 import com.mcupdater.procenhance.setup.Config;
+import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
@@ -20,17 +23,18 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
 
-import static com.mcupdater.procenhance.setup.Registration.SAWMILL_BLOCKENTITY;
+import static com.mcupdater.procenhance.setup.Registration.SAWMILL_ENTITY;
 
 public class SawmillEntity extends AbstractMachineBlockEntity {
 
-    private SawmillRecipe currentRecipe = null;
+    private RecipeHolder<SawmillRecipe> currentRecipe = null;
     private ResourceLocation recipeId = null;
 
 
@@ -65,7 +69,7 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
     };
 
     public SawmillEntity(BlockPos blockPos, BlockState blockState) {
-        super(SAWMILL_BLOCKENTITY.get(), blockPos, blockState, Config.SAWMILL_ENERGY_PER_TICK.get() * 1000, Integer.MAX_VALUE, Config.SAWMILL_ENERGY_PER_TICK.get(), 1);
+        super(SAWMILL_ENTITY.get(), blockPos, blockState, Config.SAWMILL_ENERGY_PER_TICK.get() * 1000, Integer.MAX_VALUE, Config.SAWMILL_ENERGY_PER_TICK.get(), 1);
         ItemResourceHandler itemResourceHandler = new ItemResourceHandler(this.level, 3, new int[]{0,1}, new int[]{0}, new int[]{1}, this::stillValid);
         itemResourceHandler.setInsertFunction(this::canPlaceItem);
         this.configMap.put("items", itemResourceHandler);
@@ -93,10 +97,10 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
         }
         ItemStack inputSlot = itemStorage.getItem(0);
         ItemStack outputSlot = itemStorage.getItem(1);
-        if (energyStorage.getStoredEnergy() >= Config.SAWMILL_ENERGY_PER_TICK.get() && (outputSlot.isEmpty() || (outputSlot.sameItem(currentRecipe.getResultItem()) && outputSlot.getCount() <= outputSlot.getMaxStackSize() - (currentRecipe.getResultItem().getCount()))) && !inputSlot.isEmpty()) {
+        if (energyStorage.getStoredEnergy() >= Config.SAWMILL_ENERGY_PER_TICK.get() && (outputSlot.isEmpty() || (ItemStack.isSameItem(outputSlot,currentRecipe.value().getResultItem(this.level.registryAccess())) && outputSlot.getCount() <= outputSlot.getMaxStackSize() - (currentRecipe.value().getResultItem(this.level.registryAccess()).getCount()))) && !inputSlot.isEmpty()) {
             this.workProgress++;
             if (this.workProgress >= this.workTotal) {
-                ItemStack result = this.currentRecipe.assemble(itemStorage);
+                ItemStack result = this.currentRecipe.value().assemble(new MachineContainer(this), this.level.registryAccess());
                 if (outputSlot.isEmpty()) {
                     itemStorage.setItem(1, result.copy());
                 } else if (outputSlot.is(result.getItem())) {
@@ -104,7 +108,7 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
                 }
                 this.workProgress = 0;
                 itemStorage.getItem(0).shrink(1);
-                this.storedXP += this.currentRecipe.getExperience();
+                this.storedXP += this.currentRecipe.value().getExperience();
             }
             return true;
         }
@@ -113,10 +117,10 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
 
     @Override
     public void setCurrentRecipe(ResourceLocation recipeId) {
-        SawmillRecipe sawmillRecipe = level.getRecipeManager().getAllRecipesFor(SawmillRecipe.Type.INSTANCE).stream().filter(recipe -> recipe.getId().equals(recipeId)).findFirst().orElse(null);
-        this.currentRecipe = sawmillRecipe;
-        if (sawmillRecipe != null) {
-            this.recipeId = sawmillRecipe.getId();
+        RecipeHolder<SawmillRecipe> sawmillRecipe = level.getRecipeManager().getAllRecipesFor(Registration.SAWMILL_RECIPE.get()).stream().filter(recipe -> recipe.id().equals(recipeId)).findFirst().orElse(null);
+        this.currentRecipe = sawmillRecipe != null ? sawmillRecipe : null;
+        if (this.currentRecipe != null) {
+            this.recipeId = sawmillRecipe.id();
         } else {
             this.recipeId = null;
         }
@@ -129,17 +133,17 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return this.saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider lookupProvider) {
+        return this.saveWithoutMetadata(lookupProvider);
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        super.onDataPacket(net, pkt);
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {
+        super.onDataPacket(net, pkt, lookupProvider);
         this.setCurrentRecipe(this.recipeId);
     }
 
-    public SawmillRecipe getCurrentRecipe() {
+    public RecipeHolder<SawmillRecipe> getCurrentRecipe() {
         return this.currentRecipe;
     }
 
@@ -152,7 +156,19 @@ public class SawmillEntity extends AbstractMachineBlockEntity {
     }
 
     public boolean canPlaceItem(int slot, ItemStack stack) {
-        return this.currentRecipe != null && Arrays.stream(this.currentRecipe.getIngredients().get(0).getItems()).anyMatch(validStack -> validStack.sameItem(stack)); // Source slot
+        return this.currentRecipe != null && Arrays.stream(this.currentRecipe.value().getIngredients().get(0).getItems()).anyMatch(validStack -> ItemStack.isSameItem(validStack,stack)); // Source slot
+    }
+
+    @Override
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider pRegistries) {
+        super.loadAdditional(compound, pRegistries);
+        if (compound.contains("currentRecipe")) this.setCurrentRecipe(ResourceLocation.parse(compound.getString("currentRecipe")));
+    }
+
+    @Override
+    public void saveAdditional(CompoundTag compound, HolderLookup.Provider pRegistries) {
+        if (this.currentRecipe != null) compound.putString("currentRecipe", this.currentRecipe.id().toString());
+        super.saveAdditional(compound, pRegistries);
     }
 
     @Override

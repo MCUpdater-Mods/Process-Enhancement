@@ -1,10 +1,14 @@
 package com.mcupdater.procenhance.blocks.hydrator;
 
 import com.mcupdater.mculib.block.AbstractMachineMenu;
+import com.mcupdater.mculib.helpers.DataHelper;
+import com.mcupdater.procenhance.blocks.sawmill.SawmillEntity;
+import com.mcupdater.procenhance.blocks.sawmill.SawmillMenu;
 import com.mcupdater.procenhance.recipe.HydratorRecipe;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -12,13 +16,15 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
@@ -31,15 +37,15 @@ public class HydratorMenu extends AbstractMachineMenu<HydratorEntity> {
 		}
 	};
 
-	public HydratorMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data, Map<Direction, Component> directionComponentMap) {
+	public HydratorMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data, Map<Direction, String> directionComponentMap) {
 		super((HydratorEntity) level.getBlockEntity(blockPos), Registration.HYDRATOR_MENU.get(), windowId, level, blockPos, inventory, player, data, directionComponentMap);
 		this.addSlot(new Slot(this.transientSlots, 0, 25, 16) {
 			@Override
 			public boolean mayPlace(ItemStack pStack) {
-				if (pStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent()) {
-					IFluidHandler tankFluidHandler = HydratorMenu.this.tileEntity.getFluidHandler();
-					IFluidHandlerItem itemFluidHandler = pStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(null);
-					return tankFluidHandler.isFluidValid(0, itemFluidHandler.getFluidInTank(0)) && level.getRecipeManager().getAllRecipesFor(HydratorRecipe.Type.INSTANCE).stream().anyMatch(recipe -> recipe.getFluidIngredient().getFluid().isSame(itemFluidHandler.getFluidInTank(0).getFluid()));
+				@Nullable IFluidHandlerItem itemFluidHandler = pStack.getCapability(Capabilities.FluidHandler.ITEM);
+				if (itemFluidHandler != null){
+					IFluidHandler tankFluidHandler = HydratorMenu.this.tileEntity.getFluidHandler().getInternalHandler();
+					return tankFluidHandler.isFluidValid(0, itemFluidHandler.getFluidInTank(0)) && level.getRecipeManager().getAllRecipesFor(Registration.HYDRATOR_RECIPE.get()).stream().anyMatch(recipeHolder -> recipeHolder.value().getFluidIngredient().getFluid().isSame(itemFluidHandler.getFluidInTank(0).getFluid()));
 				}
 				return false;
 			}
@@ -50,6 +56,13 @@ public class HydratorMenu extends AbstractMachineMenu<HydratorEntity> {
 				return false;
 			}
 		});
+	}
+
+	public static HydratorMenu factory(int containerId, Inventory playerInv, FriendlyByteBuf extraData) {
+		BlockPos pos = extraData.readBlockPos();
+		Level world = playerInv.player.level();
+		HydratorEntity te = (HydratorEntity) world.getBlockEntity(pos);
+		return new HydratorMenu(containerId, world, pos, playerInv, playerInv.player, new SimpleContainerData(2), DataHelper.readDirectionMap(extraData));
 	}
 
 	@Override
@@ -69,9 +82,9 @@ public class HydratorMenu extends AbstractMachineMenu<HydratorEntity> {
 	public void slotsChanged(Container pContainer) {
 		super.slotsChanged(pContainer);
 		if (pContainer == this.transientSlots) {
-			if (!this.transientSlots.getItem(0).isEmpty() && this.transientSlots.getItem(1).isEmpty() && this.transientSlots.getItem(0).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent()) {
-				IFluidHandlerItem itemFluidHandler = this.transientSlots.getItem(0).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(null);
-				IFluidHandler tankFluidHandler = HydratorMenu.this.tileEntity.getFluidHandler();
+			IFluidHandlerItem itemFluidHandler = this.transientSlots.getItem(0).getCapability(Capabilities.FluidHandler.ITEM);
+			if (!this.transientSlots.getItem(0).isEmpty() && this.transientSlots.getItem(1).isEmpty() && itemFluidHandler != null) {
+				IFluidHandler tankFluidHandler = HydratorMenu.this.tileEntity.getFluidHandler().getInternalHandler();
 				if (itemFluidHandler.getFluidInTank(0).isEmpty()) {
 					// Fill item
 					FluidStack testFluidStack = tankFluidHandler.drain(tankFluidHandler.getTankCapacity(0), IFluidHandler.FluidAction.SIMULATE);

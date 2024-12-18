@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "M": {
+      "item": "processenhancement:intermediate_biogenerator"
+    },
+    "U": {
+      "item": "minecraft:gold_ingot"
+    },
+    "u": {
+      "item": "minecraft:iron_block"
+    }
+  },
+  "pattern": [
+    "UuU",
+    "uMu",
+    "UuU"
+  ],
+  "result": {
+    "count": 1,
+    "id": "processenhancement:advanced_biogenerator"
+  }
+}

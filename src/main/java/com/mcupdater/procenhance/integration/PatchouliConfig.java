@@ -1,6 +1,5 @@
 package com.mcupdater.procenhance.integration;
 
-import com.mcupdater.mculib.setup.Config;
 import vazkii.patchouli.api.PatchouliAPI;
 
 public class PatchouliConfig {

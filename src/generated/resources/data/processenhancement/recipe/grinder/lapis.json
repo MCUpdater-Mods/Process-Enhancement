@@ -1,0 +1,40 @@
+{
+  "type": "processenhancement:grinder",
+  "experience": 0.05,
+  "ingredients": [
+    {
+      "tag": "minecraft:lapis_ores"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "count": 12,
+        "id": "minecraft:lapis_lazuli"
+      },
+      "weight": 55
+    },
+    {
+      "stack": {
+        "count": 16,
+        "id": "minecraft:lapis_lazuli"
+      },
+      "weight": 25
+    },
+    {
+      "stack": {
+        "count": 20,
+        "id": "minecraft:lapis_lazuli"
+      },
+      "weight": 18
+    },
+    {
+      "stack": {
+        "count": 24,
+        "id": "minecraft:lapis_lazuli"
+      },
+      "weight": 2
+    }
+  ],
+  "processTime": 200
+}

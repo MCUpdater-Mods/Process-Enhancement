@@ -1,38 +1,22 @@
 package com.mcupdater.procenhance.recipe;
 
-import com.google.gson.JsonObject;
-import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.setup.Config;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.crafting.conditions.ICondition;
-import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
+import com.mojang.serialization.MapCodec;
+import net.neoforged.neoforge.common.conditions.ICondition;
 
-public class ConfigCondition implements ICondition {
-    private final static ResourceLocation ID = new ResourceLocation(ProcessEnhancement.MODID,"config");
-    @Override
-    public ResourceLocation getID() {
-        return ID;
-    }
+public final class ConfigCondition implements ICondition {
+    public static final ConfigCondition INSTANCE = new ConfigCondition();
+    public static MapCodec<ConfigCondition> CODEC = MapCodec.unit(INSTANCE).stable();
+
+    public ConfigCondition() {}
 
     @Override
     public boolean test(IContext context) {
         return Config.GRINDER_RESOURCES.get();
     }
 
-    public static class Serializer implements IConditionSerializer<ConfigCondition> {
-        public static final Serializer INSTANCE = new Serializer();
-
-        @Override
-        public void write(JsonObject json, ConfigCondition value) { }
-
-        @Override
-        public ConfigCondition read(JsonObject json) {
-            return new ConfigCondition();
-        }
-
-        @Override
-        public ResourceLocation getID() {
-            return ID;
-        }
+    @Override
+    public MapCodec<? extends ICondition> codec() {
+        return CODEC;
     }
 }

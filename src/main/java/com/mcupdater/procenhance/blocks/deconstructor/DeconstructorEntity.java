@@ -67,9 +67,9 @@ public class DeconstructorEntity extends AbstractMachineBlockEntity {
 
     private Recipe getRecipe(ItemStack itemStack) {
         Recipe lookup = null;
-        lookup = level.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING).stream().filter(testRecipe -> testRecipe.getResultItem().getItem().equals(itemStack.getItem()) && testRecipe.getResultItem().getCount() <= itemStack.getCount()).findFirst().orElse(null);
+        lookup = level.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING).stream().filter(testRecipe -> testRecipe.value().getResultItem(level.registryAccess()).getItem().equals(itemStack.getItem()) && testRecipe.value().getResultItem(level.registryAccess()).getCount() <= itemStack.getCount()).findFirst().orElse(null).value();
         if (lookup == null) {
-            lookup = level.getRecipeManager().getAllRecipesFor(RecipeType.SMITHING).stream().filter(testRecipe -> testRecipe.getResultItem().getItem().equals(itemStack.getItem())).findFirst().orElse(null);
+            lookup = level.getRecipeManager().getAllRecipesFor(RecipeType.SMITHING).stream().filter(testRecipe -> testRecipe.value().getResultItem(level.registryAccess()).getItem().equals(itemStack.getItem())).findFirst().orElse(null).value();
         }
         return lookup;
     }
@@ -91,7 +91,7 @@ public class DeconstructorEntity extends AbstractMachineBlockEntity {
     public void tick(Level pLevel, BlockPos pPos, BlockState pBlockState) {
         if (this.level != null) {
             ItemStack inputSlot = itemResourceHandler.getItem(0);
-            if (currentRecipe != null && (inputSlot.isEmpty() || !(currentRecipe.getResultItem().getItem().equals(inputSlot.getItem()) && currentRecipe.getResultItem().getCount() <= inputSlot.getCount()))) {
+            if (currentRecipe != null && (inputSlot.isEmpty() || !(currentRecipe.getResultItem(pLevel.registryAccess()).getItem().equals(inputSlot.getItem()) && currentRecipe.getResultItem(pLevel.registryAccess()).getCount() <= inputSlot.getCount()))) {
                 currentRecipe = null;
                 workProgress = 0;
                 if (!inputSlot.isEmpty()) {
@@ -133,12 +133,13 @@ public class DeconstructorEntity extends AbstractMachineBlockEntity {
                         }
                         slot++;
                     }
-                    inputSlot.shrink(currentRecipe.getResultItem().getCount());
+                    inputSlot.shrink(currentRecipe.getResultItem(level.registryAccess()).getCount());
                 }
-                if (currentRecipe instanceof UpgradeRecipe upgradeRecipe) {
-                    itemResourceHandler.setItem(1, upgradeRecipe.base.getItems()[0].copy());
-                    itemResourceHandler.setItem(2, upgradeRecipe.addition.getItems()[0].copy());
-                    inputSlot.shrink(currentRecipe.getResultItem().getCount());
+                if (currentRecipe instanceof SmithingTransformRecipe transformRecipe) {
+                    itemResourceHandler.setItem(1, transformRecipe.base.getItems()[0].copy());
+                    itemResourceHandler.setItem(2, transformRecipe.addition.getItems()[0].copy());
+                    itemResourceHandler.setItem(3, transformRecipe.template.getItems()[0].copy());
+                    inputSlot.shrink(currentRecipe.getResultItem(level.registryAccess()).getCount());
                 }
                 workProgress = 0;
             }

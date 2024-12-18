@@ -4,11 +4,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.state.BlockState;
 
-import static com.mcupdater.procenhance.setup.Registration.FURNACET1_BLOCKENTITY;
+import static com.mcupdater.procenhance.setup.Registration.FURNACET1_ENTITY;
 
 public class ElectricFurnaceEntityT1 extends ElectricFurnaceEntity {
     public ElectricFurnaceEntityT1(BlockPos blockPos, BlockState blockState) {
-        super(FURNACET1_BLOCKENTITY.get(), blockPos, blockState, 1);
+        super(FURNACET1_ENTITY.get(), blockPos, blockState, 1);
     }
 
     @Override

@@ -3,29 +3,30 @@ package com.mcupdater.procenhance.blocks.miner;
 import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
 import com.mcupdater.mculib.block.IConfigurableMenu;
 import com.mcupdater.mculib.capabilities.PowerTrackingMenu;
+import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
 
 import java.util.Map;
 
 public class MinerMenu extends PowerTrackingMenu implements IConfigurableMenu {
-    private final Map<Direction, Component> adjacentNames;
+    private final Map<Direction, String> adjacentNames;
     private final Player player;
     private final IItemHandler playerInventory;
     private final MinerEntity localBlockEntity;
 
-    public MinerMenu(int windowId, Level level, BlockPos worldPosition, Inventory playerInventory, Player player, Map<Direction, Component> adjacentNames) {
+    public MinerMenu(int windowId, Level level, BlockPos worldPosition, Inventory playerInventory, Player player, Map<Direction, String> adjacentNames) {
         super(Registration.MINER_MENU.get(), windowId);
         this.localBlockEntity = level.getBlockEntity(worldPosition) instanceof MinerEntity ? (MinerEntity) level.getBlockEntity(worldPosition) : null;
         this.tileEntity = localBlockEntity;
@@ -33,9 +34,16 @@ public class MinerMenu extends PowerTrackingMenu implements IConfigurableMenu {
         this.player = player;
         this.playerInventory = new InvWrapper(playerInventory);
 
-        addSlotBox(new InvWrapper(this.tileEntity.getInventory()), 0, 62,26, 3, 18, 2, 18);
+        addSlotBox(this.tileEntity.getItemHandler().getInternalHandler(), 0, 62,26, 3, 18, 2, 18);
         layoutPlayerInventorySlots(8,84);
         trackPower();
+    }
+
+    public static MinerMenu factory(int containerId, Inventory playerInv, FriendlyByteBuf extraData) {
+        BlockPos pos = extraData.readBlockPos();
+        Level world = playerInv.player.level();
+        MinerEntity te = (MinerEntity) world.getBlockEntity(pos);
+        return new MinerMenu(containerId, world, pos, playerInv, playerInv.player, DataHelper.readDirectionMap(extraData));
     }
 
     private void layoutPlayerInventorySlots(int leftCol, int topRow) {
@@ -111,7 +119,7 @@ public class MinerMenu extends PowerTrackingMenu implements IConfigurableMenu {
     }
 
     @Override
-    public Component getSideName(Direction direction) {
+    public String getSideName(Direction direction) {
         return this.adjacentNames.get(direction);
     }
 }

@@ -1,0 +1,40 @@
+{
+  "type": "processenhancement:grinder",
+  "experience": 0.05,
+  "ingredients": [
+    {
+      "tag": "minecraft:redstone_ores"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "count": 9,
+        "id": "minecraft:redstone"
+      },
+      "weight": 55
+    },
+    {
+      "stack": {
+        "count": 12,
+        "id": "minecraft:redstone"
+      },
+      "weight": 25
+    },
+    {
+      "stack": {
+        "count": 15,
+        "id": "minecraft:redstone"
+      },
+      "weight": 18
+    },
+    {
+      "stack": {
+        "count": 18,
+        "id": "minecraft:redstone"
+      },
+      "weight": 2
+    }
+  ],
+  "processTime": 200
+}

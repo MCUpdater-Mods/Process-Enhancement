@@ -2,6 +2,7 @@ package com.mcupdater.procenhance.blocks.crude_generator;
 
 import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
 import com.mcupdater.mculib.block.AbstractMachineBlock;
+import com.mcupdater.mculib.block.IMachineGuiProvider;
 import com.mcupdater.mculib.capabilities.EnergyResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.mculib.inventory.InputOutputSettings;
@@ -22,13 +23,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.mcupdater.procenhance.setup.Registration.CRUDEGENERATOR_BLOCKENTITY;
+import static com.mcupdater.procenhance.setup.Registration.CRUDEGENERATOR_ENTITY;
 
-public class CrudeGeneratorEntity extends AbstractConfigurableBlockEntity {
+public class CrudeGeneratorEntity extends AbstractConfigurableBlockEntity implements IMachineGuiProvider {
     private List<Block> validSources = Arrays.asList(Blocks.LAVA,Blocks.FIRE,Blocks.SOUL_FIRE,Blocks.CAMPFIRE,Blocks.SOUL_CAMPFIRE);
 
     public CrudeGeneratorEntity(BlockPos blockPos, BlockState blockState) {
-        super(CRUDEGENERATOR_BLOCKENTITY.get(), blockPos, blockState);
+        super(CRUDEGENERATOR_ENTITY.get(), blockPos, blockState);
         EnergyResourceHandler energyResourceHandler = new EnergyResourceHandler(this.level, 50000, Integer.MAX_VALUE, false);
         for (Direction side : Direction.values()) {
             InputOutputSettings ioSetting = energyResourceHandler.getIOSettings(side);

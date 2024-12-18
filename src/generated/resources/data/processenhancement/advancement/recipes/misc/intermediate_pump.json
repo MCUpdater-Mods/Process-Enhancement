@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "automatic": {
+      "conditions": {
+        "items": [
+          {
+            "items": "processenhancement:basic_pump"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "processenhancement:intermediate_pump"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "automatic"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "processenhancement:intermediate_pump"
+    ]
+  }
+}

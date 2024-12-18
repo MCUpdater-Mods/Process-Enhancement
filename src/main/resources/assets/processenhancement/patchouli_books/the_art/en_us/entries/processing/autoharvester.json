@@ -1,0 +1,15 @@
+{
+  "name": "AutoHarvester",
+  "icon": "processenhancement:autoharvester",
+  "category": "processenhancement:processing",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Automatically harvests crops in a 9x9 area behind it. Normal crops and nether wart will be fully harvested when fully grown and require replanting. Pumpkins and melons will be harvested leaving the stem intact. Cactus, sugar cane, and bamboo will be harvested one block above."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:autoharvester"
+    }
+  ]
+}

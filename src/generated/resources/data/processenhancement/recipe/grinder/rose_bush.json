@@ -1,0 +1,19 @@
+{
+  "type": "processenhancement:grinder",
+  "experience": 0.0,
+  "ingredients": [
+    {
+      "item": "minecraft:rose_bush"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "count": 6,
+        "id": "minecraft:red_dye"
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 50
+}

@@ -2,6 +2,7 @@ package com.mcupdater.procenhance.blocks.biogenerator;
 
 import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
 import com.mcupdater.mculib.block.AbstractMachineBlock;
+import com.mcupdater.mculib.block.IMachineGuiProvider;
 import com.mcupdater.mculib.capabilities.EnergyResourceHandler;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
@@ -9,8 +10,8 @@ import com.mcupdater.mculib.inventory.InputOutputSettings;
 import com.mcupdater.mculib.inventory.SideSetting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -25,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 import static com.mcupdater.procenhance.setup.Registration.COPPER_DUST;
 import static com.mcupdater.procenhance.setup.Registration.PLANT_DUST;
 
-public abstract class BiogeneratorEntity extends AbstractConfigurableBlockEntity {
+public abstract class BiogeneratorEntity extends AbstractConfigurableBlockEntity implements IMachineGuiProvider {
     public final static int BIO_MAX = 1000;
     public final static int COPPER_MAX = 5000;
     public final static int GUNPOWDER_MAX = 2000;
@@ -137,19 +138,19 @@ public abstract class BiogeneratorEntity extends AbstractConfigurableBlockEntity
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider pRegistries) {
+        super.loadAdditional(compound, pRegistries);
         this.bioCurrent = compound.getInt("bioCurrent");
         this.copperCurrent = compound.getInt("copperCurrent");
         this.gunpowderCurrent = compound.getInt("gunpowderCurrent");
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound) {
+    public void saveAdditional(CompoundTag compound, HolderLookup.Provider pRegistries) {
         compound.putInt("bioCurrent", this.bioCurrent);
         compound.putInt("copperCurrent", this.copperCurrent);
         compound.putInt("gunpowderCurrent", this.gunpowderCurrent);
-        super.saveAdditional(compound);
+        super.saveAdditional(compound, pRegistries);
     }
 
     public boolean stillValid(Player player) {
@@ -178,9 +179,4 @@ public abstract class BiogeneratorEntity extends AbstractConfigurableBlockEntity
     public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
         return new BiogeneratorMenu(windowId, this.level, this.worldPosition, inventory, player, this.data, DataHelper.getAdjacentNames(this.level, this.worldPosition));
     }
-
-    public Container getInventory() {
-        return (ItemResourceHandler) this.configMap.get("items");
-    }
-
 }

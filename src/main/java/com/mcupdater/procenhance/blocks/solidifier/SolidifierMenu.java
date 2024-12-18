@@ -2,32 +2,43 @@ package com.mcupdater.procenhance.blocks.solidifier;
 
 import com.mcupdater.mculib.block.AbstractMachineMenu;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
+import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.mculib.inventory.MachineOutputSlot;
+import com.mcupdater.procenhance.blocks.sawmill.SawmillEntity;
+import com.mcupdater.procenhance.blocks.sawmill.SawmillMenu;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.wrapper.InvWrapper;
 
 import java.util.Map;
 
 public class SolidifierMenu extends AbstractMachineMenu<AbstractSolidifierEntity> {
 
-    public SolidifierMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data, Map<Direction, Component> adjacentNames) {
+    public SolidifierMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data, Map<Direction, String> adjacentNames) {
         super((AbstractSolidifierEntity) level.getBlockEntity(blockPos), Registration.SOLIDIFIER_MENU.get(), windowId, level, blockPos, inventory, player, data, adjacentNames);
+    }
+
+    public static SolidifierMenu factory(int containerId, Inventory playerInv, FriendlyByteBuf extraData) {
+        BlockPos pos = extraData.readBlockPos();
+        Level world = playerInv.player.level();
+        AbstractSolidifierEntity te = (AbstractSolidifierEntity) world.getBlockEntity(pos);
+        return new SolidifierMenu(containerId, world, pos, playerInv, playerInv.player, new SimpleContainerData(2), DataHelper.readDirectionMap(extraData));
     }
 
     @Override
     protected void addMachineSlots() {
         ItemResourceHandler resourceHandler = (ItemResourceHandler) this.machineEntity.getConfigMap().get("items");
-        addSlot(new MachineOutputSlot(this.machineEntity, new InvWrapper(this.machineEntity.getInventory()), 0, 81, 56));
+        addSlot(new MachineOutputSlot(this.machineEntity, this.machineEntity.getItemHandler().getInternalHandler(), 0, 81, 56));
     }
 
     @Override

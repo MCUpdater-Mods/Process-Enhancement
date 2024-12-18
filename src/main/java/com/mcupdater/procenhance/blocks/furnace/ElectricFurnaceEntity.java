@@ -12,9 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.AbstractCookingRecipe;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -66,7 +64,7 @@ public abstract class ElectricFurnaceEntity extends AbstractMachineBlockEntity {
         return this.level.getRecipeManager().
                 getAllRecipesFor(RecipeType.SMELTING).stream()
                 .anyMatch(recipe ->
-                        Arrays.stream(recipe.getIngredients().get(0).getItems()).anyMatch(inputItem -> inputItem.sameItem(itemStack)));
+                        Arrays.stream(recipe.value().getIngredients().get(0).getItems()).anyMatch(inputItem -> ItemStack.isSameItem(inputItem,itemStack)));
     }
 
     @Override
@@ -75,10 +73,10 @@ public abstract class ElectricFurnaceEntity extends AbstractMachineBlockEntity {
         EnergyResourceHandler energyStorage = (EnergyResourceHandler) this.configMap.get("power");
         ItemStack inputStack = itemStorage.getItem(0);
         if (!inputStack.isEmpty()) {
-            Recipe<?> recipe = this.level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, itemStorage, this.level).orElse(null);
-            if (this.currentRecipe == null || !this.currentRecipe.equals(recipe)) {
+            RecipeHolder<?> recipe = this.level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(inputStack), this.level).orElse(null);
+            if (this.currentRecipe == null || !this.currentRecipe.equals(recipe.value())) {
                 if (recipe != null) {
-                    this.currentRecipe = (AbstractCookingRecipe) recipe;
+                    this.currentRecipe = (AbstractCookingRecipe) recipe.value();
                     this.workTotal = this.currentRecipe.getCookingTime();
                 }
                 this.workProgress = 0;
@@ -88,10 +86,10 @@ public abstract class ElectricFurnaceEntity extends AbstractMachineBlockEntity {
             this.currentRecipe = null;
         }
         ItemStack outputSlot = itemStorage.getItem(1);
-        if (this.currentRecipe != null && energyStorage.getStoredEnergy() >= Config.FURNACE_ENERGY_PER_TICK.get() && (outputSlot.isEmpty() || (outputSlot.sameItem(currentRecipe.getResultItem()) && outputSlot.getCount() < outputSlot.getMaxStackSize()))) {
+        if (this.currentRecipe != null && energyStorage.getStoredEnergy() >= Config.FURNACE_ENERGY_PER_TICK.get() && (outputSlot.isEmpty() || (ItemStack.isSameItem(outputSlot,currentRecipe.getResultItem(this.level.registryAccess())) && outputSlot.getCount() < outputSlot.getMaxStackSize()))) {
             this.workProgress++;
             if (this.workProgress >= this.workTotal) {
-                ItemStack result = this.currentRecipe.assemble(itemStorage);
+                ItemStack result = this.currentRecipe.assemble(new SingleRecipeInput(inputStack), this.level.registryAccess());
                 if (outputSlot.isEmpty()) {
                     itemStorage.setItem(1, result.copy());
                 } else if (outputSlot.is(result.getItem())) {

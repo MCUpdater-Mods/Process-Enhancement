@@ -1,30 +1,31 @@
 package com.mcupdater.procenhance.blocks.stonecutter;
 
 import com.mcupdater.mculib.block.AbstractMachineMenu;
+import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.mculib.inventory.MachineInputSlot;
 import com.mcupdater.mculib.inventory.MachineOutputSlot;
 import com.mcupdater.mculib.inventory.PhantomSlot;
 import com.mcupdater.procenhance.ProcessEnhancement;
-import com.mcupdater.procenhance.network.ChannelRegistration;
-import com.mcupdater.procenhance.network.RecipeChangePacket;
+import com.mcupdater.procenhance.blocks.sawmill.SawmillEntity;
+import com.mcupdater.procenhance.blocks.sawmill.SawmillMenu;
+import com.mcupdater.procenhance.network.RecipeChange;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.DataSlot;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.crafting.StonecutterRecipe;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.wrapper.InvWrapper;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,14 +33,15 @@ import java.util.Map;
 import java.util.Objects;
 
 public class ElectricStonecutterMenu extends AbstractMachineMenu<ElectricStonecutterEntity> {
-    private List<StonecutterRecipe> recipes = new ArrayList<>();
+    private List<RecipeHolder<StonecutterRecipe>> recipes = new ArrayList<>();
     private Slot phantomSlot;
 
     Runnable slotUpdateListener = () -> {};
     DataSlot selectedRecipeIndexData = new DataSlot() {
         @Override
         public int get() {
-            int slotNum = ElectricStonecutterMenu.this.machineEntity.getCurrentRecipe() != null ? recipes.indexOf(recipes.stream().filter(recipe -> recipe.getId().equals(ElectricStonecutterMenu.this.machineEntity.getCurrentRecipe().getId())).findFirst().orElse(null)) : -1;
+            RecipeHolder<StonecutterRecipe> currentRecipe = ElectricStonecutterMenu.this.machineEntity.getCurrentRecipe();
+            int slotNum = ElectricStonecutterMenu.this.machineEntity.getCurrentRecipe() != null ? recipes.indexOf(recipes.stream().filter(recipe -> recipe.id().equals(ElectricStonecutterMenu.this.machineEntity.getCurrentRecipe().id())).findFirst().orElse(null)) : -1;
             return slotNum;
         }
 
@@ -47,16 +49,23 @@ public class ElectricStonecutterMenu extends AbstractMachineMenu<ElectricStonecu
         public void set(int pValue) {
             ResourceLocation recipeId;
             if (pValue >= 0) {
-                recipeId = recipes.get(pValue).getId();
+                recipeId = recipes.get(pValue).id();
             } else {
-                recipeId = new ResourceLocation(ProcessEnhancement.MODID,"invalid_recipe");
+                recipeId = ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID,"invalid_recipe");
             }
-            ChannelRegistration.RECIPE_CHANGE.sendToServer(new RecipeChangePacket(ElectricStonecutterMenu.this.machineEntity.getBlockPos(), recipeId));
+            PacketDistributor.sendToServer(new RecipeChange(ElectricStonecutterMenu.this.machineEntity.getBlockPos(), recipeId));
         }
     };
 
-    public ElectricStonecutterMenu(int pContainerId, Level pLevel, BlockPos pPos, Inventory pPlayerInventory, Player pPlayer, ContainerData data, Map<Direction, Component> directionComponentMap) {
+    public ElectricStonecutterMenu(int pContainerId, Level pLevel, BlockPos pPos, Inventory pPlayerInventory, Player pPlayer, ContainerData data, Map<Direction, String> directionComponentMap) {
         super((ElectricStonecutterEntity) pLevel.getBlockEntity(pPos), Registration.STONECUTTER_MENU.get(), pContainerId, pLevel, pPos, pPlayerInventory, pPlayer, data, directionComponentMap);
+    }
+
+    public static ElectricStonecutterMenu factory(int containerId, Inventory playerInv, FriendlyByteBuf extraData) {
+        BlockPos pos = extraData.readBlockPos();
+        Level world = playerInv.player.level();
+        ElectricStonecutterEntity te = (ElectricStonecutterEntity) world.getBlockEntity(pos);
+        return new ElectricStonecutterMenu(containerId, world, pos, playerInv, playerInv.player, new SimpleContainerData(2), DataHelper.readDirectionMap(extraData));
     }
 
     @Override
@@ -123,18 +132,17 @@ public class ElectricStonecutterMenu extends AbstractMachineMenu<ElectricStonecu
     @Override
     public void slotsChanged(Container pContainer) {
         ItemStack itemStack = this.phantomSlot.getItem(); // Get phantom slot
-        SimpleContainer recipeLookupContainer = new SimpleContainer(itemStack);
-        this.setupRecipeList(recipeLookupContainer, itemStack);
+        this.setupRecipeList(itemStack);
     }
 
-    private void setupRecipeList(SimpleContainer recipeLookupContainer, ItemStack itemStack) {
+    private void setupRecipeList(ItemStack itemStack) {
         this.recipes.clear();
         if (!itemStack.isEmpty()) {
-            this.recipes = this.machineEntity.getLevel().getRecipeManager().getRecipesFor(RecipeType.STONECUTTING, recipeLookupContainer, this.machineEntity.getLevel());
+            this.recipes = this.machineEntity.getLevel().getRecipeManager().getRecipesFor(RecipeType.STONECUTTING, new SingleRecipeInput(itemStack), this.machineEntity.getLevel());
         }
     }
 
-    public List<StonecutterRecipe> getRecipes() {
+    public List<RecipeHolder<StonecutterRecipe>> getRecipes() {
         return this.recipes;
     }
 
@@ -152,6 +160,7 @@ public class ElectricStonecutterMenu extends AbstractMachineMenu<ElectricStonecu
 
     @Override
     public boolean clickMenuButton(Player pPlayer, int pId) {
+        ProcessEnhancement.LOGGER.info("Clicked: {}", pId);
         if (this.isValidRecipeIndex(pId)) {
             this.selectedRecipeIndexData.set(pId);
             //this.machineEntity.setCurrentRecipe(this.recipes.get(this.data.get(2)));

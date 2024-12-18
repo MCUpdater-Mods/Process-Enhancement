@@ -2,6 +2,7 @@ package com.mcupdater.procenhance.blocks.generator;
 
 import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
 import com.mcupdater.mculib.block.AbstractMachineBlock;
+import com.mcupdater.mculib.block.IMachineGuiProvider;
 import com.mcupdater.mculib.capabilities.EnergyResourceHandler;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
@@ -9,6 +10,7 @@ import com.mcupdater.mculib.inventory.InputOutputSettings;
 import com.mcupdater.mculib.inventory.SideSetting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -20,10 +22,9 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeHooks;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class GeneratorEntity extends AbstractConfigurableBlockEntity {
+public abstract class GeneratorEntity extends AbstractConfigurableBlockEntity implements IMachineGuiProvider {
     int burnCurrent;
     int burnTotal;
     public ContainerData data = new ContainerData() {
@@ -104,10 +105,10 @@ public abstract class GeneratorEntity extends AbstractConfigurableBlockEntity {
                 }
             }
             if (this.burnCurrent == 0 && !itemStorage.getItem(0).isEmpty()) {
-                int newBurnTime = ForgeHooks.getBurnTime(itemStorage.getItem(0), RecipeType.SMELTING);
+                int newBurnTime = itemStorage.getItem(0).getBurnTime(RecipeType.SMELTING);
                 if (newBurnTime > 0) {
                     if (itemStorage.getItem(0).hasCraftingRemainingItem()) {
-                        if ((itemStorage.getItem(0).getCraftingRemainingItem().sameItem(itemStorage.getItem(1)) && itemStorage.getItem(1).getCount() < itemStorage.getItem(1).getMaxStackSize()) || itemStorage.getItem(1).isEmpty()) {
+                        if ((ItemStack.isSameItem(itemStorage.getItem(0).getCraftingRemainingItem(),itemStorage.getItem(1)) && itemStorage.getItem(1).getCount() < itemStorage.getItem(1).getMaxStackSize()) || itemStorage.getItem(1).isEmpty()) {
                             if (itemStorage.getItem(1).isEmpty()) {
                                 itemStorage.setItem(1, itemStorage.getItem(0).getCraftingRemainingItem());
                             } else {
@@ -127,17 +128,17 @@ public abstract class GeneratorEntity extends AbstractConfigurableBlockEntity {
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider pRegistries) {
+        super.loadAdditional(compound, pRegistries);
         this.burnTotal = compound.getInt("burnTotal");
         this.burnCurrent = compound.getInt("burnCurrent");
     }
 
     @Override
-    public void saveAdditional(CompoundTag compound) {
+    public void saveAdditional(CompoundTag compound, HolderLookup.Provider pRegistries) {
         compound.putInt("burnTotal", this.burnTotal);
         compound.putInt("burnCurrent", this.burnCurrent);
-        super.saveAdditional(compound);
+        super.saveAdditional(compound, pRegistries);
     }
 
     public boolean stillValid(Player player) {
@@ -149,7 +150,7 @@ public abstract class GeneratorEntity extends AbstractConfigurableBlockEntity {
     }
 
     public boolean canPlaceItem(int slot, ItemStack stack) {
-        return slot == 0 ? (ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) > 0) : false;
+        return slot == 0 ? (stack.getBurnTime(RecipeType.SMELTING) > 0) : false;
     }
 
 
@@ -157,10 +158,6 @@ public abstract class GeneratorEntity extends AbstractConfigurableBlockEntity {
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
         return new GeneratorMenu(windowId, this.level, this.worldPosition, inventory, player, this.data, DataHelper.getAdjacentNames(this.level, this.worldPosition));
-    }
-
-    public Container getInventory() {
-        return (ItemResourceHandler) this.configMap.get("items");
     }
 
 }

@@ -1,10 +1,7 @@
 package com.mcupdater.procenhance.integration;
 
 import com.mcupdater.procenhance.ProcessEnhancement;
-import com.mcupdater.procenhance.recipe.DehydratorRecipe;
-import com.mcupdater.procenhance.recipe.GrinderRecipe;
-import com.mcupdater.procenhance.recipe.HydratorRecipe;
-import com.mcupdater.procenhance.recipe.SawmillRecipe;
+import com.mcupdater.procenhance.recipe.*;
 import com.mcupdater.procenhance.setup.Registration;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -12,11 +9,16 @@ import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.IVanillaCategoryExtensionRegistration;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,7 +26,7 @@ import java.util.Objects;
 public class JEIProcEnhancePlugin implements IModPlugin {
     @Override
     public ResourceLocation getPluginUid() {
-        return new ResourceLocation(ProcessEnhancement.MODID, "jei_plugin");
+        return ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "jei_plugin");
     }
 
     @Override
@@ -33,6 +35,12 @@ public class JEIProcEnhancePlugin implements IModPlugin {
         registration.addRecipeCategories(new GrinderRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new HydratorRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new DehydratorRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+    }
+
+    @Override
+    public void registerVanillaCategoryExtensions(IVanillaCategoryExtensionRegistration registration) {
+        IModPlugin.super.registerVanillaCategoryExtensions(registration);
+        registration.getCraftingCategory().addExtension(BatteryUpgradeRecipe.class, new BatteryUpgradeCraftingExtension());
     }
 
     @Override
@@ -54,13 +62,30 @@ public class JEIProcEnhancePlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         RecipeManager recipeManager = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
-        List<SawmillRecipe> sawmillRecipes = recipeManager.getAllRecipesFor(SawmillRecipe.Type.INSTANCE);
-        List<GrinderRecipe> grinderRecipes = recipeManager.getAllRecipesFor(GrinderRecipe.Type.INSTANCE);
-        List<HydratorRecipe> hydratorRecipes = recipeManager.getAllRecipesFor(HydratorRecipe.Type.INSTANCE);
-        List<DehydratorRecipe> dehydratorRecipes = recipeManager.getAllRecipesFor(DehydratorRecipe.Type.INSTANCE);
+        List<SawmillRecipe> sawmillRecipes = recipeManager.getAllRecipesFor(Registration.SAWMILL_RECIPE.get())
+                .stream().collect(ArrayList::new, (c, e) -> c.add(e.value()), ArrayList::addAll);
+        List<GrinderRecipe> grinderRecipes = recipeManager.getAllRecipesFor(Registration.GRINDER_RECIPE.get())
+                .stream().collect(ArrayList::new, (c,e) -> c.add(e.value()), ArrayList::addAll);
+        List<HydratorRecipe> hydratorRecipes = recipeManager.getAllRecipesFor(Registration.HYDRATOR_RECIPE.get())
+                .stream().collect(ArrayList::new, (c, e) -> c.add(e.value()), ArrayList::addAll);
+        List<DehydratorRecipe> dehydratorRecipes = recipeManager.getAllRecipesFor(Registration.DEHYDRATOR_RECIPE.get())
+                .stream().collect(ArrayList::new, (c, e) -> c.add(e.value()), ArrayList::addAll);
         registration.addRecipes(SawmillRecipeCategory.TYPE, sawmillRecipes);
         registration.addRecipes(GrinderRecipeCategory.TYPE, grinderRecipes);
         registration.addRecipes(HydratorRecipeCategory.TYPE, hydratorRecipes);
         registration.addRecipes(DehydratorRecipeCategory.TYPE, dehydratorRecipes);
+    }
+
+    public static ItemStack lookupOutput(Recipe<?> recipe) {
+        return recipe.getResultItem(getLookupProvider());
+    }
+
+    public static RegistryAccess getLookupProvider() {
+        Minecraft minecraft = Minecraft.getInstance();
+        ClientLevel level = minecraft.level;
+        if (level == null) {
+            throw new NullPointerException("Level must not be null.");
+        }
+        return level.registryAccess();
     }
 }

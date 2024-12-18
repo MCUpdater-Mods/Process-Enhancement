@@ -21,7 +21,7 @@ public abstract class AbstractPatternItem extends Item {
         ItemStack result;
         CraftingRecipe recipe = matchingRecipe(stack, level);
         if (recipe != null) {
-            result = recipe.getResultItem().copy();
+            result = recipe.getResultItem(level.registryAccess()).copy();
             stack.split(ingredientCount);
             return result;
         } else {

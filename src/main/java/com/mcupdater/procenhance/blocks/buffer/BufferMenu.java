@@ -3,37 +3,46 @@ package com.mcupdater.procenhance.blocks.buffer;
 import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
 import com.mcupdater.mculib.block.IConfigurableMenu;
 import com.mcupdater.mculib.capabilities.PowerTrackingMenu;
+import com.mcupdater.mculib.helpers.DataHelper;
+import com.mcupdater.procenhance.blocks.sawmill.SawmillEntity;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
 
 import java.util.Map;
 
 public class BufferMenu extends PowerTrackingMenu implements IConfigurableMenu {
-    private final Map<Direction, Component> adjacentNames;
+    private final Map<Direction, String> adjacentNames;
     private final Player player;
     private final IItemHandler playerInventory;
 
-    public BufferMenu(int pContainerId, Level level, BlockPos blockPos, Inventory pPlayerInventory, Player pPlayer, Map<Direction, Component> adjacentNames) {
+    public BufferMenu(int pContainerId, Level level, BlockPos blockPos, Inventory pPlayerInventory, Player pPlayer, Map<Direction, String> adjacentNames) {
         super(Registration.BUFFER_MENU.get(), pContainerId);
         this.adjacentNames = adjacentNames;
         this.tileEntity = level.getBlockEntity(blockPos) instanceof BufferEntity ? (BufferEntity) level.getBlockEntity(blockPos) : null;
         this.player = pPlayer;
         this.playerInventory = new InvWrapper(pPlayerInventory);
 
-        addSlotBox(new InvWrapper(this.tileEntity.getInventory()), 0, 62, 26, 3, 18, 2, 18);
+        addSlotBox(this.tileEntity.getItemHandler().getInternalHandler(), 0, 62, 26, 3, 18, 2, 18);
         layoutPlayerInventorySlots(8, 84);
         trackPower();
+    }
+
+    public static BufferMenu factory(int containerId, Inventory playerInv, FriendlyByteBuf extraData) {
+        BlockPos pos = extraData.readBlockPos();
+        Level world = playerInv.player.level();
+        BufferEntity te = (BufferEntity) world.getBlockEntity(pos);
+        return new BufferMenu(containerId, world, pos, playerInv, playerInv.player, DataHelper.readDirectionMap(extraData));
     }
 
     private void layoutPlayerInventorySlots(int leftCol, int topRow) {
@@ -68,7 +77,7 @@ public class BufferMenu extends PowerTrackingMenu implements IConfigurableMenu {
     }
 
     @Override
-    public Component getSideName(Direction direction) {
+    public String getSideName(Direction direction) {
         return this.adjacentNames.get(direction);
     }
 

@@ -5,19 +5,18 @@ import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mcupdater.procenhance.recipe.MinerRecipe;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementRewards;
-import net.minecraft.advancements.CriterionTriggerInstance;
-import net.minecraft.advancements.RequirementsStrategy;
+import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.compress.utils.Lists;
 import org.jetbrains.annotations.Nullable;
 
@@ -72,8 +71,8 @@ public class MinerRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    public RecipeBuilder unlockedBy(String pCriterionName, CriterionTriggerInstance pCriterionTrigger) {
-        this.advancement.addCriterion(pCriterionName, pCriterionTrigger);
+    public RecipeBuilder unlockedBy(String pCriterionName, Criterion<?> criterion) {
+        this.advancement.addCriterion(pCriterionName, criterion);
         return this;
     }
 
@@ -82,102 +81,13 @@ public class MinerRecipeBuilder implements RecipeBuilder {
         return this.result;
     }
 
+    private ShapedRecipePattern getPattern() {
+        return ShapedRecipePattern.of(this.key, this.rows);
+    }
+
     @Override
-    public void save(Consumer<FinishedRecipe> pFinishedRecipeConsumer, ResourceLocation pRecipeId) {
-        this.ensureValid(pRecipeId);
-        this.advancement.parent(new ResourceLocation("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pRecipeId)).rewards(AdvancementRewards.Builder.recipe(pRecipeId)).requirements(RequirementsStrategy.OR);
-        pFinishedRecipeConsumer.accept(new MinerRecipeBuilder.Result(pRecipeId, this.result, this.group == null ? "" : this.group, this.rows, this.key, this.advancement, new ResourceLocation(pRecipeId.getNamespace(), "recipes/" + this.result.getItemCategory().getRecipeFolderName() + "/" + pRecipeId.getPath())));
-    }
-
-    private void ensureValid(ResourceLocation pRecipeId) {
-        if (this.rows.isEmpty()) {
-            throw new IllegalStateException("No pattern is defined for shaped recipe " + pRecipeId + "!");
-        } else {
-            Set<Character> set = Sets.newHashSet(this.key.keySet());
-            set.remove(' ');
-
-            for (String row : this.rows) {
-                for(int colIndex = 0; colIndex < row.length(); ++colIndex) {
-                    char col = row.charAt(colIndex);
-                    if (!this.key.containsKey(col) && col != ' ') {
-                        throw new IllegalStateException("Pattern in recipe " + pRecipeId + " uses undefined symbol '" + col + "'");
-                    }
-
-                    set.remove(col);
-                }
-            }
-
-            if (!set.isEmpty()) {
-                throw new IllegalStateException("Ingredients are defined but not used in pattern for recipe " + pRecipeId);
-            } else if (this.advancement.getCriteria().isEmpty()) {
-                throw new IllegalStateException("No way of obtaining recipe " + pRecipeId);
-            }
-        }
-    }
-
-    private class Result implements FinishedRecipe {
-
-        private final ResourceLocation recipeId;
-        private final Item result;
-        private final String group;
-        private final List<String> pattern;
-        private final Map<Character, Ingredient> key;
-        private final Advancement.Builder advancement;
-        private final ResourceLocation advancementId;
-
-        public Result(ResourceLocation pRecipeId, Item pResult, String pGroup, List<String> pPattern, Map<Character, Ingredient> pKey, Advancement.Builder pAdvancement, ResourceLocation pAdvancementId) {
-            this.recipeId = pRecipeId;
-            this.result = pResult;
-            this.group = pGroup;
-            this.pattern = pPattern;
-            this.key = pKey;
-            this.advancement = pAdvancement;
-            this.advancementId = pAdvancementId;
-        }
-
-        @Override
-        public void serializeRecipeData(JsonObject pJson) {
-            if (!this.group.isEmpty()) {
-                pJson.addProperty("group", this.group);
-            }
-
-            JsonArray patternArray = new JsonArray();
-            for(String row : this.pattern) {
-                patternArray.add(row);
-            }
-            pJson.add("pattern", patternArray);
-
-            JsonObject ingredientMap = new JsonObject();
-            for(Map.Entry<Character, Ingredient> entry : this.key.entrySet()) {
-                ingredientMap.add(String.valueOf(entry.getKey()), entry.getValue().toJson());
-            }
-            pJson.add("key", ingredientMap);
-
-            JsonObject resultObject = new JsonObject();
-            resultObject.addProperty("item", ForgeRegistries.ITEMS.getKey(this.result).toString());
-            pJson.add("result", resultObject);
-        }
-
-        @Override
-        public ResourceLocation getId() {
-            return this.recipeId;
-        }
-
-        @Override
-        public RecipeSerializer<?> getType() {
-            return MinerRecipe.SERIALIZER;
-        }
-
-        @Nullable
-        @Override
-        public JsonObject serializeAdvancement() {
-            return this.advancement.serializeToJson();
-        }
-
-        @Nullable
-        @Override
-        public ResourceLocation getAdvancementId() {
-            return this.advancementId;
-        }
+    public void save(RecipeOutput recipeOutput, ResourceLocation pRecipeId) {
+        this.advancement.parent(ResourceLocation.withDefaultNamespace("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pRecipeId)).rewards(AdvancementRewards.Builder.recipe(pRecipeId)).requirements(AdvancementRequirements.Strategy.OR);
+        recipeOutput.accept(pRecipeId, new MinerRecipe(this.group == null ? "" : this.group, CraftingBookCategory.MISC, this.getPattern(), new ItemStack(this.result), true), this.advancement.build(ResourceLocation.fromNamespaceAndPath(pRecipeId.getNamespace(), "recipes/" + pRecipeId.getPath())));
     }
 }

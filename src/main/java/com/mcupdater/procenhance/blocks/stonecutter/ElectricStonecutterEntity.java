@@ -4,8 +4,10 @@ import com.mcupdater.mculib.block.AbstractMachineBlockEntity;
 import com.mcupdater.mculib.capabilities.EnergyResourceHandler;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
+import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
@@ -19,7 +21,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.crafting.StonecutterRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -31,7 +35,7 @@ import static com.mcupdater.procenhance.setup.Registration.STONECUTTER_ENTITY;
 
 public class ElectricStonecutterEntity extends AbstractMachineBlockEntity {
 
-    private StonecutterRecipe currentRecipe = null;
+    private RecipeHolder<StonecutterRecipe> currentRecipe = null;
     private ResourceLocation recipeId = null;
 
     public ContainerData data = new ContainerData() {
@@ -95,10 +99,10 @@ public class ElectricStonecutterEntity extends AbstractMachineBlockEntity {
         }
         ItemStack inputSlot = itemStorage.getItem(0);
         ItemStack outputSlot = itemStorage.getItem(1);
-        if (energyStorage.getStoredEnergy() >= Config.STONECUTTER_ENERGY_PER_TICK.get() && (outputSlot.isEmpty() || (outputSlot.sameItem(currentRecipe.getResultItem()) && outputSlot.getCount() <= (outputSlot.getMaxStackSize() - currentRecipe.getResultItem().getCount()))) && !inputSlot.isEmpty()) {
+        if (energyStorage.getStoredEnergy() >= Config.STONECUTTER_ENERGY_PER_TICK.get() && (outputSlot.isEmpty() || (ItemStack.isSameItem(outputSlot,currentRecipe.value().getResultItem(this.level.registryAccess())) && outputSlot.getCount() <= (outputSlot.getMaxStackSize() - currentRecipe.value().getResultItem(this.level.registryAccess()).getCount()))) && !inputSlot.isEmpty()) {
             this.workProgress++;
             if (this.workProgress >= this.workTotal) {
-                ItemStack result = this.currentRecipe.assemble(itemStorage);
+                ItemStack result = this.currentRecipe.value().assemble(new SingleRecipeInput(itemStorage.getItem(0)), this.level.registryAccess());
                 if (outputSlot.isEmpty()) {
                     itemStorage.setItem(1, result.copy());
                 } else if (outputSlot.is(result.getItem())) {
@@ -114,10 +118,10 @@ public class ElectricStonecutterEntity extends AbstractMachineBlockEntity {
 
     @Override
     public void setCurrentRecipe(ResourceLocation recipeId) {
-        StonecutterRecipe stonecutterRecipe = level.getRecipeManager().getAllRecipesFor(RecipeType.STONECUTTING).stream().filter(recipe -> recipe.getId().equals(recipeId)).findFirst().orElse(null);
+        RecipeHolder<StonecutterRecipe> stonecutterRecipe = level.getRecipeManager().getAllRecipesFor(RecipeType.STONECUTTING).stream().filter(recipe -> recipe.id().equals(recipeId)).findFirst().orElse(null);
         this.currentRecipe = stonecutterRecipe;
         if (stonecutterRecipe != null) {
-            this.recipeId = stonecutterRecipe.getId();
+            this.recipeId = stonecutterRecipe.id();
         } else {
             this.recipeId = null;
         }
@@ -130,17 +134,17 @@ public class ElectricStonecutterEntity extends AbstractMachineBlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return this.saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider lookupProvider) {
+        return this.saveWithoutMetadata(lookupProvider);
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        super.onDataPacket(net, pkt);
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {
+        super.onDataPacket(net, pkt, lookupProvider);
         this.setCurrentRecipe(this.recipeId);
     }
 
-    public StonecutterRecipe getCurrentRecipe() {
+    public RecipeHolder<StonecutterRecipe> getCurrentRecipe() {
         return this.currentRecipe;
     }
 
@@ -153,7 +157,19 @@ public class ElectricStonecutterEntity extends AbstractMachineBlockEntity {
     }
 
     public boolean canPlaceItem(int slot, ItemStack pStack) {
-        return this.currentRecipe != null && Arrays.stream(this.currentRecipe.getIngredients().get(0).getItems()).anyMatch(validStack -> validStack.sameItem(pStack)); // Source slot
+        return this.currentRecipe != null && Arrays.stream(this.currentRecipe.value().getIngredients().get(0).getItems()).anyMatch(validStack -> ItemStack.isSameItem(validStack,pStack)); // Source slot
+    }
+
+    @Override
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider pRegistries) {
+        super.loadAdditional(compound, pRegistries);
+        if (compound.contains("currentRecipe")) this.setCurrentRecipe(ResourceLocation.parse(compound.getString("currentRecipe")));
+    }
+
+    @Override
+    public void saveAdditional(CompoundTag compound, HolderLookup.Provider pRegistries) {
+        if (this.currentRecipe != null) compound.putString("currentRecipe", this.currentRecipe.id().toString());
+        super.saveAdditional(compound, pRegistries);
     }
 
     @Override

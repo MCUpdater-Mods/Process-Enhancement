@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "experience": 0.0,
+  "ingredients": [
+    {
+      "item": "minecraft:spruce_boat"
+    }
+  ],
+  "processTime": 32,
+  "result": {
+    "count": 5,
+    "id": "minecraft:spruce_planks"
+  }
+}

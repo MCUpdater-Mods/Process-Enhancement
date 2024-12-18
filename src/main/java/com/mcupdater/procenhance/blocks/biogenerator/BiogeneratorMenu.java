@@ -3,20 +3,24 @@ package com.mcupdater.procenhance.blocks.biogenerator;
 import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
 import com.mcupdater.mculib.block.IConfigurableMenu;
 import com.mcupdater.mculib.capabilities.PowerTrackingMenu;
+import com.mcupdater.mculib.helpers.DataHelper;
+import com.mcupdater.procenhance.blocks.autopackager.PackagerEntity;
+import com.mcupdater.procenhance.blocks.generator.GeneratorMenu;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
 
 import java.util.Map;
 
@@ -25,9 +29,9 @@ public class BiogeneratorMenu extends PowerTrackingMenu implements IConfigurable
     private final Player player;
     private final IItemHandler playerInventory;
     private final ContainerData data;
-    private final Map<Direction, Component> adjacentNames;
+    private final Map<Direction, String> adjacentNames;
 
-    public BiogeneratorMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data, Map<Direction, Component> adjacentNames) {
+    public BiogeneratorMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data, Map<Direction, String> adjacentNames) {
         super(Registration.BIOGENERATOR_MENU.get(), windowId);
         this.adjacentNames = adjacentNames;
         this.localBlockEntity = level.getBlockEntity(blockPos) instanceof BiogeneratorEntity ? (BiogeneratorEntity) level.getBlockEntity(blockPos) : null;
@@ -37,13 +41,20 @@ public class BiogeneratorMenu extends PowerTrackingMenu implements IConfigurable
         this.data = data;
 
         if (this.localBlockEntity != null) {
-            addSlot(new SlotItemHandler(new InvWrapper(this.localBlockEntity.getInventory()), 0, 8, 15));
-            addSlot(new SlotItemHandler(new InvWrapper(this.localBlockEntity.getInventory()), 1, 8, 34));
-            addSlot(new SlotItemHandler(new InvWrapper(this.localBlockEntity.getInventory()), 2, 8, 53));
+            addSlot(new SlotItemHandler(this.localBlockEntity.getItemHandler().getInternalHandler(), 0, 8, 15));
+            addSlot(new SlotItemHandler(this.localBlockEntity.getItemHandler().getInternalHandler(), 1, 8, 34));
+            addSlot(new SlotItemHandler(this.localBlockEntity.getItemHandler().getInternalHandler(), 2, 8, 53));
         }
         layoutPlayerInventorySlots(8, 84);
         trackPower();
         addDataSlots(data);
+    }
+
+    public static BiogeneratorMenu factory(int containerId, Inventory playerInv, FriendlyByteBuf extraData) {
+        BlockPos pos = extraData.readBlockPos();
+        Level world = playerInv.player.level();
+        BiogeneratorEntity te = (BiogeneratorEntity) world.getBlockEntity(pos);
+        return new BiogeneratorMenu(containerId, world, pos, playerInv, playerInv.player, new SimpleContainerData(3), DataHelper.readDirectionMap(extraData));
     }
 
     private void layoutPlayerInventorySlots(int leftCol, int topRow) {
@@ -158,7 +169,7 @@ public class BiogeneratorMenu extends PowerTrackingMenu implements IConfigurable
     }
 
     @Override
-    public Component getSideName(Direction direction) {
+    public String getSideName(Direction direction) {
         return this.adjacentNames.get(direction);
     }
 }

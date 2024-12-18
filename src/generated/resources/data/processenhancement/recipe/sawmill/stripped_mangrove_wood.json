@@ -1,0 +1,14 @@
+{
+  "type": "processenhancement:sawmill",
+  "experience": 0.01,
+  "ingredients": [
+    {
+      "tag": "minecraft:mangrove_logs"
+    }
+  ],
+  "processTime": 16,
+  "result": {
+    "count": 1,
+    "id": "minecraft:stripped_mangrove_wood"
+  }
+}

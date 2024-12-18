@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class ElectricFurnaceScreen extends AbstractMachineScreen<ElectricFurnaceEntity,ElectricFurnaceMenu> {
 
-    private static final ResourceLocation GUI = new ResourceLocation(ProcessEnhancement.MODID, "textures/gui/machine.png");
+    private static final ResourceLocation GUI = ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "textures/gui/machine.png");
 
     public ElectricFurnaceScreen(ElectricFurnaceMenu menu, Inventory inventory, Component name) {
         super(menu, inventory, name);

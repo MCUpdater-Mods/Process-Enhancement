@@ -4,11 +4,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.state.BlockState;
 
-import static com.mcupdater.procenhance.setup.Registration.INDBATTERY_BLOCKENTITY;
+import static com.mcupdater.procenhance.setup.Registration.BATTERYT4_ENTITY;
 
 public class BatteryEntityT4 extends BatteryEntity {
     public BatteryEntityT4(BlockPos pPos, BlockState pState) {
-        super(INDBATTERY_BLOCKENTITY.get(), pPos, pState);
+        super(BATTERYT4_ENTITY.get(), pPos, pState);
         setup(80000);
     }
 

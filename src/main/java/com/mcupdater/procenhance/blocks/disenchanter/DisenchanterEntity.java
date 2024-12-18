@@ -4,17 +4,25 @@ import com.mcupdater.mculib.block.AbstractMachineBlockEntity;
 import com.mcupdater.mculib.capabilities.AbstractResourceHandler;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
+import com.mcupdater.procenhance.blocks.sawmill.SawmillEntity;
+import com.mcupdater.procenhance.blocks.sawmill.SawmillMenu;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
@@ -64,7 +72,7 @@ public class DisenchanterEntity extends AbstractMachineBlockEntity {
                 case 1:
                     return itemStack.getItem().equals(Items.BOOK);
                 case 2:
-                    return itemStack.isEnchanted() || (itemStack.hasTag() && itemStack.getTag().contains("StoredEnchantments") && itemStack.getTag().getList("StoredEnchantments", Tag.TAG_COMPOUND).size() > 1);
+                    return itemStack.isEnchanted() || !itemStack.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY).isEmpty();
                 default:
                     return false;
             }
@@ -98,8 +106,8 @@ public class DisenchanterEntity extends AbstractMachineBlockEntity {
                 !inputSlot.isEmpty() &&
                 outputSlot.isEmpty() &&
                 enchantedSlot.isEmpty() &&
-                lapisSlot.getCount() >= (inputSlot.getItem().equals(Items.ENCHANTED_BOOK) ? 1 : inputSlot.getEnchantmentTags().size())) { // Verify all slot are in a proper state
-            this.workTotal = 200 * (inputSlot.getItem().equals(Items.ENCHANTED_BOOK) ? 1 : inputSlot.getEnchantmentTags().size()); // 200 ticks per enchantment
+                lapisSlot.getCount() >= (inputSlot.getItem().equals(Items.ENCHANTED_BOOK) ? 1 : inputSlot.getTagEnchantments().size())) { // Verify all slot are in a proper state
+            this.workTotal = 200 * (inputSlot.getItem().equals(Items.ENCHANTED_BOOK) ? 1 : inputSlot.getTagEnchantments().size()); // 200 ticks per enchantment
 
         } else { // Reset work counters
             this.workTotal = 0;
@@ -108,24 +116,32 @@ public class DisenchanterEntity extends AbstractMachineBlockEntity {
         if (this.workTotal != 0) {
             this.workProgress++;
             if (this.workProgress >= this.workTotal) { // Finish cycle
-                ListTag enchantments = inputSlot.getEnchantmentTags();
                 ItemStack newStack = inputSlot.copy();
+                ItemStack newBook = new ItemStack(Items.ENCHANTED_BOOK,1);
+                ItemEnchantments original = inputSlot.getTagEnchantments();
+                ItemEnchantments.Mutable itemEnchantments = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
+                ItemEnchantments.Mutable bookEnchantments = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
                 if (newStack.getItem().equals(Items.ENCHANTED_BOOK)) {
-                    enchantments = new ListTag();
-                    Tag enchantment = newStack.hasTag() ? newStack.getTag().getList("StoredEnchantments", Tag.TAG_COMPOUND).remove(0) : null;
-                    enchantments.addTag(0, enchantment);
+                    boolean firstEnchantment = true;
+                    for (Object2IntMap.Entry<Holder<Enchantment>> entry : original.entrySet()) {
+                        if (firstEnchantment) {
+                            itemEnchantments.set(entry.getKey(), entry.getIntValue());
+                            firstEnchantment = false;
+                        } else {
+                            bookEnchantments.set(entry.getKey(), entry.getIntValue());
+                        }
+                    }
+                    EnchantmentHelper.setEnchantments(newStack, itemEnchantments.toImmutable());
+                    EnchantmentHelper.setEnchantments(newBook, bookEnchantments.toImmutable());
                 } else {
-                    newStack.removeTagKey("Enchantments");
+                    EnchantmentHelper.setEnchantments(newStack,ItemEnchantments.EMPTY);
+                    EnchantmentHelper.setEnchantments(newBook,original);
                 }
                 itemStorage.setItem(3, newStack);
-                ItemStack newBook = new ItemStack(Items.ENCHANTED_BOOK,1);
-                CompoundTag compoundTag = new CompoundTag();
-                compoundTag.put("StoredEnchantments", enchantments);
-                newBook.setTag(compoundTag);
                 itemStorage.setItem(4, newBook);
                 itemStorage.getItem(2).shrink(1);
                 itemStorage.getItem(1).shrink(1);
-                itemStorage.getItem(0).shrink(enchantments.size());
+                itemStorage.getItem(0).shrink(original.size());
             }
         }
         return false;

@@ -2,6 +2,8 @@ package com.mcupdater.procenhance.blocks.sawmill;
 
 import com.mcupdater.mculib.block.AbstractMachineBlock;
 import com.mcupdater.mculib.setup.Registration;
+import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterEntity;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -10,19 +12,26 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
 public class SawmillBlock extends AbstractMachineBlock {
-    public SawmillBlock() {
-        super(Properties.of(Material.STONE).sound(SoundType.STONE).strength(5.0f));
+    public static final MapCodec<SawmillBlock> CODEC = simpleCodec(SawmillBlock::new);
+
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
+    public SawmillBlock(Properties properties) {
+        super(properties);
     }
 
     @Nullable
@@ -52,17 +61,10 @@ public class SawmillBlock extends AbstractMachineBlock {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public void onRemove(BlockState oldState, Level level, BlockPos blockPos, BlockState newState, boolean flag) {
-        if (oldState.getBlock() != newState.getBlock()) {
-            BlockEntity blockEntity = level.getBlockEntity(blockPos);
-
-            if (blockEntity instanceof SawmillEntity machineEntity) {
-                machineEntity.getInventory().setItem(2, ItemStack.EMPTY); // Clear phantom slot before dropping contents
-                Containers.dropContents(level, blockPos, machineEntity.getInventory());
-                level.updateNeighbourForOutputSignal(blockPos, this);
-            }
-            super.onRemove(oldState, level, blockPos, newState, flag);
+    protected void dropInventory(Level pLevel, BlockPos pPos) {
+        if (pLevel.getBlockEntity(pPos) instanceof SawmillEntity entity) {
+            Containers.dropItemStack(pLevel, pPos.getX(), pPos.getY(), pPos.getZ(), entity.getInventory().getItem(0));
+            Containers.dropItemStack(pLevel, pPos.getX(), pPos.getY(), pPos.getZ(), entity.getInventory().getItem(1));
         }
     }
 

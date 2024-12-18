@@ -3,8 +3,10 @@ package com.mcupdater.procenhance.blocks.grinder;
 import com.mcupdater.mculib.block.AbstractMachineBlockEntity;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
+import com.mcupdater.mculib.inventory.MachineContainer;
 import com.mcupdater.procenhance.recipe.GrinderRecipe;
 import com.mcupdater.procenhance.setup.Config;
+import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.Container;
@@ -14,7 +16,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
@@ -22,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 public abstract class GrinderEntity extends AbstractMachineBlockEntity {
-    private GrinderRecipe currentRecipe = null;
+    private RecipeHolder<GrinderRecipe> currentRecipe = null;
 
     public ContainerData data = new ContainerData() {
         @Override
@@ -59,7 +61,7 @@ public abstract class GrinderEntity extends AbstractMachineBlockEntity {
     public GrinderEntity(BlockEntityType<?> pType, BlockPos blockPos, BlockState blockState, int multiplier) {
         super(pType, blockPos, blockState, Config.GRINDER_ENERGY_PER_TICK.get() * 1000 * multiplier, Integer.MAX_VALUE, Config.GRINDER_ENERGY_PER_TICK.get(), multiplier);
         ItemResourceHandler itemResourceHandler = new ItemResourceHandler(this.level, 2, new int[]{0,1}, new int[]{0}, new int[]{1}, this::stillValid);
-        itemResourceHandler.setInsertFunction((slot, itemStack) -> this.level.getRecipeManager().getAllRecipesFor(GrinderRecipe.Type.INSTANCE).stream().anyMatch(recipe -> Arrays.stream(recipe.getIngredients().get(0).getItems()).anyMatch(inputStack -> inputStack.sameItem(itemStack))));
+        itemResourceHandler.setInsertFunction((slot, itemStack) -> this.level.getRecipeManager().getAllRecipesFor(Registration.GRINDER_RECIPE.get()).stream().anyMatch(recipe -> Arrays.stream(recipe.value().getIngredients().get(0).getItems()).anyMatch(inputStack -> ItemStack.isSameItem(inputStack,itemStack))));
         this.configMap.put("items", itemResourceHandler);
     }
 
@@ -68,17 +70,17 @@ public abstract class GrinderEntity extends AbstractMachineBlockEntity {
         ItemResourceHandler itemStorage = (ItemResourceHandler) this.configMap.get("items");
         ItemStack inputStack = itemStorage.getItem(0);
         if (!inputStack.isEmpty()) {
-            Recipe<?> recipe = this.level.getRecipeManager().getRecipeFor(GrinderRecipe.Type.INSTANCE, itemStorage, this.level).orElse(null);
+            RecipeHolder<GrinderRecipe> recipe = this.level.getRecipeManager().getRecipeFor(Registration.GRINDER_RECIPE.get(), new MachineContainer(this), this.level).orElse(null);
             if (this.currentRecipe == null || !this.currentRecipe.equals(recipe)) {
                 if (recipe != null) {
-                    this.currentRecipe = (GrinderRecipe) recipe;
+                    this.currentRecipe = recipe;
                     this.prizePool.clear();
                     this.maxOutput = 0;
-                    for (Tuple<ItemStack, Integer> entry : currentRecipe.getOutputs()) {
+                    for (Tuple<ItemStack, Integer> entry : currentRecipe.value().getOutputs()) {
                         this.prizePool.add(entry.getA().getItem());
                         this.maxOutput = Math.max(this.maxOutput, entry.getA().getCount());
                     }
-                    this.workTotal = this.currentRecipe.getProcessTime();
+                    this.workTotal = this.currentRecipe.value().getProcessTime();
                 }
                 this.workProgress = 0;
             }
@@ -90,7 +92,7 @@ public abstract class GrinderEntity extends AbstractMachineBlockEntity {
             this.workProgress++;
             if (this.workProgress >= this.workTotal) {
                 List<ItemStack> prizeList = new ArrayList<>();
-                for (Tuple<ItemStack,Integer> tuple : this.currentRecipe.getOutputs()) {
+                for (Tuple<ItemStack,Integer> tuple : this.currentRecipe.value().getOutputs()) {
                     ItemStack potentialPrize = tuple.getA();
                     for (int i = 0; i < tuple.getB(); i++) {
                         prizeList.add(potentialPrize);
@@ -105,7 +107,7 @@ public abstract class GrinderEntity extends AbstractMachineBlockEntity {
                 }
                 this.workProgress = 0;
                 itemStorage.getItem(0).shrink(1);
-                this.storedXP += this.currentRecipe.getExperience();
+                this.storedXP += this.currentRecipe.value().getExperience();
             }
             return true;
         }

@@ -1,0 +1,19 @@
+{
+  "type": "processenhancement:grinder",
+  "experience": 0.0,
+  "ingredients": [
+    {
+      "item": "minecraft:bone"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "count": 6,
+        "id": "minecraft:bone_meal"
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 50
+}

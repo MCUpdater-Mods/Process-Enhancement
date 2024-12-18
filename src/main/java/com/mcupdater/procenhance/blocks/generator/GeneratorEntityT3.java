@@ -5,11 +5,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.state.BlockState;
 
 import static com.mcupdater.procenhance.setup.Config.BASIC_GENERATOR_PER_TICK;
-import static com.mcupdater.procenhance.setup.Registration.ADVGENERATOR_BLOCKENTITY;
+import static com.mcupdater.procenhance.setup.Registration.GENERATORT3_ENTITY;
 
 public class GeneratorEntityT3 extends GeneratorEntity {
     public GeneratorEntityT3(BlockPos blockPos, BlockState blockState) {
-        super(ADVGENERATOR_BLOCKENTITY.get(), blockPos, blockState);
+        super(GENERATORT3_ENTITY.get(), blockPos, blockState);
         setup(BASIC_GENERATOR_PER_TICK.get() * 4);
     }
 

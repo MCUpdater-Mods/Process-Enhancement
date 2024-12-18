@@ -1,46 +1,45 @@
 package com.mcupdater.procenhance.recipe;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.mcupdater.procenhance.ProcessEnhancement;
+import com.mcupdater.mculib.inventory.MachineContainer;
+import com.mcupdater.procenhance.setup.Registration;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.world.Container;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-public class SawmillRecipe implements Recipe<Container> {
-    private final ResourceLocation id;
+public class SawmillRecipe implements Recipe<MachineContainer> {
     private final ItemStack result;
     private final int processTime;
     private final NonNullList<Ingredient> ingredients;
-    private float experience;
+    private final float experience;
 
-    public SawmillRecipe(ResourceLocation id, ItemStack output, int processTime, float experience, NonNullList<Ingredient> ingredients) {
-        this.id = id;
-        this.result = output;
+    public SawmillRecipe(ItemStack result, int processTime, float experience, NonNullList<Ingredient> ingredients) {
+        this.result = result;
         this.processTime = processTime;
         this.experience = experience;
         this.ingredients = ingredients;
     }
 
     @Override
-    public boolean matches(Container container, Level level) {
-        return ingredients.get(0).test(container.getItem(2)); // match to phantom slot
+    public boolean matches(@NotNull MachineContainer container, @NotNull Level level) {
+        return ingredients.getFirst().test(container.getItem(2)); // match to phantom slot
     }
 
     @Override
-    public NonNullList<Ingredient> getIngredients() {
+    public @NotNull NonNullList<Ingredient> getIngredients() {
         return ingredients;
     }
 
     @Override
-    public ItemStack assemble(Container container) {
-        return result;
+    public @NotNull ItemStack assemble(@NotNull MachineContainer container, HolderLookup.@NotNull Provider pRegistries) {
+        return this.getResultItem(pRegistries).copy();
     }
 
     @Override
@@ -49,26 +48,25 @@ public class SawmillRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ItemStack getResultItem() {
-        return result.copy();
+    public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider pRegistries) {
+        return this.result;
+    }
+
+    public ItemStack result() {
+        return this.result;
     }
 
     @Override
-    public ResourceLocation getId() {
-        return id;
+    public @NotNull RecipeSerializer<?> getSerializer() {
+        return Registration.SAWMILL_SERIALIZER.get();
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
-        return Serializer.INSTANCE;
+    public @NotNull RecipeType<?> getType() {
+        return Registration.SAWMILL_RECIPE.get();
     }
 
-    @Override
-    public RecipeType<?> getType() {
-        return Type.INSTANCE;
-    }
-
-    public int getProcessTime() {
+    public int processTime() {
         return this.processTime;
     }
 
@@ -76,75 +74,50 @@ public class SawmillRecipe implements Recipe<Container> {
         return experience;
     }
 
-    public static class Type implements RecipeType<SawmillRecipe> {
-        private Type() {}
-        public static final Type INSTANCE = new Type();
-        public static final String ID = "sawmill";
-    }
-
     public static class Serializer implements RecipeSerializer<SawmillRecipe> {
-        public static final Serializer INSTANCE = new Serializer();
-        public static final ResourceLocation ID = new ResourceLocation(ProcessEnhancement.MODID,"sawmill");
+        public static final MapCodec<SawmillRecipe> CODEC = RecordCodecBuilder.mapCodec(
+                inst -> inst.group(
+                                // ItemStack result, int processTime, float experience, NonNullList<Ingredient> ingredients
+                                ItemStack.STRICT_CODEC.fieldOf("result").forGetter(SawmillRecipe::result),
+                                Codec.INT.fieldOf("processTime").forGetter(SawmillRecipe::processTime),
+                                Codec.FLOAT.fieldOf("experience").forGetter(SawmillRecipe::getExperience),
+                                NonNullList.codecOf(Ingredient.CODEC).fieldOf("ingredients").forGetter(SawmillRecipe::getIngredients)
+                        )
+                        .apply(inst, SawmillRecipe::new)
+        );
+
+        public static final StreamCodec<RegistryFriendlyByteBuf, SawmillRecipe> STREAM_CODEC = StreamCodec.of(
+                SawmillRecipe.Serializer::toNetwork,
+                SawmillRecipe.Serializer::fromNetwork
+        );
 
         @Override
-        public SawmillRecipe fromJson(ResourceLocation id, JsonObject json) {
-            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json,"result"));
-            int processTime = GsonHelper.getAsInt(json,"processTime");
-            float experience = GsonHelper.getAsFloat(json,"experience");
-            JsonArray ingredientArray = GsonHelper.getAsJsonArray(json, "ingredients");
-            NonNullList<Ingredient> ingredients = NonNullList.withSize(ingredientArray.size(),Ingredient.EMPTY);
-            for (int index = 0; index < ingredients.size(); index++) {
-                ingredients.set(index,Ingredient.fromJson(ingredientArray.get(index)));
-            }
-            return new SawmillRecipe(id, output, processTime, experience, ingredients);
+        public @NotNull MapCodec<SawmillRecipe> codec() {
+            return CODEC;
         }
 
-        @Nullable
         @Override
-        public SawmillRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
+        public @NotNull StreamCodec<RegistryFriendlyByteBuf, SawmillRecipe> streamCodec() {
+            return STREAM_CODEC;
+        }
+
+        public static SawmillRecipe fromNetwork(RegistryFriendlyByteBuf buf) {
             NonNullList<Ingredient> ingredients = NonNullList.withSize(buf.readInt(), Ingredient.EMPTY);
-            for(int index = 0; index < ingredients.size(); index++) {
-                ingredients.set(index, Ingredient.fromNetwork(buf));
-            }
+            ingredients.replaceAll(ignored -> Ingredient.CONTENTS_STREAM_CODEC.decode(buf));
             int processTime = buf.readInt();
             float experience = buf.readFloat();
-            ItemStack output = buf.readItem();
-            return new SawmillRecipe(id, output, processTime, experience, ingredients);
+            ItemStack output = ItemStack.STREAM_CODEC.decode(buf);
+            return new SawmillRecipe(output, processTime, experience, ingredients);
         }
 
-        @Override
-        public void toNetwork(FriendlyByteBuf buf, SawmillRecipe recipe) {
+        public static void toNetwork(RegistryFriendlyByteBuf buf, SawmillRecipe recipe) {
             buf.writeInt(recipe.getIngredients().size());
             for(Ingredient ingredient : recipe.getIngredients()) {
-                ingredient.toNetwork(buf);
+                Ingredient.CONTENTS_STREAM_CODEC.encode(buf,ingredient);
             }
-            buf.writeInt(recipe.getProcessTime());
+            buf.writeInt(recipe.processTime());
             buf.writeFloat(recipe.getExperience());
-            buf.writeItemStack(recipe.getResultItem(), false);
-        }
-
-        /*
-        @Override
-        public RecipeSerializer<?> setRegistryName(ResourceLocation name) {
-            return INSTANCE;
-        }
-
-        @Nullable
-        @Override
-        public ResourceLocation getRegistryName() {
-            return ID;
-        }
-
-        @Override
-        public Class<RecipeSerializer<?>> getRegistryType() {
-            return Serializer.castClass(RecipeSerializer.class);
-        }
-        */
-
-        @SuppressWarnings("unchecked")
-        private static <G> Class<G> castClass(Class<?> cls) {
-            return (Class<G>)cls;
+            ItemStack.STREAM_CODEC.encode(buf,recipe.result);
         }
     }
-
 }

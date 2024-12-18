@@ -4,11 +4,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.state.BlockState;
 
-import static com.mcupdater.procenhance.setup.Registration.GRINDERT4_BLOCKENTITY;
+import static com.mcupdater.procenhance.setup.Registration.GRINDERT4_ENTITY;
 
 public class GrinderEntityT4 extends GrinderEntity {
     public GrinderEntityT4(BlockPos blockPos, BlockState blockState) {
-        super(GRINDERT4_BLOCKENTITY.get(), blockPos, blockState, 8);
+        super(GRINDERT4_ENTITY.get(), blockPos, blockState, 8);
     }
 
     @Override

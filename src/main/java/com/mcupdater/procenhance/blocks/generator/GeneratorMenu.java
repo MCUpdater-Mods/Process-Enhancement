@@ -3,22 +3,27 @@ package com.mcupdater.procenhance.blocks.generator;
 import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
 import com.mcupdater.mculib.block.IConfigurableMenu;
 import com.mcupdater.mculib.capabilities.PowerTrackingMenu;
+import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.mculib.inventory.BucketSlot;
 import com.mcupdater.mculib.inventory.FuelSlot;
+import com.mcupdater.procenhance.blocks.autopackager.PackagerEntity;
+import com.mcupdater.procenhance.blocks.autopackager.PackagerMenu;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
 
 import java.util.Map;
 
@@ -27,9 +32,9 @@ public class GeneratorMenu extends PowerTrackingMenu implements IConfigurableMen
     private final Player player;
     private final IItemHandler playerInventory;
     private final ContainerData data;
-    private final Map<Direction, Component> adjacentNames;
+    private final Map<Direction, String> adjacentNames;
 
-    public GeneratorMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data, Map<Direction, Component> adjacentNames) {
+    public GeneratorMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data, Map<Direction, String> adjacentNames) {
         super(Registration.GENERATOR_MENU.get(), windowId);
         this.adjacentNames = adjacentNames;
         this.localBlockEntity = level.getBlockEntity(blockPos) instanceof GeneratorEntity ? (GeneratorEntity) level.getBlockEntity(blockPos) : null;
@@ -39,12 +44,19 @@ public class GeneratorMenu extends PowerTrackingMenu implements IConfigurableMen
         this.data = data;
 
         if (this.localBlockEntity != null) {
-            addSlot(new FuelSlot(new InvWrapper(this.localBlockEntity.getInventory()), 0, 81, 56));
-            addSlot(new BucketSlot(new InvWrapper(this.localBlockEntity.getInventory()), 1, 105, 56));
+            addSlot(new FuelSlot(this.localBlockEntity.getItemHandler().getInternalHandler(), 0, 81, 56));
+            addSlot(new BucketSlot(this.localBlockEntity.getItemHandler().getInternalHandler(), 1, 105, 56));
         }
         layoutPlayerInventorySlots(8, 84);
         trackPower();
         addDataSlots(data);
+    }
+
+    public static GeneratorMenu factory(int containerId, Inventory playerInv, FriendlyByteBuf extraData) {
+        BlockPos pos = extraData.readBlockPos();
+        Level world = playerInv.player.level();
+        GeneratorEntity te = (GeneratorEntity) world.getBlockEntity(pos);
+        return new GeneratorMenu(containerId, world, pos, playerInv, playerInv.player, new SimpleContainerData(2), DataHelper.readDirectionMap(extraData));
     }
 
     private void layoutPlayerInventorySlots(int leftCol, int topRow) {
@@ -136,7 +148,7 @@ public class GeneratorMenu extends PowerTrackingMenu implements IConfigurableMen
     }
 
     @Override
-    public Component getSideName(Direction direction) {
+    public String getSideName(Direction direction) {
         return this.adjacentNames.get(direction);
     }
 }

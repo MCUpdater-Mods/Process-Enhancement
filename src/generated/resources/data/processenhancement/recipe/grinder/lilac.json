@@ -1,0 +1,19 @@
+{
+  "type": "processenhancement:grinder",
+  "experience": 0.0,
+  "ingredients": [
+    {
+      "item": "minecraft:lilac"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "count": 6,
+        "id": "minecraft:magenta_dye"
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 50
+}

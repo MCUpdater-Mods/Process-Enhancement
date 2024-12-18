@@ -4,10 +4,10 @@ import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.recipe.HydratorRecipe;
 import com.mcupdater.procenhance.setup.Registration;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.neoforge.NeoForgeTypes;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
@@ -18,7 +18,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class HydratorRecipeCategory implements IRecipeCategory<HydratorRecipe> {
     public static final RecipeType<HydratorRecipe> TYPE = RecipeType.create(ProcessEnhancement.MODID, "hydrator", HydratorRecipe.class);
-    public static final ResourceLocation TEXTURE = new ResourceLocation(ProcessEnhancement.MODID, "textures/jei/hydrator.png");
+    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "textures/jei/hydrator.png");
 
     private final IDrawable background;
     private final IDrawable icon;
@@ -51,8 +51,8 @@ public class HydratorRecipeCategory implements IRecipeCategory<HydratorRecipe> {
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, HydratorRecipe recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 17,5).addIngredients(recipe.getItemIngredients().get(0));
-        builder.addSlot(RecipeIngredientRole.INPUT, 4, 3).setFluidRenderer(1000, true,5,19).addIngredient(ForgeTypes.FLUID_STACK, recipe.getFluidIngredient());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 53, 5).addItemStack(recipe.getResultItem());
+        builder.addSlot(RecipeIngredientRole.INPUT, 4, 3).setFluidRenderer(1000, true,5,19).addIngredient(NeoForgeTypes.FLUID_STACK, recipe.getFluidIngredient());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 53, 5).addItemStack(JEIProcEnhancePlugin.lookupOutput(recipe));
     }
 
 }

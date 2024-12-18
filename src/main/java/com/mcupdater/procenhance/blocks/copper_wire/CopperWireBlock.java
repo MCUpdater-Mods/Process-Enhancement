@@ -1,5 +1,6 @@
 package com.mcupdater.procenhance.blocks.copper_wire;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
@@ -18,11 +19,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import org.jetbrains.annotations.Nullable;
 
 public class CopperWireBlock extends BaseEntityBlock {
@@ -33,8 +33,16 @@ public class CopperWireBlock extends BaseEntityBlock {
     public static final BooleanProperty UP = BlockStateProperties.UP;
     public static final BooleanProperty DOWN = BlockStateProperties.DOWN;
 
-    public CopperWireBlock() {
-        super(Properties.of(Material.METAL).sound(SoundType.METAL).strength(1.5f).noOcclusion());
+    public static final MapCodec<CopperWireBlock> CODEC = simpleCodec(CopperWireBlock::new);
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
+    public CopperWireBlock(Properties properties) {
+        super(properties);
+        //super(Properties.of(Material.METAL).sound(SoundType.METAL).strength(1.5f).noOcclusion());
         registerDefaultState(
                 this.stateDefinition.any()
                         .setValue(NORTH, false)
@@ -63,11 +71,6 @@ public class CopperWireBlock extends BaseEntityBlock {
     }
 
     @Override
-    public boolean isValidSpawn(BlockState state, BlockGetter level, BlockPos pos, SpawnPlacements.Type type, EntityType<?> entityType) {
-        return false;
-    }
-
-    @Override
     public void neighborChanged(BlockState pState, Level pLevel, BlockPos pPos, Block pBlock, BlockPos pFromPos, boolean pIsMoving) {
         super.neighborChanged(pState,pLevel,pPos,pBlock,pFromPos,pIsMoving);
         BlockState newState = getState(pLevel, pPos, pState);
@@ -93,8 +96,7 @@ public class CopperWireBlock extends BaseEntityBlock {
     }
 
     private boolean isSideValid(Level pLevel, BlockPos pPos, Direction side) {
-        BlockEntity neighborEntity = pLevel.getBlockEntity(pPos.relative(side));
-        return neighborEntity != null && neighborEntity.getCapability(ForgeCapabilities.ENERGY, side.getOpposite()).isPresent();
+        return pLevel.getCapability(Capabilities.EnergyStorage.BLOCK , pPos.relative(side), side.getOpposite()) != null;
     }
 
     public BooleanProperty getSideProperty(Direction side) {

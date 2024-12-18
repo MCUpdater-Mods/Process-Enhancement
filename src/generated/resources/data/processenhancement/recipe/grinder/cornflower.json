@@ -1,0 +1,19 @@
+{
+  "type": "processenhancement:grinder",
+  "experience": 0.0,
+  "ingredients": [
+    {
+      "item": "minecraft:cornflower"
+    }
+  ],
+  "outputs": [
+    {
+      "stack": {
+        "count": 3,
+        "id": "minecraft:blue_dye"
+      },
+      "weight": 1
+    }
+  ],
+  "processTime": 50
+}

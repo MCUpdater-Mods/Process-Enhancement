@@ -1,0 +1,17 @@
+{
+  "type": "processenhancement:dehydrator",
+  "fluidOutput": {
+    "amount": 250,
+    "id": "minecraft:lava"
+  },
+  "itemIngredients": [
+    {
+      "item": "minecraft:magma_block"
+    }
+  ],
+  "processTime": 64,
+  "result": {
+    "count": 1,
+    "id": "minecraft:blackstone"
+  }
+}

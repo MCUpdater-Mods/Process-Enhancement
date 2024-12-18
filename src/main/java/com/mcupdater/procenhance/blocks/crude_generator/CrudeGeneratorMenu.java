@@ -3,19 +3,20 @@ package com.mcupdater.procenhance.blocks.crude_generator;
 import com.mcupdater.mculib.block.AbstractConfigurableBlockEntity;
 import com.mcupdater.mculib.block.IConfigurableMenu;
 import com.mcupdater.mculib.capabilities.PowerTrackingMenu;
+import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
 
 import java.util.Map;
 
@@ -23,9 +24,9 @@ public class CrudeGeneratorMenu extends PowerTrackingMenu implements IConfigurab
     private final CrudeGeneratorEntity localBlockEntity;
     private final Player player;
     private final IItemHandler playerInventory;
-    private final Map<Direction, Component> adjacentNames;
+    private final Map<Direction, String> adjacentNames;
 
-    public CrudeGeneratorMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, Map<Direction, Component> adjacentNames) {
+    public CrudeGeneratorMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, Map<Direction, String> adjacentNames) {
         super(Registration.CRUDEGENERATOR_MENU.get(), windowId);
         this.adjacentNames = adjacentNames;
         this.localBlockEntity = level.getBlockEntity(blockPos) instanceof CrudeGeneratorEntity ? (CrudeGeneratorEntity) level.getBlockEntity(blockPos) : null;
@@ -35,6 +36,13 @@ public class CrudeGeneratorMenu extends PowerTrackingMenu implements IConfigurab
 
         layoutPlayerInventorySlots(8, 84);
         trackPower();
+    }
+
+    public static CrudeGeneratorMenu factory(int containerId, Inventory playerInv, FriendlyByteBuf extraData) {
+        BlockPos pos = extraData.readBlockPos();
+        Level world = playerInv.player.level();
+        CrudeGeneratorEntity te = (CrudeGeneratorEntity) world.getBlockEntity(pos);
+        return new CrudeGeneratorMenu(containerId, world, pos, playerInv, playerInv.player, DataHelper.readDirectionMap(extraData));
     }
 
     private void layoutPlayerInventorySlots(int leftCol, int topRow) {
@@ -105,7 +113,7 @@ public class CrudeGeneratorMenu extends PowerTrackingMenu implements IConfigurab
     }
 
     @Override
-    public Component getSideName(Direction direction) {
+    public String getSideName(Direction direction) {
         return this.adjacentNames.get(direction);
     }
 

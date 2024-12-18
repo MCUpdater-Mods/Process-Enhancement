@@ -1,29 +1,27 @@
 package com.mcupdater.procenhance.recipe;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.mculib.inventory.MachineContainer;
-import com.mcupdater.procenhance.ProcessEnhancement;
+import com.mcupdater.procenhance.setup.Registration;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import net.neoforged.neoforge.fluids.FluidStack;
+import org.jetbrains.annotations.NotNull;
 
 public class HydratorRecipe implements Recipe<MachineContainer> {
-	private final ResourceLocation id;
 	private final ItemStack result;
 	private final int processTime;
 	private final NonNullList<Ingredient> itemIngredients;
 	private final FluidStack fluidIngredient;
 
-	public HydratorRecipe(ResourceLocation id, ItemStack output, int processTime, NonNullList<Ingredient> itemIngredients, FluidStack fluidIngredient) {
-		this.id = id;
+	public HydratorRecipe(ItemStack output, int processTime, NonNullList<Ingredient> itemIngredients, FluidStack fluidIngredient) {
 		this.result = output;
 		this.processTime = processTime;
 		this.itemIngredients = itemIngredients;
@@ -31,12 +29,11 @@ public class HydratorRecipe implements Recipe<MachineContainer> {
 	}
 
 	@Override
-	public boolean matches(MachineContainer pContainer, Level pLevel) {
+	public boolean matches(@NotNull MachineContainer pContainer, Level pLevel) {
 		if (pLevel.isClientSide()) {
 			return false;
 		}
-		//ProcessEnhancement.LOGGER.debug("Machine has - inputItem: {}, inputFluid: {}",pContainer.getItem(0),pContainer.getFluidHandler().getFluidInTank(0));
-		return itemIngredients.get(0).test(pContainer.getItem(0)) && pContainer.getFluidHandler().getFluidInTank(0).containsFluid(fluidIngredient);
+		return itemIngredients.getFirst().test(pContainer.getItem(0)) && FluidStack.isSameFluid(pContainer.getFluidHandler().getInternalHandler().getFluidInTank(0),fluidIngredient);
 	}
 
 	public NonNullList<Ingredient> getItemIngredients() {
@@ -48,8 +45,8 @@ public class HydratorRecipe implements Recipe<MachineContainer> {
 	}
 
 	@Override
-	public ItemStack assemble(MachineContainer pContainer) {
-		return result;
+	public @NotNull ItemStack assemble(@NotNull MachineContainer pContainer, HolderLookup.@NotNull Provider pRegistries) {
+		return this.getResultItem(pRegistries).copy();
 	}
 
 	@Override
@@ -58,78 +55,72 @@ public class HydratorRecipe implements Recipe<MachineContainer> {
 	}
 
 	@Override
-	public ItemStack getResultItem() {
-		return result.copy();
+	public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider pRegistries) {
+		return this.result;
+	}
+
+	public ItemStack getResult() {
+		return this.result;
 	}
 
 	@Override
-	public ResourceLocation getId() {
-		return id;
+	public @NotNull RecipeSerializer<?> getSerializer() {
+		return Registration.HYDRATOR_SERIALIZER.get();
 	}
 
 	@Override
-	public RecipeSerializer<?> getSerializer() {
-		return Serializer.INSTANCE;
-	}
-
-	@Override
-	public RecipeType<?> getType() {
-		return Type.INSTANCE;
+	public @NotNull RecipeType<?> getType() {
+		return Registration.HYDRATOR_RECIPE.get();
 	}
 
 	public int getProcessTime() {
 		return this.processTime;
 	}
 
-	public static class Type implements RecipeType<HydratorRecipe> {
-		private Type() {}
-		public static final Type INSTANCE = new Type();
-		public static final String ID = "hydrator";
-	}
-
 	public static class Serializer implements RecipeSerializer<HydratorRecipe> {
-		public static final Serializer INSTANCE = new Serializer();
-		public static final ResourceLocation ID = new ResourceLocation(ProcessEnhancement.MODID, "hydrator");
+		public static final MapCodec<HydratorRecipe> CODEC = RecordCodecBuilder.mapCodec(
+				inst -> inst.group(
+								// (ItemStack output, int processTime, NonNullList<Ingredient> itemIngredients, FluidStack fluidIngredient)
+								ItemStack.STRICT_CODEC.fieldOf("result").forGetter(HydratorRecipe::getResult),
+								Codec.INT.fieldOf("processTime").forGetter(HydratorRecipe::getProcessTime),
+								NonNullList.codecOf(Ingredient.CODEC).fieldOf("itemIngredients").forGetter(HydratorRecipe::getItemIngredients),
+								FluidStack.CODEC.fieldOf("fluidIngredient").forGetter(HydratorRecipe::getFluidIngredient)
+						)
+						.apply(inst, HydratorRecipe::new)
+		);
+
+		public static final StreamCodec<RegistryFriendlyByteBuf, HydratorRecipe> STREAM_CODEC = StreamCodec.of(
+				HydratorRecipe.Serializer::toNetwork,
+				HydratorRecipe.Serializer::fromNetwork
+		);
 
 		@Override
-		public HydratorRecipe fromJson(ResourceLocation id, JsonObject json) {
-			ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
-			int processTime = GsonHelper.getAsInt(json, "processTime");
-			JsonArray itemIngredientArray = GsonHelper.getAsJsonArray(json, "itemIngredients");
-			NonNullList<Ingredient> itemIngredients = NonNullList.withSize(itemIngredientArray.size(),Ingredient.EMPTY);
-			for (int index = 0; index < itemIngredients.size(); index++) {
-				itemIngredients.set(index,Ingredient.fromJson(itemIngredientArray.get(index)));
-			}
-			FluidStack fluidIngredient =  DataHelper.getJsonFluidStack(GsonHelper.getAsJsonObject(json, "fluidIngredient"));
-			return new HydratorRecipe(id, output, processTime, itemIngredients, fluidIngredient);
+		public @NotNull MapCodec<HydratorRecipe> codec() {
+			return CODEC;
 		}
 
 		@Override
-		public @Nullable HydratorRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
+		public @NotNull StreamCodec<RegistryFriendlyByteBuf, HydratorRecipe> streamCodec() {
+			return STREAM_CODEC;
+		}
+
+		public static HydratorRecipe fromNetwork(RegistryFriendlyByteBuf buf) {
 			NonNullList<Ingredient> itemIngredients = NonNullList.withSize(buf.readInt(), Ingredient.EMPTY);
-			for(int index = 0; index < itemIngredients.size(); index++) {
-				itemIngredients.set(index, Ingredient.fromNetwork(buf));
-			}
-			FluidStack fluidIngredient = FluidStack.readFromPacket(buf);
+			itemIngredients.replaceAll(ignored -> Ingredient.CONTENTS_STREAM_CODEC.decode(buf));
+			FluidStack fluidIngredient = FluidStack.STREAM_CODEC.decode(buf);
 			int processTime = buf.readInt();
-			ItemStack output = buf.readItem();
-			return new HydratorRecipe(id, output, processTime, itemIngredients, fluidIngredient);
+			ItemStack output = ItemStack.STREAM_CODEC.decode(buf);
+			return new HydratorRecipe(output, processTime, itemIngredients, fluidIngredient);
 		}
 
-		@Override
-		public void toNetwork(FriendlyByteBuf buf, HydratorRecipe recipe) {
+		public static void toNetwork(RegistryFriendlyByteBuf buf, HydratorRecipe recipe) {
 			buf.writeInt(recipe.getItemIngredients().size());
-			for(Ingredient ingredient : recipe.getItemIngredients()) {
-				ingredient.toNetwork(buf);
+			for (Ingredient ingredient : recipe.getItemIngredients()) {
+				Ingredient.CONTENTS_STREAM_CODEC.encode(buf, ingredient);
 			}
-			recipe.fluidIngredient.writeToPacket(buf);
-			buf.writeInt(recipe.getProcessTime());
-			buf.writeItemStack(recipe.getResultItem(), false);
-		}
-
-		@SuppressWarnings("unchecked")
-		private static <G> Class<G> castClass(Class<?> cls) {
-			return (Class<G>)cls;
+			FluidStack.STREAM_CODEC.encode(buf, recipe.fluidIngredient);
+			buf.writeInt(recipe.processTime);
+			ItemStack.STREAM_CODEC.encode(buf, recipe.result);
 		}
 	}
 }
