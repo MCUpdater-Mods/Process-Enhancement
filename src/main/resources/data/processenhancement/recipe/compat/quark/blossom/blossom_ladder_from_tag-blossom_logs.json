@@ -1,9 +1,9 @@
 {
   "type": "processenhancement:sawmill",
-  "conditions": [
+  "neoforge:conditions": [
     {
       "modid": "quark",
-      "type": "forge:mod_loaded"
+      "type": "neoforge:mod_loaded"
     }
   ],
   "ingredients": [

@@ -1,9 +1,9 @@
 {
 	"type": "processenhancement:grinder",
-	"conditions": [
+	"neoforge:conditions": [
 		{
 			"modid": "gemsnjewels",
-			"type": "forge:mod_loaded"
+			"type": "neoforge:mod_loaded"
 		}
 	],
 	"ingredients": [

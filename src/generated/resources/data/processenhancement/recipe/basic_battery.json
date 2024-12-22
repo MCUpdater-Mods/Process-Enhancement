@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "#": {
-      "item": "processenhancement:capacitor"
+      "item": "minecraft:redstone_block"
     },
     "C": {
       "item": "minecraft:copper_ingot"
@@ -12,7 +12,7 @@
       "item": "minecraft:iron_ingot"
     },
     "R": {
-      "item": "minecraft:redstone"
+      "item": "processenhancement:capacitor"
     }
   },
   "pattern": [

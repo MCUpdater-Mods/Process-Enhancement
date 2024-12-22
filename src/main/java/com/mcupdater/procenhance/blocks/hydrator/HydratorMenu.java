@@ -2,14 +2,10 @@ package com.mcupdater.procenhance.blocks.hydrator;
 
 import com.mcupdater.mculib.block.AbstractMachineMenu;
 import com.mcupdater.mculib.helpers.DataHelper;
-import com.mcupdater.procenhance.blocks.sawmill.SawmillEntity;
-import com.mcupdater.procenhance.blocks.sawmill.SawmillMenu;
-import com.mcupdater.procenhance.recipe.HydratorRecipe;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -24,9 +20,11 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class HydratorMenu extends AbstractMachineMenu<HydratorEntity> {
 	private final Container transientSlots = new SimpleContainer(2) {
@@ -71,17 +69,17 @@ public class HydratorMenu extends AbstractMachineMenu<HydratorEntity> {
 	}
 
 	@Override
-	public void removed(Player pPlayer) {
-		super.removed(pPlayer);
-		ContainerLevelAccess.create(tileEntity.getLevel(), tileEntity.getBlockPos()).execute((level, blockPos) -> {
-			this.clearContainer(pPlayer, this.transientSlots);
+	public void removed(@NotNull Player player) {
+		super.removed(player);
+		ContainerLevelAccess.create(Objects.requireNonNull(tileEntity.getLevel()), tileEntity.getBlockPos()).execute((level, blockPos) -> {
+			this.clearContainer(player, this.transientSlots);
 		});
 	}
 
 	@Override
-	public void slotsChanged(Container pContainer) {
-		super.slotsChanged(pContainer);
-		if (pContainer == this.transientSlots) {
+	public void slotsChanged(@NotNull Container container) {
+		super.slotsChanged(container);
+		if (container == this.transientSlots) {
 			IFluidHandlerItem itemFluidHandler = this.transientSlots.getItem(0).getCapability(Capabilities.FluidHandler.ITEM);
 			if (!this.transientSlots.getItem(0).isEmpty() && this.transientSlots.getItem(1).isEmpty() && itemFluidHandler != null) {
 				IFluidHandler tankFluidHandler = HydratorMenu.this.tileEntity.getFluidHandler().getInternalHandler();

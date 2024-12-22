@@ -19,17 +19,19 @@ import com.mcupdater.procenhance.blocks.miner.MinerScreen;
 import com.mcupdater.procenhance.blocks.planter.PlanterScreen;
 import com.mcupdater.procenhance.blocks.pump.PumpScreen;
 import com.mcupdater.procenhance.blocks.sawmill.SawmillScreen;
+import com.mcupdater.procenhance.blocks.soilmanager.SoilManagerScreen;
 import com.mcupdater.procenhance.blocks.solidifier.SolidifierScreen;
 import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterScreen;
 import com.mcupdater.procenhance.blocks.tank.TankScreen;
 import net.minecraft.client.renderer.BiomeColors;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
-@EventBusSubscriber(modid=ProcessEnhancement.MODID, bus=EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(value=Dist.CLIENT, modid=ProcessEnhancement.MODID, bus=EventBusSubscriber.Bus.MOD)
 public class ModSetup {
 
     @SubscribeEvent
@@ -68,6 +70,7 @@ public class ModSetup {
         event.register(Registration.DEHYDRATOR_MENU.get(), DehydratorScreen::new);
         event.register(Registration.HARVESTER_MENU.get(), HarvesterScreen::new);
         event.register(Registration.PLANTER_MENU.get(), PlanterScreen::new);
+        event.register(Registration.SOILMANAGER_MENU.get(), SoilManagerScreen::new);
     }
 
     @SubscribeEvent

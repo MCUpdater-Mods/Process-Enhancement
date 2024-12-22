@@ -37,6 +37,9 @@ import com.mcupdater.procenhance.blocks.pump.*;
 import com.mcupdater.procenhance.blocks.sawmill.SawmillBlock;
 import com.mcupdater.procenhance.blocks.sawmill.SawmillEntity;
 import com.mcupdater.procenhance.blocks.sawmill.SawmillMenu;
+import com.mcupdater.procenhance.blocks.soilmanager.SoilManagerBlock;
+import com.mcupdater.procenhance.blocks.soilmanager.SoilManagerEntity;
+import com.mcupdater.procenhance.blocks.soilmanager.SoilManagerMenu;
 import com.mcupdater.procenhance.blocks.solidifier.*;
 import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterBlock;
 import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterEntity;
@@ -55,6 +58,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -407,10 +411,25 @@ public class Registration {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PlanterEntity>> PLANTER_ENTITY = BLOCK_ENTITIES.register("planter", () -> BlockEntityType.Builder.of(PlanterEntity::new, PLANTER_BLOCK.get()).build(null));
     public static final Supplier<MenuType<PlanterMenu>> PLANTER_MENU = MENUS.register("planter", () -> IMenuTypeExtension.create(PlanterMenu::factory));
 
+    public static final DeferredBlock<SoilManagerBlock> SOILMANAGER_BLOCK = MACHINES.register("soilmanager", () -> new SoilManagerBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.METAL)
+            .sound(SoundType.METAL)
+            .strength(15.0f)
+            .requiresCorrectToolForDrops()
+    ));
+    public static final DeferredItem<Item> SOILMANAGER_BLOCKITEM = BLOCK_ITEMS.register("soilmanager", () -> new BlockItem(SOILMANAGER_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SoilManagerEntity>> SOILMANAGER_ENTITY = BLOCK_ENTITIES.register("soilmanager", () -> BlockEntityType.Builder.of(SoilManagerEntity::new, SOILMANAGER_BLOCK.get()).build(null));
+    public static final Supplier<MenuType<SoilManagerMenu>> SOILMANAGER_MENU = MENUS.register("soilmanager", () -> IMenuTypeExtension.create(SoilManagerMenu::factory));
+
     public static final Supplier<LootItemFunctionType<? extends LootItemConditionalFunction>> RETAIN_ENCHANTMENTS = LOOT_FUNCTION_TYPES.register("retain_enchantments", () -> new LootItemFunctionType(RetainEnchantmentsFunction.CODEC));
     public static final Supplier<LootItemFunctionType<? extends LootItemConditionalFunction>> RETAIN_ENERGY = LOOT_FUNCTION_TYPES.register("retain_energy", () -> new LootItemFunctionType(RetainEnergyFunction.CODEC));
     public static final Supplier<LootItemFunctionType<? extends LootItemConditionalFunction>> RETAIN_FLUID = LOOT_FUNCTION_TYPES.register("retain_fluid", () -> new LootItemFunctionType(RetainFluidFunction.CODEC));
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> STORED_ENERGY = DATA_COMPONENTS.register("energy", () -> DataComponentType.<Integer>builder().persistent(Codec.INT.orElse(0)).networkSynchronized(ByteBufCodecs.VAR_INT).build());
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<SimpleFluidContent>> STORED_FLUID = DATA_COMPONENTS.register("fluid", () -> DataComponentType.<SimpleFluidContent>builder().persistent(SimpleFluidContent.CODEC.orElse(SimpleFluidContent.EMPTY)).networkSynchronized(SimpleFluidContent.STREAM_CODEC).build());
+
+    public static final TagKey<Item> IRON_DUST_TAG = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "dusts/iron"));
+    public static final TagKey<Item> COPPER_DUST_TAG = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "dusts/copper"));
+    public static final TagKey<Item> GOLD_DUST_TAG = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "dusts/gold"));
+    public static final TagKey<Item> PLANT_DUST_TAG = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "dusts/plant"));
 }

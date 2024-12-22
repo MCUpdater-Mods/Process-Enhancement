@@ -37,6 +37,7 @@
     "processenhancement:dehydrator",
     "processenhancement:autoharvester",
     "processenhancement:planter",
+    "processenhancement:soilmanager",
     "processenhancement:copper_wire",
     "processenhancement:basic_battery",
     "processenhancement:intermediate_battery",

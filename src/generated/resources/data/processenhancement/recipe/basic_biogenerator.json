@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "#": {
-      "item": "processenhancement:plant_dust"
+      "tag": "c:dusts/plant"
     },
     "C": {
       "item": "minecraft:copper_ingot"
@@ -12,7 +12,7 @@
       "item": "minecraft:deepslate_bricks"
     },
     "R": {
-      "item": "minecraft:redstone"
+      "item": "processenhancement:capacitor"
     }
   },
   "pattern": [

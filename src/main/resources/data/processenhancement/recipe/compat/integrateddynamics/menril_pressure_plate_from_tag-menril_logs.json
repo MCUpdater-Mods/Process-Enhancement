@@ -1,9 +1,9 @@
 {
   "type": "processenhancement:sawmill",
-  "conditions": [
+  "neoforge:conditions": [
     {
       "modid": "integrateddynamics",
-      "type": "forge:mod_loaded"
+      "type": "neoforge:mod_loaded"
     }
   ],
   "ingredients": [
@@ -12,7 +12,7 @@
     }
   ],
   "result": {
-    "item": "integrateddynamics:menril_pressure_plate",
+    "id": "integrateddynamics:menril_pressure_plate",
     "count": 3
   },
   "processTime": 32,

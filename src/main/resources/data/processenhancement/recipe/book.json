@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "conditions": [{
-    "type": "forge:mod_loaded",
-    "modid": "patchouli"
-  }],
-  "group": "mculib",
-  "ingredients": [{
-    "item": "minecraft:book"
-  },
+  "neoforge:conditions": [
     {
-      "tag": "forge:ingots/copper"
+      "type": "neoforge:item_exists",
+      "item": "patchouli:guide_book"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "processenhancement:capacitor"
     }
   ],
   "result": {
-    "item": "patchouli:guide_book",
-    "nbt": "{\"patchouli:book\": \"processenhancement:the_art\"}",
-    "count": 1
+    "id": "patchouli:guide_book",
+    "components": {
+      "patchouli:book": "processenhancement:the_art"
+    }
   }
 }

@@ -69,6 +69,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         machine(Registration.DECONSTRUCTOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.AMETHYST_BLOCK, Blocks.IRON_BLOCK, Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/deconstructor", false);
         machine(Registration.AUTOPACKAGER_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.COPPER_BLOCK,Blocks.SMOOTH_STONE,Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/crafter", false);
         machine(Registration.HARVESTER_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.COPPER_BLOCK,Blocks.SPRUCE_PLANKS,Blocks.BLACK_CONCRETE,Blocks.COPPER_BLOCK,"block/harvester",false);
+        machine(Registration.SOILMANAGER_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.COPPER_BLOCK,Blocks.SPRUCE_PLANKS,Blocks.BLACK_CONCRETE,Blocks.COPPER_BLOCK,"block/soil_manager", false);
         machine(Registration.HYDRATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK,Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/hydrator", false);
         machine(Registration.DEHYDRATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK,Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/dehydrator", false);
         solidifier(Registration.COBBLESTONESOLIDIFIER_BLOCK.get(),Blocks.COPPER_BLOCK,blockTexture(Blocks.COBBLESTONE), "block/solidifier", ResourceLocation.withDefaultNamespace("block/water_flow"), ResourceLocation.withDefaultNamespace("block/lava_flow"));

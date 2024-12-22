@@ -54,6 +54,7 @@ public class ModEventHandlers {
 				event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Registration.MINERT4_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getItemHandler().getItemHandler(side) : blockEntity.getItemHandler().getInternalHandler());
 				event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Registration.PLANTER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getItemHandler().getItemHandler(side) : blockEntity.getItemHandler().getInternalHandler());
 				event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Registration.SAWMILL_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getItemHandler().getItemHandler(side) : blockEntity.getItemHandler().getInternalHandler());
+				event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Registration.SOILMANAGER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getItemHandler().getItemHandler(side) : blockEntity.getItemHandler().getInternalHandler());
 				event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Registration.BASALTSOLIDIFIER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getItemHandler().getItemHandler(side) : blockEntity.getItemHandler().getInternalHandler());
 				event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Registration.COBBLESTONESOLIDIFIER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getItemHandler().getItemHandler(side) : blockEntity.getItemHandler().getInternalHandler());
 				event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Registration.STONECUTTER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getItemHandler().getItemHandler(side) : blockEntity.getItemHandler().getInternalHandler());
@@ -102,6 +103,7 @@ public class ModEventHandlers {
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.PUMPT3_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.PUMPT4_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.SAWMILL_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
+				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.SOILMANAGER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.STONECUTTER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.BASALTSOLIDIFIER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.COBBLESTONESOLIDIFIER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
@@ -120,6 +122,7 @@ public class ModEventHandlers {
 				event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, Registration.TANKT2_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getFluidHandler().getFluidHandler(side) : blockEntity.getFluidHandler().getInternalHandler());
 				event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, Registration.TANKT3_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getFluidHandler().getFluidHandler(side) : blockEntity.getFluidHandler().getInternalHandler());
 				event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, Registration.TANKT4_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getFluidHandler().getFluidHandler(side) : blockEntity.getFluidHandler().getInternalHandler());
+				event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, Registration.SOILMANAGER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getFluidHandler().getFluidHandler(side) : blockEntity.getFluidHandler().getInternalHandler());
 			}
 		}
 		{ // Item Handlers

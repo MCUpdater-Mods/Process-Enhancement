@@ -1,18 +1,18 @@
 {
-  "type": "processenhancement:sawmill",
-  "conditions": [
+  "neoforge:conditions": [
     {
       "modid": "integrateddynamics",
-      "type": "forge:mod_loaded"
+      "type": "neoforge:mod_loaded"
     }
   ],
+  "type": "processenhancement:sawmill",
   "ingredients": [
     {
       "tag": "integrateddynamics:menril_logs"
     }
   ],
   "result": {
-    "item": "integrateddynamics:menril_door",
+    "id": "integrateddynamics:menril_door",
     "count": 3
   },
   "processTime": 32,

@@ -1,9 +1,9 @@
 {
   "type": "processenhancement:sawmill",
-  "conditions": [
+  "neoforge:conditions": [
     {
       "modid": "integrateddynamics",
-      "type": "forge:mod_loaded"
+      "type": "neoforge:mod_loaded"
     }
   ],
   "ingredients": [
@@ -12,7 +12,7 @@
     }
   ],
   "result": {
-    "item": "integrateddynamics:menril_planks",
+    "id": "integrateddynamics:menril_planks",
     "count": 5
   },
   "processTime": 32,

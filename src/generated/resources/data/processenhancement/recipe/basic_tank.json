@@ -10,15 +10,12 @@
     },
     "F": {
       "item": "minecraft:iron_ingot"
-    },
-    "R": {
-      "item": "minecraft:redstone"
     }
   },
   "pattern": [
     "CFC",
     "F#F",
-    "CRC"
+    "CFC"
   ],
   "result": {
     "count": 1,

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "processenhancement:copper_dust"
+            "items": "#c:dusts/copper"
           }
         ]
       },

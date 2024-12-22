@@ -11,7 +11,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.Container;
@@ -30,8 +29,6 @@ import net.minecraft.world.level.block.StemBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.util.FakePlayer;
-import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedList;
@@ -72,13 +69,13 @@ public class PlanterEntity extends AbstractMachineBlockEntity {
 	}
 
 	private void initializeWorkArea() {
-		Direction workfacing = level.getBlockState(this.worldPosition).getValue(PlanterBlock.FACING).getOpposite();
-		BlockPos initial = this.worldPosition.relative(workfacing).relative(workfacing.getCounterClockWise(),4);
+		Direction workFacing = level.getBlockState(this.worldPosition).getValue(PlanterBlock.FACING).getOpposite();
+		BlockPos initial = this.worldPosition.relative(workFacing).relative(workFacing.getCounterClockWise(),4);
 		for (int i = 0; i < 9; i++) {
 			Integer row = i;
 			BlockPos currentRowStart = initial;
-			IntStream.rangeClosed(0,8).forEach(value -> workArea.add(new Tuple<>(currentRowStart.relative(workfacing,value), row)));
-			initial = currentRowStart.relative(workfacing.getClockWise());
+			IntStream.rangeClosed(0,8).forEach(value -> workArea.add(new Tuple<>(currentRowStart.relative(workFacing,value), row)));
+			initial = currentRowStart.relative(workFacing.getClockWise());
 		}
 	}
 

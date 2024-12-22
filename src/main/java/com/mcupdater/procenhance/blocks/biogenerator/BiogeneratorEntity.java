@@ -21,10 +21,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
 
-import static com.mcupdater.procenhance.setup.Registration.COPPER_DUST;
-import static com.mcupdater.procenhance.setup.Registration.PLANT_DUST;
+import static com.mcupdater.procenhance.setup.Registration.*;
 
 public abstract class BiogeneratorEntity extends AbstractConfigurableBlockEntity implements IMachineGuiProvider {
     public final static int BIO_MAX = 1000;
@@ -164,9 +164,9 @@ public abstract class BiogeneratorEntity extends AbstractConfigurableBlockEntity
     public boolean canPlaceItem(int slot, ItemStack stack) {
         switch(slot) {
             case 0: // Plant Dust
-                return stack.getItem().equals(PLANT_DUST.get());
+                return stack.is(PLANT_DUST_TAG);
             case 1: // Copper Dust
-                return stack.getItem().equals(COPPER_DUST.get());
+                return stack.is(COPPER_DUST_TAG);
             case 2: // Gunpowder
                 return stack.getItem().equals(Items.GUNPOWDER);
             default:

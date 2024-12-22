@@ -1,0 +1,15 @@
+{
+  "name": "Soil Manager",
+  "icon": "processenhancement:soilmanager",
+  "category": "processenhancement:processing",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Irrigates farmland and speeds growth using bonemeal"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:soilmanager"
+    }
+  ]
+}

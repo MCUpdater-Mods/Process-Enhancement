@@ -11,6 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
@@ -141,6 +142,13 @@ public class HarvesterEntity extends AbstractMachineBlockEntity {
                         level.playSound(null, toHarvest, SoundEvents.CROP_BREAK, SoundSource.BLOCKS, 1, 1);
                         internalBuffer.addAll(drops);
                         //ProcessEnhancement.LOGGER.info("Harvested: {} @ {} Drops: {}", state.getBlock(), toHarvest, drops);
+                        tick += 20;
+                        return true;
+                    } else if (state.getBlock() instanceof SweetBerryBushBlock berryBushBlock && state.getValue(SweetBerryBushBlock.AGE) == SweetBerryBushBlock.MAX_AGE) {
+                        int count = 2 + level.random.nextInt(2);
+                        internalBuffer.add(new ItemStack(Items.SWEET_BERRIES, count));
+                        level.setBlock(toHarvest, state.setValue(SweetBerryBushBlock.AGE, 1), 2);
+                        level.playSound(null, toHarvest, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
                         tick += 20;
                         return true;
                     }

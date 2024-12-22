@@ -4,7 +4,7 @@
   "cookingtime": 100,
   "experience": 0.7,
   "ingredient": {
-    "item": "processenhancement:copper_dust"
+    "tag": "c:dusts/copper"
   },
   "result": {
     "count": 1,

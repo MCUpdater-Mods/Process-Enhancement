@@ -6,6 +6,7 @@ import com.mcupdater.procenhance.setup.Config;
 import com.mcupdater.procenhance.setup.ModSetup;
 import com.mcupdater.procenhance.setup.Registration;
 import com.mojang.logging.LogUtils;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
@@ -22,11 +23,9 @@ public class ProcessEnhancement {
 
     public ProcessEnhancement(IEventBus modEventBus, ModContainer modContainer) {
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
-        modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
         Registration.init(modEventBus);
 
         modEventBus.addListener(ChannelRegistration::register);
-        if (ModList.get().isLoaded("patchouli")) PatchouliConfig.register();
     }
 
 }

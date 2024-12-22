@@ -1,5 +1,7 @@
 package com.mcupdater.procenhance.datagen;
 
+import alexthw.ars_elemental.registry.ModItems;
+import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
 import com.mcupdater.procenhance.datagen.custom.*;
 import com.mcupdater.procenhance.recipe.ConfigCondition;
 import com.mcupdater.procenhance.setup.Registration;
@@ -8,6 +10,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -49,12 +52,12 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         upgradeMachineRecipe(recipeOutput, ADVLAVAGENERATOR_BLOCK.get(), INTERLAVAGENERATOR_BLOCK.get(), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Blocks.IRON_BLOCK));
         upgradeMachineRecipe(recipeOutput, INDLAVAGENERATOR_BLOCK.get(), ADVLAVAGENERATOR_BLOCK.get(), Ingredient.of(Items.DIAMOND), Ingredient.of(Blocks.GOLD_BLOCK));
 
-        basicMachineRecipe(recipeOutput, BASICBIOGENERATOR_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Blocks.DEEPSLATE_BRICKS), Ingredient.of(PLANT_DUST.get()));
+        basicMachineRecipe(recipeOutput, BASICBIOGENERATOR_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Blocks.DEEPSLATE_BRICKS), Ingredient.of(PLANT_DUST_TAG));
         upgradeMachineRecipe(recipeOutput, INTERBIOGENERATOR_BLOCK.get(), BASICBIOGENERATOR_BLOCK.get(), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.COPPER_BLOCK));
         upgradeMachineRecipe(recipeOutput, ADVBIOGENERATOR_BLOCK.get(), INTERBIOGENERATOR_BLOCK.get(), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Blocks.IRON_BLOCK));
         upgradeMachineRecipe(recipeOutput, INDBIOGENERATOR_BLOCK.get(), ADVBIOGENERATOR_BLOCK.get(), Ingredient.of(Items.DIAMOND), Ingredient.of(Blocks.GOLD_BLOCK));
 
-        basicMachineRecipe(recipeOutput, BASICBATTERY_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(CAPACITOR.get()));
+        basicMachineRecipe(recipeOutput, BASICBATTERY_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.REDSTONE_BLOCK));
         upgradeBatteryRecipe(recipeOutput, INTBATTERY_BLOCK.get(), BASICBATTERY_BLOCK.get(), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.COPPER_BLOCK));
         upgradeBatteryRecipe(recipeOutput, ADVBATTERY_BLOCK.get(), INTBATTERY_BLOCK.get(), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Blocks.IRON_BLOCK));
         upgradeBatteryRecipe(recipeOutput, INDBATTERY_BLOCK.get(), ADVBATTERY_BLOCK.get(), Ingredient.of(Items.DIAMOND), Ingredient.of(Blocks.GOLD_BLOCK));
@@ -69,7 +72,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         upgradeMachineRecipe(recipeOutput, GRINDERT3_BLOCK.get(), GRINDERT2_BLOCK.get(), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Blocks.IRON_BLOCK));
         upgradeMachineRecipe(recipeOutput, GRINDERT4_BLOCK.get(), GRINDERT3_BLOCK.get(), Ingredient.of(Items.DIAMOND), Ingredient.of(Blocks.GOLD_BLOCK));
 
-        basicMachineRecipe(recipeOutput, TANKT1_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.GLASS));
+        crudeMachineRecipe(recipeOutput, TANKT1_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.GLASS));
         upgradeTankRecipe(recipeOutput, TANKT2_BLOCK.get(), TANKT1_BLOCK.get(), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.COPPER_BLOCK));
         upgradeTankRecipe(recipeOutput, TANKT3_BLOCK.get(), TANKT2_BLOCK.get(), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Blocks.IRON_BLOCK));
         upgradeTankRecipe(recipeOutput, TANKT4_BLOCK.get(), TANKT3_BLOCK.get(), Ingredient.of(Items.DIAMOND), Ingredient.of(Blocks.GOLD_BLOCK));
@@ -86,6 +89,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         basicMachineRecipe(recipeOutput, HARVESTER_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(ItemTags.PLANKS), Ingredient.of(Items.STONE_HOE));
         basicMachineRecipe(recipeOutput, PLANTER_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(ItemTags.PLANKS), Ingredient.of(ItemTags.VILLAGER_PLANTABLE_SEEDS));
+        basicMachineRecipe(recipeOutput, SOILMANAGER_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(ItemTags.PLANKS), Ingredient.of(Blocks.BONE_BLOCK));
         // Sawmill recipes
         //sawmill(recipeOutput, Ingredient.of(ItemTags.DIRT), Items.DIAMOND, 1, 32, 0.05f, new ModLoadedCondition("testmod"));
         sawmill(recipeOutput, Ingredient.of(ItemTags.PLANKS), Items.STICK, 3, 16, 0.01f, null,"stick_from_planks");
@@ -244,7 +248,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         // Grinder recipes
         grinder(Ingredient.of(Blocks.COBBLESTONE),200,0.01f,"cobblestone").addOutput(new ItemStack(Blocks.GRAVEL,1), 1).save(recipeOutput);
-        // Disabled recipe generation.  Generated recipes moved to resources
         grinder(Ingredient.of(Blocks.GRAVEL), 200, 0.01f,"gravel_noresources")
                 .addCondition(new NotCondition(new ConfigCondition()))
                 .addOutput(new ItemStack(Items.FLINT, 1), 1)
@@ -343,9 +346,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         dehydrator(recipeOutput, Ingredient.of(Blocks.CLAY), new FluidStack(Fluids.WATER, 50), Blocks.TERRACOTTA, 1, 32, null,"terracotta");
         dehydrator(recipeOutput, Ingredient.of(Blocks.MAGMA_BLOCK), new FluidStack(Fluids.LAVA, 250), Blocks.BLACKSTONE, 1, 64, null,"lava");
 
-        cookOre(recipeOutput, IRON_DUST.get(), Items.IRON_INGOT, 0.7f);
-        cookOre(recipeOutput, COPPER_DUST.get(), Items.COPPER_INGOT, 0.7f);
-        cookOre(recipeOutput, GOLD_DUST.get(), Items.GOLD_INGOT, 1.0f);
+        cookOre(recipeOutput, "iron_dust", IRON_DUST_TAG, Items.IRON_INGOT, 0.7f);
+        cookOre(recipeOutput, "copper_dust", COPPER_DUST_TAG, Items.COPPER_INGOT, 0.7f);
+        cookOre(recipeOutput, "gold_dust", GOLD_DUST_TAG, Items.GOLD_INGOT, 1.0f);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC,CAPACITOR.get()).define('B',Ingredient.of(Items.BLUE_DYE)).define('C',Ingredient.of(Items.COPPER_INGOT)).define('P',Ingredient.of(Items.PAPER)).define('I',Ingredient.of(Items.IRON_NUGGET)).pattern("BBB").pattern("CPC").pattern("I I").unlockedBy("automatic", has(Items.COPPER_INGOT)).save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC,DISENCHANTER_BLOCK.get()).define('L',Ingredient.of(Items.LAPIS_LAZULI)).define('A',Ingredient.of(Items.AMETHYST_SHARD)).define('B',Ingredient.of(Blocks.POLISHED_BLACKSTONE)).define('E',Ingredient.of(Blocks.ENCHANTING_TABLE)).pattern("LBA").pattern("BEB").pattern("ABL").unlockedBy("automatic", has(Blocks.ENCHANTING_TABLE)).save(recipeOutput);
@@ -361,6 +364,47 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         for (BWGWoodSet woodSet : BWGWoodSet.woodsets()) {
             generateConditionalSawmillRecipes(recipeOutput, "biomeswevegone", woodSet.name(), woodSet.logstem(), woodSet.planks(), woodSet.stairs(), woodSet.slab(), woodSet.pressurePlate(), woodSet.sign(), woodSet.door(), woodSet.trapdoor(), woodSet.strippedLogStem(), woodSet.strippedWood(), woodSet.fence(), woodSet.fenceGate(), woodSet.boatItem() != null ? woodSet.boatItem().get() : null, woodSet.button(), null);
         }
+        generateConditionalSawmillRecipes(recipeOutput, "ars_nouveau", "archwood", BlockRegistry.BLAZING_LOG.get(), BlockRegistry.ARCHWOOD_PLANK.get(), BlockRegistry.ARCHWOOD_STAIRS.get(), BlockRegistry.ARCHWOOD_SLABS.get(), BlockRegistry.ARCHWOOD_PPlate.get(), null, BlockRegistry.ARCHWOOD_DOOR.get(), BlockRegistry.ARCHWOOD_TRAPDOOR.get(), BlockRegistry.STRIPPED_AWLOG_RED.get(), BlockRegistry.STRIPPED_AWWOOD_RED.get(), BlockRegistry.ARCHWOOD_FENCE.get(), BlockRegistry.ARCHWOOD_FENCE_GATE.get(), null, BlockRegistry.ARCHWOOD_BUTTON.get(), null);
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.CASCADING_LOG.get()), BlockRegistry.ARCHWOOD_PLANK.get(), 6, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau","cascading_archwood_planks");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.CASCADING_LOG.get()), BlockRegistry.STRIPPED_AWLOG_BLUE.get(), 1, 16, 0.01f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.CASCADING_LOG.get()), BlockRegistry.STRIPPED_AWWOOD_BLUE.get(), 1, 16, 0.01f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.CASCADING_LOG.get()), BlockRegistry.ARCHWOOD_STAIRS.get(), 6, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "cascading_archwood_stairs");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.CASCADING_LOG.get()), BlockRegistry.ARCHWOOD_SLABS.get(), 12, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "cascading_archwood_slabs");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.CASCADING_LOG.get()), BlockRegistry.ARCHWOOD_PPlate.get(), 3, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "cascading_archwood_pplates");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.CASCADING_LOG.get()), BlockRegistry.ARCHWOOD_DOOR.get(), 3, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "cascading_archwood_doors");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.CASCADING_LOG.get()), BlockRegistry.ARCHWOOD_TRAPDOOR.get(), 2, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "cascading_archwood_trapdoors");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.CASCADING_LOG.get()), BlockRegistry.ARCHWOOD_FENCE.get(), 4, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "cascading_archwood_fence");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.CASCADING_LOG.get()), BlockRegistry.ARCHWOOD_FENCE_GATE.get(), 2, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "cascading_archwood_fencegate");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.FLOURISHING_LOG.get()), BlockRegistry.ARCHWOOD_PLANK.get(), 6, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "flourishing_archwood_planks");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.FLOURISHING_LOG.get()), BlockRegistry.STRIPPED_AWLOG_GREEN.get(), 1, 16, 0.01f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.FLOURISHING_LOG.get()), BlockRegistry.STRIPPED_AWWOOD_GREEN.get(), 1, 16, 0.01f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.FLOURISHING_LOG.get()), BlockRegistry.ARCHWOOD_STAIRS.get(), 6, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "flourishing_archwood_stairs");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.FLOURISHING_LOG.get()), BlockRegistry.ARCHWOOD_SLABS.get(), 12, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "flourishing_archwood_slabs");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.FLOURISHING_LOG.get()), BlockRegistry.ARCHWOOD_PPlate.get(), 3, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "flourishing_archwood_pplates");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.FLOURISHING_LOG.get()), BlockRegistry.ARCHWOOD_DOOR.get(), 3, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "flourishing_archwood_doors");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.FLOURISHING_LOG.get()), BlockRegistry.ARCHWOOD_TRAPDOOR.get(), 2, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "flourishing_archwood_trapdoors");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.FLOURISHING_LOG.get()), BlockRegistry.ARCHWOOD_FENCE.get(), 4, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "flourishing_archwood_fence");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.FLOURISHING_LOG.get()), BlockRegistry.ARCHWOOD_FENCE_GATE.get(), 2, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "flourishing_archwood_fencegate");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.VEXING_LOG.get()), BlockRegistry.ARCHWOOD_PLANK.get(), 6, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau","vexing_archwood_planks");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.VEXING_LOG.get()), BlockRegistry.STRIPPED_AWLOG_PURPLE.get(), 1, 16, 0.01f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.VEXING_LOG.get()), BlockRegistry.STRIPPED_AWWOOD_PURPLE.get(), 1, 16, 0.01f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.VEXING_LOG.get()), BlockRegistry.ARCHWOOD_STAIRS.get(), 6, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "vexing_archwood_stairs");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.VEXING_LOG.get()), BlockRegistry.ARCHWOOD_SLABS.get(), 12, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "vexing_archwood_slabs");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.VEXING_LOG.get()), BlockRegistry.ARCHWOOD_PPlate.get(), 3, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "vexing_archwood_pplates");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.VEXING_LOG.get()), BlockRegistry.ARCHWOOD_DOOR.get(), 3, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "vexing_archwood_doors");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.VEXING_LOG.get()), BlockRegistry.ARCHWOOD_TRAPDOOR.get(), 2, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "vexing_archwood_trapdoors");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.VEXING_LOG.get()), BlockRegistry.ARCHWOOD_FENCE.get(), 4, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "vexing_archwood_fence");
+        sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.VEXING_LOG.get()), BlockRegistry.ARCHWOOD_FENCE_GATE.get(), 2, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "vexing_archwood_fencegate");
+        sawmillConditional(recipeOutput, Ingredient.of(ModItems.FLASHING_ARCHWOOD_LOG.get()), BlockRegistry.ARCHWOOD_PLANK.get(), 6, 32, 0.05f, new ModLoadedCondition("ars_elemental"), "ars_elemental","flashing_archwood_planks");
+        sawmillConditional(recipeOutput, Ingredient.of(ModItems.FLASHING_ARCHWOOD_LOG.get()), ModItems.FLASHING_ARCHWOOD_LOG_STRIPPED.get(), 1, 16, 0.01f, new ModLoadedCondition("ars_elemental"), "ars_elemental");
+        sawmillConditional(recipeOutput, Ingredient.of(ModItems.FLASHING_ARCHWOOD_LOG.get()), ModItems.FLASHING_ARCHWOOD_STRIPPED.get(), 1, 16, 0.01f, new ModLoadedCondition("ars_elemental"), "ars_elemental");
+        sawmillConditional(recipeOutput, Ingredient.of(ModItems.FLASHING_ARCHWOOD_LOG.get()), BlockRegistry.ARCHWOOD_STAIRS.get(), 6, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "flashing_archwood_stairs");
+        sawmillConditional(recipeOutput, Ingredient.of(ModItems.FLASHING_ARCHWOOD_LOG.get()), BlockRegistry.ARCHWOOD_SLABS.get(), 12, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "flashing_archwood_slabs");
+        sawmillConditional(recipeOutput, Ingredient.of(ModItems.FLASHING_ARCHWOOD_LOG.get()), BlockRegistry.ARCHWOOD_PPlate.get(), 3, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "flashing_archwood_pplates");
+        sawmillConditional(recipeOutput, Ingredient.of(ModItems.FLASHING_ARCHWOOD_LOG.get()), BlockRegistry.ARCHWOOD_DOOR.get(), 3, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "flashing_archwood_doors");
+        sawmillConditional(recipeOutput, Ingredient.of(ModItems.FLASHING_ARCHWOOD_LOG.get()), BlockRegistry.ARCHWOOD_TRAPDOOR.get(), 2, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "flashing_archwood_trapdoors");
+        sawmillConditional(recipeOutput, Ingredient.of(ModItems.FLASHING_ARCHWOOD_LOG.get()), BlockRegistry.ARCHWOOD_FENCE.get(), 4, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "flashing_archwood_fence");
+        sawmillConditional(recipeOutput, Ingredient.of(ModItems.FLASHING_ARCHWOOD_LOG.get()), BlockRegistry.ARCHWOOD_FENCE_GATE.get(), 2, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "flashing_archwood_fencegate");
     }
 
     private void hydrator(RecipeOutput recipeOutput, Ingredient itemInput, FluidStack fluidInput, ItemLike output, int count, int processTime, ICondition condition) {
@@ -394,9 +438,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput);
     }
 
-    private void cookOre(RecipeOutput recipeOutput, Item input, Item output, float experience) {
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(input),RecipeCategory.MISC,output,experience, 200).unlockedBy("has_" + Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(input)).getPath(), has(input)).save(recipeOutput, Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(output).getPath() + "_from_smelting_" + BuiltInRegistries.ITEM.getKey(input).getPath()));
-        SimpleCookingRecipeBuilder.blasting(Ingredient.of(input),RecipeCategory.MISC,output,experience,100).unlockedBy("has_" + BuiltInRegistries.ITEM.getKey(input).getPath(), has(input)).save(recipeOutput, BuiltInRegistries.ITEM.getKey(output).getPath() + "_from_blasting_" + BuiltInRegistries.ITEM.getKey(input).getPath());
+    private void cookOre(RecipeOutput recipeOutput, String itemName, ItemLike input, Item output, float experience) {
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(input),RecipeCategory.MISC,output,experience, 200).unlockedBy("has_" + itemName, has(input)).save(recipeOutput, BuiltInRegistries.ITEM.getKey(output).getPath() + "_from_smelting_" + itemName);
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(input),RecipeCategory.MISC,output,experience,100).unlockedBy("has_" + itemName, has(input)).save(recipeOutput, BuiltInRegistries.ITEM.getKey(output).getPath() + "_from_blasting_" + itemName);
+    }
+
+    private void cookOre(RecipeOutput recipeOutput, String itemName, TagKey<Item> input, Item output, float experience) {
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(input),RecipeCategory.MISC,output,experience, 200).unlockedBy("has_" + itemName, has(input)).save(recipeOutput, BuiltInRegistries.ITEM.getKey(output).getPath() + "_from_smelting_" + itemName);
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(input),RecipeCategory.MISC,output,experience,100).unlockedBy("has_" + itemName, has(input)).save(recipeOutput, BuiltInRegistries.ITEM.getKey(output).getPath() + "_from_blasting_" + itemName);
     }
 
     protected static void crudeMachineRecipe(RecipeOutput recipeOutput, ItemLike result, Ingredient corner, Ingredient face, Ingredient core) {
@@ -416,7 +465,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('C', corner)
                 .define('F', face)
                 .define('#', core)
-                .define('R', Ingredient.of(Items.REDSTONE))
+                .define('R', Ingredient.of(CAPACITOR.get()))
                 .pattern("CFC")
                 .pattern("F#F")
                 .pattern("CRC")

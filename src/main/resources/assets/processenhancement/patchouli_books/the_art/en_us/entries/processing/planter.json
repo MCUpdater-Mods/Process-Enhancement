@@ -1,0 +1,15 @@
+{
+  "name": "Planter",
+  "icon": "processenhancement:planter",
+  "category": "processenhancement:processing",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Plants seeds, crops, netherwart, berry bushes, etc. in rows (crops planted in rows where the adjacent rows do not contain the same crop grow faster)"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:planter"
+    }
+  ]
+}
