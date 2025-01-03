@@ -6,12 +6,10 @@ import com.mcupdater.mculib.capabilities.FluidResourceHandler;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.mculib.inventory.MachineContainer;
-import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.recipe.HydratorRecipe;
 import com.mcupdater.procenhance.setup.Config;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -119,7 +117,19 @@ public class HydratorEntity extends AbstractMachineBlockEntity {
 			this.currentRecipe = null;
 		}
 		ItemStack outputSlot = itemStorage.getItem(1);
-		if (this.currentRecipe != null && energyStorage.getStoredEnergy() >= Config.HYDRATOR_ENERGY_PER_TICK.get() && (outputSlot.isEmpty() || (ItemStack.isSameItem(outputSlot,currentRecipe.value().getResultItem(level.registryAccess())) && outputSlot.getCount() < outputSlot.getMaxStackSize()))) {
+		if (
+				this.currentRecipe != null &&
+						energyStorage.getStoredEnergy() >= Config.HYDRATOR_ENERGY_PER_TICK.get() &&
+						(
+								outputSlot.isEmpty() ||
+										(
+												ItemStack.isSameItem(outputSlot,currentRecipe.value().getResultItem(level.registryAccess())) &&
+														outputSlot.getCount() < outputSlot.getMaxStackSize()
+										)
+						) &&
+						FluidStack.isSameFluid(currentRecipe.value().getFluidIngredient(), fluidStorage.getInternalHandler().getFluidInTank(0)) &&
+						currentRecipe.value().getFluidIngredient().getAmount() <= fluidStorage.getInternalHandler().getFluidInTank(0).getAmount()
+		) {
 			this.workProgress++;
 			if (this.workProgress >= this.workTotal) {
 				ItemStack result = this.currentRecipe.value().assemble(machineContainer, level.registryAccess());
