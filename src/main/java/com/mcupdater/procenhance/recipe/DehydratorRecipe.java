@@ -34,7 +34,7 @@ public class DehydratorRecipe implements Recipe<MachineContainer> {
 		if (pLevel.isClientSide()) {
 			return false;
 		}
-		ProcessEnhancement.LOGGER.debug("Dehydrator checking recipe");
+		if (com.mcupdater.mculib.setup.Config.DEBUG.get()) ProcessEnhancement.LOGGER.debug("Dehydrator checking recipe");
 		return itemIngredients.getFirst().test(pContainer.getItem(0));
 	}
 

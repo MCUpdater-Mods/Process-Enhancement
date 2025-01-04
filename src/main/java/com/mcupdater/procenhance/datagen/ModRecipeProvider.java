@@ -208,6 +208,22 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         sawmill(recipeOutput, Ingredient.of(Blocks.MANGROVE_PLANKS),Blocks.MANGROVE_SLAB,2,16,0.01f, null,"mangrove_planks_to_slab");
         sawmill(recipeOutput, Ingredient.of(Blocks.MANGROVE_PLANKS),Blocks.MANGROVE_BUTTON,4,16,0.01f, null,"mangrove_planks_to_button");
 
+        sawmill(recipeOutput, Ingredient.of(ItemTags.CHERRY_LOGS),Blocks.CHERRY_PLANKS,6,32,0.05f, null);
+        sawmill(recipeOutput, Ingredient.of(ItemTags.CHERRY_LOGS),Blocks.CHERRY_STAIRS,6,32,0.05f, null);
+        sawmill(recipeOutput, Ingredient.of(ItemTags.CHERRY_LOGS),Blocks.CHERRY_SLAB,12,32,0.05f, null);
+        sawmill(recipeOutput, Ingredient.of(ItemTags.CHERRY_LOGS),Blocks.CHERRY_PRESSURE_PLATE,3,32,0.05f, null);
+        sawmill(recipeOutput, Ingredient.of(ItemTags.CHERRY_LOGS),Items.CHERRY_SIGN,3,32,0.05f, null);
+        sawmill(recipeOutput, Ingredient.of(ItemTags.CHERRY_LOGS),Blocks.CHERRY_DOOR,3,32,0.05f, null);
+        sawmill(recipeOutput, Ingredient.of(ItemTags.CHERRY_LOGS),Blocks.CHERRY_TRAPDOOR,2,32,0.05f, null);
+        sawmill(recipeOutput, Ingredient.of(ItemTags.CHERRY_LOGS),Blocks.STRIPPED_CHERRY_LOG,1,16,0.01f, null);
+        sawmill(recipeOutput, Ingredient.of(ItemTags.CHERRY_LOGS),Blocks.STRIPPED_CHERRY_WOOD,1,16,0.01f, null);
+        sawmill(recipeOutput, Ingredient.of(ItemTags.CHERRY_LOGS),Blocks.CHERRY_FENCE,4,32,0.05f, null);
+        sawmill(recipeOutput, Ingredient.of(ItemTags.CHERRY_LOGS),Blocks.CHERRY_FENCE_GATE,2,32,0.05f, null);
+        sawmill(recipeOutput, Ingredient.of(ItemTags.CHERRY_LOGS),Items.CHERRY_BOAT,1,32,0.05f, null);
+        sawmill(recipeOutput, Ingredient.of(Blocks.CHERRY_PLANKS),Blocks.CHERRY_STAIRS,1,16,0.01f, null,"cherry_planks_to_stairs");
+        sawmill(recipeOutput, Ingredient.of(Blocks.CHERRY_PLANKS),Blocks.CHERRY_SLAB,2,16,0.01f, null,"cherry_planks_to_slab");
+        sawmill(recipeOutput, Ingredient.of(Blocks.CHERRY_PLANKS),Blocks.CHERRY_BUTTON,4,16,0.01f, null,"cherry_planks_to_button");
+
         sawmill(recipeOutput, Ingredient.of(ItemTags.CRIMSON_STEMS),Blocks.CRIMSON_PLANKS,6,32,0.05f, null);
         sawmill(recipeOutput, Ingredient.of(ItemTags.CRIMSON_STEMS),Blocks.CRIMSON_STAIRS,6,32,0.05f, null);
         sawmill(recipeOutput, Ingredient.of(ItemTags.CRIMSON_STEMS),Blocks.CRIMSON_SLAB,12,32,0.05f, null);
@@ -338,13 +354,18 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         grinder_single(Ingredient.of(Items.KELP), new ItemStack(PLANT_DUST.get(), 1), 50, 0.1f, recipeOutput,"kelp");
         grinder_single(Ingredient.of(Items.COPPER_INGOT), new ItemStack(COPPER_DUST.get(), 1), 50, 0f, recipeOutput,"copper_ingot");
         grinder_single(Ingredient.of(Blocks.SMOOTH_BASALT), new ItemStack(Blocks.BASALT, 1), 50, 0.1f, recipeOutput,"smooth_basalt");
+        grinder_single(Ingredient.of(Tags.Items.NETHERRACKS), new ItemStack(NETHER_DUST.get(), 1), 50, 0.1f, recipeOutput, "netherrack");
 
         hydrator(recipeOutput, Ingredient.of(ItemTags.DIRT), new FluidStack(Fluids.WATER,100), Blocks.MUD, 1, 32, null);
-        hydrator(recipeOutput, Ingredient.of(Blocks.COBBLESTONE), new FluidStack(Fluids.WATER,100), Blocks.MOSS_BLOCK, 1, 32, null);
+        hydrator(recipeOutput, Ingredient.of(Tags.Items.STONES), new FluidStack(Fluids.WATER,100), Blocks.MOSS_BLOCK, 1, 32, null);
+        hydrator(recipeOutput, Ingredient.of(Blocks.COBBLESTONE), new FluidStack(Fluids.WATER,100), Blocks.MOSSY_COBBLESTONE, 1, 32, null);
+        hydrator(recipeOutput, Ingredient.of(Blocks.STONE_BRICKS), new FluidStack(Fluids.WATER,100), Blocks.MOSSY_STONE_BRICKS, 1, 32, null);
 
         dehydrator(recipeOutput, Ingredient.of(Blocks.MUD), new FluidStack(Fluids.WATER, 50), Blocks.CLAY, 1, 32, null,"clay");
         dehydrator(recipeOutput, Ingredient.of(Blocks.CLAY), new FluidStack(Fluids.WATER, 50), Blocks.TERRACOTTA, 1, 32, null,"terracotta");
-        dehydrator(recipeOutput, Ingredient.of(Blocks.MAGMA_BLOCK), new FluidStack(Fluids.LAVA, 250), Blocks.BLACKSTONE, 1, 64, null,"lava");
+        dehydrator(recipeOutput, Ingredient.of(Items.KELP), new FluidStack(Fluids.WATER, 10), Items.DRIED_KELP, 1, 16, null, "dried_kelp");
+        dehydrator(recipeOutput, Ingredient.of(Blocks.MAGMA_BLOCK), new FluidStack(Fluids.LAVA, 250), Blocks.BLACKSTONE, 1, 64, null,"blackstone");
+        dehydrator(recipeOutput, Ingredient.of(NETHER_DUST.get()), new FluidStack(Fluids.LAVA, 100), Items.BONE_MEAL, 1, 64, null, "bone_meal");
 
         cookOre(recipeOutput, "iron_dust", IRON_DUST_TAG, Items.IRON_INGOT, 0.7f);
         cookOre(recipeOutput, "copper_dust", COPPER_DUST_TAG, Items.COPPER_INGOT, 0.7f);

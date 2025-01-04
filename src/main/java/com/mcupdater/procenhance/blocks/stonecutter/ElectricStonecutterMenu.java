@@ -6,8 +6,6 @@ import com.mcupdater.mculib.inventory.MachineInputSlot;
 import com.mcupdater.mculib.inventory.MachineOutputSlot;
 import com.mcupdater.mculib.inventory.PhantomSlot;
 import com.mcupdater.procenhance.ProcessEnhancement;
-import com.mcupdater.procenhance.blocks.sawmill.SawmillEntity;
-import com.mcupdater.procenhance.blocks.sawmill.SawmillMenu;
 import com.mcupdater.procenhance.network.RecipeChange;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
@@ -160,7 +158,7 @@ public class ElectricStonecutterMenu extends AbstractMachineMenu<ElectricStonecu
 
     @Override
     public boolean clickMenuButton(Player pPlayer, int pId) {
-        ProcessEnhancement.LOGGER.info("Clicked: {}", pId);
+        if (com.mcupdater.mculib.setup.Config.DEBUG.get()) ProcessEnhancement.LOGGER.debug("Clicked: {}", pId);
         if (this.isValidRecipeIndex(pId)) {
             this.selectedRecipeIndexData.set(pId);
             //this.machineEntity.setCurrentRecipe(this.recipes.get(this.data.get(2)));

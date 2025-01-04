@@ -34,6 +34,12 @@
       "anchor": "gold_dust",
       "link_recipe": true,
       "text": "Gold Dust is produced by grinding up Raw Gold (1-2 each) or any Gold Ore (3-6 each)"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "processenhancement:nether_dust",
+      "link_recipe": true,
+      "text": "Nether Dust is produced by grinding up Netherrack"
     }
   ]
 }

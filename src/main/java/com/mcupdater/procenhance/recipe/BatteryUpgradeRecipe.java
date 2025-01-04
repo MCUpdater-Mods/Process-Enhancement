@@ -12,12 +12,8 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.Objects;
 import java.util.Optional;
 
 public class BatteryUpgradeRecipe extends ShapedRecipe {
@@ -31,8 +27,10 @@ public class BatteryUpgradeRecipe extends ShapedRecipe {
 
     @Override
     public boolean matches(@NotNull CraftingInput craftingInput, @NotNull Level level) {
-        craftingInput.items().stream().forEach(stack -> ProcessEnhancement.LOGGER.debug("Input: " + stack.toString()));
-        this.pattern.ingredients().stream().forEach(stack -> ProcessEnhancement.LOGGER.debug("Pattern: " + stack.toString()));
+        if (com.mcupdater.mculib.setup.Config.DEBUG.get()) {
+            craftingInput.items().stream().forEach(stack -> ProcessEnhancement.LOGGER.debug("Input: " + stack.toString()));
+            this.pattern.ingredients().stream().forEach(stack -> ProcessEnhancement.LOGGER.debug("Pattern: " + stack.toString()));
+        }
         return this.pattern.matches(craftingInput);
     }
 

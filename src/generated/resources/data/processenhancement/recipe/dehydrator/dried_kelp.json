@@ -1,0 +1,17 @@
+{
+  "type": "processenhancement:dehydrator",
+  "fluidOutput": {
+    "amount": 10,
+    "id": "minecraft:water"
+  },
+  "itemIngredients": [
+    {
+      "item": "minecraft:kelp"
+    }
+  ],
+  "processTime": 16,
+  "result": {
+    "count": 1,
+    "id": "minecraft:dried_kelp"
+  }
+}

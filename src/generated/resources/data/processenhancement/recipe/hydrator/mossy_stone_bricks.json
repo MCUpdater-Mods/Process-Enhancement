@@ -6,12 +6,12 @@
   },
   "itemIngredients": [
     {
-      "tag": "c:stones"
+      "item": "minecraft:stone_bricks"
     }
   ],
   "processTime": 32,
   "result": {
     "count": 1,
-    "id": "minecraft:moss_block"
+    "id": "minecraft:mossy_stone_bricks"
   }
 }

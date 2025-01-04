@@ -347,6 +347,7 @@ public class Registration {
     public static final DeferredItem<Item> COPPER_DUST = ITEMS.register("copper_dust", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> CAPACITOR = ITEMS.register("capacitor", () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> PLANT_DUST = ITEMS.register("plant_dust", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> NETHER_DUST = ITEMS.register("nether_dust", () -> new Item(new Item.Properties()));
 
     public static final DeferredBlock<PackagerBlock> AUTOPACKAGER_BLOCK = MACHINES.register("autopackager", () -> new PackagerBlock(BlockBehaviour.Properties.of()
             .mapColor(MapColor.METAL)

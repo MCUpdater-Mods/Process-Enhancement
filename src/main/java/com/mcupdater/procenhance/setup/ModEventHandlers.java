@@ -110,6 +110,8 @@ public class ModEventHandlers {
 			}
 			{ // Fluid
 				event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, Registration.BUFFER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getFluidHandler().getFluidHandler(side) : blockEntity.getFluidHandler().getInternalHandler());
+				event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, Registration.DEHYDRATOR_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getFluidHandler().getFluidHandler(side) : blockEntity.getFluidHandler().getInternalHandler());
+				event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, Registration.HYDRATOR_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getFluidHandler().getFluidHandler(side) : blockEntity.getFluidHandler().getInternalHandler());
 				event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, Registration.LAVAGENERATORT1_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getFluidHandler().getFluidHandler(side) : blockEntity.getFluidHandler().getInternalHandler());
 				event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, Registration.LAVAGENERATORT2_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getFluidHandler().getFluidHandler(side) : blockEntity.getFluidHandler().getInternalHandler());
 				event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, Registration.LAVAGENERATORT3_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getFluidHandler().getFluidHandler(side) : blockEntity.getFluidHandler().getInternalHandler());

@@ -11,7 +11,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
@@ -83,7 +82,7 @@ public class HarvesterEntity extends AbstractMachineBlockEntity {
             for (int z = Math.min(startPos.getZ(), endPos.getZ()); z <= Math.max(startPos.getZ(), endPos.getZ()); z++) {
                 BlockPos blockPos = new BlockPos(x,y,z);
                 BlockState state = level.getBlockState(blockPos);
-                if (state.getBlock() instanceof BushBlock || state.getBlock().equals(Blocks.MELON) || state.getBlock().equals(Blocks.PUMPKIN)) {
+                if (state.getBlock() instanceof BushBlock || state.getBlock().equals(Blocks.MELON) || state.getBlock().equals(Blocks.PUMPKIN) || state.getBlock().equals(Blocks.KELP)) {
                     harvestableBlocks.add(blockPos);
                 }
                 if (state.getBlock() instanceof BambooStalkBlock || state.getBlock() instanceof SugarCaneBlock || state.getBlock() instanceof CactusBlock) {
@@ -137,7 +136,7 @@ public class HarvesterEntity extends AbstractMachineBlockEntity {
                     BlockState state = level.getBlockState(toHarvest);
                     if (readyToFullHarvest(state)){
                         List<ItemStack> drops = state.getDrops(new LootParams.Builder((ServerLevel) this.level).withParameter(LootContextParams.ORIGIN,this.worldPosition.getBottomCenter()).withParameter(LootContextParams.TOOL,new ItemStack(Items.NETHERITE_HOE)));
-                        level.setBlock(toHarvest, Blocks.AIR.defaultBlockState(), 3);
+                        level.setBlock(toHarvest, !state.is(Blocks.KELP) ? Blocks.AIR.defaultBlockState() : Blocks.WATER.defaultBlockState(), 3);
                         RenderHelper.sendParticles((ServerLevel) level, ParticleTypes.INSTANT_EFFECT, toHarvest.getX() + 0.5D, toHarvest.getY() + 0.1D, toHarvest.getZ() + 0.5D, 3,0,0, 0, 0);
                         level.playSound(null, toHarvest, SoundEvents.CROP_BREAK, SoundSource.BLOCKS, 1, 1);
                         internalBuffer.addAll(drops);
@@ -194,7 +193,8 @@ public class HarvesterEntity extends AbstractMachineBlockEntity {
                         state.getBlock() instanceof BambooStalkBlock ||
                         state.getBlock() instanceof SugarCaneBlock ||
                         state.getBlock() instanceof CactusBlock ||
-                        (state.getBlock() instanceof NetherWartBlock && state.getValue(NetherWartBlock.AGE) == NetherWartBlock.MAX_AGE)
+                        (state.getBlock() instanceof NetherWartBlock && state.getValue(NetherWartBlock.AGE) == NetherWartBlock.MAX_AGE) ||
+                        state.getBlock() instanceof KelpBlock
                 ;
     }
 
