@@ -23,7 +23,7 @@ public class CobblestoneSolidifierEntity extends AbstractSolidifierEntity {
     @Override
     protected boolean performWork() {
         IItemHandler itemHandler = itemResourceHandler.getInternalHandler();
-        if (itemHandler.getStackInSlot(0).getCount() < itemHandler.getSlotLimit(0)) {
+        if (itemHandler.getStackInSlot(0).isEmpty() || itemHandler.getStackInSlot(0).getCount() < itemHandler.getStackInSlot(0).getMaxStackSize()) {
             this.workProgress++;
             if (this.workProgress >= this.workTotal) {
                 this.workProgress = 0;
