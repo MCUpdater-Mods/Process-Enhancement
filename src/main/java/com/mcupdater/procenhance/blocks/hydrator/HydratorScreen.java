@@ -18,7 +18,7 @@ public class HydratorScreen extends AbstractMachineScreen<HydratorEntity,Hydrato
 	@Override
 	public void registerWidgets() {
 		super.registerWidgets();
-		fluidWidget = this.addRenderableWidget(new WidgetFluid(this.leftPos + 5, this.topPos + 14, 18, 58, menu.getBlockEntity().getFluidHandler().getInternalHandler(), 0));
+		fluidWidget = this.addRenderableWidget(new WidgetFluid(this.leftPos + 5, this.topPos + 16, 18, 52, menu.getBlockEntity().getFluidHandler().getInternalHandler(), 0));
 		this.addExtraWidget(fluidWidget);
 	}
 

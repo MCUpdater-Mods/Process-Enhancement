@@ -5,12 +5,31 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "These machines use a small amount of power to automate the creation of cobblestone or basalt."
+      "text": "These machines use a small amount of power to automate the creation of various stones."
     },
     {
       "type": "patchouli:crafting",
       "recipe": "processenhancement:cobblestone_solidifier",
       "recipe2": "processenhancement:basalt_solidifier"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:andesite_solidifier",
+      "recipe2": "processenhancement:calcite_solidifier"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:diorite_solidifier",
+      "recipe2": "processenhancement:granite_solidifier"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:deepslate_solidifier",
+      "recipe2": "processenhancement:stone_solidifier"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:tuff_solidifier"
     }
   ]
 }

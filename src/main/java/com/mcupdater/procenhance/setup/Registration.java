@@ -8,6 +8,9 @@ import com.mcupdater.procenhance.blocks.biogenerator.*;
 import com.mcupdater.procenhance.blocks.buffer.BufferBlock;
 import com.mcupdater.procenhance.blocks.buffer.BufferEntity;
 import com.mcupdater.procenhance.blocks.buffer.BufferMenu;
+import com.mcupdater.procenhance.blocks.concrete_mixer.MixerBlock;
+import com.mcupdater.procenhance.blocks.concrete_mixer.MixerEntity;
+import com.mcupdater.procenhance.blocks.concrete_mixer.MixerMenu;
 import com.mcupdater.procenhance.blocks.copper_wire.CopperWireBlock;
 import com.mcupdater.procenhance.blocks.copper_wire.CopperWireEntity;
 import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorBlock;
@@ -340,6 +343,62 @@ public class Registration {
     ));
     public static final DeferredItem<Item> BASALTSOLIDIFIER_BLOCKITEM = BLOCK_ITEMS.register("basalt_solidifier", () -> new BlockItem(BASALTSOLIDIFIER_BLOCK.get(), new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BasaltSolidifierEntity>> BASALTSOLIDIFIER_ENTITY = BLOCK_ENTITIES.register("basalt_solidifier", () -> BlockEntityType.Builder.of(BasaltSolidifierEntity::new, BASALTSOLIDIFIER_BLOCK.get()).build(null));
+    public static final DeferredBlock<AndesiteSolidifierBlock> ANDESITESOLIDIFIER_BLOCK = MACHINES.register("andesite_solidifier", () -> new AndesiteSolidifierBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.STONE)
+            .sound(SoundType.STONE)
+            .strength(5.0f)
+            .requiresCorrectToolForDrops()
+    ));
+    public static final DeferredItem<Item> ANDESITESOLIDIFIER_BLOCKITEM = BLOCK_ITEMS.register("andesite_solidifier", () -> new BlockItem(ANDESITESOLIDIFIER_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<AndesiteSolidifierEntity>> ANDESITESOLIDIFIER_ENTITY = BLOCK_ENTITIES.register("andesite_solidifier", () -> BlockEntityType.Builder.of(AndesiteSolidifierEntity::new, ANDESITESOLIDIFIER_BLOCK.get()).build(null));
+    public static final DeferredBlock<CalciteSolidifierBlock> CALCITESOLIDIFIER_BLOCK = MACHINES.register("calcite_solidifier", () -> new CalciteSolidifierBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.STONE)
+            .sound(SoundType.STONE)
+            .strength(5.0f)
+            .requiresCorrectToolForDrops()
+    ));
+    public static final DeferredItem<Item> CALCITESOLIDIFIER_BLOCKITEM = BLOCK_ITEMS.register("calcite_solidifier", () -> new BlockItem(CALCITESOLIDIFIER_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CalciteSolidifierEntity>> CALCITESOLIDIFIER_ENTITY = BLOCK_ENTITIES.register("calcite_solidifier", () -> BlockEntityType.Builder.of(CalciteSolidifierEntity::new, CALCITESOLIDIFIER_BLOCK.get()).build(null));
+    public static final DeferredBlock<DioriteSolidifierBlock> DIORITESOLIDIFIER_BLOCK = MACHINES.register("diorite_solidifier", () -> new DioriteSolidifierBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.STONE)
+            .sound(SoundType.STONE)
+            .strength(5.0f)
+            .requiresCorrectToolForDrops()
+    ));
+    public static final DeferredItem<Item> DIORITESOLIDIFIER_BLOCKITEM = BLOCK_ITEMS.register("diorite_solidifier", () -> new BlockItem(DIORITESOLIDIFIER_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<DioriteSolidifierEntity>> DIORITESOLIDIFIER_ENTITY = BLOCK_ENTITIES.register("diorite_solidifier", () -> BlockEntityType.Builder.of(DioriteSolidifierEntity::new, DIORITESOLIDIFIER_BLOCK.get()).build(null));
+    public static final DeferredBlock<GraniteSolidifierBlock> GRANITESOLIDIFIER_BLOCK = MACHINES.register("granite_solidifier", () -> new GraniteSolidifierBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.STONE)
+            .sound(SoundType.STONE)
+            .strength(5.0f)
+            .requiresCorrectToolForDrops()
+    ));
+    public static final DeferredItem<Item> GRANITESOLIDIFIER_BLOCKITEM = BLOCK_ITEMS.register("granite_solidifier", () -> new BlockItem(GRANITESOLIDIFIER_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GraniteSolidifierEntity>> GRANITESOLIDIFIER_ENTITY = BLOCK_ENTITIES.register("granite_solidifier", () -> BlockEntityType.Builder.of(GraniteSolidifierEntity::new, GRANITESOLIDIFIER_BLOCK.get()).build(null));
+    public static final DeferredBlock<StoneSolidifierBlock> STONESOLIDIFIER_BLOCK = MACHINES.register("stone_solidifier", () -> new StoneSolidifierBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.STONE)
+            .sound(SoundType.STONE)
+            .strength(5.0f)
+            .requiresCorrectToolForDrops()
+    ));
+    public static final DeferredItem<Item> STONESOLIDIFIER_BLOCKITEM = BLOCK_ITEMS.register("stone_solidifier", () -> new BlockItem(STONESOLIDIFIER_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<StoneSolidifierEntity>> STONESOLIDIFIER_ENTITY = BLOCK_ENTITIES.register("stone_solidifier", () -> BlockEntityType.Builder.of(StoneSolidifierEntity::new, STONESOLIDIFIER_BLOCK.get()).build(null));
+    public static final DeferredBlock<DeepslateSolidifierBlock> DEEPSLATESOLIDIFIER_BLOCK = MACHINES.register("deepslate_solidifier", () -> new DeepslateSolidifierBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.DEEPSLATE)
+            .sound(SoundType.DEEPSLATE)
+            .strength(5.0f)
+            .requiresCorrectToolForDrops()
+    ));
+    public static final DeferredItem<Item> DEEPSLATESOLIDIFIER_BLOCKITEM = BLOCK_ITEMS.register("deepslate_solidifier", () -> new BlockItem(DEEPSLATESOLIDIFIER_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<DeepslateSolidifierEntity>> DEEPSLATESOLIDIFIER_ENTITY = BLOCK_ENTITIES.register("deepslate_solidifier", () -> BlockEntityType.Builder.of(DeepslateSolidifierEntity::new, DEEPSLATESOLIDIFIER_BLOCK.get()).build(null));
+    public static final DeferredBlock<TuffSolidifierBlock> TUFFSOLIDIFIER_BLOCK = MACHINES.register("tuff_solidifier", () -> new TuffSolidifierBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.STONE)
+            .sound(SoundType.TUFF)
+            .strength(5.0f)
+            .requiresCorrectToolForDrops()
+    ));
+    public static final DeferredItem<Item> TUFFSOLIDIFIER_BLOCKITEM = BLOCK_ITEMS.register("tuff_solidifier", () -> new BlockItem(TUFFSOLIDIFIER_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TuffSolidifierEntity>> TUFFSOLIDIFIER_ENTITY = BLOCK_ENTITIES.register("tuff_solidifier", () -> BlockEntityType.Builder.of(TuffSolidifierEntity::new, TUFFSOLIDIFIER_BLOCK.get()).build(null));
     public static final Supplier<MenuType<SolidifierMenu>> SOLIDIFIER_MENU = MENUS.register("solidifier", () -> IMenuTypeExtension.create(SolidifierMenu::factory));
 
     public static final DeferredItem<Item> IRON_DUST = ITEMS.register("iron_dust", () -> new Item(new Item.Properties()));
@@ -421,6 +480,16 @@ public class Registration {
     public static final DeferredItem<Item> SOILMANAGER_BLOCKITEM = BLOCK_ITEMS.register("soilmanager", () -> new BlockItem(SOILMANAGER_BLOCK.get(), new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SoilManagerEntity>> SOILMANAGER_ENTITY = BLOCK_ENTITIES.register("soilmanager", () -> BlockEntityType.Builder.of(SoilManagerEntity::new, SOILMANAGER_BLOCK.get()).build(null));
     public static final Supplier<MenuType<SoilManagerMenu>> SOILMANAGER_MENU = MENUS.register("soilmanager", () -> IMenuTypeExtension.create(SoilManagerMenu::factory));
+
+    public static final DeferredBlock<MixerBlock> CONCRETEMIXER_BLOCK = MACHINES.register("concrete_mixer", () -> new MixerBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.STONE)
+            .sound(SoundType.STONE)
+            .strength(15.0f)
+            .requiresCorrectToolForDrops()
+    ));
+    public static final DeferredItem<Item> CONCRETEMIXER_BLOCKITEM = BLOCK_ITEMS.register("concrete_mixer", () -> new BlockItem(CONCRETEMIXER_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MixerEntity>> CONCRETEMIXER_ENTITY = BLOCK_ENTITIES.register("concrete_mixer", () -> BlockEntityType.Builder.of(MixerEntity::new, CONCRETEMIXER_BLOCK.get()).build(null));
+    public static final Supplier<MenuType<MixerMenu>> CONCRETEMIXER_MENU = MENUS.register("concrete_mixer", () ->IMenuTypeExtension.create(MixerMenu::factory));
 
     public static final Supplier<LootItemFunctionType<? extends LootItemConditionalFunction>> RETAIN_ENCHANTMENTS = LOOT_FUNCTION_TYPES.register("retain_enchantments", () -> new LootItemFunctionType(RetainEnchantmentsFunction.CODEC));
     public static final Supplier<LootItemFunctionType<? extends LootItemConditionalFunction>> RETAIN_ENERGY = LOOT_FUNCTION_TYPES.register("retain_energy", () -> new LootItemFunctionType(RetainEnergyFunction.CODEC));

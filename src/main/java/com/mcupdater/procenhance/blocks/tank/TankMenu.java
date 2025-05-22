@@ -49,7 +49,7 @@ public class TankMenu extends AbstractContainerMenu implements IConfigurableMenu
         this.adjacentNames = adjacentNames;
         this.player = pPlayer;
         this.playerInventory = new InvWrapper(pPlayerInventory);
-        this.addSlot(new Slot(this.transientSlots,0,8,16){
+        this.addSlot(new Slot(this.transientSlots,0,8,17){
             @Override
             public boolean mayPlace(ItemStack pStack) {
                 @Nullable IFluidHandlerItem itemFluidHandler = pStack.getCapability(Capabilities.FluidHandler.ITEM, null);

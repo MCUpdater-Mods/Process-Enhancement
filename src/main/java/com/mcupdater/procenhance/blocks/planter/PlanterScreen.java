@@ -21,7 +21,7 @@ public class PlanterScreen extends AbstractMachineScreen<PlanterEntity, PlanterM
 
 	@Override
 	public void registerWidgets() {
-		addExtraWidget(this.addRenderableWidget(new WidgetPower(this.leftPos + 153, this.topPos + 5, 18, 26, menu.getEnergyHandler(), WidgetPower.Orientation.VERTICAL)));
+		addExtraWidget(this.addRenderableWidget(new WidgetPower(this.leftPos + 153, this.topPos + 5, 18, 25, menu.getEnergyHandler(), WidgetPower.Orientation.VERTICAL)));
 	}
 
 	@Override

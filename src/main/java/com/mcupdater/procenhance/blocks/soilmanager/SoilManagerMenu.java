@@ -36,7 +36,7 @@ public class SoilManagerMenu extends AbstractMachineMenu<SoilManagerEntity> {
 			SoilManagerMenu.this.slotsChanged(this);
 		}
 	};
-	private final Slot fluidInput =new Slot(this.transientSlots, 0, 25, 16) {
+	private final Slot fluidInput =new Slot(this.transientSlots, 0, 25, 17) {
 		@Override
 		public boolean mayPlace(ItemStack stack) {
 			@Nullable IFluidHandlerItem itemFluidHandler = stack.getCapability(Capabilities.FluidHandler.ITEM);
@@ -126,6 +126,6 @@ public class SoilManagerMenu extends AbstractMachineMenu<SoilManagerEntity> {
 	}
 
 	public int getFertilizer() {
-		return (this.data.get(0) * 36) / SoilManagerEntity.MAX_FERTILIZER;
+		return (this.data.get(0) * 33) / SoilManagerEntity.MAX_FERTILIZER;
 	}
 }

@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    },
+    "P": {
+      "item": "minecraft:iron_pickaxe"
+    },
+    "S": {
+      "item": "minecraft:andesite"
+    },
+    "W": {
+      "item": "minecraft:water_bucket"
+    }
+  },
+  "pattern": [
+    "CSC",
+    "WPL",
+    "CSC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "processenhancement:andesite_solidifier"
+  }
+}

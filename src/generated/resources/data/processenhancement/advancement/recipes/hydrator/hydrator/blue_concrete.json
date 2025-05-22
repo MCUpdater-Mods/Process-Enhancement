@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_hydrator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "processenhancement:hydrator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "processenhancement:hydrator/blue_concrete"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_hydrator",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "processenhancement:hydrator/blue_concrete"
+    ]
+  },
+  "sends_telemetry_event": true
+}

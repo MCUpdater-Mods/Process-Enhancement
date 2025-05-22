@@ -66,12 +66,12 @@ public class DeconstructorEntity extends AbstractMachineBlockEntity {
     }
 
     private Recipe getRecipe(ItemStack itemStack) {
-        Recipe lookup = null;
-        lookup = level.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING).stream().filter(testRecipe -> testRecipe.value().getResultItem(level.registryAccess()).getItem().equals(itemStack.getItem()) && testRecipe.value().getResultItem(level.registryAccess()).getCount() <= itemStack.getCount()).findFirst().orElse(null).value();
+        RecipeHolder<? extends Recipe> lookup = null;
+        lookup = level.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING).stream().filter(testRecipe -> testRecipe.value().getResultItem(level.registryAccess()).getItem().equals(itemStack.getItem()) && testRecipe.value().getResultItem(level.registryAccess()).getCount() <= itemStack.getCount()).findFirst().orElse(null);
         if (lookup == null) {
-            lookup = level.getRecipeManager().getAllRecipesFor(RecipeType.SMITHING).stream().filter(testRecipe -> testRecipe.value().getResultItem(level.registryAccess()).getItem().equals(itemStack.getItem())).findFirst().orElse(null).value();
+            lookup = level.getRecipeManager().getAllRecipesFor(RecipeType.SMITHING).stream().filter(testRecipe -> testRecipe.value().getResultItem(level.registryAccess()).getItem().equals(itemStack.getItem())).findFirst().orElse(null);
         }
-        return lookup;
+        return lookup != null ? lookup.value() : null;
     }
 
     @Override

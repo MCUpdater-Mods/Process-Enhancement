@@ -47,11 +47,11 @@ public class PackagerMenu extends AbstractMachineMenu<PackagerEntity> {
         this.addSlot(new MachineInputSlot(this.machineEntity, resourceHandler.getInternalHandler(), 0, 62, 20));
         this.addSlot(new MachineInputSlot(this.machineEntity, resourceHandler.getInternalHandler(), 1, 98, 20));
         this.addSlot(new Slot(this.patternSupply,0, 8,20));
-        this.addSlotRange(resourceHandler.getInternalHandler(),2, 8, 54, 8, 18);
+        this.addSlotRange(resourceHandler.getInternalHandler(),2, 8, 51, 8, 18);
     }
 
     @Override
-    public boolean stillValid(Player playerIn) {
-        return ContainerLevelAccess.create(machineEntity.getLevel(), machineEntity.getBlockPos()).evaluate((level, blockPos) -> playerIn.distanceToSqr((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.5D, (double)blockPos.getZ() + 0.5D) <= 64.0D, true);
+    public boolean stillValid(Player player) {
+        return ContainerLevelAccess.create(machineEntity.getLevel(), machineEntity.getBlockPos()).evaluate((level, blockPos) -> player.distanceToSqr((double)blockPos.getX() + 0.5D, (double)blockPos.getY() + 0.5D, (double)blockPos.getZ() + 0.5D) <= 64.0D, true);
     }
 }

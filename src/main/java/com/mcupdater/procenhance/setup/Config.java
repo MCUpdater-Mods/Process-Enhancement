@@ -27,6 +27,7 @@ public class Config {
     public static ModConfigSpec.IntValue SOILMANAGER_ENERGY_PER_TICK;
     public static ModConfigSpec.IntValue SOLIDIFIER_ENERGY_PER_TICK;
     public static ModConfigSpec.IntValue STONECUTTER_ENERGY_PER_TICK;
+    public static ModConfigSpec.IntValue CONCRETEMIXER_ENERGY_PER_TICK;
 
     static {
         ModConfigSpec.Builder COMMON_BUILDER = new ModConfigSpec.Builder();
@@ -53,6 +54,7 @@ public class Config {
         SOILMANAGER_ENERGY_PER_TICK = COMMON_BUILDER.comment("Base energy per tick").defineInRange("SoilManagerEnergyUse", 10, 0, Integer.MAX_VALUE);
         SOLIDIFIER_ENERGY_PER_TICK = COMMON_BUILDER.comment("Base energy per tick").defineInRange("SolidifierEnergyUser", 5, 0, Integer.MAX_VALUE);
         STONECUTTER_ENERGY_PER_TICK = COMMON_BUILDER.comment("Base energy per tick").defineInRange("StonecutterEnergyUse", 20, 0, Integer.MAX_VALUE);
+        CONCRETEMIXER_ENERGY_PER_TICK = COMMON_BUILDER.comment("Base energy per tick").defineInRange("ConcreteMixerEnergyUse", 20, 0, Integer.MAX_VALUE);
         COMMON_BUILDER.pop();
 
         COMMON_CONFIG = COMMON_BUILDER.build();

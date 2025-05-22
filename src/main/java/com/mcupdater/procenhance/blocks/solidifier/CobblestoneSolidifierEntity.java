@@ -27,8 +27,8 @@ public class CobblestoneSolidifierEntity extends AbstractSolidifierEntity {
             this.workProgress++;
             if (this.workProgress >= this.workTotal) {
                 this.workProgress = 0;
-                ItemStack cobbleStack = new ItemStack(Items.COBBLESTONE, 1);
-                itemHandler.insertItem(0, cobbleStack, false);
+                ItemStack outputStack = new ItemStack(Items.COBBLESTONE, 1);
+                itemHandler.insertItem(0, outputStack, false);
             }
             return true;
         } else {
