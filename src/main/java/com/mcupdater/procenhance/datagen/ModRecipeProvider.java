@@ -90,6 +90,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         basicMachineRecipe(recipeOutput, HARVESTER_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(ItemTags.PLANKS), Ingredient.of(Items.STONE_HOE));
         basicMachineRecipe(recipeOutput, PLANTER_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(ItemTags.PLANKS), Ingredient.of(ItemTags.VILLAGER_PLANTABLE_SEEDS));
         basicMachineRecipe(recipeOutput, SOILMANAGER_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(ItemTags.PLANKS), Ingredient.of(Blocks.BONE_BLOCK));
+
+        basicMachineRecipe(recipeOutput, CONCRETEMIXER_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Blocks.STONE_BRICKS), Ingredient.of(Blocks.CRAFTING_TABLE));
         // Sawmill recipes
         //sawmill(recipeOutput, Ingredient.of(ItemTags.DIRT), Items.DIAMOND, 1, 32, 0.05f, new ModLoadedCondition("testmod"));
         sawmill(recipeOutput, Ingredient.of(ItemTags.PLANKS), Items.STICK, 3, 16, 0.01f, null,"stick_from_planks");
@@ -360,6 +362,22 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         hydrator(recipeOutput, Ingredient.of(Tags.Items.STONES), new FluidStack(Fluids.WATER,100), Blocks.MOSS_BLOCK, 1, 32, null);
         hydrator(recipeOutput, Ingredient.of(Blocks.COBBLESTONE), new FluidStack(Fluids.WATER,100), Blocks.MOSSY_COBBLESTONE, 1, 32, null);
         hydrator(recipeOutput, Ingredient.of(Blocks.STONE_BRICKS), new FluidStack(Fluids.WATER,100), Blocks.MOSSY_STONE_BRICKS, 1, 32, null);
+        hydrator(recipeOutput, Ingredient.of(Blocks.BLACK_CONCRETE_POWDER), new FluidStack(Fluids.WATER,10), Blocks.BLACK_CONCRETE, 1, 1, null);
+        hydrator(recipeOutput, Ingredient.of(Blocks.BLUE_CONCRETE_POWDER), new FluidStack(Fluids.WATER,10), Blocks.BLUE_CONCRETE, 1, 1, null);
+        hydrator(recipeOutput, Ingredient.of(Blocks.BROWN_CONCRETE_POWDER), new FluidStack(Fluids.WATER,10), Blocks.BROWN_CONCRETE, 1, 1, null);
+        hydrator(recipeOutput, Ingredient.of(Blocks.CYAN_CONCRETE_POWDER), new FluidStack(Fluids.WATER,10), Blocks.CYAN_CONCRETE, 1, 1, null);
+        hydrator(recipeOutput, Ingredient.of(Blocks.GRAY_CONCRETE_POWDER), new FluidStack(Fluids.WATER,10), Blocks.GRAY_CONCRETE, 1, 1, null);
+        hydrator(recipeOutput, Ingredient.of(Blocks.GREEN_CONCRETE_POWDER), new FluidStack(Fluids.WATER,10), Blocks.GREEN_CONCRETE, 1, 1, null);
+        hydrator(recipeOutput, Ingredient.of(Blocks.LIGHT_BLUE_CONCRETE_POWDER), new FluidStack(Fluids.WATER,10), Blocks.LIGHT_BLUE_CONCRETE, 1, 1, null);
+        hydrator(recipeOutput, Ingredient.of(Blocks.LIGHT_GRAY_CONCRETE_POWDER), new FluidStack(Fluids.WATER,10), Blocks.LIGHT_GRAY_CONCRETE, 1, 1, null);
+        hydrator(recipeOutput, Ingredient.of(Blocks.LIME_CONCRETE_POWDER), new FluidStack(Fluids.WATER,10), Blocks.LIME_CONCRETE, 1, 1, null);
+        hydrator(recipeOutput, Ingredient.of(Blocks.MAGENTA_CONCRETE_POWDER), new FluidStack(Fluids.WATER,10), Blocks.MAGENTA_CONCRETE, 1, 1, null);
+        hydrator(recipeOutput, Ingredient.of(Blocks.ORANGE_CONCRETE_POWDER), new FluidStack(Fluids.WATER,10), Blocks.ORANGE_CONCRETE, 1, 1, null);
+        hydrator(recipeOutput, Ingredient.of(Blocks.PINK_CONCRETE_POWDER), new FluidStack(Fluids.WATER,10), Blocks.PINK_CONCRETE, 1, 1, null);
+        hydrator(recipeOutput, Ingredient.of(Blocks.PURPLE_CONCRETE_POWDER), new FluidStack(Fluids.WATER,10), Blocks.PURPLE_CONCRETE, 1, 1, null);
+        hydrator(recipeOutput, Ingredient.of(Blocks.RED_CONCRETE_POWDER), new FluidStack(Fluids.WATER,10), Blocks.RED_CONCRETE, 1, 1, null);
+        hydrator(recipeOutput, Ingredient.of(Blocks.WHITE_CONCRETE_POWDER), new FluidStack(Fluids.WATER,10), Blocks.WHITE_CONCRETE, 1, 1, null);
+        hydrator(recipeOutput, Ingredient.of(Blocks.YELLOW_CONCRETE_POWDER), new FluidStack(Fluids.WATER,10), Blocks.YELLOW_CONCRETE, 1, 1, null);
 
         dehydrator(recipeOutput, Ingredient.of(Blocks.MUD), new FluidStack(Fluids.WATER, 50), Blocks.CLAY, 1, 32, null,"clay");
         dehydrator(recipeOutput, Ingredient.of(Blocks.CLAY), new FluidStack(Fluids.WATER, 50), Blocks.TERRACOTTA, 1, 32, null,"terracotta");
@@ -376,6 +394,13 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC,DECONSTRUCTOR_BLOCK.get()).define('A', Ingredient.of(Items.AMETHYST_BLOCK)).define('E', Ingredient.of(Items.EMERALD)).define('G', Ingredient.of(GRINDERT3_BLOCK.get())).pattern("AEA").pattern("EGE").pattern("AEA").unlockedBy("automatic", has(GRINDERT3_BLOCK.get())).save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC,COBBLESTONESOLIDIFIER_BLOCK.get()).define('S',Ingredient.of(Blocks.COBBLESTONE)).define('C', Ingredient.of(Items.COPPER_INGOT)).define('W', Ingredient.of(Items.WATER_BUCKET)).define('L',Ingredient.of(Items.LAVA_BUCKET)).define('P', Ingredient.of(Items.IRON_PICKAXE)).pattern("CSC").pattern("WPL").pattern("CSC").unlockedBy("automatic", has(Blocks.COBBLESTONE)).save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC,BASALTSOLIDIFIER_BLOCK.get()).define('B',Ingredient.of(Blocks.BASALT)).define('C', Ingredient.of(Items.COPPER_INGOT)).define('I', Ingredient.of(Blocks.BLUE_ICE)).define('L',Ingredient.of(Items.LAVA_BUCKET)).define('P', Ingredient.of(Items.IRON_PICKAXE)).define('S', Ingredient.of(Blocks.SOUL_SOIL)).pattern("CBC").pattern("IPL").pattern("CSC").unlockedBy("automatic", has(Blocks.BLUE_ICE)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC,ANDESITESOLIDIFIER_BLOCK.get()).define('S',Ingredient.of(Blocks.ANDESITE)).define('C', Ingredient.of(Items.COPPER_INGOT)).define('W', Ingredient.of(Items.WATER_BUCKET)).define('L',Ingredient.of(Items.LAVA_BUCKET)).define('P', Ingredient.of(Items.IRON_PICKAXE)).pattern("CSC").pattern("WPL").pattern("CSC").unlockedBy("automatic", has(Blocks.ANDESITE)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC,CALCITESOLIDIFIER_BLOCK.get()).define('S',Ingredient.of(Blocks.CALCITE)).define('C', Ingredient.of(Items.COPPER_INGOT)).define('W', Ingredient.of(Items.WATER_BUCKET)).define('L',Ingredient.of(Items.LAVA_BUCKET)).define('P', Ingredient.of(Items.IRON_PICKAXE)).pattern("CSC").pattern("WPL").pattern("CSC").unlockedBy("automatic", has(Blocks.CALCITE)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC,DEEPSLATESOLIDIFIER_BLOCK.get()).define('S',Ingredient.of(Blocks.DEEPSLATE)).define('C', Ingredient.of(Items.COPPER_INGOT)).define('W', Ingredient.of(Items.WATER_BUCKET)).define('L',Ingredient.of(Items.LAVA_BUCKET)).define('P', Ingredient.of(Items.IRON_PICKAXE)).pattern("CSC").pattern("WPL").pattern("CSC").unlockedBy("automatic", has(Blocks.DEEPSLATE)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC,DIORITESOLIDIFIER_BLOCK.get()).define('S',Ingredient.of(Blocks.DIORITE)).define('C', Ingredient.of(Items.COPPER_INGOT)).define('W', Ingredient.of(Items.WATER_BUCKET)).define('L',Ingredient.of(Items.LAVA_BUCKET)).define('P', Ingredient.of(Items.IRON_PICKAXE)).pattern("CSC").pattern("WPL").pattern("CSC").unlockedBy("automatic", has(Blocks.DIORITE)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC,GRANITESOLIDIFIER_BLOCK.get()).define('S',Ingredient.of(Blocks.GRANITE)).define('C', Ingredient.of(Items.COPPER_INGOT)).define('W', Ingredient.of(Items.WATER_BUCKET)).define('L',Ingredient.of(Items.LAVA_BUCKET)).define('P', Ingredient.of(Items.IRON_PICKAXE)).pattern("CSC").pattern("WPL").pattern("CSC").unlockedBy("automatic", has(Blocks.GRANITE)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC,STONESOLIDIFIER_BLOCK.get()).define('S',Ingredient.of(Blocks.STONE)).define('C', Ingredient.of(Items.COPPER_INGOT)).define('W', Ingredient.of(Items.WATER_BUCKET)).define('L',Ingredient.of(Items.LAVA_BUCKET)).define('P', Ingredient.of(Items.IRON_PICKAXE)).pattern("CSC").pattern("WPL").pattern("CSC").unlockedBy("automatic", has(Blocks.STONE)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC,TUFFSOLIDIFIER_BLOCK.get()).define('S',Ingredient.of(Blocks.TUFF)).define('C', Ingredient.of(Items.COPPER_INGOT)).define('W', Ingredient.of(Items.WATER_BUCKET)).define('L',Ingredient.of(Items.LAVA_BUCKET)).define('P', Ingredient.of(Items.IRON_PICKAXE)).pattern("CSC").pattern("WPL").pattern("CSC").unlockedBy("automatic", has(Blocks.TUFF)).save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC,COPPERWIRE_BLOCKITEM.get(),16).define('C', Ingredient.of(Items.COPPER_INGOT)).pattern("CCC").unlockedBy("automatic",has(Items.COPPER_INGOT)).save(recipeOutput);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,Items.SLIME_BALL).requires(Items.MILK_BUCKET,1).requires(PLANT_DUST.get(),1).unlockedBy("automatic",has(PLANT_DUST.get())).save(recipeOutput);
         basicMachineRecipe(recipeOutput,HYDRATOR_BLOCK.get(),Ingredient.of(Items.COPPER_INGOT),Ingredient.of(Items.IRON_INGOT),Ingredient.of(Items.GLASS_BOTTLE));
@@ -437,7 +462,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     }
 
     private void dehydrator(RecipeOutput recipeOutput, Ingredient itemInput, FluidStack fluidOutput, ItemLike output, int count, int processTime, ICondition condition) {
-        dehydrator(recipeOutput,itemInput,fluidOutput,output,count,processTime,condition,"");
+        dehydrator(recipeOutput,itemInput,fluidOutput,output,count,processTime,condition,null);
     }
 
     private void dehydrator(RecipeOutput recipeOutput, Ingredient itemInput, FluidStack fluidOutput, ItemLike output, int count, int processTime, ICondition condition, String recipeName) {

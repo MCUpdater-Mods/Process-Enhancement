@@ -74,6 +74,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
         machine(Registration.DEHYDRATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK,Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/dehydrator", false);
         solidifier(Registration.COBBLESTONESOLIDIFIER_BLOCK.get(),Blocks.COPPER_BLOCK,blockTexture(Blocks.COBBLESTONE), "block/solidifier", ResourceLocation.withDefaultNamespace("block/water_flow"), ResourceLocation.withDefaultNamespace("block/lava_flow"));
         solidifier(Registration.BASALTSOLIDIFIER_BLOCK.get(),Blocks.COPPER_BLOCK,ResourceLocation.withDefaultNamespace("block/basalt_side"), "block/solidifier", blockTexture(Blocks.BLUE_ICE), ResourceLocation.withDefaultNamespace( "block/lava_flow"));
+        solidifier(Registration.ANDESITESOLIDIFIER_BLOCK.get(),Blocks.COPPER_BLOCK,blockTexture(Blocks.ANDESITE), "block/solidifier", ResourceLocation.withDefaultNamespace("block/water_flow"), ResourceLocation.withDefaultNamespace("block/lava_flow"));
+        solidifier(Registration.CALCITESOLIDIFIER_BLOCK.get(),Blocks.COPPER_BLOCK,blockTexture(Blocks.CALCITE), "block/solidifier", ResourceLocation.withDefaultNamespace("block/water_flow"), ResourceLocation.withDefaultNamespace("block/lava_flow"));
+        solidifier(Registration.DEEPSLATESOLIDIFIER_BLOCK.get(),Blocks.COPPER_BLOCK,blockTexture(Blocks.DEEPSLATE), "block/solidifier", ResourceLocation.withDefaultNamespace("block/water_flow"), ResourceLocation.withDefaultNamespace("block/lava_flow"));
+        solidifier(Registration.DIORITESOLIDIFIER_BLOCK.get(),Blocks.COPPER_BLOCK,blockTexture(Blocks.DIORITE), "block/solidifier", ResourceLocation.withDefaultNamespace("block/water_flow"), ResourceLocation.withDefaultNamespace("block/lava_flow"));
+        solidifier(Registration.GRANITESOLIDIFIER_BLOCK.get(),Blocks.COPPER_BLOCK,blockTexture(Blocks.GRANITE), "block/solidifier", ResourceLocation.withDefaultNamespace("block/water_flow"), ResourceLocation.withDefaultNamespace("block/lava_flow"));
+        solidifier(Registration.STONESOLIDIFIER_BLOCK.get(),Blocks.COPPER_BLOCK,blockTexture(Blocks.STONE), "block/solidifier", ResourceLocation.withDefaultNamespace("block/water_flow"), ResourceLocation.withDefaultNamespace("block/lava_flow"));
+        solidifier(Registration.TUFFSOLIDIFIER_BLOCK.get(),Blocks.COPPER_BLOCK,blockTexture(Blocks.TUFF), "block/solidifier", ResourceLocation.withDefaultNamespace("block/water_flow"), ResourceLocation.withDefaultNamespace("block/lava_flow"));
+        machine(Registration.CONCRETEMIXER_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.COPPER_BLOCK,Blocks.STONE_BRICKS,Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/concrete_mixer", false);
 
         horizontalBlock(Registration.BASICBATTERY_BLOCK.get(), (blockState -> {
             int charge = blockState.getValue(BatteryBlock.CHARGE_LEVEL);

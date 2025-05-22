@@ -72,7 +72,7 @@ public class DisenchanterEntity extends AbstractMachineBlockEntity {
                 case 1:
                     return itemStack.getItem().equals(Items.BOOK);
                 case 2:
-                    return itemStack.isEnchanted() || !itemStack.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY).isEmpty();
+                    return itemStack.isEnchanted() || (itemStack.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY).size() > 1);
                 default:
                     return false;
             }
@@ -118,7 +118,7 @@ public class DisenchanterEntity extends AbstractMachineBlockEntity {
             if (this.workProgress >= this.workTotal) { // Finish cycle
                 ItemStack newStack = inputSlot.copy();
                 ItemStack newBook = new ItemStack(Items.ENCHANTED_BOOK,1);
-                ItemEnchantments original = inputSlot.getTagEnchantments();
+                ItemEnchantments original = inputSlot.getOrDefault(EnchantmentHelper.getComponentType(inputSlot), ItemEnchantments.EMPTY);
                 ItemEnchantments.Mutable itemEnchantments = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
                 ItemEnchantments.Mutable bookEnchantments = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
                 if (newStack.getItem().equals(Items.ENCHANTED_BOOK)) {

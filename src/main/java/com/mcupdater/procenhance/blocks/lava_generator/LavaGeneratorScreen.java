@@ -17,7 +17,7 @@ import net.neoforged.neoforge.common.NeoForge;
 
 public class LavaGeneratorScreen extends AbstractContainerScreen<LavaGeneratorMenu> {
 
-    private static final ResourceLocation GUI = ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "textures/gui/generator.png");
+    private static final ResourceLocation GUI = ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "textures/gui/lava_generator.png");
     private ConfigPanel configPanel;
     private TabConfig configTab;
     private WidgetPower powerWidget;
@@ -31,7 +31,7 @@ public class LavaGeneratorScreen extends AbstractContainerScreen<LavaGeneratorMe
     protected void init() {
         super.init();
         powerWidget = this.addRenderableWidget(new WidgetPower(this.leftPos + 153, this.topPos + 5, 18,71, menu.getEnergyHandler(), WidgetPower.Orientation.VERTICAL));
-        fluidWidget = this.addRenderableWidget(new WidgetFluid(this.leftPos + 5, this.topPos + 14, 18, 58, menu.getBlockEntity().getFluidHandler().getInternalHandler(), 0));
+        fluidWidget = this.addRenderableWidget(new WidgetFluid(this.leftPos + 5, this.topPos + 16, 18, 52, menu.getBlockEntity().getFluidHandler().getInternalHandler(), 0));
         this.configPanel = new ConfigPanel(this.menu, this.leftPos, this.topPos, this.imageWidth, this.imageHeight);
         this.configPanel.setVisible(false);
         this.configTab = this.addRenderableWidget(new TabConfig(this.leftPos - 22, this.topPos + 2,22,22, (mouseX, mouseY) -> {

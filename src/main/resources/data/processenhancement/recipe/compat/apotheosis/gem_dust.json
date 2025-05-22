@@ -14,7 +14,7 @@
   "outputs": [
     {
       "stack": {
-        "item": "apotheosis:gem_dust",
+        "id": "apotheosis:gem_dust",
         "count": 1
       },
       "weight": 1

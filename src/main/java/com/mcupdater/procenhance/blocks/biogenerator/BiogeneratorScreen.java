@@ -82,7 +82,7 @@ public class BiogeneratorScreen extends AbstractContainerScreen<BiogeneratorMenu
         guiGraphics.blit(GUI,relX,relY,0,0,this.imageWidth,this.imageHeight);
         if (this.menu.isBioFueled()) {
             int progress = this.menu.getBioFill();
-            guiGraphics.blit(GUI, relX + 33, relY + 20, 2, 168, progress, 8);
+            guiGraphics.blit(GUI, relX + 33, relY + 21, 2, 168, progress, 8);
         }
         if (this.menu.isCopperFueled()) {
             int progress = this.menu.getCopperFill();
@@ -90,7 +90,7 @@ public class BiogeneratorScreen extends AbstractContainerScreen<BiogeneratorMenu
         }
         if (this.menu.isGunpowderFueled()) {
             int progress = this.menu.getGunpowderFill();
-            guiGraphics.blit(GUI, relX + 33, relY + 58, 2, 168, progress, 8);
+            guiGraphics.blit(GUI, relX + 33, relY + 57, 2, 168, progress, 8);
         }
     }
 }

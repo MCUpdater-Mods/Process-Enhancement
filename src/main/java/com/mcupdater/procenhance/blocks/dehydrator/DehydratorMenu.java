@@ -36,7 +36,7 @@ public class DehydratorMenu extends AbstractMachineMenu<DehydratorEntity> {
 
 	public DehydratorMenu(int windowId, Level level, BlockPos blockPos, Inventory inventory, Player player, ContainerData data, Map<Direction, String> directionComponentMap) {
 		super((DehydratorEntity) level.getBlockEntity(blockPos), Registration.DEHYDRATOR_MENU.get(), windowId, level, blockPos, inventory, player, data, directionComponentMap);
-		this.addSlot(new Slot(this.transientSlots, 0, 25, 16) {
+		this.addSlot(new Slot(this.transientSlots, 0, 25, 17) {
 			@Override
 			public boolean mayPlace(ItemStack pStack) {
 				IFluidHandlerItem itemFluidHandler = pStack.getCapability(Capabilities.FluidHandler.ITEM);

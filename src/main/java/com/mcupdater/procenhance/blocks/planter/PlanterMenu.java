@@ -40,8 +40,8 @@ public class PlanterMenu extends AbstractMachineMenu<PlanterEntity> {
 	@Override
 	protected void addMachineSlots() {
 		ItemResourceHandler resourceHandler = (ItemResourceHandler) this.machineEntity.getInventory();
-		addSlotRange(resourceHandler.getInternalHandler(), 0, 8, 54, 9, 18);
-		addPhantomSlotRange(this.machineEntity.getInventory(), 9, 8, 35, 9, 18);
+		addSlotRange(resourceHandler.getInternalHandler(), 0, 8, 51, 9, 18);
+		addPhantomSlotRange(this.machineEntity.getInventory(), 9, 8, 32, 9, 18);
 	}
 
 	private int addPhantomSlotRange(Container container, int index, int x, int y, int amount, int dx) {

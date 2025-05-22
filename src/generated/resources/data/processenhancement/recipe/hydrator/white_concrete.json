@@ -1,0 +1,17 @@
+{
+  "type": "processenhancement:hydrator",
+  "fluidIngredient": {
+    "amount": 10,
+    "id": "minecraft:water"
+  },
+  "itemIngredients": [
+    {
+      "item": "minecraft:white_concrete_powder"
+    }
+  ],
+  "processTime": 1,
+  "result": {
+    "count": 1,
+    "id": "minecraft:white_concrete"
+  }
+}

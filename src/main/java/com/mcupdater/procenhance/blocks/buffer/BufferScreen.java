@@ -30,7 +30,7 @@ public class BufferScreen extends AbstractContainerScreen<BufferMenu> {
     protected void init() {
         super.init();
         powerWidget = this.addRenderableWidget(new WidgetPower(this.leftPos + 153, this.topPos + 7, 18, 68, menu.getEnergyHandler(), WidgetPower.Orientation.VERTICAL));
-        fluidWidget = this.addRenderableWidget(new WidgetFluid( this.leftPos + 5, this.topPos + 14, 18, 58, menu.getBlockEntity().getFluidHandler().getInternalHandler(), 0));
+        fluidWidget = this.addRenderableWidget(new WidgetFluid( this.leftPos + 5, this.topPos + 16, 18, 52, menu.getBlockEntity().getFluidHandler().getInternalHandler(), 0));
         this.configPanel = new ConfigPanel(this.menu, this.leftPos, this.topPos, this.imageWidth, this.imageHeight);
         this.configPanel.setVisible(false);
         this.configTab = this.addRenderableWidget(new TabConfig(this.leftPos - 22, this.topPos + 2, 22, 22, (mouseX, mouseY) -> {

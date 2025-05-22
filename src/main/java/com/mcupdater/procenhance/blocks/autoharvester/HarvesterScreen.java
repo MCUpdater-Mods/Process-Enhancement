@@ -8,7 +8,8 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class HarvesterScreen extends AbstractMachineScreen<HarvesterEntity, HarvesterMenu> {
 
-    private static final ResourceLocation GUI = ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "textures/gui/buffer.png");
+    private static final ResourceLocation GUI = ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "textures/gui/harvester" +
+            ".png");
 
     public HarvesterScreen(HarvesterMenu menu, Inventory inventory, Component name) {
         super(menu, inventory, name);

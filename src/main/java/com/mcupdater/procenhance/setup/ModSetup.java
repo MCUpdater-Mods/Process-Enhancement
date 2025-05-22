@@ -6,6 +6,7 @@ import com.mcupdater.procenhance.blocks.autopackager.PackagerScreen;
 import com.mcupdater.procenhance.blocks.battery.BatteryScreen;
 import com.mcupdater.procenhance.blocks.biogenerator.BiogeneratorScreen;
 import com.mcupdater.procenhance.blocks.buffer.BufferScreen;
+import com.mcupdater.procenhance.blocks.concrete_mixer.MixerScreen;
 import com.mcupdater.procenhance.blocks.crude_generator.CrudeGeneratorScreen;
 import com.mcupdater.procenhance.blocks.deconstructor.DeconstructorScreen;
 import com.mcupdater.procenhance.blocks.dehydrator.DehydratorScreen;
@@ -71,6 +72,7 @@ public class ModSetup {
         event.register(Registration.HARVESTER_MENU.get(), HarvesterScreen::new);
         event.register(Registration.PLANTER_MENU.get(), PlanterScreen::new);
         event.register(Registration.SOILMANAGER_MENU.get(), SoilManagerScreen::new);
+        event.register(Registration.CONCRETEMIXER_MENU.get(), MixerScreen::new);
     }
 
     @SubscribeEvent
@@ -85,6 +87,14 @@ public class ModSetup {
                 }
             }
             return -1;
-        }, Registration.COBBLESTONESOLIDIFIER_BLOCK.get());
+        }, Registration.COBBLESTONESOLIDIFIER_BLOCK.get(),
+                Registration.ANDESITESOLIDIFIER_BLOCK.get(),
+                Registration.CALCITESOLIDIFIER_BLOCK.get(),
+                Registration.DEEPSLATESOLIDIFIER_BLOCK.get(),
+                Registration.DIORITESOLIDIFIER_BLOCK.get(),
+                Registration.GRANITESOLIDIFIER_BLOCK.get(),
+                Registration.STONESOLIDIFIER_BLOCK.get(),
+                Registration.TUFFSOLIDIFIER_BLOCK.get()
+                );
     }
 }

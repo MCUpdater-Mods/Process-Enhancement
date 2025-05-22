@@ -38,7 +38,7 @@ public class SolidifierMenu extends AbstractMachineMenu<AbstractSolidifierEntity
     @Override
     protected void addMachineSlots() {
         ItemResourceHandler resourceHandler = (ItemResourceHandler) this.machineEntity.getConfigMap().get("items");
-        addSlot(new MachineOutputSlot(this.machineEntity, this.machineEntity.getItemHandler().getInternalHandler(), 0, 81, 56));
+        addSlot(new MachineOutputSlot(this.machineEntity, this.machineEntity.getItemHandler().getInternalHandler(), 0, 81, 51));
     }
 
     @Override

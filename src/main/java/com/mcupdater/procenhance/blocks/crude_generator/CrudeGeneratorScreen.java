@@ -17,7 +17,7 @@ import net.neoforged.neoforge.common.NeoForge;
 
 public class CrudeGeneratorScreen extends AbstractContainerScreen<CrudeGeneratorMenu> {
 
-    private static final ResourceLocation GUI = ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "textures/gui/blank.png");
+    private static final ResourceLocation GUI = ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "textures/gui/crude_generator.png");
     private ConfigPanel configPanel;
     private TabConfig configTab;
 

@@ -17,7 +17,7 @@ import net.neoforged.neoforge.common.NeoForge;
 
 public class MinerScreen extends AbstractContainerScreen<MinerMenu> {
 
-    private static final ResourceLocation GUI = ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "textures/gui/buffer.png");
+    private static final ResourceLocation GUI = ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "textures/gui/miner.png");
     private ConfigPanel configPanel;
     private TabConfig configTab;
     private WidgetPower powerWidget;

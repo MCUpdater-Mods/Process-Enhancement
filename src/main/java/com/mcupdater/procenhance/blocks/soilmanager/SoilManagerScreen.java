@@ -21,7 +21,7 @@ public class SoilManagerScreen extends AbstractMachineScreen<SoilManagerEntity, 
 	@Override
 	public void registerWidgets() {
 		super.registerWidgets();
-		fluidWidget = this.addRenderableWidget(new WidgetFluid(this.leftPos + 5, this.topPos + 14, 18,58, menu.getBlockEntity().getFluidHandler().getInternalHandler(), 0));
+		fluidWidget = this.addRenderableWidget(new WidgetFluid(this.leftPos + 5, this.topPos + 16, 18,52, menu.getBlockEntity().getFluidHandler().getInternalHandler(), 0));
 		this.addExtraWidget(fluidWidget);
 	}
 
@@ -37,6 +37,6 @@ public class SoilManagerScreen extends AbstractMachineScreen<SoilManagerEntity, 
 		int relY = this.topPos;
 		guiGraphics.blit(this.getGUIResourceLocation(), relX, relY, 0, 0, this.imageWidth, this.imageHeight);
 		int fertilizer = this.menu.getFertilizer();
-		guiGraphics.blitSprite(FILL, 128, 128, 0, 36 - fertilizer, relX + 79, relY + 14 + 36 - fertilizer, 20, fertilizer);
+		guiGraphics.blitSprite(FILL, 128, 128, 0, 33 - fertilizer, relX + 79, relY + 17 + 33 - fertilizer, 20, fertilizer);
 	}
 }
