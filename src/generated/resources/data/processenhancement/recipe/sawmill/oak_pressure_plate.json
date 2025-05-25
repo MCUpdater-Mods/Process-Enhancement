@@ -1,14 +1,15 @@
 {
-  "type": "processenhancement:sawmill",
-  "experience": 0.05,
-  "ingredients": [
-    {
-      "tag": "minecraft:oak_logs"
+    "type": "processenhancement:sawmill",
+    "experience": 0.05,
+    "ingredients": [
+        {
+            "tag": "minecraft:oak_logs"
+        }
+    ],
+    "processTime": 32,
+    "result": {
+        "type": "processenhancement:item",
+        "count": 3,
+        "id": "minecraft:oak_pressure_plate"
     }
-  ],
-  "processTime": 32,
-  "result": {
-    "count": 3,
-    "id": "minecraft:oak_pressure_plate"
-  }
 }

@@ -1,40 +1,44 @@
 {
-  "type": "processenhancement:grinder",
-  "experience": 0.05,
-  "ingredients": [
-    {
-      "tag": "minecraft:coal_ores"
-    }
-  ],
-  "outputs": [
-    {
-      "stack": {
-        "count": 3,
-        "id": "minecraft:coal"
-      },
-      "weight": 55
-    },
-    {
-      "stack": {
-        "count": 4,
-        "id": "minecraft:coal"
-      },
-      "weight": 25
-    },
-    {
-      "stack": {
-        "count": 5,
-        "id": "minecraft:coal"
-      },
-      "weight": 18
-    },
-    {
-      "stack": {
-        "count": 6,
-        "id": "minecraft:coal"
-      },
-      "weight": 2
-    }
-  ],
-  "processTime": 200
+    "type": "processenhancement:grinder",
+    "experience": 0.05,
+    "ingredients": [
+        {
+            "tag": "minecraft:coal_ores"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 3,
+                "id": "minecraft:coal"
+            },
+            "weight": 55
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 4,
+                "id": "minecraft:coal"
+            },
+            "weight": 25
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 5,
+                "id": "minecraft:coal"
+            },
+            "weight": 18
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 6,
+                "id": "minecraft:coal"
+            },
+            "weight": 2
+        }
+    ],
+    "processTime": 200
 }

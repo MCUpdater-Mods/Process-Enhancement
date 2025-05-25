@@ -1,17 +1,17 @@
 {
-  "type": "processenhancement:hydrator",
-  "fluidIngredient": {
-    "amount": 100,
-    "id": "minecraft:water"
-  },
-  "itemIngredients": [
-    {
-      "item": "minecraft:cobblestone"
+    "type": "processenhancement:hydrator",
+    "fluidIngredient": {
+        "amount": 100,
+        "id": "minecraft:water"
+    },
+    "itemIngredients": [
+        {
+            "item": "minecraft:cobblestone"
+        }
+    ],
+    "processTime": 32,
+    "result": {
+        "count": 1,
+        "id": "minecraft:mossy_cobblestone"
     }
-  ],
-  "processTime": 32,
-  "result": {
-    "count": 1,
-    "id": "minecraft:mossy_cobblestone"
-  }
 }

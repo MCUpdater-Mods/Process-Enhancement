@@ -1,0 +1,24 @@
+{
+    "type": "processenhancement:tank_upgrade",
+    "category": "misc",
+    "key": {
+        "T": {
+            "item": "processenhancement:intermediate_tank"
+        },
+        "U": {
+            "item": "minecraft:gold_ingot"
+        },
+        "u": {
+            "item": "minecraft:iron_block"
+        }
+    },
+    "pattern": [
+        "UuU",
+        "uTu",
+        "UuU"
+    ],
+    "result": {
+        "count": 1,
+        "id": "processenhancement:advanced_tank"
+    }
+}

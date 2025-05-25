@@ -1,17 +1,17 @@
 {
-  "type": "processenhancement:hydrator",
-  "fluidIngredient": {
-    "amount": 100,
-    "id": "minecraft:water"
-  },
-  "itemIngredients": [
-    {
-      "tag": "c:stones"
+    "type": "processenhancement:hydrator",
+    "fluidIngredient": {
+        "amount": 100,
+        "id": "minecraft:water"
+    },
+    "itemIngredients": [
+        {
+            "tag": "c:stones"
+        }
+    ],
+    "processTime": 32,
+    "result": {
+        "count": 1,
+        "id": "minecraft:moss_block"
     }
-  ],
-  "processTime": 32,
-  "result": {
-    "count": 1,
-    "id": "minecraft:moss_block"
-  }
 }

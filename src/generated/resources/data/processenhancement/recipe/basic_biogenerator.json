@@ -1,27 +1,27 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "key": {
-    "#": {
-      "tag": "c:dusts/plant"
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+        "#": {
+            "tag": "c:dusts/plant"
+        },
+        "C": {
+            "item": "minecraft:copper_ingot"
+        },
+        "F": {
+            "item": "minecraft:deepslate_bricks"
+        },
+        "R": {
+            "item": "processenhancement:capacitor"
+        }
     },
-    "C": {
-      "item": "minecraft:copper_ingot"
-    },
-    "F": {
-      "item": "minecraft:deepslate_bricks"
-    },
-    "R": {
-      "item": "processenhancement:capacitor"
+    "pattern": [
+        "CFC",
+        "F#F",
+        "CRC"
+    ],
+    "result": {
+        "count": 1,
+        "id": "processenhancement:basic_biogenerator"
     }
-  },
-  "pattern": [
-    "CFC",
-    "F#F",
-    "CRC"
-  ],
-  "result": {
-    "count": 1,
-    "id": "processenhancement:basic_biogenerator"
-  }
 }

@@ -38,6 +38,7 @@ public class HydratorRecipeBuilder implements RecipeBuilder {
 	protected final List<ICondition> conditions = new ArrayList<>();
 	private final Advancement.Builder advancement = Advancement.Builder.advancement();
 	private final String recipeName;
+	private String additonalHierarchy = "";
 
 	public HydratorRecipeBuilder(Ingredient inputItem, FluidStack inputFluid, ItemLike output, int count, int processTime, String recipeName) {
 		this.inputItem = inputItem;
@@ -46,6 +47,11 @@ public class HydratorRecipeBuilder implements RecipeBuilder {
 		this.count = count;
 		this.processTime = processTime;
 		this.recipeName = recipeName != null ? recipeName : ResourceLocation.parse(this.output.toString()).getPath();
+	}
+
+	public HydratorRecipeBuilder(String modId, Ingredient inputItem, FluidStack inputFluid, ItemLike output, int count, int processTime, String recipeName) {
+		this(inputItem, inputFluid, output, count, processTime, recipeName);
+		this.additonalHierarchy = "compat/" + modId + "/";
 	}
 
 	@Override
@@ -76,15 +82,15 @@ public class HydratorRecipeBuilder implements RecipeBuilder {
 		ICondition[] finalConditions = new ICondition[this.conditions.size()];
 		finalConditions = this.conditions.toArray(finalConditions);
 		RecipeOutput conditionalRecipeOutput = !this.conditions.isEmpty() ? recipeOutput.withConditions(finalConditions) : recipeOutput;
-		this.advancement.parent(ResourceLocation.withDefaultNamespace("recipes/root"))
+		this.advancement
 				.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pRecipeId))
 				.rewards(AdvancementRewards.Builder.recipe(pRecipeId)).requirements(AdvancementRequirements.Strategy.OR);
 
-		conditionalRecipeOutput.accept(pRecipeId, new HydratorRecipe(new ItemStack(this.output, this.count), this.processTime, NonNullList.of(this.inputItem,this.inputItem), this.inputFluid), this.advancement.build(ResourceLocation.fromNamespaceAndPath(pRecipeId.getNamespace(), "recipes/hydrator/" + pRecipeId.getPath())));
+		conditionalRecipeOutput.accept(pRecipeId, new HydratorRecipe(new ItemStack(this.output, this.count), this.processTime, NonNullList.of(this.inputItem,this.inputItem), this.inputFluid), this.advancement.build(pRecipeId.withPrefix("recipes/")));
 	}
 
 	@Override
 	public void save(RecipeOutput recipeOutput) {
-		save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "hydrator/" + this.recipeName));
+		save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "hydrator/" + this.additonalHierarchy + this.recipeName));
 	}
 }

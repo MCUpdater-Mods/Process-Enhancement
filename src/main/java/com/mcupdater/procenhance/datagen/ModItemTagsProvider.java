@@ -19,6 +19,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     public static final TagKey<Item> COPPER_DUST = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "dusts/copper"));
     public static final TagKey<Item> GOLD_DUST = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "dusts/gold"));
     public static final TagKey<Item> PLANT_DUST = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "dusts/plant"));
+    public static final TagKey<Item> NETHER_DUST = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "dusts/netherrack"));
 
     public ModItemTagsProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, BlockTagsProvider modBlockTagsProvider, String modid, ExistingFileHelper existingFileHelper) {
         super(packOutput, lookupProvider, modBlockTagsProvider.contentsGetter(), modid, existingFileHelper);
@@ -30,7 +31,8 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         this.tag(COPPER_DUST).add(Registration.COPPER_DUST.get());
         this.tag(GOLD_DUST).add(Registration.GOLD_DUST.get());
         this.tag(PLANT_DUST).add(Registration.PLANT_DUST.get());
+        this.tag(NETHER_DUST).add(Registration.NETHER_DUST.get());
 
-        this.tag(Tags.Items.DUSTS).addTags(IRON_DUST,COPPER_DUST,GOLD_DUST,PLANT_DUST);
+        this.tag(Tags.Items.DUSTS).addTags(IRON_DUST,COPPER_DUST,GOLD_DUST,PLANT_DUST,NETHER_DUST);
     }
 }

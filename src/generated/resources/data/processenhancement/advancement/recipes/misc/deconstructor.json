@@ -1,32 +1,32 @@
 {
-  "parent": "minecraft:recipes/root",
-  "criteria": {
-    "automatic": {
-      "conditions": {
-        "items": [
-          {
-            "items": "processenhancement:advanced_grinder"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+        "automatic": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:advanced_grinder"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "has_the_recipe": {
+            "conditions": {
+                "recipe": "processenhancement:deconstructor"
+            },
+            "trigger": "minecraft:recipe_unlocked"
+        }
     },
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "processenhancement:deconstructor"
-      },
-      "trigger": "minecraft:recipe_unlocked"
+    "requirements": [
+        [
+            "has_the_recipe",
+            "automatic"
+        ]
+    ],
+    "rewards": {
+        "recipes": [
+            "processenhancement:deconstructor"
+        ]
     }
-  },
-  "requirements": [
-    [
-      "has_the_recipe",
-      "automatic"
-    ]
-  ],
-  "rewards": {
-    "recipes": [
-      "processenhancement:deconstructor"
-    ]
-  }
 }

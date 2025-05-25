@@ -1,0 +1,15 @@
+{
+  "name": "Concrete Mixer",
+  "icon": "processenhancement:concrete_mixer",
+  "category": "processenhancement:processing",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Manufactures concrete powder from gravel, sand, and dye. Pair with the $(l:processenhancement:processing/hydrator)Hydrator$() to produce finished concrete."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:concrete_mixer"
+    }
+  ]
+}

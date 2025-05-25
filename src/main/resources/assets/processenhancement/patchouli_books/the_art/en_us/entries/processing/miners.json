@@ -13,13 +13,13 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "processenhancement:basic_miner",
-      "recipe2": "processenhancement:intermediate_miner"
+      "recipe": "processenhancement:miner/basic_miner",
+      "recipe2": "processenhancement:miner/intermediate_miner"
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "processenhancement:advanced_miner",
-      "recipe2": "processenhancement:industrial_miner"
+      "recipe": "processenhancement:miner/advanced_miner",
+      "recipe2": "processenhancement:miner/industrial_miner"
     }
   ]
 }

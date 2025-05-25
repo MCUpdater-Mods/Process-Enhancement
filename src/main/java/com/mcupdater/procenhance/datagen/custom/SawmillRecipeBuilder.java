@@ -2,6 +2,7 @@ package com.mcupdater.procenhance.datagen.custom;
 
 import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.recipe.SawmillRecipe;
+import com.mcupdater.procenhance.recipe.result.RecipeResult;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.core.NonNullList;
@@ -9,9 +10,7 @@ import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,21 +22,25 @@ import java.util.Map;
 public class SawmillRecipeBuilder implements RecipeBuilder {
 
     private final Ingredient input;
-    private final Item output;
-    private final int count;
+    private final RecipeResult output;
     private final int processTime;
     private final float experience;
     protected final List<ICondition> conditions = new ArrayList<>();
     private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
     private final String recipeName;
+    private String additionalHierarchy = "";
 
-    public SawmillRecipeBuilder(Ingredient input, ItemLike output, int count, int processTime, float experience, String recipeName) {
+    public SawmillRecipeBuilder(Ingredient input, RecipeResult output, int processTime, float experience, String recipeName) {
         this.input = input;
-        this.output = output.asItem();
-        this.count = count;
+        this.output = output;
         this.processTime = processTime;
         this.experience = experience;
-        this.recipeName = recipeName != null ? recipeName : ResourceLocation.parse(this.output.toString()).getPath();
+        this.recipeName = recipeName != null ? recipeName : ResourceLocation.parse(this.output.getItemStack().getItem().toString()).getPath();
+    }
+
+    public SawmillRecipeBuilder(String modId, Ingredient input, RecipeResult output, int processTime, float experience, String recipeName) {
+        this(input, output, processTime, experience, recipeName);
+        this.additionalHierarchy = "compat/" + modId + "/";
     }
 
     @Override
@@ -60,7 +63,7 @@ public class SawmillRecipeBuilder implements RecipeBuilder {
 
     @Override
     public Item getResult() {
-        return this.output;
+        return this.output.getItemStack().getItem();
     }
 
     @Override
@@ -72,11 +75,12 @@ public class SawmillRecipeBuilder implements RecipeBuilder {
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeId))
                 .rewards(AdvancementRewards.Builder.recipe(recipeId))
                 .requirements(AdvancementRequirements.Strategy.OR);
-        conditionalRecipeOutput.accept(recipeId, new SawmillRecipe(new ItemStack(this.output, this.count), this.processTime, this.experience, NonNullList.of(this.input,this.input)), advancementBuilder.build(recipeId.withPrefix("recipes/sawmill/")));
+        this.criteria.entrySet().forEach(entry -> advancementBuilder.addCriterion(entry.getKey(), entry.getValue()));
+        conditionalRecipeOutput.accept(recipeId, new SawmillRecipe(this.output, this.processTime, this.experience, NonNullList.of(this.input,this.input)), advancementBuilder.build(recipeId.withPrefix("recipes/")));
     }
 
     @Override
     public void save(RecipeOutput recipeOutput) {
-        save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "sawmill/" + recipeName));
+        save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "sawmill/" + this.additionalHierarchy + this.recipeName));
     }
 }

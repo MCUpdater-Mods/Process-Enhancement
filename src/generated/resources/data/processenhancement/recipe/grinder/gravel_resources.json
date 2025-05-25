@@ -1,87 +1,97 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "processenhancement:config"
-    }
-  ],
-  "type": "processenhancement:grinder",
-  "experience": 0.01,
-  "ingredients": [
-    {
-      "item": "minecraft:gravel"
-    }
-  ],
-  "outputs": [
-    {
-      "stack": {
-        "count": 1,
-        "id": "minecraft:dirt"
-      },
-      "weight": 40
-    },
-    {
-      "stack": {
-        "count": 1,
-        "id": "minecraft:sand"
-      },
-      "weight": 40
-    },
-    {
-      "stack": {
-        "count": 1,
-        "id": "minecraft:flint"
-      },
-      "weight": 20
-    },
-    {
-      "stack": {
-        "count": 1,
-        "id": "minecraft:coal"
-      },
-      "weight": 10
-    },
-    {
-      "stack": {
-        "count": 1,
-        "id": "processenhancement:iron_dust"
-      },
-      "weight": 10
-    },
-    {
-      "stack": {
-        "count": 1,
-        "id": "processenhancement:copper_dust"
-      },
-      "weight": 10
-    },
-    {
-      "stack": {
-        "count": 1,
-        "id": "processenhancement:gold_dust"
-      },
-      "weight": 8
-    },
-    {
-      "stack": {
-        "count": 1,
-        "id": "minecraft:redstone"
-      },
-      "weight": 8
-    },
-    {
-      "stack": {
-        "count": 1,
-        "id": "minecraft:lapis_lazuli"
-      },
-      "weight": 8
-    },
-    {
-      "stack": {
-        "count": 1,
-        "id": "minecraft:diamond"
-      },
-      "weight": 2
-    }
-  ],
-  "processTime": 200
+    "neoforge:conditions": [
+        {
+            "type": "processenhancement:config"
+        }
+    ],
+    "type": "processenhancement:grinder",
+    "experience": 0.01,
+    "ingredients": [
+        {
+            "item": "minecraft:gravel"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:dirt"
+            },
+            "weight": 40
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:sand"
+            },
+            "weight": 40
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:flint"
+            },
+            "weight": 20
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:coal"
+            },
+            "weight": 10
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "processenhancement:iron_dust"
+            },
+            "weight": 10
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "processenhancement:copper_dust"
+            },
+            "weight": 10
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "processenhancement:gold_dust"
+            },
+            "weight": 8
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:redstone"
+            },
+            "weight": 8
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:lapis_lazuli"
+            },
+            "weight": 8
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:diamond"
+            },
+            "weight": 2
+        }
+    ],
+    "processTime": 200
 }

@@ -5,6 +5,7 @@ import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.mculib.inventory.MachineContainer;
 import com.mcupdater.procenhance.recipe.GrinderRecipe;
+import com.mcupdater.procenhance.recipe.result.RecipeResult;
 import com.mcupdater.procenhance.setup.Config;
 import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
@@ -76,9 +77,9 @@ public abstract class GrinderEntity extends AbstractMachineBlockEntity {
                     this.currentRecipe = recipe;
                     this.prizePool.clear();
                     this.maxOutput = 0;
-                    for (Tuple<ItemStack, Integer> entry : currentRecipe.value().getOutputs()) {
-                        this.prizePool.add(entry.getA().getItem());
-                        this.maxOutput = Math.max(this.maxOutput, entry.getA().getCount());
+                    for (Tuple<RecipeResult, Integer> entry : currentRecipe.value().getOutputs()) {
+                        this.prizePool.add(entry.getA().getItemStack().getItem());
+                        this.maxOutput = Math.max(this.maxOutput, entry.getA().getItemStack().getCount());
                     }
                     this.workTotal = this.currentRecipe.value().getProcessTime();
                 }
@@ -92,8 +93,8 @@ public abstract class GrinderEntity extends AbstractMachineBlockEntity {
             this.workProgress++;
             if (this.workProgress >= this.workTotal) {
                 List<ItemStack> prizeList = new ArrayList<>();
-                for (Tuple<ItemStack,Integer> tuple : this.currentRecipe.value().getOutputs()) {
-                    ItemStack potentialPrize = tuple.getA();
+                for (Tuple<RecipeResult,Integer> tuple : this.currentRecipe.value().getOutputs()) {
+                    ItemStack potentialPrize = tuple.getA().getItemStack();
                     for (int i = 0; i < tuple.getB(); i++) {
                         prizeList.add(potentialPrize);
                     }

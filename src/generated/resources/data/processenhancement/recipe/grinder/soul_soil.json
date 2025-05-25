@@ -1,33 +1,36 @@
 {
-  "type": "processenhancement:grinder",
-  "experience": 0.1,
-  "ingredients": [
-    {
-      "item": "minecraft:soul_soil"
-    }
-  ],
-  "outputs": [
-    {
-      "stack": {
-        "count": 1,
-        "id": "minecraft:warped_roots"
-      },
-      "weight": 30
-    },
-    {
-      "stack": {
-        "count": 1,
-        "id": "minecraft:crimson_roots"
-      },
-      "weight": 30
-    },
-    {
-      "stack": {
-        "count": 1,
-        "id": "minecraft:nether_wart"
-      },
-      "weight": 1
-    }
-  ],
-  "processTime": 200
+    "type": "processenhancement:grinder",
+    "experience": 0.1,
+    "ingredients": [
+        {
+            "item": "minecraft:soul_soil"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:warped_roots"
+            },
+            "weight": 30
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:crimson_roots"
+            },
+            "weight": 30
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:nether_wart"
+            },
+            "weight": 1
+        }
+    ],
+    "processTime": 200
 }

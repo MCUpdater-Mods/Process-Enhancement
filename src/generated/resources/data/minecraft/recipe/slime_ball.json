@@ -1,16 +1,16 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "category": "misc",
-  "ingredients": [
-    {
-      "item": "minecraft:milk_bucket"
-    },
-    {
-      "item": "processenhancement:plant_dust"
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "ingredients": [
+        {
+            "item": "minecraft:milk_bucket"
+        },
+        {
+            "item": "processenhancement:plant_dust"
+        }
+    ],
+    "result": {
+        "count": 1,
+        "id": "minecraft:slime_ball"
     }
-  ],
-  "result": {
-    "count": 1,
-    "id": "minecraft:slime_ball"
-  }
 }

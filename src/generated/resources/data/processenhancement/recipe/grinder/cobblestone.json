@@ -1,19 +1,20 @@
 {
-  "type": "processenhancement:grinder",
-  "experience": 0.01,
-  "ingredients": [
-    {
-      "item": "minecraft:cobblestone"
-    }
-  ],
-  "outputs": [
-    {
-      "stack": {
-        "count": 1,
-        "id": "minecraft:gravel"
-      },
-      "weight": 1
-    }
-  ],
-  "processTime": 200
+    "type": "processenhancement:grinder",
+    "experience": 0.01,
+    "ingredients": [
+        {
+            "item": "minecraft:cobblestone"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:gravel"
+            },
+            "weight": 1
+        }
+    ],
+    "processTime": 200
 }

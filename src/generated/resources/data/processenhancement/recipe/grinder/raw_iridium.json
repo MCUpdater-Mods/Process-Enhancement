@@ -1,0 +1,28 @@
+{
+    "type": "processenhancement:grinder",
+    "experience": 0.05,
+    "ingredients": [
+        {
+            "tag": "c:raw_materials/iridium"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 1,
+                "tag": "c:dusts/iridium"
+            },
+            "weight": 2
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 2,
+                "tag": "c:dusts/iridium"
+            },
+            "weight": 1
+        }
+    ],
+    "processTime": 200
+}

@@ -1,17 +1,17 @@
 {
-  "type": "processenhancement:dehydrator",
-  "fluidOutput": {
-    "amount": 100,
-    "id": "minecraft:lava"
-  },
-  "itemIngredients": [
-    {
-      "item": "processenhancement:nether_dust"
+    "type": "processenhancement:dehydrator",
+    "fluidOutput": {
+        "amount": 100,
+        "id": "minecraft:lava"
+    },
+    "itemIngredients": [
+        {
+            "item": "processenhancement:nether_dust"
+        }
+    ],
+    "processTime": 64,
+    "result": {
+        "count": 1,
+        "id": "minecraft:bone_meal"
     }
-  ],
-  "processTime": 64,
-  "result": {
-    "count": 1,
-    "id": "minecraft:bone_meal"
-  }
 }

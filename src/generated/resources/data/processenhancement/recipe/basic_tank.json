@@ -1,24 +1,24 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "key": {
-    "#": {
-      "item": "minecraft:glass"
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+        "#": {
+            "item": "minecraft:glass"
+        },
+        "C": {
+            "item": "minecraft:copper_ingot"
+        },
+        "F": {
+            "item": "minecraft:iron_ingot"
+        }
     },
-    "C": {
-      "item": "minecraft:copper_ingot"
-    },
-    "F": {
-      "item": "minecraft:iron_ingot"
+    "pattern": [
+        "CFC",
+        "F#F",
+        "CFC"
+    ],
+    "result": {
+        "count": 1,
+        "id": "processenhancement:basic_tank"
     }
-  },
-  "pattern": [
-    "CFC",
-    "F#F",
-    "CFC"
-  ],
-  "result": {
-    "count": 1,
-    "id": "processenhancement:basic_tank"
-  }
 }

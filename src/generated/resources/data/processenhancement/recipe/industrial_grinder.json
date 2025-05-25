@@ -1,24 +1,24 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "key": {
-    "M": {
-      "item": "processenhancement:advanced_grinder"
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+        "M": {
+            "item": "processenhancement:advanced_grinder"
+        },
+        "U": {
+            "item": "minecraft:diamond"
+        },
+        "u": {
+            "item": "minecraft:gold_block"
+        }
     },
-    "U": {
-      "item": "minecraft:diamond"
-    },
-    "u": {
-      "item": "minecraft:gold_block"
+    "pattern": [
+        "UuU",
+        "uMu",
+        "UuU"
+    ],
+    "result": {
+        "count": 1,
+        "id": "processenhancement:industrial_grinder"
     }
-  },
-  "pattern": [
-    "UuU",
-    "uMu",
-    "UuU"
-  ],
-  "result": {
-    "count": 1,
-    "id": "processenhancement:industrial_grinder"
-  }
 }

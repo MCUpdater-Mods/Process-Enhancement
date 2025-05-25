@@ -10,12 +10,12 @@
     {
       "type": "patchouli:crafting",
       "recipe": "processenhancement:basic_battery",
-      "recipe2": "processenhancement:intermediate_battery"
+      "recipe2": "processenhancement:battery_upgrade/intermediate_battery"
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "processenhancement:advanced_battery",
-      "recipe2": "processenhancement:industrial_battery"
+      "recipe": "processenhancement:battery_upgrade/advanced_battery",
+      "recipe2": "processenhancement:battery_upgrade/industrial_battery"
     }
   ]
 }

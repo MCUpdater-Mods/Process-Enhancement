@@ -1,0 +1,32 @@
+{
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+        "has_sawmill": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:sawmill"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "has_the_recipe": {
+            "conditions": {
+                "recipe": "processenhancement:sawmill/warped_planks_to_slab"
+            },
+            "trigger": "minecraft:recipe_unlocked"
+        }
+    },
+    "requirements": [
+        [
+            "has_the_recipe",
+            "has_sawmill"
+        ]
+    ],
+    "rewards": {
+        "recipes": [
+            "processenhancement:sawmill/warped_planks_to_slab"
+        ]
+    }
+}

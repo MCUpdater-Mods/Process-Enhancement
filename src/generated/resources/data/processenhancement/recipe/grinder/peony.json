@@ -1,19 +1,20 @@
 {
-  "type": "processenhancement:grinder",
-  "experience": 0.0,
-  "ingredients": [
-    {
-      "item": "minecraft:peony"
-    }
-  ],
-  "outputs": [
-    {
-      "stack": {
-        "count": 6,
-        "id": "minecraft:pink_dye"
-      },
-      "weight": 1
-    }
-  ],
-  "processTime": 50
+    "type": "processenhancement:grinder",
+    "experience": 0.0,
+    "ingredients": [
+        {
+            "item": "minecraft:peony"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 6,
+                "id": "minecraft:pink_dye"
+            },
+            "weight": 1
+        }
+    ],
+    "processTime": 50
 }

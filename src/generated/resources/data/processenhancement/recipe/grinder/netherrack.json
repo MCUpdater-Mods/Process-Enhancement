@@ -1,19 +1,20 @@
 {
-  "type": "processenhancement:grinder",
-  "experience": 0.1,
-  "ingredients": [
-    {
-      "tag": "c:netherracks"
-    }
-  ],
-  "outputs": [
-    {
-      "stack": {
-        "count": 1,
-        "id": "processenhancement:nether_dust"
-      },
-      "weight": 1
-    }
-  ],
-  "processTime": 50
+    "type": "processenhancement:grinder",
+    "experience": 0.1,
+    "ingredients": [
+        {
+            "tag": "c:netherracks"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "processenhancement:nether_dust"
+            },
+            "weight": 1
+        }
+    ],
+    "processTime": 50
 }

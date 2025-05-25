@@ -1,14 +1,15 @@
 {
-  "type": "processenhancement:sawmill",
-  "experience": 0.05,
-  "ingredients": [
-    {
-      "tag": "minecraft:oak_logs"
+    "type": "processenhancement:sawmill",
+    "experience": 0.05,
+    "ingredients": [
+        {
+            "tag": "minecraft:oak_logs"
+        }
+    ],
+    "processTime": 32,
+    "result": {
+        "type": "processenhancement:item",
+        "count": 12,
+        "id": "minecraft:oak_slab"
     }
-  ],
-  "processTime": 32,
-  "result": {
-    "count": 12,
-    "id": "minecraft:oak_slab"
-  }
 }

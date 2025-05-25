@@ -1,24 +1,24 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "key": {
-    "#": {
-      "item": "minecraft:furnace"
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+        "#": {
+            "item": "minecraft:furnace"
+        },
+        "C": {
+            "item": "minecraft:copper_ingot"
+        },
+        "F": {
+            "item": "minecraft:smooth_stone"
+        }
     },
-    "C": {
-      "item": "minecraft:copper_ingot"
-    },
-    "F": {
-      "item": "minecraft:smooth_stone"
+    "pattern": [
+        "CFC",
+        "F#F",
+        "CFC"
+    ],
+    "result": {
+        "count": 1,
+        "id": "processenhancement:crude_generator"
     }
-  },
-  "pattern": [
-    "CFC",
-    "F#F",
-    "CFC"
-  ],
-  "result": {
-    "count": 1,
-    "id": "processenhancement:crude_generator"
-  }
 }

@@ -1,17 +1,17 @@
 {
-  "type": "processenhancement:hydrator",
-  "fluidIngredient": {
-    "amount": 100,
-    "id": "minecraft:water"
-  },
-  "itemIngredients": [
-    {
-      "item": "minecraft:stone_bricks"
+    "type": "processenhancement:hydrator",
+    "fluidIngredient": {
+        "amount": 100,
+        "id": "minecraft:water"
+    },
+    "itemIngredients": [
+        {
+            "item": "minecraft:stone_bricks"
+        }
+    ],
+    "processTime": 32,
+    "result": {
+        "count": 1,
+        "id": "minecraft:mossy_stone_bricks"
     }
-  ],
-  "processTime": 32,
-  "result": {
-    "count": 1,
-    "id": "minecraft:mossy_stone_bricks"
-  }
 }
