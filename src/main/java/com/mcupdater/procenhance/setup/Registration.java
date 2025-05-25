@@ -1,5 +1,6 @@
 package com.mcupdater.procenhance.setup;
 
+import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.blocks.autoharvester.HarvesterBlock;
 import com.mcupdater.procenhance.blocks.autoharvester.HarvesterEntity;
 import com.mcupdater.procenhance.blocks.autoharvester.HarvesterMenu;
@@ -54,6 +55,10 @@ import com.mcupdater.procenhance.loot.functions.RetainEnchantmentsFunction;
 import com.mcupdater.procenhance.loot.functions.RetainEnergyFunction;
 import com.mcupdater.procenhance.loot.functions.RetainFluidFunction;
 import com.mcupdater.procenhance.recipe.*;
+import com.mcupdater.procenhance.recipe.result.ItemRecipeResult;
+import com.mcupdater.procenhance.recipe.result.RecipeResult;
+import com.mcupdater.procenhance.recipe.result.RecipeResultType;
+import com.mcupdater.procenhance.recipe.result.TagRecipeResult;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.component.DataComponentType;
@@ -99,6 +104,7 @@ public class Registration {
     public static final DeferredRegister<MapCodec<? extends ICondition>> CONDITION_CODECS = DeferredRegister.create(NeoForgeRegistries.Keys.CONDITION_CODECS, MODID);
     public static final DeferredRegister<LootItemFunctionType<?>> LOOT_FUNCTION_TYPES = DeferredRegister.create(Registries.LOOT_FUNCTION_TYPE, MODID);
     public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENTS = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, MODID);
+    public static final DeferredRegister<RecipeResultType<?>> RECIPE_RESULT_TYPES = DeferredRegister.create(PERegistries.RECIPE_RESULT_TYPES, MODID);
 
     public static void init(IEventBus modEventBus) {
         MACHINES.register(modEventBus);
@@ -116,6 +122,7 @@ public class Registration {
         CONDITION_CODECS.register(modEventBus);
         LOOT_FUNCTION_TYPES.register(modEventBus);
         DATA_COMPONENTS.register(modEventBus);
+        RECIPE_RESULT_TYPES.register(modEventBus);
     }
 
     public static final DeferredHolder<MapCodec<? extends ICondition>, MapCodec<ConfigCondition>> CONFIG_CONDITION = CONDITION_CODECS.register("config", () -> ConfigCondition.CODEC);
@@ -502,4 +509,8 @@ public class Registration {
     public static final TagKey<Item> COPPER_DUST_TAG = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "dusts/copper"));
     public static final TagKey<Item> GOLD_DUST_TAG = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "dusts/gold"));
     public static final TagKey<Item> PLANT_DUST_TAG = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "dusts/plant"));
+
+    // Recipe Result Types
+    public static final DeferredHolder<RecipeResultType<?>, RecipeResultType<ItemRecipeResult>> RESULT_ITEM = RECIPE_RESULT_TYPES.register("item", () -> new RecipeResultType<>(ItemRecipeResult.CODEC, ItemRecipeResult.STREAM_CODEC));
+    public static final DeferredHolder<RecipeResultType<?>, RecipeResultType<TagRecipeResult>> RESULT_TAG = RECIPE_RESULT_TYPES.register("tag", () -> new RecipeResultType<>(TagRecipeResult.CODEC, TagRecipeResult.STREAM_CODEC));
 }

@@ -1,24 +1,24 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "key": {
-    "M": {
-      "item": "processenhancement:intermediate_pump"
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+        "M": {
+            "item": "processenhancement:intermediate_pump"
+        },
+        "U": {
+            "item": "minecraft:gold_ingot"
+        },
+        "u": {
+            "item": "minecraft:iron_block"
+        }
     },
-    "U": {
-      "item": "minecraft:gold_ingot"
-    },
-    "u": {
-      "item": "minecraft:iron_block"
+    "pattern": [
+        "UuU",
+        "uMu",
+        "UuU"
+    ],
+    "result": {
+        "count": 1,
+        "id": "processenhancement:advanced_pump"
     }
-  },
-  "pattern": [
-    "UuU",
-    "uMu",
-    "UuU"
-  ],
-  "result": {
-    "count": 1,
-    "id": "processenhancement:advanced_pump"
-  }
 }

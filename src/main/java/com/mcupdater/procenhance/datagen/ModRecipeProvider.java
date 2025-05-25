@@ -4,11 +4,16 @@ import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
 import com.mcupdater.procenhance.datagen.custom.*;
 import com.mcupdater.procenhance.recipe.ConfigCondition;
+import com.mcupdater.procenhance.recipe.result.ItemRecipeResult;
+import com.mcupdater.procenhance.recipe.result.RecipeResult;
 import com.mcupdater.procenhance.setup.Registration;
+import dev.shadowsoffire.apotheosis.Apoth;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -24,7 +29,6 @@ import net.neoforged.neoforge.common.conditions.*;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.potionstudios.biomeswevegone.world.level.block.wood.BWGWoodSet;
 
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 import static com.mcupdater.procenhance.setup.Registration.*;
@@ -300,6 +304,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .addOutput(new ItemStack(Blocks.CRIMSON_ROOTS, 1), 30)
                 .addOutput(new ItemStack(Items.NETHER_WART, 1), 1)
                 .save(recipeOutput);
+        /*
         grinder(Ingredient.of(Items.RAW_IRON),200,0.05f,"raw_iron")
                 .addOutput(new ItemStack(IRON_DUST.get(), 1), 2)
                 .addOutput(new ItemStack(IRON_DUST.get(), 2), 1)
@@ -312,9 +317,29 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .addOutput(new ItemStack(COPPER_DUST.get(), 1), 2)
                 .addOutput(new ItemStack(COPPER_DUST.get(), 2), 1)
                 .save(recipeOutput);
-        grinder_oreblock(Ingredient.of(ItemTags.IRON_ORES),1, 200,0.05f, IRON_DUST.get(), recipeOutput,"iron");
-        grinder_oreblock(Ingredient.of(ItemTags.GOLD_ORES),1, 200,0.05f, GOLD_DUST.get(), recipeOutput,"gold");
-        grinder_oreblock(Ingredient.of(ItemTags.COPPER_ORES),2, 200,0.05f, COPPER_DUST.get(), recipeOutput,"copper");
+        */
+        grinder_tagged_resource(recipeOutput, "iron", 1);
+        grinder_tagged_resource(recipeOutput, "gold", 1);
+        grinder_tagged_resource(recipeOutput, "copper", 2);
+        // Compatibility additions - Not native Process Enhancement resources
+        grinder_tagged_resource(recipeOutput, "aluminum", 1);
+        grinder_tagged_resource(recipeOutput, "iesnium", 1);
+        grinder_tagged_resource(recipeOutput, "iridium", 1);
+        grinder_tagged_resource(recipeOutput, "lead", 1);
+        grinder_tagged_resource(recipeOutput, "nickel", 1);
+        grinder_tagged_resource(recipeOutput, "osmium", 1);
+        grinder_tagged_resource(recipeOutput, "platinum", 1);
+        grinder_tagged_resource(recipeOutput, "silver", 1);
+        grinder_tagged_resource(recipeOutput, "tin", 1);
+        grinder_tagged_resource(recipeOutput, "titanium", 1);
+        grinder_tagged_resource(recipeOutput, "uranium", 1);
+        grinder_tagged_resource(recipeOutput, "zinc", 1);
+        //
+        /*
+        grinder_oreblock(Ingredient.of(ItemTags.IRON_ORES),1, 200,0.05f, IRON_DUST_TAG, recipeOutput,"iron");
+        grinder_oreblock(Ingredient.of(ItemTags.GOLD_ORES),1, 200,0.05f, GOLD_DUST_TAG, recipeOutput,"gold");
+        grinder_oreblock(Ingredient.of(ItemTags.COPPER_ORES),2, 200,0.05f, COPPER_DUST_TAG, recipeOutput,"copper");
+        */
         grinder_oreblock(Ingredient.of(ItemTags.COAL_ORES), 1, 200, 0.05f, Items.COAL, recipeOutput,"coal");
         grinder_oreblock(Ingredient.of(ItemTags.REDSTONE_ORES), 3, 200, 0.05f, Items.REDSTONE, recipeOutput,"redstone");
         grinder_oreblock(Ingredient.of(ItemTags.LAPIS_ORES), 4, 200, 0.05f, Items.LAPIS_LAZULI, recipeOutput,"lapis");
@@ -354,7 +379,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         grinder_single(Ingredient.of(Items.SUGAR_CANE), new ItemStack(PLANT_DUST.get(), 1), 50, 0.1f, recipeOutput,"sugar_cane");
         grinder_single(Ingredient.of(Items.BAMBOO), new ItemStack(PLANT_DUST.get(), 1), 50, 0.1f, recipeOutput,"bamboo");
         grinder_single(Ingredient.of(Items.KELP), new ItemStack(PLANT_DUST.get(), 1), 50, 0.1f, recipeOutput,"kelp");
-        grinder_single(Ingredient.of(Items.COPPER_INGOT), new ItemStack(COPPER_DUST.get(), 1), 50, 0f, recipeOutput,"copper_ingot");
         grinder_single(Ingredient.of(Blocks.SMOOTH_BASALT), new ItemStack(Blocks.BASALT, 1), 50, 0.1f, recipeOutput,"smooth_basalt");
         grinder_single(Ingredient.of(Tags.Items.NETHERRACKS), new ItemStack(NETHER_DUST.get(), 1), 50, 0.1f, recipeOutput, "netherrack");
 
@@ -451,6 +475,12 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         sawmillConditional(recipeOutput, Ingredient.of(ModItems.FLASHING_ARCHWOOD_LOG.get()), BlockRegistry.ARCHWOOD_TRAPDOOR.get(), 2, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "flashing_archwood_trapdoors");
         sawmillConditional(recipeOutput, Ingredient.of(ModItems.FLASHING_ARCHWOOD_LOG.get()), BlockRegistry.ARCHWOOD_FENCE.get(), 4, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "flashing_archwood_fence");
         sawmillConditional(recipeOutput, Ingredient.of(ModItems.FLASHING_ARCHWOOD_LOG.get()), BlockRegistry.ARCHWOOD_FENCE_GATE.get(), 2, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "flashing_archwood_fencegate");
+
+        // Apotheosis
+        grinderConditional(recipeOutput, Ingredient.of(Apoth.Items.GEM.value()), 200, 0.05f, new ModLoadedCondition("apotheosis"), "apotheosis", "gem_dust")
+                .addOutput(new ItemStack(Apoth.Items.GEM_DUST, 1), 1)
+                .save(recipeOutput);
+
     }
 
     private void hydrator(RecipeOutput recipeOutput, Ingredient itemInput, FluidStack fluidInput, ItemLike output, int count, int processTime, ICondition condition) {
@@ -469,6 +499,24 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         new DehydratorRecipeBuilder(itemInput,fluidOutput,output,count,processTime,recipeName).unlockedBy("has_dehydrator", has(Registration.DEHYDRATOR_BLOCK.get())).addCondition(condition).save(recipeOutput);
     }
 
+    private void grinder_tagged_resource(RecipeOutput recipeOutput, String resourceName, int multiplier) {
+        TagKey<Item> oreBlock = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "ores/" + resourceName));
+        TagKey<Item> rawOre = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "raw_materials/" + resourceName));
+        TagKey<Item> dust = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "dusts/" + resourceName));
+        TagKey<Item> ingot = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "ingots/" + resourceName));
+
+        grinder_oreblock(Ingredient.of(oreBlock), multiplier, 200, 0.05f, dust, recipeOutput, "ore_" + resourceName);
+        grinder_raw_to_dust(recipeOutput, rawOre, dust, resourceName);
+        grinder_single(Ingredient.of(ingot), dust, 1, 50, 0, recipeOutput, "ingot_" + resourceName);
+    }
+
+    private void grinder_raw_to_dust(RecipeOutput recipeOutput, TagKey<Item> raw, TagKey<Item> dust, String resourceName) {
+        grinder(Ingredient.of(raw), 200, 0.05f, "raw_" + resourceName)
+                .addOutput(dust, 1, 2)
+                .addOutput(dust, 2, 1)
+                .save(recipeOutput);
+    }
+
     private void grinder_oreblock(Ingredient input, int multiplier, int processTime, float experience, Item output, RecipeOutput recipeOutput, String recipeName) {
         grinder(input, processTime, experience, recipeName)
                 .addOutput(new ItemStack(output, 3 * multiplier), 55)
@@ -478,9 +526,25 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput);
     }
 
+    private void grinder_oreblock(Ingredient input, int multiplier, int processTime, float experience, TagKey<Item> output, RecipeOutput recipeOutput, String recipeName) {
+        grinder(input, processTime, experience, recipeName)
+                .addOutput(output, 3 * multiplier, 55)
+                .addOutput(output, 4 * multiplier, 25)
+                .addOutput(output, 5 * multiplier, 18)
+                .addOutput(output, 6 * multiplier, 2)
+                .save(recipeOutput);
+    }
+
+
     private void grinder_single(Ingredient input, ItemStack output, int processTime, float experience, RecipeOutput recipeOutput, String recipeName) {
         grinder(input,processTime,experience, recipeName)
                 .addOutput(output,1)
+                .save(recipeOutput);
+    }
+
+    private void grinder_single(Ingredient input, TagKey<Item> output, int count, int processTime, float experience, RecipeOutput recipeOutput, String recipeName) {
+        grinder(input,processTime,experience, recipeName)
+                .addOutput(output, count,1)
                 .save(recipeOutput);
     }
 
@@ -585,7 +649,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     }
 
     public static void sawmill(RecipeOutput recipeOutput, Ingredient input, ItemLike output, int count, int processTime, float experience, ICondition condition, String recipeName) {
-        new SawmillRecipeBuilder(input,output,count,processTime,experience,recipeName)
+        new SawmillRecipeBuilder(input,new ItemRecipeResult(output,count),processTime,experience,recipeName)
                 .unlockedBy("has_sawmill", has(Registration.SAWMILL_BLOCK.get()))
                 .addCondition(condition)
                 .save(recipeOutput);
@@ -623,7 +687,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     }
 
     public static void sawmillConditional(RecipeOutput recipeOutput, Ingredient input, ItemLike output, int count, int processTime, float experience, ICondition condition, String modId, String recipeName) {
-        new CompatSawmillRecipeBuilder(modId,input,output,count,processTime,experience,recipeName).unlockedBy("has_sawmill", has(Registration.SAWMILL_BLOCK.get())).addCondition(condition).save(recipeOutput);
+        sawmillConditional(recipeOutput, input, new ItemRecipeResult(output,count),processTime,experience,condition,modId,recipeName);
     }
 
+    public static void sawmillConditional(RecipeOutput recipeOutput, Ingredient input, RecipeResult result, int processTime, float experience, ICondition condition, String modId, String recipeName) {
+        new SawmillRecipeBuilder(modId,input,result,processTime,experience,recipeName).unlockedBy("has_sawmill", has(Registration.SAWMILL_BLOCK.get())).addCondition(condition).save(recipeOutput);
+    }
+
+    public static GrinderRecipeBuilder grinderConditional(RecipeOutput recipeOutput, Ingredient input, int processTime, float experience, ICondition condition, String modId, String recipeName) {
+        return new GrinderRecipeBuilder(modId, input, processTime, experience, recipeName)
+                .unlockedBy("has_grinder", has(Registration.GRINDERT1_BLOCK.get()))
+                .addCondition(condition);
+    }
 }

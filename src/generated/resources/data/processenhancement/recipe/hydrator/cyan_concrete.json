@@ -1,17 +1,17 @@
 {
-  "type": "processenhancement:hydrator",
-  "fluidIngredient": {
-    "amount": 10,
-    "id": "minecraft:water"
-  },
-  "itemIngredients": [
-    {
-      "item": "minecraft:cyan_concrete_powder"
+    "type": "processenhancement:hydrator",
+    "fluidIngredient": {
+        "amount": 10,
+        "id": "minecraft:water"
+    },
+    "itemIngredients": [
+        {
+            "item": "minecraft:cyan_concrete_powder"
+        }
+    ],
+    "processTime": 1,
+    "result": {
+        "count": 1,
+        "id": "minecraft:cyan_concrete"
     }
-  ],
-  "processTime": 1,
-  "result": {
-    "count": 1,
-    "id": "minecraft:cyan_concrete"
-  }
 }

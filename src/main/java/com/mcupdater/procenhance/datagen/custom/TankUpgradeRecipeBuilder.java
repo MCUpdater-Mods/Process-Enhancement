@@ -1,6 +1,7 @@
 package com.mcupdater.procenhance.datagen.custom;
 
 import com.google.common.collect.Maps;
+import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.recipe.TankUpgradeRecipe;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
@@ -84,7 +85,12 @@ public class TankUpgradeRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(RecipeOutput recipeOutput, ResourceLocation pRecipeId) {
-        this.advancement.parent(ResourceLocation.withDefaultNamespace("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pRecipeId)).rewards(AdvancementRewards.Builder.recipe(pRecipeId)).requirements(AdvancementRequirements.Strategy.OR);
-        recipeOutput.accept(pRecipeId, new TankUpgradeRecipe(this.group == null ? "" : this.group, CraftingBookCategory.MISC, getPattern(), new ItemStack(this.result), true), this.advancement.build(ResourceLocation.fromNamespaceAndPath(pRecipeId.getNamespace(), "recipes/" + pRecipeId.getPath())));
+        this.advancement.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pRecipeId)).rewards(AdvancementRewards.Builder.recipe(pRecipeId)).requirements(AdvancementRequirements.Strategy.OR);
+        recipeOutput.accept(pRecipeId, new TankUpgradeRecipe(this.group == null ? "" : this.group, CraftingBookCategory.MISC, getPattern(), new ItemStack(this.result), true), this.advancement.build(pRecipeId.withPrefix("recipes/")));
+    }
+
+    @Override
+    public void save(RecipeOutput recipeOutput) {
+        save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "tank_upgrade/" + ResourceLocation.parse(this.result.toString()).getPath()));
     }
 }

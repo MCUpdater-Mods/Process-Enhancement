@@ -1,27 +1,27 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "key": {
-    "#": {
-      "item": "minecraft:stonecutter"
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+        "#": {
+            "item": "minecraft:stonecutter"
+        },
+        "C": {
+            "item": "minecraft:copper_ingot"
+        },
+        "F": {
+            "item": "minecraft:stone_bricks"
+        },
+        "R": {
+            "item": "processenhancement:capacitor"
+        }
     },
-    "C": {
-      "item": "minecraft:copper_ingot"
-    },
-    "F": {
-      "item": "minecraft:stone_bricks"
-    },
-    "R": {
-      "item": "processenhancement:capacitor"
+    "pattern": [
+        "CFC",
+        "F#F",
+        "CRC"
+    ],
+    "result": {
+        "count": 1,
+        "id": "processenhancement:stonecutter"
     }
-  },
-  "pattern": [
-    "CFC",
-    "F#F",
-    "CRC"
-  ],
-  "result": {
-    "count": 1,
-    "id": "processenhancement:stonecutter"
-  }
 }

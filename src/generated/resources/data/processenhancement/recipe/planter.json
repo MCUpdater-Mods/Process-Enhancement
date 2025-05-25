@@ -1,27 +1,27 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "key": {
-    "#": {
-      "tag": "minecraft:villager_plantable_seeds"
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+        "#": {
+            "tag": "minecraft:villager_plantable_seeds"
+        },
+        "C": {
+            "item": "minecraft:copper_ingot"
+        },
+        "F": {
+            "tag": "minecraft:planks"
+        },
+        "R": {
+            "item": "processenhancement:capacitor"
+        }
     },
-    "C": {
-      "item": "minecraft:copper_ingot"
-    },
-    "F": {
-      "tag": "minecraft:planks"
-    },
-    "R": {
-      "item": "processenhancement:capacitor"
+    "pattern": [
+        "CFC",
+        "F#F",
+        "CRC"
+    ],
+    "result": {
+        "count": 1,
+        "id": "processenhancement:planter"
     }
-  },
-  "pattern": [
-    "CFC",
-    "F#F",
-    "CRC"
-  ],
-  "result": {
-    "count": 1,
-    "id": "processenhancement:planter"
-  }
 }

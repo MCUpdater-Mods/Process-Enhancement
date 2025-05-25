@@ -1,0 +1,44 @@
+{
+    "type": "processenhancement:grinder",
+    "experience": 0.05,
+    "ingredients": [
+        {
+            "tag": "c:ores/gold"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 3,
+                "tag": "c:dusts/gold"
+            },
+            "weight": 55
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 4,
+                "tag": "c:dusts/gold"
+            },
+            "weight": 25
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 5,
+                "tag": "c:dusts/gold"
+            },
+            "weight": 18
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 6,
+                "tag": "c:dusts/gold"
+            },
+            "weight": 2
+        }
+    ],
+    "processTime": 200
+}

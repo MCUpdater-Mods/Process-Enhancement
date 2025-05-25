@@ -1,17 +1,17 @@
 {
-  "type": "processenhancement:hydrator",
-  "fluidIngredient": {
-    "amount": 100,
-    "id": "minecraft:water"
-  },
-  "itemIngredients": [
-    {
-      "tag": "minecraft:dirt"
+    "type": "processenhancement:hydrator",
+    "fluidIngredient": {
+        "amount": 100,
+        "id": "minecraft:water"
+    },
+    "itemIngredients": [
+        {
+            "tag": "minecraft:dirt"
+        }
+    ],
+    "processTime": 32,
+    "result": {
+        "count": 1,
+        "id": "minecraft:mud"
     }
-  ],
-  "processTime": 32,
-  "result": {
-    "count": 1,
-    "id": "minecraft:mud"
-  }
 }

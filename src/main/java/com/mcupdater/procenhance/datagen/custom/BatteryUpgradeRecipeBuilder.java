@@ -1,6 +1,7 @@
 package com.mcupdater.procenhance.datagen.custom;
 
 import com.google.common.collect.Maps;
+import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.recipe.BatteryUpgradeRecipe;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
@@ -81,7 +82,12 @@ public class BatteryUpgradeRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(RecipeOutput recipeOutput, ResourceLocation recipeId) {
-        this.advancement.parent(ResourceLocation.withDefaultNamespace("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeId)).rewards(AdvancementRewards.Builder.recipe(recipeId)).requirements(AdvancementRequirements.Strategy.OR);
-        recipeOutput.accept(recipeId, new BatteryUpgradeRecipe(this.group == null ? "" : this.group, CraftingBookCategory.MISC, this.getPattern(), new ItemStack(this.result), true), this.advancement.build(ResourceLocation.fromNamespaceAndPath(recipeId.getNamespace(), "recipes/" + recipeId.getPath())));
+        this.advancement.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeId)).rewards(AdvancementRewards.Builder.recipe(recipeId)).requirements(AdvancementRequirements.Strategy.OR);
+        recipeOutput.accept(recipeId, new BatteryUpgradeRecipe(this.group == null ? "" : this.group, CraftingBookCategory.MISC, this.getPattern(), new ItemStack(this.result), true), this.advancement.build(recipeId.withPrefix("recipes/")));
+    }
+
+    @Override
+    public void save(RecipeOutput recipeOutput) {
+        save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "battery_upgrade/" + ResourceLocation.parse(this.result.toString()).getPath()));
     }
 }

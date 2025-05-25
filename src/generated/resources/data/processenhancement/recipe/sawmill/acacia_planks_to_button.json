@@ -1,14 +1,15 @@
 {
-  "type": "processenhancement:sawmill",
-  "experience": 0.01,
-  "ingredients": [
-    {
-      "item": "minecraft:acacia_planks"
+    "type": "processenhancement:sawmill",
+    "experience": 0.01,
+    "ingredients": [
+        {
+            "item": "minecraft:acacia_planks"
+        }
+    ],
+    "processTime": 16,
+    "result": {
+        "type": "processenhancement:item",
+        "count": 4,
+        "id": "minecraft:acacia_button"
     }
-  ],
-  "processTime": 16,
-  "result": {
-    "count": 4,
-    "id": "minecraft:acacia_button"
-  }
 }

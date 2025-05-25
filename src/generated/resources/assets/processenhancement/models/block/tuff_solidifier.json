@@ -1,13 +1,13 @@
 {
-  "parent": "processenhancement:block/solidifier",
-  "textures": {
-    "corner": "minecraft:block/copper_block",
-    "face": "minecraft:block/tuff",
-    "frame": "minecraft:block/copper_block",
-    "inset": "minecraft:block/black_concrete",
-    "overlay": "processenhancement:block/solidifier",
-    "overlay_left": "minecraft:block/water_flow",
-    "overlay_right": "minecraft:block/lava_flow",
-    "particle": "minecraft:block/copper_block"
-  }
+    "parent": "processenhancement:block/solidifier",
+    "textures": {
+        "corner": "minecraft:block/copper_block",
+        "face": "minecraft:block/tuff",
+        "frame": "minecraft:block/copper_block",
+        "inset": "minecraft:block/black_concrete",
+        "overlay": "processenhancement:block/solidifier",
+        "overlay_left": "minecraft:block/water_flow",
+        "overlay_right": "minecraft:block/lava_flow",
+        "particle": "minecraft:block/copper_block"
+    }
 }

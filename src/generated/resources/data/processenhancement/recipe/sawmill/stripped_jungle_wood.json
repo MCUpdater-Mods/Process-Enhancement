@@ -1,14 +1,15 @@
 {
-  "type": "processenhancement:sawmill",
-  "experience": 0.01,
-  "ingredients": [
-    {
-      "tag": "minecraft:jungle_logs"
+    "type": "processenhancement:sawmill",
+    "experience": 0.01,
+    "ingredients": [
+        {
+            "tag": "minecraft:jungle_logs"
+        }
+    ],
+    "processTime": 16,
+    "result": {
+        "type": "processenhancement:item",
+        "count": 1,
+        "id": "minecraft:stripped_jungle_wood"
     }
-  ],
-  "processTime": 16,
-  "result": {
-    "count": 1,
-    "id": "minecraft:stripped_jungle_wood"
-  }
 }

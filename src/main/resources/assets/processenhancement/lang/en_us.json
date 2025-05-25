@@ -81,6 +81,7 @@
     "processenhancement.configuration.BasicBiogeneratorProduction": "Biogenerator",
     "processenhancement.configuration.BasicGeneratorProduction": "Generator (Fuel-burning)",
     "processenhancement.configuration.BasicLavaGeneratorProduction": "Lava Generator",
+    "processenhancement.configuration.ConcreteMixerEnergyUse": "Concrete Mixer",
     "processenhancement.configuration.CrudeGeneratorProduction": "Crude Generator",
     "processenhancement.configuration.DeconstructorEnergyUse": "Deconstructor",
     "processenhancement.configuration.DehydratorEnergyUse": "Dehydrator",

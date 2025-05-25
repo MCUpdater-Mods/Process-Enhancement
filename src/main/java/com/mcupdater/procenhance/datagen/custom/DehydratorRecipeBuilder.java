@@ -35,6 +35,7 @@ public class DehydratorRecipeBuilder implements RecipeBuilder {
 	protected final List<ICondition> conditions = new ArrayList<>();
 	private final Advancement.Builder advancement = Advancement.Builder.advancement();
 	private final String recipeName;
+	private String additionalHierarchy = "";
 
 	public DehydratorRecipeBuilder(Ingredient inputItem, FluidStack outputFluid, ItemLike output, int count, int processTime, String recipeName) {
 		this.inputItem = inputItem;
@@ -43,6 +44,11 @@ public class DehydratorRecipeBuilder implements RecipeBuilder {
 		this.count = count;
 		this.processTime = processTime;
 		this.recipeName = recipeName != null ? recipeName : ResourceLocation.parse(this.output.toString()).getPath();
+	}
+
+	public DehydratorRecipeBuilder(String modId, Ingredient inputItem, FluidStack outputFluid, ItemLike output, int count, int processTime, String recipeName) {
+		this(inputItem, outputFluid, output, count, processTime, recipeName);
+		this.additionalHierarchy = "compat/" + modId + "/";
 	}
 
 	@Override
@@ -73,15 +79,15 @@ public class DehydratorRecipeBuilder implements RecipeBuilder {
 		ICondition[] finalConditions = new ICondition[this.conditions.size()];
 		finalConditions = this.conditions.toArray(finalConditions);
 		RecipeOutput conditionalRecipeOutput = !this.conditions.isEmpty() ? recipeOutput.withConditions(finalConditions) : recipeOutput;
-		this.advancement.parent(ResourceLocation.withDefaultNamespace("recipes/root"))
+		this.advancement
 				.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pRecipeId))
 				.rewards(AdvancementRewards.Builder.recipe(pRecipeId)).requirements(AdvancementRequirements.Strategy.OR);
 
-		conditionalRecipeOutput.accept(pRecipeId, new DehydratorRecipe(new ItemStack(this.output, this.count), this.processTime, NonNullList.of(this.inputItem,this.inputItem), this.outputFluid), this.advancement.build(ResourceLocation.fromNamespaceAndPath(pRecipeId.getNamespace(), "recipes/dehydrator/" + pRecipeId.getPath())));
+		conditionalRecipeOutput.accept(pRecipeId, new DehydratorRecipe(new ItemStack(this.output, this.count), this.processTime, NonNullList.of(this.inputItem,this.inputItem), this.outputFluid), this.advancement.build(pRecipeId.withPrefix("recipes/")));
 	}
 
 	@Override
 	public void save(RecipeOutput recipeOutput) {
-		save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "dehydrator/" + this.recipeName));
+		save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "dehydrator/" + this.additionalHierarchy + this.recipeName));
 	}
 }

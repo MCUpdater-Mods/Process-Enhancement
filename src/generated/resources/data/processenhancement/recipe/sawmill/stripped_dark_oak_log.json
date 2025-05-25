@@ -1,14 +1,15 @@
 {
-  "type": "processenhancement:sawmill",
-  "experience": 0.01,
-  "ingredients": [
-    {
-      "tag": "minecraft:dark_oak_logs"
+    "type": "processenhancement:sawmill",
+    "experience": 0.01,
+    "ingredients": [
+        {
+            "tag": "minecraft:dark_oak_logs"
+        }
+    ],
+    "processTime": 16,
+    "result": {
+        "type": "processenhancement:item",
+        "count": 1,
+        "id": "minecraft:stripped_dark_oak_log"
     }
-  ],
-  "processTime": 16,
-  "result": {
-    "count": 1,
-    "id": "minecraft:stripped_dark_oak_log"
-  }
 }

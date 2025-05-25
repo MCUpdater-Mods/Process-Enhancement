@@ -1,14 +1,15 @@
 {
-  "type": "processenhancement:sawmill",
-  "experience": 0.01,
-  "ingredients": [
-    {
-      "tag": "minecraft:planks"
+    "type": "processenhancement:sawmill",
+    "experience": 0.01,
+    "ingredients": [
+        {
+            "tag": "minecraft:planks"
+        }
+    ],
+    "processTime": 16,
+    "result": {
+        "type": "processenhancement:item",
+        "count": 4,
+        "id": "minecraft:ladder"
     }
-  ],
-  "processTime": 16,
-  "result": {
-    "count": 4,
-    "id": "minecraft:ladder"
-  }
 }

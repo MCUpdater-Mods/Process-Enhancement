@@ -52,7 +52,7 @@ public class GrinderRecipeCategory implements IRecipeCategory<GrinderRecipe> {
         builder.addSlot(RecipeIngredientRole.INPUT, 3,3).addIngredients(recipe.getIngredients().get(0));
 
         for (int i = 0; i < recipe.getOutputs().size(); i++) {
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 32 + (i % 7 * 18), 3 + i / 7 * 18).addItemStack(recipe.getOutputs().get(i).getA()).addRichTooltipCallback(new GrinderRichTooltipCallback(recipe,recipe.getOutputs().get(i)));
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 32 + (i % 7 * 18), 3 + i / 7 * 18).addItemStack(recipe.getOutputs().get(i).getA().getItemStack()).addRichTooltipCallback(new GrinderRichTooltipCallback(recipe,recipe.getOutputs().get(i)));
         }
     }
 }

@@ -1,19 +1,20 @@
 {
-  "type": "processenhancement:grinder",
-  "experience": 0.1,
-  "ingredients": [
-    {
-      "item": "minecraft:lily_pad"
-    }
-  ],
-  "outputs": [
-    {
-      "stack": {
-        "count": 4,
-        "id": "minecraft:green_dye"
-      },
-      "weight": 1
-    }
-  ],
-  "processTime": 50
+    "type": "processenhancement:grinder",
+    "experience": 0.1,
+    "ingredients": [
+        {
+            "item": "minecraft:lily_pad"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 4,
+                "id": "minecraft:green_dye"
+            },
+            "weight": 1
+        }
+    ],
+    "processTime": 50
 }

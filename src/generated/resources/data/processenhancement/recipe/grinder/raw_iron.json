@@ -1,26 +1,28 @@
 {
-  "type": "processenhancement:grinder",
-  "experience": 0.05,
-  "ingredients": [
-    {
-      "item": "minecraft:raw_iron"
-    }
-  ],
-  "outputs": [
-    {
-      "stack": {
-        "count": 1,
-        "id": "processenhancement:iron_dust"
-      },
-      "weight": 2
-    },
-    {
-      "stack": {
-        "count": 2,
-        "id": "processenhancement:iron_dust"
-      },
-      "weight": 1
-    }
-  ],
-  "processTime": 200
+    "type": "processenhancement:grinder",
+    "experience": 0.05,
+    "ingredients": [
+        {
+            "tag": "c:raw_materials/iron"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 1,
+                "tag": "c:dusts/iron"
+            },
+            "weight": 2
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 2,
+                "tag": "c:dusts/iron"
+            },
+            "weight": 1
+        }
+    ],
+    "processTime": 200
 }

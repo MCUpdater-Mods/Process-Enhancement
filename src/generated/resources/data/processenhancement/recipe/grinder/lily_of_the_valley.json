@@ -1,19 +1,20 @@
 {
-  "type": "processenhancement:grinder",
-  "experience": 0.0,
-  "ingredients": [
-    {
-      "item": "minecraft:lily_of_the_valley"
-    }
-  ],
-  "outputs": [
-    {
-      "stack": {
-        "count": 3,
-        "id": "minecraft:white_dye"
-      },
-      "weight": 1
-    }
-  ],
-  "processTime": 50
+    "type": "processenhancement:grinder",
+    "experience": 0.0,
+    "ingredients": [
+        {
+            "item": "minecraft:lily_of_the_valley"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 3,
+                "id": "minecraft:white_dye"
+            },
+            "weight": 1
+        }
+    ],
+    "processTime": 50
 }

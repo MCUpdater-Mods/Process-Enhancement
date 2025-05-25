@@ -1,6 +1,7 @@
 package com.mcupdater.procenhance.recipe;
 
 import com.mcupdater.mculib.inventory.MachineContainer;
+import com.mcupdater.procenhance.recipe.result.RecipeResult;
 import com.mcupdater.procenhance.setup.Registration;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -15,12 +16,12 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 public class SawmillRecipe implements Recipe<MachineContainer> {
-    private final ItemStack result;
+    private final RecipeResult result;
     private final int processTime;
     private final NonNullList<Ingredient> ingredients;
     private final float experience;
 
-    public SawmillRecipe(ItemStack result, int processTime, float experience, NonNullList<Ingredient> ingredients) {
+    public SawmillRecipe(RecipeResult result, int processTime, float experience, NonNullList<Ingredient> ingredients) {
         this.result = result;
         this.processTime = processTime;
         this.experience = experience;
@@ -49,10 +50,10 @@ public class SawmillRecipe implements Recipe<MachineContainer> {
 
     @Override
     public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider pRegistries) {
-        return this.result;
+        return this.result.getItemStack();
     }
 
-    public ItemStack result() {
+    public RecipeResult result() {
         return this.result;
     }
 
@@ -78,7 +79,7 @@ public class SawmillRecipe implements Recipe<MachineContainer> {
         public static final MapCodec<SawmillRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 inst -> inst.group(
                                 // ItemStack result, int processTime, float experience, NonNullList<Ingredient> ingredients
-                                ItemStack.STRICT_CODEC.fieldOf("result").forGetter(SawmillRecipe::result),
+                                RecipeResult.CODEC.fieldOf("result").forGetter(SawmillRecipe::result),
                                 Codec.INT.fieldOf("processTime").forGetter(SawmillRecipe::processTime),
                                 Codec.FLOAT.fieldOf("experience").forGetter(SawmillRecipe::getExperience),
                                 NonNullList.codecOf(Ingredient.CODEC).fieldOf("ingredients").forGetter(SawmillRecipe::getIngredients)
@@ -106,7 +107,7 @@ public class SawmillRecipe implements Recipe<MachineContainer> {
             ingredients.replaceAll(ignored -> Ingredient.CONTENTS_STREAM_CODEC.decode(buf));
             int processTime = buf.readInt();
             float experience = buf.readFloat();
-            ItemStack output = ItemStack.STREAM_CODEC.decode(buf);
+            RecipeResult output = RecipeResult.STREAM_CODEC.decode(buf);
             return new SawmillRecipe(output, processTime, experience, ingredients);
         }
 
@@ -117,7 +118,7 @@ public class SawmillRecipe implements Recipe<MachineContainer> {
             }
             buf.writeInt(recipe.processTime());
             buf.writeFloat(recipe.getExperience());
-            ItemStack.STREAM_CODEC.encode(buf,recipe.result);
+            RecipeResult.STREAM_CODEC.encode(buf,recipe.result);
         }
     }
 }

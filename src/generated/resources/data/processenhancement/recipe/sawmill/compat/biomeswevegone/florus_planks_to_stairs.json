@@ -1,0 +1,21 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "biomeswevegone"
+        }
+    ],
+    "type": "processenhancement:sawmill",
+    "experience": 0.01,
+    "ingredients": [
+        {
+            "item": "biomeswevegone:florus_planks"
+        }
+    ],
+    "processTime": 16,
+    "result": {
+        "type": "processenhancement:item",
+        "count": 1,
+        "id": "biomeswevegone:florus_stairs"
+    }
+}

@@ -1,11 +1,11 @@
 {
-  "parent": "mculib:block/machine",
-  "textures": {
-    "corner": "minecraft:block/copper_block",
-    "face": "minecraft:block/stone_bricks",
-    "frame": "minecraft:block/copper_block",
-    "inset": "minecraft:block/black_concrete",
-    "overlay": "processenhancement:block/sawmill",
-    "particle": "minecraft:block/copper_block"
-  }
+    "parent": "mculib:block/machine",
+    "textures": {
+        "corner": "minecraft:block/copper_block",
+        "face": "minecraft:block/stone_bricks",
+        "frame": "minecraft:block/copper_block",
+        "inset": "minecraft:block/black_concrete",
+        "overlay": "processenhancement:block/sawmill",
+        "particle": "minecraft:block/copper_block"
+    }
 }

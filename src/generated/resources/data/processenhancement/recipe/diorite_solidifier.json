@@ -1,30 +1,30 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "key": {
-    "C": {
-      "item": "minecraft:copper_ingot"
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+        "C": {
+            "item": "minecraft:copper_ingot"
+        },
+        "L": {
+            "item": "minecraft:lava_bucket"
+        },
+        "P": {
+            "item": "minecraft:iron_pickaxe"
+        },
+        "S": {
+            "item": "minecraft:diorite"
+        },
+        "W": {
+            "item": "minecraft:water_bucket"
+        }
     },
-    "L": {
-      "item": "minecraft:lava_bucket"
-    },
-    "P": {
-      "item": "minecraft:iron_pickaxe"
-    },
-    "S": {
-      "item": "minecraft:diorite"
-    },
-    "W": {
-      "item": "minecraft:water_bucket"
+    "pattern": [
+        "CSC",
+        "WPL",
+        "CSC"
+    ],
+    "result": {
+        "count": 1,
+        "id": "processenhancement:diorite_solidifier"
     }
-  },
-  "pattern": [
-    "CSC",
-    "WPL",
-    "CSC"
-  ],
-  "result": {
-    "count": 1,
-    "id": "processenhancement:diorite_solidifier"
-  }
 }

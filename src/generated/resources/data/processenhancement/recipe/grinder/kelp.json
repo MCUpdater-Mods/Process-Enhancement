@@ -1,19 +1,20 @@
 {
-  "type": "processenhancement:grinder",
-  "experience": 0.1,
-  "ingredients": [
-    {
-      "item": "minecraft:kelp"
-    }
-  ],
-  "outputs": [
-    {
-      "stack": {
-        "count": 1,
-        "id": "processenhancement:plant_dust"
-      },
-      "weight": 1
-    }
-  ],
-  "processTime": 50
+    "type": "processenhancement:grinder",
+    "experience": 0.1,
+    "ingredients": [
+        {
+            "item": "minecraft:kelp"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "processenhancement:plant_dust"
+            },
+            "weight": 1
+        }
+    ],
+    "processTime": 50
 }

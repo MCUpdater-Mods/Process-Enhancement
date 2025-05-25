@@ -2,19 +2,22 @@ package com.mcupdater.procenhance.datagen.custom;
 
 import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.recipe.GrinderRecipe;
+import com.mcupdater.procenhance.recipe.result.ItemRecipeResult;
+import com.mcupdater.procenhance.recipe.result.RecipeResult;
+import com.mcupdater.procenhance.recipe.result.TagRecipeResult;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.conditions.ICondition;
-import net.neoforged.neoforge.common.crafting.ConditionalRecipeOutput;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,12 +26,13 @@ import java.util.List;
 
 public class GrinderRecipeBuilder implements RecipeBuilder {
     private final Ingredient input;
-    private final NonNullList<Tuple<ItemStack,Integer>> outputs;
+    private final NonNullList<Tuple<RecipeResult,Integer>> outputs;
     private final int processTime;
     private final float experience;
     protected final List<ICondition> conditions = new ArrayList<>();
     private final Advancement.Builder advancement = Advancement.Builder.advancement();
     private final String recipeName;
+    private String additionalHierarchy = "";
 
     public GrinderRecipeBuilder(Ingredient input, int processTime, float experience, @NotNull String recipeName) {
         this.input = input;
@@ -36,6 +40,11 @@ public class GrinderRecipeBuilder implements RecipeBuilder {
         this.processTime = processTime;
         this.experience = experience;
         this.recipeName = recipeName;
+    }
+
+    public GrinderRecipeBuilder(String modId, Ingredient input, int processTime, float experience, @NotNull String recipeName) {
+        this(input, processTime, experience, recipeName);
+        this.additionalHierarchy = "compat/" + modId + "/";
     }
 
     @Override
@@ -62,13 +71,18 @@ public class GrinderRecipeBuilder implements RecipeBuilder {
     }
 
     public GrinderRecipeBuilder addOutput(ItemStack itemStack, Integer weight) {
-        this.outputs.add(this.outputs.size(), new Tuple<>(itemStack, weight));
+        this.outputs.add(this.outputs.size(), new Tuple<>(new ItemRecipeResult(itemStack), weight));
+        return this;
+    }
+
+    public GrinderRecipeBuilder addOutput(TagKey<Item> tagKey, int count, Integer weight) {
+        this.outputs.add(this.outputs.size(), new Tuple<>(new TagRecipeResult(tagKey, count), weight));
         return this;
     }
 
     @Override
     public void save(RecipeOutput recipeOutput) {
-        save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "grinder/" + this.recipeName));
+        save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "grinder/" + this.additionalHierarchy + this.recipeName));
     }
 
     @Override
@@ -76,9 +90,9 @@ public class GrinderRecipeBuilder implements RecipeBuilder {
         ICondition[] finalConditions = new ICondition[this.conditions.size()];
         finalConditions = this.conditions.toArray(finalConditions);
         RecipeOutput conditionalRecipeOutput = !this.conditions.isEmpty() ? recipeOutput.withConditions(finalConditions) : recipeOutput;
-        this.advancement.parent(ResourceLocation.withDefaultNamespace("recipes/root"))
+        this.advancement
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeId))
                 .rewards(AdvancementRewards.Builder.recipe(recipeId)).requirements(AdvancementRequirements.Strategy.OR);
-        conditionalRecipeOutput.accept(recipeId, new GrinderRecipe(this.outputs, this.processTime, this.experience, NonNullList.of(this.input,this.input)), this.advancement.build(ResourceLocation.fromNamespaceAndPath(recipeId.getNamespace(),"recipes/grinder/" + recipeId.getPath())));
+        conditionalRecipeOutput.accept(recipeId, new GrinderRecipe(this.outputs, this.processTime, this.experience, NonNullList.of(this.input,this.input)), this.advancement.build(recipeId.withPrefix("recipes/")));
     }
 }

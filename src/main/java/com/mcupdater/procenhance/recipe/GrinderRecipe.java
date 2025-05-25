@@ -1,6 +1,7 @@
 package com.mcupdater.procenhance.recipe;
 
 import com.mcupdater.mculib.inventory.MachineContainer;
+import com.mcupdater.procenhance.recipe.result.RecipeResult;
 import com.mcupdater.procenhance.setup.Registration;
 import com.mojang.serialization.*;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -19,11 +20,11 @@ import java.util.List;
 
 public class GrinderRecipe implements Recipe<MachineContainer> {
     private final NonNullList<Ingredient> ingredients;
-    private final NonNullList<Tuple<ItemStack,Integer>> outputs;
+    private final NonNullList<Tuple<RecipeResult,Integer>> outputs;
     private final int processTime;
     private final float experience;
 
-    public GrinderRecipe(NonNullList<Tuple<ItemStack,Integer>> outputs, int processTime, float experience, NonNullList<Ingredient> ingredients) {
+    public GrinderRecipe(NonNullList<Tuple<RecipeResult,Integer>> outputs, int processTime, float experience, NonNullList<Ingredient> ingredients) {
         this.outputs = outputs;
         this.processTime = processTime;
         this.experience = experience;
@@ -77,14 +78,14 @@ public class GrinderRecipe implements Recipe<MachineContainer> {
         return experience;
     }
 
-    public NonNullList<Tuple<ItemStack, Integer>> getOutputs() {
+    public NonNullList<Tuple<RecipeResult, Integer>> getOutputs() {
         return this.outputs;
     }
 
     public static class Serializer implements RecipeSerializer<GrinderRecipe> {
 
-        public static final Codec<Tuple<ItemStack,Integer>> TUPLE_CODEC = RecordCodecBuilder.create(inst -> inst.group(
-                ItemStack.CODEC.fieldOf("stack").forGetter(Tuple::getA),
+        public static final Codec<Tuple<RecipeResult,Integer>> TUPLE_CODEC = RecordCodecBuilder.create(inst -> inst.group(
+                RecipeResult.CODEC.fieldOf("result").forGetter(Tuple::getA),
                 Codec.INT.fieldOf("weight").forGetter(Tuple::getB)
         ).apply(inst, Tuple::new));
 
@@ -118,8 +119,8 @@ public class GrinderRecipe implements Recipe<MachineContainer> {
         public static @NotNull GrinderRecipe fromNetwork(RegistryFriendlyByteBuf buf) {
             NonNullList<Ingredient> ingredients = NonNullList.withSize(buf.readInt(), Ingredient.EMPTY);
             ingredients.replaceAll(ignored -> Ingredient.CONTENTS_STREAM_CODEC.decode(buf));
-            NonNullList<Tuple<ItemStack,Integer>> outputs = NonNullList.withSize(buf.readInt(), new Tuple<>(ItemStack.EMPTY,0));
-            outputs.replaceAll(ignored -> new Tuple<>(ItemStack.STREAM_CODEC.decode(buf), buf.readInt()));
+            NonNullList<Tuple<RecipeResult,Integer>> outputs = NonNullList.withSize(buf.readInt(), new Tuple<>(RecipeResult.of(ItemStack.EMPTY),0));
+            outputs.replaceAll(ignored -> new Tuple<>(RecipeResult.STREAM_CODEC.decode(buf), buf.readInt()));
             int processTime = buf.readInt();
             float experience = buf.readFloat();
             return new GrinderRecipe(outputs, processTime, experience, ingredients);
@@ -131,29 +132,12 @@ public class GrinderRecipe implements Recipe<MachineContainer> {
                 Ingredient.CONTENTS_STREAM_CODEC.encode(buf, ingredient);
             }
             buf.writeInt(recipe.getOutputs().size());
-            for(Tuple<ItemStack,Integer> entry : recipe.getOutputs()) {
-                ItemStack.STREAM_CODEC.encode(buf,entry.getA());
+            for(Tuple<RecipeResult,Integer> entry : recipe.getOutputs()) {
+                RecipeResult.STREAM_CODEC.encode(buf,entry.getA());
                 buf.writeInt(entry.getB());
             }
             buf.writeInt(recipe.getProcessTime());
             buf.writeFloat(recipe.getExperience());
         }
     }
-
-    /*
-    public static class TupleCodec implements Codec<Tuple<ItemStack,Integer>> {
-
-        @Override
-        public <T> DataResult<Pair<Tuple<ItemStack, Integer>, T>> decode(DynamicOps<T> ops, T input) {
-            return ItemStack.CODEC.decode(ops, input).flatMap(p1 ->
-                    Codec.INT.decode(ops, p1.getSecond()).map(p2 ->
-                            Pair.of(new Tuple<>(p1.getFirst(), p2.getFirst()), p2.getSecond())));
-        }
-
-        @Override
-        public <T> DataResult<T> encode(Tuple<ItemStack, Integer> input, DynamicOps<T> ops, T prefix) {
-            return Codec.INT.encode(input.getB(), ops, prefix).flatMap(f -> ItemStack.CODEC.encode(input.getA(), ops, f));
-        }
-    }
-     */
 }

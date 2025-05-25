@@ -4,6 +4,7 @@ import com.mcupdater.procenhance.integration.PatchouliConfig;
 import com.mcupdater.procenhance.network.ChannelRegistration;
 import com.mcupdater.procenhance.setup.Config;
 import com.mcupdater.procenhance.setup.ModSetup;
+import com.mcupdater.procenhance.setup.PERegistries;
 import com.mcupdater.procenhance.setup.Registration;
 import com.mojang.logging.LogUtils;
 import net.neoforged.api.distmarker.Dist;
@@ -23,6 +24,7 @@ public class ProcessEnhancement {
 
     public ProcessEnhancement(IEventBus modEventBus, ModContainer modContainer) {
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
+        modEventBus.addListener(PERegistries::onRegisterRecipes);
         Registration.init(modEventBus);
 
         modEventBus.addListener(ChannelRegistration::register);

@@ -1,0 +1,44 @@
+{
+    "type": "processenhancement:grinder",
+    "experience": 0.05,
+    "ingredients": [
+        {
+            "tag": "c:ores/copper"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 6,
+                "tag": "c:dusts/copper"
+            },
+            "weight": 55
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 8,
+                "tag": "c:dusts/copper"
+            },
+            "weight": 25
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 10,
+                "tag": "c:dusts/copper"
+            },
+            "weight": 18
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 12,
+                "tag": "c:dusts/copper"
+            },
+            "weight": 2
+        }
+    ],
+    "processTime": 200
+}

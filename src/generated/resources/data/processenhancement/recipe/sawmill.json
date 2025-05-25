@@ -1,27 +1,27 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "key": {
-    "#": {
-      "item": "minecraft:iron_axe"
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+        "#": {
+            "item": "minecraft:iron_axe"
+        },
+        "C": {
+            "item": "minecraft:copper_ingot"
+        },
+        "F": {
+            "tag": "minecraft:planks"
+        },
+        "R": {
+            "item": "processenhancement:capacitor"
+        }
     },
-    "C": {
-      "item": "minecraft:copper_ingot"
-    },
-    "F": {
-      "tag": "minecraft:planks"
-    },
-    "R": {
-      "item": "processenhancement:capacitor"
+    "pattern": [
+        "CFC",
+        "F#F",
+        "CRC"
+    ],
+    "result": {
+        "count": 1,
+        "id": "processenhancement:sawmill"
     }
-  },
-  "pattern": [
-    "CFC",
-    "F#F",
-    "CRC"
-  ],
-  "result": {
-    "count": 1,
-    "id": "processenhancement:sawmill"
-  }
 }

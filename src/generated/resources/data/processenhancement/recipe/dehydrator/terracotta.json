@@ -1,17 +1,17 @@
 {
-  "type": "processenhancement:dehydrator",
-  "fluidOutput": {
-    "amount": 50,
-    "id": "minecraft:water"
-  },
-  "itemIngredients": [
-    {
-      "item": "minecraft:clay"
+    "type": "processenhancement:dehydrator",
+    "fluidOutput": {
+        "amount": 50,
+        "id": "minecraft:water"
+    },
+    "itemIngredients": [
+        {
+            "item": "minecraft:clay"
+        }
+    ],
+    "processTime": 32,
+    "result": {
+        "count": 1,
+        "id": "minecraft:terracotta"
     }
-  ],
-  "processTime": 32,
-  "result": {
-    "count": 1,
-    "id": "minecraft:terracotta"
-  }
 }

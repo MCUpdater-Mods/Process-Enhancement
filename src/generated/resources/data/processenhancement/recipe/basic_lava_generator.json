@@ -1,27 +1,27 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "key": {
-    "#": {
-      "item": "minecraft:blast_furnace"
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+        "#": {
+            "item": "minecraft:blast_furnace"
+        },
+        "C": {
+            "item": "minecraft:copper_ingot"
+        },
+        "F": {
+            "item": "minecraft:nether_bricks"
+        },
+        "R": {
+            "item": "processenhancement:capacitor"
+        }
     },
-    "C": {
-      "item": "minecraft:copper_ingot"
-    },
-    "F": {
-      "item": "minecraft:nether_bricks"
-    },
-    "R": {
-      "item": "processenhancement:capacitor"
+    "pattern": [
+        "CFC",
+        "F#F",
+        "CRC"
+    ],
+    "result": {
+        "count": 1,
+        "id": "processenhancement:basic_lava_generator"
     }
-  },
-  "pattern": [
-    "CFC",
-    "F#F",
-    "CRC"
-  ],
-  "result": {
-    "count": 1,
-    "id": "processenhancement:basic_lava_generator"
-  }
 }

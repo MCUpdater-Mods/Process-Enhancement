@@ -158,8 +158,16 @@ dependencies {
     implementation "curse.maven:terrablender-neoforge-940057:5864140"
 
     implementation "curse.maven:ars-nouveau-401955:5995085"
-    implementation "curse.maven:adorned-1036809:5740650"
+    implementation "curse.maven:curios-309927:6529130"
     implementation "curse.maven:ars-elemental-561470:6006174"
+
+    // Apotheosis
+    implementation "curse.maven:apotheosis-313970:6545942"
+    implementation "curse.maven:apothic-attributes-898963:6514649"
+    implementation "curse.maven:apothic-enchanting-1063926:6514634"
+    implementation "curse.maven:apothic-spawners-986583:6430294"
+    implementation "curse.maven:placebo-283644:6446766"
+
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
     // The group id is ignored when searching -- in this case, it is "blank"

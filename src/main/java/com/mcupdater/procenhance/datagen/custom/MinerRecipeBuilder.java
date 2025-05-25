@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.recipe.MinerRecipe;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
@@ -87,7 +88,12 @@ public class MinerRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(RecipeOutput recipeOutput, ResourceLocation pRecipeId) {
-        this.advancement.parent(ResourceLocation.withDefaultNamespace("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pRecipeId)).rewards(AdvancementRewards.Builder.recipe(pRecipeId)).requirements(AdvancementRequirements.Strategy.OR);
-        recipeOutput.accept(pRecipeId, new MinerRecipe(this.group == null ? "" : this.group, CraftingBookCategory.MISC, this.getPattern(), new ItemStack(this.result), true), this.advancement.build(ResourceLocation.fromNamespaceAndPath(pRecipeId.getNamespace(), "recipes/" + pRecipeId.getPath())));
+        this.advancement.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pRecipeId)).rewards(AdvancementRewards.Builder.recipe(pRecipeId)).requirements(AdvancementRequirements.Strategy.OR);
+        recipeOutput.accept(pRecipeId, new MinerRecipe(this.group == null ? "" : this.group, CraftingBookCategory.MISC, this.getPattern(), new ItemStack(this.result), true), this.advancement.build(pRecipeId.withPrefix("recipes/")));
+    }
+
+    @Override
+    public void save(RecipeOutput recipeOutput) {
+        save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "miner/" + ResourceLocation.parse(this.result.toString()).getPath()));
     }
 }

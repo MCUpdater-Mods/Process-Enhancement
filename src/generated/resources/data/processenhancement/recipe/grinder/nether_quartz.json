@@ -1,40 +1,44 @@
 {
-  "type": "processenhancement:grinder",
-  "experience": 0.05,
-  "ingredients": [
-    {
-      "item": "minecraft:nether_quartz_ore"
-    }
-  ],
-  "outputs": [
-    {
-      "stack": {
-        "count": 6,
-        "id": "minecraft:quartz"
-      },
-      "weight": 55
-    },
-    {
-      "stack": {
-        "count": 8,
-        "id": "minecraft:quartz"
-      },
-      "weight": 25
-    },
-    {
-      "stack": {
-        "count": 10,
-        "id": "minecraft:quartz"
-      },
-      "weight": 18
-    },
-    {
-      "stack": {
-        "count": 12,
-        "id": "minecraft:quartz"
-      },
-      "weight": 2
-    }
-  ],
-  "processTime": 200
+    "type": "processenhancement:grinder",
+    "experience": 0.05,
+    "ingredients": [
+        {
+            "item": "minecraft:nether_quartz_ore"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 6,
+                "id": "minecraft:quartz"
+            },
+            "weight": 55
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 8,
+                "id": "minecraft:quartz"
+            },
+            "weight": 25
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 10,
+                "id": "minecraft:quartz"
+            },
+            "weight": 18
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 12,
+                "id": "minecraft:quartz"
+            },
+            "weight": 2
+        }
+    ],
+    "processTime": 200
 }

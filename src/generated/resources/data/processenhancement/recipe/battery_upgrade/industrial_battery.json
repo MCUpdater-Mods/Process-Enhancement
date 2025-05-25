@@ -1,0 +1,24 @@
+{
+    "type": "processenhancement:battery_upgrade",
+    "category": "misc",
+    "key": {
+        "B": {
+            "item": "processenhancement:advanced_battery"
+        },
+        "U": {
+            "item": "minecraft:diamond"
+        },
+        "u": {
+            "item": "minecraft:gold_block"
+        }
+    },
+    "pattern": [
+        "UuU",
+        "uBu",
+        "UuU"
+    ],
+    "result": {
+        "count": 1,
+        "id": "processenhancement:industrial_battery"
+    }
+}

@@ -15,6 +15,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 
@@ -65,7 +66,7 @@ public class JEIProcEnhancePlugin implements IModPlugin {
         List<SawmillRecipe> sawmillRecipes = recipeManager.getAllRecipesFor(Registration.SAWMILL_RECIPE.get())
                 .stream().collect(ArrayList::new, (c, e) -> c.add(e.value()), ArrayList::addAll);
         List<GrinderRecipe> grinderRecipes = recipeManager.getAllRecipesFor(Registration.GRINDER_RECIPE.get())
-                .stream().collect(ArrayList::new, (c,e) -> c.add(e.value()), ArrayList::addAll);
+                .stream().filter(recipe -> !recipe.value().getOutputs().get(0).getA().getItemStack().is(Items.BARRIER)).collect(ArrayList::new, (c, e) -> c.add(e.value()), ArrayList::addAll);
         List<HydratorRecipe> hydratorRecipes = recipeManager.getAllRecipesFor(Registration.HYDRATOR_RECIPE.get())
                 .stream().collect(ArrayList::new, (c, e) -> c.add(e.value()), ArrayList::addAll);
         List<DehydratorRecipe> dehydratorRecipes = recipeManager.getAllRecipesFor(Registration.DEHYDRATOR_RECIPE.get())

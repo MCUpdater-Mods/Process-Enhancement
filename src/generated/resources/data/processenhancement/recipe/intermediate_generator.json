@@ -1,24 +1,24 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "key": {
-    "M": {
-      "item": "processenhancement:basic_generator"
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+        "M": {
+            "item": "processenhancement:basic_generator"
+        },
+        "U": {
+            "item": "minecraft:iron_ingot"
+        },
+        "u": {
+            "item": "minecraft:copper_block"
+        }
     },
-    "U": {
-      "item": "minecraft:iron_ingot"
-    },
-    "u": {
-      "item": "minecraft:copper_block"
+    "pattern": [
+        "UuU",
+        "uMu",
+        "UuU"
+    ],
+    "result": {
+        "count": 1,
+        "id": "processenhancement:intermediate_generator"
     }
-  },
-  "pattern": [
-    "UuU",
-    "uMu",
-    "UuU"
-  ],
-  "result": {
-    "count": 1,
-    "id": "processenhancement:intermediate_generator"
-  }
 }

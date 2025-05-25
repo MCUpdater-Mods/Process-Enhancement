@@ -1,0 +1,20 @@
+{
+    "type": "processenhancement:grinder",
+    "experience": 0.0,
+    "ingredients": [
+        {
+            "tag": "c:ingots/iesnium"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 1,
+                "tag": "c:dusts/iesnium"
+            },
+            "weight": 1
+        }
+    ],
+    "processTime": 50
+}

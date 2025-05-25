@@ -1,19 +1,20 @@
 {
-  "type": "processenhancement:grinder",
-  "experience": 0.0,
-  "ingredients": [
-    {
-      "item": "minecraft:dandelion"
-    }
-  ],
-  "outputs": [
-    {
-      "stack": {
-        "count": 3,
-        "id": "minecraft:yellow_dye"
-      },
-      "weight": 1
-    }
-  ],
-  "processTime": 50
+    "type": "processenhancement:grinder",
+    "experience": 0.0,
+    "ingredients": [
+        {
+            "item": "minecraft:dandelion"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 3,
+                "id": "minecraft:yellow_dye"
+            },
+            "weight": 1
+        }
+    ],
+    "processTime": 50
 }

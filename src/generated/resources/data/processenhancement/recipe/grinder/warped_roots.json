@@ -1,19 +1,20 @@
 {
-  "type": "processenhancement:grinder",
-  "experience": 0.1,
-  "ingredients": [
-    {
-      "item": "minecraft:warped_roots"
-    }
-  ],
-  "outputs": [
-    {
-      "stack": {
-        "count": 2,
-        "id": "minecraft:cyan_dye"
-      },
-      "weight": 1
-    }
-  ],
-  "processTime": 50
+    "type": "processenhancement:grinder",
+    "experience": 0.1,
+    "ingredients": [
+        {
+            "item": "minecraft:warped_roots"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 2,
+                "id": "minecraft:cyan_dye"
+            },
+            "weight": 1
+        }
+    ],
+    "processTime": 50
 }
