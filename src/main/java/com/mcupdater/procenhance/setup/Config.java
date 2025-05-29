@@ -25,6 +25,7 @@ public class Config {
     public static ModConfigSpec.IntValue PUMP_ENERGY_PER_TICK;
     public static ModConfigSpec.IntValue SAWMILL_ENERGY_PER_TICK;
     public static ModConfigSpec.IntValue SOILMANAGER_ENERGY_PER_TICK;
+    public static ModConfigSpec.IntValue BASIC_SOLAR_GENERATOR_PER_TICK;
     public static ModConfigSpec.IntValue SOLIDIFIER_ENERGY_PER_TICK;
     public static ModConfigSpec.IntValue STONECUTTER_ENERGY_PER_TICK;
     public static ModConfigSpec.IntValue CONCRETEMIXER_ENERGY_PER_TICK;
@@ -35,6 +36,7 @@ public class Config {
         GRINDER_RESOURCES = COMMON_BUILDER.comment("Grinder: Enable recipes for gravel and basalt resource generation").define("GrinderResources", true);
         COMMON_BUILDER.push(CATEGORY_ENERGYPRODUCTION);
         CRUDE_GENERATOR_PER_TICK = COMMON_BUILDER.comment("Base energy per tick").defineInRange("CrudeGeneratorProduction",5,0, Integer.MAX_VALUE);
+        BASIC_SOLAR_GENERATOR_PER_TICK = COMMON_BUILDER.comment("Base energy per tick").defineInRange("BasicSolarGeneratorProduction", 10, 0, Integer.MAX_VALUE);
         BASIC_GENERATOR_PER_TICK = COMMON_BUILDER.comment("Base energy per tick").defineInRange("BasicGeneratorProduction",20,0, Integer.MAX_VALUE);
         BASIC_LAVA_GENERATOR_PER_TICK = COMMON_BUILDER.comment("Base energy per tick").defineInRange("BasicLavaGeneratorProduction", 30, 0, Integer.MAX_VALUE);
         BASIC_BIOGENERATOR_PER_TICK = COMMON_BUILDER.comment("Base energy per tick").defineInRange("BasicBiogeneratorProduction", 50, 0, Integer.MAX_VALUE);

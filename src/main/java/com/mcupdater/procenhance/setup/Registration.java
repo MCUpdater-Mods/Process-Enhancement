@@ -44,6 +44,7 @@ import com.mcupdater.procenhance.blocks.sawmill.SawmillMenu;
 import com.mcupdater.procenhance.blocks.soilmanager.SoilManagerBlock;
 import com.mcupdater.procenhance.blocks.soilmanager.SoilManagerEntity;
 import com.mcupdater.procenhance.blocks.soilmanager.SoilManagerMenu;
+import com.mcupdater.procenhance.blocks.solar_generator.*;
 import com.mcupdater.procenhance.blocks.solidifier.*;
 import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterBlock;
 import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterEntity;
@@ -136,6 +137,21 @@ public class Registration {
     public static final DeferredItem<Item> CRUDEGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("crude_generator", () -> new BlockItem(CRUDEGENERATOR_BLOCK.get(), new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CrudeGeneratorEntity>> CRUDEGENERATOR_ENTITY = BLOCK_ENTITIES.register("crude_generator", () -> BlockEntityType.Builder.of(CrudeGeneratorEntity::new, CRUDEGENERATOR_BLOCK.get()).build(null));
     public static final Supplier<MenuType<CrudeGeneratorMenu>> CRUDEGENERATOR_MENU = MENUS.register("crude_generator", () -> IMenuTypeExtension.create(CrudeGeneratorMenu::factory));
+
+    public static final DeferredBlock<SolarBlockT1> BASICSOLARGENERATOR_BLOCK = MACHINES.register("basic_solar_generator", () -> new SolarBlockT1(SolarBlock.defaultProperties()));
+    public static final DeferredItem<Item> BASICSOLARGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("basic_solar_generator", () -> new BlockItem(BASICSOLARGENERATOR_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SolarEntityT1>> SOLARGENERATORT1_ENTITY = BLOCK_ENTITIES.register("basic_solar_generator", () -> BlockEntityType.Builder.of(SolarEntityT1::new, BASICSOLARGENERATOR_BLOCK.get()).build(null));
+    public static final DeferredBlock<SolarBlockT2> INTERSOLARGENERATOR_BLOCK = MACHINES.register("intermediate_solar_generator", () -> new SolarBlockT2(SolarBlock.defaultProperties()));
+    public static final DeferredItem<Item> INTERSOLARGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("intermediate_solar_generator", () -> new BlockItem(INTERSOLARGENERATOR_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SolarEntityT2>> SOLARGENERATORT2_ENTITY = BLOCK_ENTITIES.register("intermediate_solar_generator", () -> BlockEntityType.Builder.of(SolarEntityT2::new, INTERSOLARGENERATOR_BLOCK.get()).build(null));
+    public static final DeferredBlock<SolarBlockT3> ADVSOLARGENERATOR_BLOCK = MACHINES.register("advanced_solar_generator", () -> new SolarBlockT3(SolarBlock.defaultProperties()));
+    public static final DeferredItem<Item> ADVSOLARGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("advanced_solar_generator", () -> new BlockItem(ADVSOLARGENERATOR_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SolarEntityT3>> SOLARGENERATORT3_ENTITY = BLOCK_ENTITIES.register("advanced_solar_generator", () -> BlockEntityType.Builder.of(SolarEntityT3::new, ADVSOLARGENERATOR_BLOCK.get()).build(null));
+    public static final DeferredBlock<SolarBlockT4> INDSOLARGENERATOR_BLOCK = MACHINES.register("industrial_solar_generator", () -> new SolarBlockT4(SolarBlock.defaultProperties()));
+    public static final DeferredItem<Item> INDSOLARGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("industrial_solar_generator", () -> new BlockItem(INDSOLARGENERATOR_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SolarEntityT4>> SOLARGENERATORT4_ENTITY = BLOCK_ENTITIES.register("industrial_solar_generator", () -> BlockEntityType.Builder.of(SolarEntityT4::new, INDSOLARGENERATOR_BLOCK.get()).build(null));
+
+    public static final Supplier<MenuType<SolarMenu>> SOLARGENERATOR_MENU = MENUS.register("solar_generator", () -> IMenuTypeExtension.create(SolarMenu::factory));
 
     public static final DeferredBlock<GeneratorBlockT1> BASICGENERATOR_BLOCK = MACHINES.register("basic_generator", () -> new GeneratorBlockT1(GeneratorBlock.defaultProperties()));
     public static final DeferredItem<Item> BASICGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("basic_generator", () -> new BlockItem(BASICGENERATOR_BLOCK.get(), new Item.Properties()));

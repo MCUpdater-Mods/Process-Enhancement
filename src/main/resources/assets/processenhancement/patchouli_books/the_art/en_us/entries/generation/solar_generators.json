@@ -1,0 +1,25 @@
+{
+  "name": "Tiered Solar Generators",
+  "icon": "processenhancement:basic_solar_generator",
+  "category": "processenhancement:generation",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "These tiered power generators will generate a small amount of FE during daylight hours while it is not raining.$(br2)Each successive tier will generate additional power."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(li)Basic: 1x power generation$(li)Intermediate: 2x power generation$(li)Advanced: 4x power generation$(li)Industrial: 8x power generation"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:basic_solar_generator",
+      "recipe2": "processenhancement:intermediate_solar_generator"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:advanced_solar_generator",
+      "recipe2": "processenhancement:industrial_solar_generator"
+    }
+  ]
+}

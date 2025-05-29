@@ -82,6 +82,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
         solidifier(Registration.STONESOLIDIFIER_BLOCK.get(),Blocks.COPPER_BLOCK,blockTexture(Blocks.STONE), "block/solidifier", ResourceLocation.withDefaultNamespace("block/water_flow"), ResourceLocation.withDefaultNamespace("block/lava_flow"));
         solidifier(Registration.TUFFSOLIDIFIER_BLOCK.get(),Blocks.COPPER_BLOCK,blockTexture(Blocks.TUFF), "block/solidifier", ResourceLocation.withDefaultNamespace("block/water_flow"), ResourceLocation.withDefaultNamespace("block/lava_flow"));
         machine(Registration.CONCRETEMIXER_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.COPPER_BLOCK,Blocks.STONE_BRICKS,Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/concrete_mixer", false);
+        solar(Registration.BASICSOLARGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK,Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/generator", true);
+        solar(Registration.INTERSOLARGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK,Blocks.IRON_BLOCK,Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/generator", true);
+        solar(Registration.ADVSOLARGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.GOLD_BLOCK,Blocks.IRON_BLOCK,Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/generator", true);
+        solar(Registration.INDSOLARGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK,Blocks.IRON_BLOCK,Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/generator", true);
 
         horizontalBlock(Registration.BASICBATTERY_BLOCK.get(), (blockState -> {
             int charge = blockState.getValue(BatteryBlock.CHARGE_LEVEL);
@@ -142,6 +146,21 @@ public class ModBlockStateProvider extends BlockStateProvider {
                     .texture("overlay_right", right)
                     .texture("particle", blockTexture(frame));
         }));
+    }
+
+    protected void solar(@NotNull Block block, Block frame, Block corner, Block face, Block inset, Block particle, String overlay, boolean splitActiveTextures) {
+        horizontalBlock(block, (blockstate -> {
+            boolean active = blockstate.getValue(AbstractMachineBlock.ACTIVE);
+            return models().getBuilder(BuiltInRegistries.BLOCK.getKey(block).getPath() + (splitActiveTextures ? (active ? "_on" : "") : ""))
+                    .parent(new ModelFile.UncheckedModelFile("processenhancement:block/solar"))
+                    .texture("frame", blockTexture(frame))
+                    .texture("corner", blockTexture(corner))
+                    .texture("face", blockTexture(face))
+                    .texture("inset", blockTexture(inset))
+                    .texture("overlay", ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, overlay + (splitActiveTextures ? (active ? "_on" : "_off") : "")))
+                    .texture("particle", blockTexture(particle));
+        }
+        ));
     }
 
     public ResourceLocation itemTexture(Item item) {

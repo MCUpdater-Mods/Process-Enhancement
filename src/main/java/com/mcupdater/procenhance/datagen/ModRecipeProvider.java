@@ -51,6 +51,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         upgradeMachineRecipe(recipeOutput, ADVGENERATOR_BLOCK.get(), INTERGENERATOR_BLOCK.get(), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Blocks.IRON_BLOCK));
         upgradeMachineRecipe(recipeOutput, INDGENERATOR_BLOCK.get(), ADVGENERATOR_BLOCK.get(), Ingredient.of(Items.DIAMOND), Ingredient.of(Blocks.GOLD_BLOCK));
 
+        basicMachineRecipe(recipeOutput, BASICSOLARGENERATOR_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.DAYLIGHT_DETECTOR));
+        upgradeMachineRecipe(recipeOutput, INTERSOLARGENERATOR_BLOCK.get(), BASICSOLARGENERATOR_BLOCK.get(), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.COPPER_BLOCK));
+        upgradeMachineRecipe(recipeOutput, ADVSOLARGENERATOR_BLOCK.get(), INTERSOLARGENERATOR_BLOCK.get(), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Blocks.IRON_BLOCK));
+        upgradeMachineRecipe(recipeOutput, INDSOLARGENERATOR_BLOCK.get(), ADVSOLARGENERATOR_BLOCK.get(), Ingredient.of(Items.DIAMOND), Ingredient.of(Blocks.GOLD_BLOCK));
+
         basicMachineRecipe(recipeOutput, BASICLAVAGENERATOR_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Blocks.NETHER_BRICKS), Ingredient.of(Blocks.BLAST_FURNACE));
         upgradeMachineRecipe(recipeOutput, INTERLAVAGENERATOR_BLOCK.get(), BASICLAVAGENERATOR_BLOCK.get(), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.COPPER_BLOCK));
         upgradeMachineRecipe(recipeOutput, ADVLAVAGENERATOR_BLOCK.get(), INTERLAVAGENERATOR_BLOCK.get(), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Blocks.IRON_BLOCK));
@@ -505,13 +510,15 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         TagKey<Item> dust = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "dusts/" + resourceName));
         TagKey<Item> ingot = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "ingots/" + resourceName));
 
-        grinder_oreblock(Ingredient.of(oreBlock), multiplier, 200, 0.05f, dust, recipeOutput, "ore_" + resourceName);
+        grinder_oreblock(oreBlock, multiplier, 200, 0.05f, dust, recipeOutput, "ore_" + resourceName);
         grinder_raw_to_dust(recipeOutput, rawOre, dust, resourceName);
-        grinder_single(Ingredient.of(ingot), dust, 1, 50, 0, recipeOutput, "ingot_" + resourceName);
+        grinder_single(ingot, dust, 1, 50, 0, recipeOutput, "ingot_" + resourceName);
     }
 
     private void grinder_raw_to_dust(RecipeOutput recipeOutput, TagKey<Item> raw, TagKey<Item> dust, String resourceName) {
         grinder(Ingredient.of(raw), 200, 0.05f, "raw_" + resourceName)
+                .addCondition(new NotCondition(new TagEmptyCondition(raw)))
+                .addCondition(new NotCondition(new TagEmptyCondition(dust)))
                 .addOutput(dust, 1, 2)
                 .addOutput(dust, 2, 1)
                 .save(recipeOutput);
@@ -526,8 +533,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput);
     }
 
-    private void grinder_oreblock(Ingredient input, int multiplier, int processTime, float experience, TagKey<Item> output, RecipeOutput recipeOutput, String recipeName) {
-        grinder(input, processTime, experience, recipeName)
+    private void grinder_oreblock(TagKey<Item> input, int multiplier, int processTime, float experience, TagKey<Item> output, RecipeOutput recipeOutput, String recipeName) {
+        grinder(Ingredient.of(input), processTime, experience, recipeName)
+                .addCondition(new NotCondition(new TagEmptyCondition(input)))
+                .addCondition(new NotCondition(new TagEmptyCondition(output)))
                 .addOutput(output, 3 * multiplier, 55)
                 .addOutput(output, 4 * multiplier, 25)
                 .addOutput(output, 5 * multiplier, 18)
@@ -542,8 +551,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput);
     }
 
-    private void grinder_single(Ingredient input, TagKey<Item> output, int count, int processTime, float experience, RecipeOutput recipeOutput, String recipeName) {
-        grinder(input,processTime,experience, recipeName)
+    private void grinder_single(TagKey<Item> input, TagKey<Item> output, int count, int processTime, float experience, RecipeOutput recipeOutput, String recipeName) {
+        grinder(Ingredient.of(input),processTime,experience, recipeName)
+                .addCondition(new NotCondition(new TagEmptyCondition(input)))
+                .addCondition(new NotCondition(new TagEmptyCondition(output)))
                 .addOutput(output, count,1)
                 .save(recipeOutput);
     }

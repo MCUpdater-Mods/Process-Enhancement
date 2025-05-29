@@ -1,6 +1,10 @@
 {
     "values": [
         "processenhancement:crude_generator",
+        "processenhancement:basic_solar_generator",
+        "processenhancement:intermediate_solar_generator",
+        "processenhancement:advanced_solar_generator",
+        "processenhancement:industrial_solar_generator",
         "processenhancement:basic_generator",
         "processenhancement:intermediate_generator",
         "processenhancement:advanced_generator",
