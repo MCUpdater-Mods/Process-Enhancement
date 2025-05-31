@@ -29,6 +29,8 @@ import net.minecraft.world.level.block.StemBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedList;
@@ -97,6 +99,7 @@ public class PlanterEntity extends AbstractMachineBlockEntity {
 	@Override
 	protected boolean performWork() {
 		if (!level.isClientSide()) {
+			FakePlayer fakePlayer = FakePlayerFactory.getMinecraft((ServerLevel) level);
 			if (this.workArea.isEmpty()) {
 				initializeWorkArea();
 			}
@@ -118,12 +121,13 @@ public class PlanterEntity extends AbstractMachineBlockEntity {
 					if (!level.getBlockState(current.getA().below()).is(BlockTags.AIR) && (level.getBlockState(current.getA()).is(BlockTags.AIR) || level.getBlockState(current.getA()).getBlock().equals(Blocks.WATER))) {
 						try {
 							BlockHitResult hitResult = new BlockHitResult(current.getA().above().getCenter(), Direction.DOWN, current.getA(), false);
-							InteractionResult interactionResult = itemResourceHandler.getInternalHandler().getStackInSlot(current.getB()).useOn(new UseOnContext(this.level, null, InteractionHand.MAIN_HAND, itemResourceHandler.getInternalHandler().getStackInSlot(current.getB()), hitResult));
+							InteractionResult interactionResult = itemResourceHandler.getInternalHandler().getStackInSlot(current.getB()).useOn(new UseOnContext(this.level, fakePlayer, InteractionHand.MAIN_HAND, itemResourceHandler.getInternalHandler().getStackInSlot(current.getB()), hitResult));
 							if (interactionResult.indicateItemUse()) {
 								tick += 20;
 								return true;
 							}
 						} catch (Exception e) {
+							String details = String.format("{Current: %s, %d}",current.getA(),current.getB());
 							ProcessEnhancement.LOGGER.error("Exception caught!",e);
 							tick -= 10;
 							return false;
