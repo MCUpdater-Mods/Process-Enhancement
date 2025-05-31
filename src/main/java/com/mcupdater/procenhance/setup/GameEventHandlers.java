@@ -1,11 +1,14 @@
 package com.mcupdater.procenhance.setup;
 
 import com.mcupdater.procenhance.ProcessEnhancement;
+import com.mcupdater.procenhance.grid.GridManager;
 import com.mcupdater.procenhance.items.autopackager.AbstractPatternItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.saveddata.SavedData;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
+import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 @EventBusSubscriber(modid= ProcessEnhancement.MODID)
@@ -19,5 +22,11 @@ public class GameEventHandlers {
                     patternItem.clearCache();
             }
         }
+    }
+
+    @SubscribeEvent
+    private static void serverStarted(ServerStartedEvent event) {
+        ProcessEnhancement.LOGGER.info("Server started");
+        event.getServer().overworld().getDataStorage().computeIfAbsent(new SavedData.Factory<>(GridManager::new, GridManager::load),"pe_grid");
     }
 }
