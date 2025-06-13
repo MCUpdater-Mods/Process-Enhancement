@@ -58,7 +58,7 @@ public class SolidifierMenu extends AbstractMachineMenu<AbstractSolidifierEntity
                     return ItemStack.EMPTY;
                 }
             } else { // Player inventory slots
-                if (!this.moveItemStackTo(stackInSlot, 28, 37, false)) { // Move to hotbar
+                if (index >= 1 && index < 28 && !this.moveItemStackTo(stackInSlot, 28, 37, false)) { // Move to hotbar
                     return ItemStack.EMPTY;
                 } else if (index >= 28 && index < 37 && !this.moveItemStackTo(stackInSlot, 1, 28, false)) { // Move to inventory
                     return ItemStack.EMPTY;
