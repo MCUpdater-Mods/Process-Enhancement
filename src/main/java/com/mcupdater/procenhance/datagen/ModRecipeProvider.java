@@ -386,6 +386,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         grinder_single(Ingredient.of(Items.KELP), new ItemStack(PLANT_DUST.get(), 1), 50, 0.1f, recipeOutput,"kelp");
         grinder_single(Ingredient.of(Blocks.SMOOTH_BASALT), new ItemStack(Blocks.BASALT, 1), 50, 0.1f, recipeOutput,"smooth_basalt");
         grinder_single(Ingredient.of(Tags.Items.NETHERRACKS), new ItemStack(NETHER_DUST.get(), 1), 50, 0.1f, recipeOutput, "netherrack");
+        grinder_single(Ingredient.of(Blocks.QUARTZ_BLOCK), new ItemStack(Items.QUARTZ,4), 50, 0.1f, recipeOutput, "quartz_block");
+        grinder_single(Ingredient.of(Blocks.QUARTZ_PILLAR), new ItemStack(Items.QUARTZ,4), 50, 0.1f, recipeOutput, "quartz_pillar");
+        grinder_single(Ingredient.of(Blocks.QUARTZ_BRICKS), new ItemStack(Items.QUARTZ,4), 50, 0.1f, recipeOutput, "quartz_bricks");
+        grinder_single(Ingredient.of(Blocks.CHISELED_QUARTZ_BLOCK), new ItemStack(Items.QUARTZ,4), 50, 0.1f, recipeOutput, "chiseled_quartz");
+        grinder_single(Ingredient.of(Blocks.SMOOTH_QUARTZ), new ItemStack(Items.QUARTZ,4), 50, 0.1f, recipeOutput, "smooth_quartz");
 
         hydrator(recipeOutput, Ingredient.of(ItemTags.DIRT), new FluidStack(Fluids.WATER,100), Blocks.MUD, 1, 32, null);
         hydrator(recipeOutput, Ingredient.of(Tags.Items.STONES), new FluidStack(Fluids.WATER,100), Blocks.MOSS_BLOCK, 1, 32, null);
