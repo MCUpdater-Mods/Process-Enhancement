@@ -82,6 +82,7 @@ public class SoilManagerEntity extends AbstractMachineBlockEntity {
 	@Override
 	protected boolean performWork() {
 		if (!level.isClientSide()) {
+			boolean doneWork = false;
 			if (this.workArea.isEmpty()) {
 				initializeWorkArea();
 			}
@@ -104,12 +105,13 @@ public class SoilManagerEntity extends AbstractMachineBlockEntity {
 						level.getBlockState(current).randomTick((ServerLevel) this.level, current, this.level.getRandom());
 						dataFertilizer.set(0, dataFertilizer.get(0)-1);
 						RenderHelper.sendParticles((ServerLevel) this.level, ParticleTypes.HAPPY_VILLAGER, current.getX()+0.5D, current.getY()+0.5D, current.getZ()+0.5D, 5, 0,0,0,0);
+						doneWork = true;
 				}
 				tick += 5;
-				return true;
+				return doneWork;
 			} else if (tick > 0) {
 				tick--;
-				return true;
+				return doneWork;
 			} else {
 				tick++;
 				return false;

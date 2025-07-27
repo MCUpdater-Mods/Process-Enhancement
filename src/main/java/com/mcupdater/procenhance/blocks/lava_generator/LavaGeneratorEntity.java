@@ -130,7 +130,7 @@ public abstract class LavaGeneratorEntity extends AbstractConfigurableBlockEntit
                     this.setChanged();
                     this.notifyClients();
                 }
-                if (fluidHandlerItem.getFluidInTank(0).isEmpty()) {
+                if (fluidHandlerItem != null && fluidHandlerItem.getFluidInTank(0).isEmpty()) {
                     itemStorage.setItem(0, fluidHandlerItem.getContainer());
                     if ((ItemStack.isSameItem(itemStorage.getItem(0),itemStorage.getItem(1)) && itemStorage.getItem(1).getCount() < itemStorage.getItem(1).getMaxStackSize()) || itemStorage.getItem(1).isEmpty()) {
                         ItemStack stack = itemStorage.removeItem(0, 1);
