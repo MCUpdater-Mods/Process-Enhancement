@@ -5,13 +5,15 @@ license="${mod_license}"
 modId="${mod_id}"
 version="${mod_version}"
 displayName="${mod_name}"
-authors="${mod_authors}"
-description='''${mod_description}'''
+authors="smbarbour,allaryin"
+description='''
+Yet another technology mod, but this one is from the developers of MCUpdater
+'''
 
 [[dependencies.${mod_id}]] #optional
 modId="neoforge" #mandatory
 type="required" #mandatory
-versionRange="${neo_version_range}" #mandatory
+versionRange="[${neo_version},)" #mandatory
 ordering="NONE"
 side="BOTH"
 
@@ -25,6 +27,6 @@ side="BOTH"
 [[dependencies.${mod_id}]]
 modId="mculib"
 type="required"
-versionRange="[1.5,)"
+versionRange="[1.5.1,)"
 ordering="NONE"
 side="BOTH"

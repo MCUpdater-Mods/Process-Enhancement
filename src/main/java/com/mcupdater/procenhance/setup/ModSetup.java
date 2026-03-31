@@ -38,7 +38,7 @@ public class ModSetup {
 
     @SubscribeEvent
     public static void buildContents(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTab() == com.mcupdater.mculib.setup.Registration.ITEM_GROUP.get()) {
+        if (event.getTab() == com.mcupdater.mculib.setup.MCULibRegistration.ITEM_GROUP.get()) {
             Registration.MACHINES.getEntries().stream().forEach(entry -> event.accept(entry.get()));
             Registration.BATTERIES.getEntries().stream().forEach(entry -> event.accept(entry.get()));
             Registration.TANKS.getEntries().stream().forEach(entry -> event.accept(entry.get()));

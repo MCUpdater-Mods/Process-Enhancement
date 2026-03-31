@@ -1,7 +1,7 @@
 package com.mcupdater.procenhance.blocks.grinder;
 
 import com.mcupdater.mculib.block.AbstractMachineBlock;
-import com.mcupdater.mculib.setup.Registration;
+import com.mcupdater.mculib.setup.MCULibRegistration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -37,7 +37,7 @@ public abstract class GrinderBlock extends AbstractMachineBlock {
             double x = (double) pPos.getX() + 0.5D;
             double y = (double) pPos.getY();
             double z = (double) pPos.getZ() + 0.5D;
-            pLevel.playLocalSound(x, y, z, Registration.MACHINE_HUM.get(), SoundSource.BLOCKS, 1.0F, 1.0F, false);
+            pLevel.playLocalSound(x, y, z, MCULibRegistration.MACHINE_HUM.get(), SoundSource.BLOCKS, 1.0F, 1.0F, false);
 
             Direction direction = pState.getValue(FACING);
             Direction.Axis axis = direction.getAxis();

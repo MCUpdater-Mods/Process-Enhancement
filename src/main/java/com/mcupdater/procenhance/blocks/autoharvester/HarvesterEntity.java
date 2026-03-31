@@ -135,7 +135,7 @@ public class HarvesterEntity extends AbstractMachineBlockEntity {
                     BlockPos toHarvest = this.harvestableBlocks.removeFirst();
                     BlockState state = level.getBlockState(toHarvest);
                     if (readyToFullHarvest(state)){
-                        List<ItemStack> drops = state.getDrops(new LootParams.Builder((ServerLevel) this.level).withParameter(LootContextParams.ORIGIN,this.worldPosition.getBottomCenter()).withParameter(LootContextParams.TOOL,new ItemStack(Items.NETHERITE_HOE)));
+                        List<ItemStack> drops = state.getDrops(new LootParams.Builder((ServerLevel) this.level).withParameter(LootContextParams.ORIGIN,toHarvest.getBottomCenter()).withParameter(LootContextParams.TOOL,new ItemStack(Items.NETHERITE_HOE)));
                         level.setBlock(toHarvest, !state.is(Blocks.KELP) ? Blocks.AIR.defaultBlockState() : Blocks.WATER.defaultBlockState(), 3);
                         RenderHelper.sendParticles((ServerLevel) level, ParticleTypes.INSTANT_EFFECT, toHarvest.getX() + 0.5D, toHarvest.getY() + 0.1D, toHarvest.getZ() + 0.5D, 3,0,0, 0, 0);
                         level.playSound(null, toHarvest, SoundEvents.CROP_BREAK, SoundSource.BLOCKS, 1, 1);
