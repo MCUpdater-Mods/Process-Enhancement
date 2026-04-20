@@ -13,23 +13,26 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.Container;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import static com.mcupdater.procenhance.setup.Registration.HARVESTER_ENTITY;
@@ -88,14 +91,39 @@ public class HarvesterEntity extends AbstractMachineBlockEntity {
                 if (state.getBlock() instanceof BambooStalkBlock || state.getBlock() instanceof SugarCaneBlock || state.getBlock() instanceof CactusBlock) {
                     harvestableBlocks.add(blockPos.above());
                 }
+                if (state.is(BlockTags.LOGS)) {
+                    TreeSet<BlockPos> treeSet = new TreeSet<>();
+                    harvestableBlocks.addAll(walkTree(level, treeSet, blockPos, 0));
+                }
             }
         }
         harvestableBlocks.sort(new BlockDistanceComparator(this.worldPosition));
     }
 
+    private Set<BlockPos> walkTree(Level level, TreeSet<BlockPos> treeSet, BlockPos blockPos, int depth) {
+        treeSet.add(blockPos);
+        if (depth < 200) {
+            for (Direction side : Direction.values()) {
+                BlockPos target = blockPos.relative(side);
+                if (!treeSet.contains(target) && (level.getBlockState(target).is(BlockTags.LOGS) || level.getBlockState(target).is(BlockTags.LEAVES))) {
+                    walkTree(level, treeSet, target, depth + 1);
+                }
+            }
+        }
+        return treeSet;
+    }
+
     @Override
     protected boolean performWork() {
         if (!level.isClientSide()) {
+            // Collect floating items in the harvest area (i.e. bamboo and sugar cane above the broken block and saplings from leaf decay) and add to the collection buffer
+            List<ItemEntity> items = level.getEntitiesOfClass(ItemEntity.class, AABB.encapsulatingFullBlocks(worldPosition.below(2).east(11).north(11), worldPosition.west(11).south(11).above(2)), EntitySelector.ENTITY_STILL_ALIVE);
+            for (ItemEntity item : items) {
+                this.internalBuffer.add(item.getItem().copy());
+                RenderHelper.sendParticles((ServerLevel) level, ParticleTypes.ENCHANT, item.getX(), item.getY(), item.getZ(), 3,0,0, 0, 0);
+                level.playSound(null, item.getOnPos(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.BLOCKS, 0.5f, 2f);
+                item.remove(Entity.RemovalReason.DISCARDED);
+            }
             // Clear the internal buffer
             if (!this.internalBuffer.isEmpty()) {
                 //ProcessEnhancement.LOGGER.info("Buffer not empty - transferring contents");
@@ -194,7 +222,9 @@ public class HarvesterEntity extends AbstractMachineBlockEntity {
                         state.getBlock() instanceof SugarCaneBlock ||
                         state.getBlock() instanceof CactusBlock ||
                         (state.getBlock() instanceof NetherWartBlock && state.getValue(NetherWartBlock.AGE) == NetherWartBlock.MAX_AGE) ||
-                        state.getBlock() instanceof KelpBlock
+                        state.getBlock() instanceof KelpBlock ||
+                        state.is(BlockTags.LOGS) ||
+                        state.is(BlockTags.LEAVES)
                 ;
     }
 
