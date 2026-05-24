@@ -103,5 +103,7 @@
     "processenhancement.configuration.StonecutterEnergyUse": "Stonecutter",
     "processenhancement.configuration.energy_use": "Energy Use",
     "processenhancement.configuration.general": "General",
-    "processenhancement.configuration.production": "Energy Production"
+    "processenhancement.configuration.production": "Energy Production",
+    "block.processenhancement.endstone_solidifier": "End Stone Solidifier",
+    "block.processenhancement.electric_lantern": "Electric Lantern"
 }

@@ -81,11 +81,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
         solidifier(Registration.GRANITESOLIDIFIER_BLOCK.get(),Blocks.COPPER_BLOCK,blockTexture(Blocks.GRANITE), "block/solidifier", ResourceLocation.withDefaultNamespace("block/water_flow"), ResourceLocation.withDefaultNamespace("block/lava_flow"));
         solidifier(Registration.STONESOLIDIFIER_BLOCK.get(),Blocks.COPPER_BLOCK,blockTexture(Blocks.STONE), "block/solidifier", ResourceLocation.withDefaultNamespace("block/water_flow"), ResourceLocation.withDefaultNamespace("block/lava_flow"));
         solidifier(Registration.TUFFSOLIDIFIER_BLOCK.get(),Blocks.COPPER_BLOCK,blockTexture(Blocks.TUFF), "block/solidifier", ResourceLocation.withDefaultNamespace("block/water_flow"), ResourceLocation.withDefaultNamespace("block/lava_flow"));
+        solidifier(Registration.ENDSTONESOLIDIFIER_BLOCK.get(),Blocks.COPPER_BLOCK,blockTexture(Blocks.END_STONE), "block/solidifier", blockTexture(Blocks.PURPUR_BLOCK), blockTexture(Blocks.PURPUR_BLOCK));
         machine(Registration.CONCRETEMIXER_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.COPPER_BLOCK,Blocks.STONE_BRICKS,Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/concrete_mixer", false);
         solar(Registration.BASICSOLARGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK,Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/generator", true);
         solar(Registration.INTERSOLARGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.IRON_BLOCK,Blocks.IRON_BLOCK,Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/generator", true);
         solar(Registration.ADVSOLARGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.GOLD_BLOCK,Blocks.IRON_BLOCK,Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/generator", true);
         solar(Registration.INDSOLARGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK,Blocks.IRON_BLOCK,Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/generator", true);
+
+        simpleBlock(Registration.ELECTRIC_LANTERN_BLOCK.get(), new ModelFile.ExistingModelFile(ResourceLocation.fromNamespaceAndPath("processenhancement","block/electric_lantern"), this.existingFileHelper));
 
         horizontalBlock(Registration.BASICBATTERY_BLOCK.get(), (blockState -> {
             int charge = blockState.getValue(BatteryBlock.CHARGE_LEVEL);

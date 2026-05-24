@@ -1,0 +1,20 @@
+{
+    "type": "processenhancement:grinder",
+    "experience": 0.1,
+    "ingredients": [
+        {
+            "item": "minecraft:quartz_block"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 4,
+                "id": "minecraft:quartz"
+            },
+            "weight": 1
+        }
+    ],
+    "processTime": 50
+}

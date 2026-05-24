@@ -1,0 +1,15 @@
+{
+  "name": "Electric Lantern",
+  "icon": "processenhancement:electric_lantern",
+  "category": "processenhancement:infrastructure",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "These electric lights use a trickle of power to produce light."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:electric_lantern"
+    }
+  ]
+}

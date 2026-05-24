@@ -15,6 +15,7 @@ import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceScreen;
 import com.mcupdater.procenhance.blocks.generator.GeneratorScreen;
 import com.mcupdater.procenhance.blocks.grinder.GrinderScreen;
 import com.mcupdater.procenhance.blocks.hydrator.HydratorScreen;
+import com.mcupdater.procenhance.blocks.lantern.LanternScreen;
 import com.mcupdater.procenhance.blocks.lava_generator.LavaGeneratorScreen;
 import com.mcupdater.procenhance.blocks.miner.MinerScreen;
 import com.mcupdater.procenhance.blocks.planter.PlanterScreen;
@@ -75,6 +76,7 @@ public class ModSetup {
         event.register(Registration.SOILMANAGER_MENU.get(), SoilManagerScreen::new);
         event.register(Registration.CONCRETEMIXER_MENU.get(), MixerScreen::new);
         event.register(Registration.SOLARGENERATOR_MENU.get(), SolarScreen::new);
+        event.register(Registration.ELECTRIC_LANTERN_MENU.get(), LanternScreen::new);
     }
 
     @SubscribeEvent

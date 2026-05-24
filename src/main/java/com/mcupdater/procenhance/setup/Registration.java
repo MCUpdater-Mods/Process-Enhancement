@@ -1,6 +1,6 @@
 package com.mcupdater.procenhance.setup;
 
-import com.mcupdater.procenhance.ProcessEnhancement;
+import com.mcupdater.mculib.block.AbstractMachineBlock;
 import com.mcupdater.procenhance.blocks.autoharvester.HarvesterBlock;
 import com.mcupdater.procenhance.blocks.autoharvester.HarvesterEntity;
 import com.mcupdater.procenhance.blocks.autoharvester.HarvesterMenu;
@@ -32,6 +32,9 @@ import com.mcupdater.procenhance.blocks.grinder.*;
 import com.mcupdater.procenhance.blocks.hydrator.HydratorBlock;
 import com.mcupdater.procenhance.blocks.hydrator.HydratorEntity;
 import com.mcupdater.procenhance.blocks.hydrator.HydratorMenu;
+import com.mcupdater.procenhance.blocks.lantern.LanternBlock;
+import com.mcupdater.procenhance.blocks.lantern.LanternEntity;
+import com.mcupdater.procenhance.blocks.lantern.LanternMenu;
 import com.mcupdater.procenhance.blocks.lava_generator.*;
 import com.mcupdater.procenhance.blocks.miner.*;
 import com.mcupdater.procenhance.blocks.planter.PlanterBlock;
@@ -57,7 +60,6 @@ import com.mcupdater.procenhance.loot.functions.RetainEnergyFunction;
 import com.mcupdater.procenhance.loot.functions.RetainFluidFunction;
 import com.mcupdater.procenhance.recipe.*;
 import com.mcupdater.procenhance.recipe.result.ItemRecipeResult;
-import com.mcupdater.procenhance.recipe.result.RecipeResult;
 import com.mcupdater.procenhance.recipe.result.RecipeResultType;
 import com.mcupdater.procenhance.recipe.result.TagRecipeResult;
 import com.mojang.serialization.Codec;
@@ -73,6 +75,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -422,6 +425,14 @@ public class Registration {
     ));
     public static final DeferredItem<Item> TUFFSOLIDIFIER_BLOCKITEM = BLOCK_ITEMS.register("tuff_solidifier", () -> new BlockItem(TUFFSOLIDIFIER_BLOCK.get(), new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TuffSolidifierEntity>> TUFFSOLIDIFIER_ENTITY = BLOCK_ENTITIES.register("tuff_solidifier", () -> BlockEntityType.Builder.of(TuffSolidifierEntity::new, TUFFSOLIDIFIER_BLOCK.get()).build(null));
+    public static final DeferredBlock<EndStoneSolidifierBlock> ENDSTONESOLIDIFIER_BLOCK = MACHINES.register("endstone_solidifier", () -> new EndStoneSolidifierBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.STONE)
+            .sound(SoundType.STONE)
+            .strength(5.0f)
+            .requiresCorrectToolForDrops()
+    ));
+    public static final DeferredItem<Item> ENDSTONESOLIDIFIER_BLOCKITEM = BLOCK_ITEMS.register("endstone_solidifier", () -> new BlockItem(ENDSTONESOLIDIFIER_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EndStoneSolidifierEntity>> ENDSTONESOLIDIFIER_ENTITY = BLOCK_ENTITIES.register("endstone_solidifier", () -> BlockEntityType.Builder.of(EndStoneSolidifierEntity::new, ENDSTONESOLIDIFIER_BLOCK.get()).build(null));
     public static final Supplier<MenuType<SolidifierMenu>> SOLIDIFIER_MENU = MENUS.register("solidifier", () -> IMenuTypeExtension.create(SolidifierMenu::factory));
 
     public static final DeferredItem<Item> IRON_DUST = ITEMS.register("iron_dust", () -> new Item(new Item.Properties()));
@@ -513,6 +524,17 @@ public class Registration {
     public static final DeferredItem<Item> CONCRETEMIXER_BLOCKITEM = BLOCK_ITEMS.register("concrete_mixer", () -> new BlockItem(CONCRETEMIXER_BLOCK.get(), new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MixerEntity>> CONCRETEMIXER_ENTITY = BLOCK_ENTITIES.register("concrete_mixer", () -> BlockEntityType.Builder.of(MixerEntity::new, CONCRETEMIXER_BLOCK.get()).build(null));
     public static final Supplier<MenuType<MixerMenu>> CONCRETEMIXER_MENU = MENUS.register("concrete_mixer", () ->IMenuTypeExtension.create(MixerMenu::factory));
+
+    public static final DeferredBlock<LanternBlock> ELECTRIC_LANTERN_BLOCK = MACHINES.register("electric_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.COLOR_YELLOW)
+            .sound(SoundType.LANTERN)
+            .strength(15.0f)
+            .lightLevel((blockState)->blockState.getValue(AbstractMachineBlock.ACTIVE) ? 15 : 0)
+            .requiresCorrectToolForDrops()
+    ));
+    public static final DeferredItem<Item> ELECTRIC_LANTERN_BLOCKITEM = BLOCK_ITEMS.register("electric_lantern", () -> new BlockItem(ELECTRIC_LANTERN_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LanternEntity>> ELECTRIC_LANTERN_ENTITY = BLOCK_ENTITIES.register("electric_lantern", () -> BlockEntityType.Builder.of(LanternEntity::new, ELECTRIC_LANTERN_BLOCK.get()).build(null));
+    public static final Supplier<MenuType<LanternMenu>> ELECTRIC_LANTERN_MENU = MENUS.register("electric_lantern", () -> IMenuTypeExtension.create(LanternMenu::factory));
 
     public static final Supplier<LootItemFunctionType<? extends LootItemConditionalFunction>> RETAIN_ENCHANTMENTS = LOOT_FUNCTION_TYPES.register("retain_enchantments", () -> new LootItemFunctionType(RetainEnchantmentsFunction.CODEC));
     public static final Supplier<LootItemFunctionType<? extends LootItemConditionalFunction>> RETAIN_ENERGY = LOOT_FUNCTION_TYPES.register("retain_energy", () -> new LootItemFunctionType(RetainEnergyFunction.CODEC));
