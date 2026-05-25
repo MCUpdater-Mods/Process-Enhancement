@@ -38,6 +38,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         for (DeferredHolder<Item, ? extends Item> entry : Registration.PATTERNS.getEntries()) {
             simpleItem(entry.get());
         }
+        for (DeferredHolder<Item, ? extends Item> entry : Registration.TOOLS.getEntries()) {
+            simpleItem(entry.get());
+        }
     }
 
     protected ItemModelBuilder simpleItem(Item item) {

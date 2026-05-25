@@ -1,0 +1,16 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "occultism"
+        }
+    ],
+    "type": "processenhancement:chisel",
+    "input": {
+        "item": "occultism:otherstone"
+    },
+    "result": {
+        "count": 1,
+        "id": "occultism:otherstone_bricks"
+    }
+}

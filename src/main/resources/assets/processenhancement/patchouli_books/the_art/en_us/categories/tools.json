@@ -1,0 +1,6 @@
+{
+  "name": "Tools",
+  "description": "Handheld tools for doing stuff while on-the-go",
+  "icon": "processenhancement:chisel",
+  "sortnum": 2
+}

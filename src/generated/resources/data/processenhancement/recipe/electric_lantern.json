@@ -5,17 +5,17 @@
         "C": {
             "item": "minecraft:black_concrete"
         },
+        "D": {
+            "tag": "c:dusts/iron"
+        },
         "G": {
             "item": "minecraft:glass"
-        },
-        "I": {
-            "tag": "c:dusts/iron"
         }
     },
     "pattern": [
-        "CIC",
-        "GIG",
-        "CIC"
+        "CDC",
+        "GDG",
+        "CDC"
     ],
     "result": {
         "count": 16,

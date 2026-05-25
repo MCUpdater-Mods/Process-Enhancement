@@ -89,6 +89,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         solar(Registration.INDSOLARGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK,Blocks.IRON_BLOCK,Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/generator", true);
 
         simpleBlock(Registration.ELECTRIC_LANTERN_BLOCK.get(), new ModelFile.ExistingModelFile(ResourceLocation.fromNamespaceAndPath("processenhancement","block/electric_lantern"), this.existingFileHelper));
+        simpleBlock(Registration.COPPER_ELECTRIC_LANTERN_BLOCK.get(), new ModelFile.ExistingModelFile(ResourceLocation.fromNamespaceAndPath("processenhancement","block/copper_electric_lantern"), this.existingFileHelper));
+        simpleBlock(Registration.NETHER_ELECTRIC_LANTERN_BLOCK.get(), new ModelFile.ExistingModelFile(ResourceLocation.fromNamespaceAndPath("processenhancement","block/nether_electric_lantern"), this.existingFileHelper));
 
         horizontalBlock(Registration.BASICBATTERY_BLOCK.get(), (blockState -> {
             int charge = blockState.getValue(BatteryBlock.CHARGE_LEVEL);

@@ -1,0 +1,10 @@
+{
+    "type": "processenhancement:chisel",
+    "input": {
+        "item": "minecraft:stone_bricks"
+    },
+    "result": {
+        "count": 1,
+        "id": "minecraft:chiseled_stone_bricks"
+    }
+}

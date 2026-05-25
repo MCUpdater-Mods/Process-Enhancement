@@ -8,7 +8,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
-@EventBusSubscriber(modid= ProcessEnhancement.MODID, bus=EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid= ProcessEnhancement.MODID)
 public class GameEventHandlers {
 
     @SubscribeEvent

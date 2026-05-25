@@ -10,7 +10,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack;
 
-@EventBusSubscriber(modid= ProcessEnhancement.MODID, bus= EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid= ProcessEnhancement.MODID)
 public class ModEventHandlers {
 
 	@SubscribeEvent
@@ -128,6 +128,8 @@ public class ModEventHandlers {
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.STONESOLIDIFIER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.TUFFSOLIDIFIER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.ELECTRIC_LANTERN_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
+				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.COPPER_ELECTRIC_LANTERN_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
+				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.NETHER_ELECTRIC_LANTERN_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 			}
 			{ // Fluid
 				event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, Registration.BUFFER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getFluidHandler().getFluidHandler(side) : blockEntity.getFluidHandler().getInternalHandler());

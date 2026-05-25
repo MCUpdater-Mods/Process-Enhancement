@@ -1,0 +1,10 @@
+{
+    "type": "processenhancement:chisel",
+    "input": {
+        "item": "minecraft:packed_mud"
+    },
+    "result": {
+        "count": 1,
+        "id": "minecraft:mud_bricks"
+    }
+}

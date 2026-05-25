@@ -173,6 +173,22 @@ dependencies {
     implementation "curse.maven:apothic-spawners-986583:6430294"
     implementation "curse.maven:placebo-283644:6446766"
 
+    // Silent Gear
+    implementation "curse.maven:silent-gear-297039:8095210"
+    implementation "curse.maven:silent-lib-242998:7935618"
+
+    // Occultism
+    implementation "curse.maven:occultism-361026:8037152"
+    implementation "curse.maven:modonomicon-538392:7771524"
+    implementation "curse.maven:smartbrainlib-661293:7055149"
+
+    // Integrated Dynamics
+    implementation "curse.maven:integrated-dynamics-236307:8126880"
+    implementation "curse.maven:cyclops-core-232758:8006281"
+    implementation "curse.maven:common-capabilities-247007:7756804"
+    implementation "curse.maven:refined-storage-243076:8105115"
+
+
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
     // The group id is ignored when searching -- in this case, it is "blank"

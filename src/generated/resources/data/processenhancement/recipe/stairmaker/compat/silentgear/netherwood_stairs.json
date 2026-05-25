@@ -1,0 +1,16 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "silentgear"
+        }
+    ],
+    "type": "processenhancement:stairmaker",
+    "input": {
+        "item": "silentgear:netherwood_planks"
+    },
+    "result": {
+        "count": 1,
+        "id": "silentgear:netherwood_stairs"
+    }
+}

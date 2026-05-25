@@ -5,7 +5,7 @@
             "conditions": {
                 "items": [
                     {
-                        "items": "processenhancement:iron_dust"
+                        "items": "minecraft:glass"
                     }
                 ]
             },

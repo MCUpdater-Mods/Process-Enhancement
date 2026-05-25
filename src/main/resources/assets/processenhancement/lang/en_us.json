@@ -65,6 +65,7 @@
     "block.processenhancement.stonecutter": "Electric Stonecutter",
     "block.processenhancement.tuff_solidifier": "Tuff Solidifier",
     "item.processenhancement.capacitor": "Capacitor",
+    "item.processenhancement.chisel": "Chisel",
     "item.processenhancement.copper_dust": "Copper Dust",
     "item.processenhancement.gold_dust": "Gold Dust",
     "item.processenhancement.iron_dust": "Iron Dust",
@@ -79,6 +80,7 @@
     "item.processenhancement.slate_stair": "Pattern Slate: Stair",
     "item.processenhancement.slate_unpackage": "Pattern Slate: Unpackage",
     "item.processenhancement.slate_wall": "Pattern Slate: Wall",
+    "item.processenhancement.stairmaker": "Stairmaker",
     "message.energy": "Energy:",
     "processenhancement.configuration.AutoHarvesterEnergyUse": "AutoHarvester",
     "processenhancement.configuration.AutoPackagerEnergyUse": "AutoPackager",
@@ -105,5 +107,7 @@
     "processenhancement.configuration.general": "General",
     "processenhancement.configuration.production": "Energy Production",
     "block.processenhancement.endstone_solidifier": "End Stone Solidifier",
-    "block.processenhancement.electric_lantern": "Electric Lantern"
+    "block.processenhancement.electric_lantern": "Electric Lantern",
+    "block.processenhancement.copper_electric_lantern": "Copper Electric Lantern",
+    "block.processenhancement.nether_electric_lantern": "Nether Electric Lantern"
 }

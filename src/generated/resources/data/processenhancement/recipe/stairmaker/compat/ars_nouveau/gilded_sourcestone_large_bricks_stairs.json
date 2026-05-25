@@ -1,0 +1,16 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "ars_nouveau"
+        }
+    ],
+    "type": "processenhancement:stairmaker",
+    "input": {
+        "item": "ars_nouveau:gilded_sourcestone_large_bricks"
+    },
+    "result": {
+        "count": 1,
+        "id": "ars_nouveau:gilded_sourcestone_large_bricks_stairs"
+    }
+}

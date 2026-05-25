@@ -32,9 +32,7 @@ import com.mcupdater.procenhance.blocks.grinder.*;
 import com.mcupdater.procenhance.blocks.hydrator.HydratorBlock;
 import com.mcupdater.procenhance.blocks.hydrator.HydratorEntity;
 import com.mcupdater.procenhance.blocks.hydrator.HydratorMenu;
-import com.mcupdater.procenhance.blocks.lantern.LanternBlock;
-import com.mcupdater.procenhance.blocks.lantern.LanternEntity;
-import com.mcupdater.procenhance.blocks.lantern.LanternMenu;
+import com.mcupdater.procenhance.blocks.lantern.*;
 import com.mcupdater.procenhance.blocks.lava_generator.*;
 import com.mcupdater.procenhance.blocks.miner.*;
 import com.mcupdater.procenhance.blocks.planter.PlanterBlock;
@@ -55,6 +53,8 @@ import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterMenu;
 import com.mcupdater.procenhance.blocks.tank.*;
 import com.mcupdater.procenhance.blocks.autopackager.*;
 import com.mcupdater.procenhance.items.autopackager.*;
+import com.mcupdater.procenhance.items.tools.chisel.ChiselItem;
+import com.mcupdater.procenhance.items.tools.stairmaker.StairmakerItem;
 import com.mcupdater.procenhance.loot.functions.RetainEnchantmentsFunction;
 import com.mcupdater.procenhance.loot.functions.RetainEnergyFunction;
 import com.mcupdater.procenhance.loot.functions.RetainFluidFunction;
@@ -75,7 +75,6 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -101,6 +100,7 @@ public class Registration {
     public static final DeferredRegister.Items BLOCK_ITEMS = DeferredRegister.createItems(MODID);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
     public static final DeferredRegister.Items PATTERNS = DeferredRegister.createItems(MODID);
+    public static final DeferredRegister.Items TOOLS = DeferredRegister.createItems(MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, MODID);
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(BuiltInRegistries.MENU, MODID);
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, MODID);
@@ -119,6 +119,7 @@ public class Registration {
         BLOCK_ITEMS.register(modEventBus);
         ITEMS.register(modEventBus);
         PATTERNS.register(modEventBus);
+        TOOLS.register(modEventBus);
         BLOCK_ENTITIES.register(modEventBus);
         MENUS.register(modEventBus);
         RECIPE_TYPES.register(modEventBus);
@@ -534,7 +535,39 @@ public class Registration {
     ));
     public static final DeferredItem<Item> ELECTRIC_LANTERN_BLOCKITEM = BLOCK_ITEMS.register("electric_lantern", () -> new BlockItem(ELECTRIC_LANTERN_BLOCK.get(), new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LanternEntity>> ELECTRIC_LANTERN_ENTITY = BLOCK_ENTITIES.register("electric_lantern", () -> BlockEntityType.Builder.of(LanternEntity::new, ELECTRIC_LANTERN_BLOCK.get()).build(null));
+    public static final DeferredBlock<CopperLanternBlock> COPPER_ELECTRIC_LANTERN_BLOCK = MACHINES.register("copper_electric_lantern", () -> new CopperLanternBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.COLOR_LIGHT_GREEN)
+            .sound(SoundType.LANTERN)
+            .strength(15.0f)
+            .lightLevel((blockState)->blockState.getValue(AbstractMachineBlock.ACTIVE) ? 15 : 0)
+            .requiresCorrectToolForDrops()
+    ));
+    public static final DeferredItem<Item> COPPER_ELECTRIC_LANTERN_BLOCKITEM = BLOCK_ITEMS.register("copper_electric_lantern", () -> new BlockItem(COPPER_ELECTRIC_LANTERN_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CopperLanternEntity>> COPPER_ELECTRIC_LANTERN_ENTITY = BLOCK_ENTITIES.register("copper_electric_lantern", () -> BlockEntityType.Builder.of(CopperLanternEntity::new, COPPER_ELECTRIC_LANTERN_BLOCK.get()).build(null));
+    public static final DeferredBlock<NetherLanternBlock> NETHER_ELECTRIC_LANTERN_BLOCK = MACHINES.register("nether_electric_lantern", () -> new NetherLanternBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.COLOR_CYAN)
+            .sound(SoundType.LANTERN)
+            .strength(15.0f)
+            .lightLevel((blockState)->blockState.getValue(AbstractMachineBlock.ACTIVE) ? 15 : 0)
+            .requiresCorrectToolForDrops()
+    ));
+    public static final DeferredItem<Item> NETHER_ELECTRIC_LANTERN_BLOCKITEM = BLOCK_ITEMS.register("nether_electric_lantern", () -> new BlockItem(NETHER_ELECTRIC_LANTERN_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<NetherLanternEntity>> NETHER_ELECTRIC_LANTERN_ENTITY = BLOCK_ENTITIES.register("nether_electric_lantern", () -> BlockEntityType.Builder.of(NetherLanternEntity::new, NETHER_ELECTRIC_LANTERN_BLOCK.get()).build(null));
     public static final Supplier<MenuType<LanternMenu>> ELECTRIC_LANTERN_MENU = MENUS.register("electric_lantern", () -> IMenuTypeExtension.create(LanternMenu::factory));
+
+    public static final DeferredItem<ChiselItem> CHISEL_ITEM = TOOLS.register("chisel", () -> new ChiselItem(new Item.Properties()
+            .stacksTo(1)
+            .durability(2048)
+    ));
+    public static final Supplier<RecipeType<ChiselRecipe>> CHISEL_RECIPE = RECIPE_TYPES.register("chisel", () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(MODID, "chisel")));
+    public static final Supplier<RecipeSerializer<ChiselRecipe>> CHISEL_SERIALIZER = RECIPE_SERIALIZERS.register("chisel", ChiselRecipe.Serializer::new);
+
+    public static final DeferredItem<StairmakerItem> STAIRMAKER_ITEM = TOOLS.register("stairmaker", () -> new StairmakerItem(new Item.Properties()
+            .stacksTo(1)
+            .durability(2048)
+    ));
+    public static final Supplier<RecipeType<StairmakerRecipe>> STAIRMAKER_RECIPE = RECIPE_TYPES.register("stairmaker", () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(MODID, "stairmaker")));
+    public static final Supplier<RecipeSerializer<StairmakerRecipe>> STAIRMAKER_SERIALIZER = RECIPE_SERIALIZERS.register("stairmaker", StairmakerRecipe.Serializer::new);
 
     public static final Supplier<LootItemFunctionType<? extends LootItemConditionalFunction>> RETAIN_ENCHANTMENTS = LOOT_FUNCTION_TYPES.register("retain_enchantments", () -> new LootItemFunctionType(RetainEnchantmentsFunction.CODEC));
     public static final Supplier<LootItemFunctionType<? extends LootItemConditionalFunction>> RETAIN_ENERGY = LOOT_FUNCTION_TYPES.register("retain_energy", () -> new LootItemFunctionType(RetainEnergyFunction.CODEC));

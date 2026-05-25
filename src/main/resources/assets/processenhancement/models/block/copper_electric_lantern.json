@@ -1,0 +1,9 @@
+{
+  "format_version": "1.9.0",
+  "parent": "processenhancement:block/electric_lantern",
+  "textures": {
+    "frame": "minecraft:block/gray_concrete",
+    "lamp": "processenhancement:block/copper_lamp",
+    "particle": "minecraft:block/gray_concrete"
+  }
+}

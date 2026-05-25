@@ -1,0 +1,16 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "biomeswevegone"
+        }
+    ],
+    "type": "processenhancement:chisel",
+    "input": {
+        "item": "biomeswevegone:windswept_sandstone"
+    },
+    "result": {
+        "count": 1,
+        "id": "biomeswevegone:cut_windswept_sandstone"
+    }
+}

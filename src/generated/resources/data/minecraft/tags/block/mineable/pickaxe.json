@@ -52,6 +52,8 @@
         "processenhancement:soilmanager",
         "processenhancement:concrete_mixer",
         "processenhancement:electric_lantern",
+        "processenhancement:copper_electric_lantern",
+        "processenhancement:nether_electric_lantern",
         "processenhancement:copper_wire",
         "processenhancement:basic_battery",
         "processenhancement:intermediate_battery",

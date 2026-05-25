@@ -1,7 +1,9 @@
 package com.mcupdater.procenhance.datagen;
 
 import alexthw.ars_elemental.registry.ModItems;
+import com.hollingsworth.arsnouveau.common.lib.LibBlockNames;
 import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
+import com.klikli_dev.occultism.registry.OccultismBlocks;
 import com.mcupdater.procenhance.datagen.custom.*;
 import com.mcupdater.procenhance.recipe.ConfigCondition;
 import com.mcupdater.procenhance.recipe.result.ItemRecipeResult;
@@ -16,6 +18,7 @@ import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -24,10 +27,17 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.*;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.potionstudios.biomeswevegone.world.level.block.BWGBlocks;
+import net.potionstudios.biomeswevegone.world.level.block.sand.BWGSandSet;
+import net.potionstudios.biomeswevegone.world.level.block.set.BWGBlockSet;
 import net.potionstudios.biomeswevegone.world.level.block.wood.BWGWoodSet;
+import net.silentchaos512.gear.setup.SgBlocks;
+import org.checkerframework.checker.units.qual.C;
+import org.cyclops.integrateddynamics.RegistryEntries;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -440,12 +450,114 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,Items.SLIME_BALL).requires(Items.MILK_BUCKET,1).requires(PLANT_DUST.get(),1).unlockedBy("automatic",has(PLANT_DUST.get())).save(recipeOutput);
         basicMachineRecipe(recipeOutput,HYDRATOR_BLOCK.get(),Ingredient.of(Items.COPPER_INGOT),Ingredient.of(Items.IRON_INGOT),Ingredient.of(Items.GLASS_BOTTLE));
         basicMachineRecipe(recipeOutput,DEHYDRATOR_BLOCK.get(),Ingredient.of(Items.COPPER_INGOT),Ingredient.of(Items.IRON_INGOT),Ingredient.of(Items.POINTED_DRIPSTONE));
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,ELECTRIC_LANTERN_BLOCK.get(), 16).define('C',Ingredient.of(Blocks.BLACK_CONCRETE)).define('G',Ingredient.of(Blocks.GLASS)).define('I',Ingredient.of(IRON_DUST_TAG)).pattern("CIC").pattern("GIG").pattern("CIC").unlockedBy("automatic", has(IRON_DUST.get())).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,ELECTRIC_LANTERN_BLOCK.get(), 16).define('C',Ingredient.of(Blocks.BLACK_CONCRETE)).define('G',Ingredient.of(Blocks.GLASS)).define('D',Ingredient.of(IRON_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.GLASS)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,COPPER_ELECTRIC_LANTERN_BLOCK.get(), 16).define('C',Ingredient.of(Blocks.BLACK_CONCRETE)).define('G',Ingredient.of(Blocks.GLASS)).define('D',Ingredient.of(COPPER_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.GLASS)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,NETHER_ELECTRIC_LANTERN_BLOCK.get(), 16).define('C',Ingredient.of(Blocks.BLACK_CONCRETE)).define('G',Ingredient.of(Blocks.GLASS)).define('D',Ingredient.of(NETHER_DUST.get())).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.GLASS)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, CHISEL_ITEM.get(),1).define('S', Ingredient.of(Items.STICK)).define('I', Ingredient.of(Items.IRON_INGOT)).pattern("SSI").unlockedBy("automatic", has(Items.IRON_INGOT)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, STAIRMAKER_ITEM.get(),1).define('S', Ingredient.of(Items.STICK)).define('I', Ingredient.of(Items.IRON_INGOT)).pattern("ISS").unlockedBy("automatic", has(Items.IRON_INGOT)).save(recipeOutput);
+
+        // Add chisel recipes
+        chisel(recipeOutput, Ingredient.of(Blocks.STONE), (BlockItem)Blocks.STONE_BRICKS.asItem(), null);
+        chisel(recipeOutput, Ingredient.of(Blocks.STONE_BRICKS), (BlockItem)Blocks.CHISELED_STONE_BRICKS.asItem(), null);
+        chisel(recipeOutput, Ingredient.of(Blocks.GRANITE), (BlockItem)Blocks.POLISHED_GRANITE.asItem(), null);
+        chisel(recipeOutput, Ingredient.of(Blocks.DIORITE), (BlockItem)Blocks.POLISHED_DIORITE.asItem(), null);
+        chisel(recipeOutput, Ingredient.of(Blocks.ANDESITE), (BlockItem)Blocks.POLISHED_ANDESITE.asItem(), null);
+        chisel(recipeOutput, Ingredient.of(Blocks.DEEPSLATE), (BlockItem)Blocks.POLISHED_DEEPSLATE.asItem(), null);
+        chisel(recipeOutput, Ingredient.of(Blocks.POLISHED_DEEPSLATE), (BlockItem)Blocks.DEEPSLATE_BRICKS.asItem(), null);
+        chisel(recipeOutput, Ingredient.of(Blocks.TUFF), (BlockItem)Blocks.POLISHED_TUFF.asItem(), null);
+        chisel(recipeOutput, Ingredient.of(Blocks.POLISHED_TUFF), (BlockItem)Blocks.TUFF_BRICKS.asItem(), null);
+        chisel(recipeOutput, Ingredient.of(Blocks.PACKED_MUD), (BlockItem)Blocks.MUD_BRICKS.asItem(), null);
+        chisel(recipeOutput, Ingredient.of(Blocks.SANDSTONE), (BlockItem)Blocks.CUT_SANDSTONE.asItem(), null);
+        chisel(recipeOutput, Ingredient.of(Blocks.CUT_SANDSTONE), (BlockItem)Blocks.CHISELED_SANDSTONE.asItem(), null);
+        chisel(recipeOutput, Ingredient.of(Blocks.RED_SANDSTONE), (BlockItem)Blocks.CUT_RED_SANDSTONE.asItem(), null);
+        chisel(recipeOutput, Ingredient.of(Blocks.CUT_RED_SANDSTONE), (BlockItem)Blocks.CHISELED_RED_SANDSTONE.asItem(), null);
+        chisel(recipeOutput, Ingredient.of(Blocks.PRISMARINE), (BlockItem)Blocks.PRISMARINE_BRICKS.asItem(), null);
+        chisel(recipeOutput, Ingredient.of(Blocks.BASALT), (BlockItem)Blocks.POLISHED_BASALT.asItem(), null);
+        chisel(recipeOutput, Ingredient.of(Blocks.BLACKSTONE), (BlockItem)Blocks.POLISHED_BLACKSTONE.asItem(), null);
+        chisel(recipeOutput, Ingredient.of(Blocks.POLISHED_BLACKSTONE), (BlockItem)Blocks.CHISELED_POLISHED_BLACKSTONE.asItem(), null);
+        chisel(recipeOutput, Ingredient.of(Blocks.END_STONE), (BlockItem)Blocks.END_STONE_BRICKS.asItem(), null);
+
+        // Add stairmaker recipes
+        stairmaker(recipeOutput, Ingredient.of(Blocks.OAK_PLANKS), (BlockItem)Blocks.OAK_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.SPRUCE_PLANKS), (BlockItem)Blocks.SPRUCE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.BIRCH_PLANKS), (BlockItem)Blocks.BIRCH_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.JUNGLE_PLANKS), (BlockItem)Blocks.JUNGLE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.ACACIA_PLANKS), (BlockItem)Blocks.ACACIA_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.DARK_OAK_PLANKS), (BlockItem)Blocks.DARK_OAK_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.MANGROVE_PLANKS), (BlockItem)Blocks.MANGROVE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.CHERRY_PLANKS), (BlockItem)Blocks.CHERRY_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.BAMBOO_PLANKS), (BlockItem)Blocks.BAMBOO_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.BAMBOO_MOSAIC), (BlockItem)Blocks.BAMBOO_MOSAIC_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.CRIMSON_PLANKS), (BlockItem)Blocks.CRIMSON_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.WARPED_PLANKS), (BlockItem)Blocks.WARPED_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.STONE), (BlockItem)Blocks.STONE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.COBBLESTONE), (BlockItem)Blocks.COBBLESTONE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.MOSSY_COBBLESTONE), (BlockItem)Blocks.MOSSY_COBBLESTONE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.STONE_BRICKS), (BlockItem)Blocks.STONE_BRICK_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.MOSSY_STONE_BRICKS), (BlockItem)Blocks.MOSSY_STONE_BRICK_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.GRANITE), (BlockItem)Blocks.GRANITE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.POLISHED_GRANITE), (BlockItem)Blocks.POLISHED_GRANITE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.DIORITE), (BlockItem)Blocks.DIORITE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.POLISHED_DIORITE), (BlockItem)Blocks.POLISHED_DIORITE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.ANDESITE), (BlockItem)Blocks.ANDESITE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.POLISHED_ANDESITE), (BlockItem)Blocks.POLISHED_ANDESITE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.COBBLED_DEEPSLATE), (BlockItem)Blocks.COBBLED_DEEPSLATE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.POLISHED_DEEPSLATE), (BlockItem)Blocks.POLISHED_DEEPSLATE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.DEEPSLATE), (BlockItem)Blocks.POLISHED_DEEPSLATE_STAIRS.asItem(), null, "deepslate_stairs");
+        stairmaker(recipeOutput, Ingredient.of(Blocks.DEEPSLATE_BRICKS), (BlockItem)Blocks.DEEPSLATE_BRICK_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.DEEPSLATE_TILES), (BlockItem)Blocks.DEEPSLATE_TILE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.TUFF), (BlockItem)Blocks.TUFF_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.POLISHED_TUFF), (BlockItem)Blocks.POLISHED_TUFF_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.TUFF_BRICKS), (BlockItem)Blocks.TUFF_BRICK_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.BRICKS), (BlockItem)Blocks.BRICK_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.MUD_BRICKS), (BlockItem)Blocks.MUD_BRICK_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.SANDSTONE), (BlockItem)Blocks.SANDSTONE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.SMOOTH_SANDSTONE), (BlockItem)Blocks.SMOOTH_SANDSTONE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.RED_SANDSTONE), (BlockItem)Blocks.RED_SANDSTONE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.SMOOTH_RED_SANDSTONE), (BlockItem)Blocks.SMOOTH_RED_SANDSTONE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.PRISMARINE), (BlockItem)Blocks.PRISMARINE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.PRISMARINE_BRICKS), (BlockItem)Blocks.PRISMARINE_BRICK_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.DARK_PRISMARINE), (BlockItem)Blocks.DARK_PRISMARINE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.NETHER_BRICKS), (BlockItem)Blocks.NETHER_BRICK_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.RED_NETHER_BRICKS), (BlockItem)Blocks.RED_NETHER_BRICK_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.BLACKSTONE), (BlockItem)Blocks.BLACKSTONE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.POLISHED_BLACKSTONE), (BlockItem)Blocks.POLISHED_BLACKSTONE_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.POLISHED_BLACKSTONE_BRICKS), (BlockItem)Blocks.POLISHED_BLACKSTONE_BRICK_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.END_STONE_BRICKS), (BlockItem)Blocks.END_STONE_BRICK_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.END_STONE), (BlockItem)Blocks.END_STONE_BRICK_STAIRS.asItem(), null,"end_stone");
+        stairmaker(recipeOutput, Ingredient.of(Blocks.PURPUR_BLOCK), (BlockItem)Blocks.PURPUR_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.QUARTZ_BLOCK), (BlockItem)Blocks.QUARTZ_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.SMOOTH_QUARTZ), (BlockItem)Blocks.SMOOTH_QUARTZ_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.CUT_COPPER), (BlockItem)Blocks.CUT_COPPER_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.EXPOSED_CUT_COPPER), (BlockItem)Blocks.EXPOSED_CUT_COPPER_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.WEATHERED_CUT_COPPER), (BlockItem)Blocks.WEATHERED_CUT_COPPER_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.OXIDIZED_CUT_COPPER), (BlockItem)Blocks.OXIDIZED_CUT_COPPER_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.WAXED_CUT_COPPER), (BlockItem)Blocks.WAXED_CUT_COPPER_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.WAXED_EXPOSED_CUT_COPPER), (BlockItem)Blocks.WAXED_EXPOSED_CUT_COPPER_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.WAXED_WEATHERED_CUT_COPPER), (BlockItem)Blocks.WAXED_WEATHERED_CUT_COPPER_STAIRS.asItem(), null);
+        stairmaker(recipeOutput, Ingredient.of(Blocks.WAXED_OXIDIZED_CUT_COPPER), (BlockItem)Blocks.WAXED_OXIDIZED_CUT_COPPER_STAIRS.asItem(), null);
 
         // Add mod compatibility recipes
+        // === Biomes We've Gone ===
         for (BWGWoodSet woodSet : BWGWoodSet.woodsets()) {
             generateConditionalSawmillRecipes(recipeOutput, "biomeswevegone", woodSet.name(), woodSet.logstem(), woodSet.planks(), woodSet.stairs(), woodSet.slab(), woodSet.pressurePlate(), woodSet.sign(), woodSet.door(), woodSet.trapdoor(), woodSet.strippedLogStem(), woodSet.strippedWood(), woodSet.fence(), woodSet.fenceGate(), woodSet.boatItem() != null ? woodSet.boatItem().get() : null, woodSet.button(), null);
         }
+        for (BWGSandSet sandSet : BWGSandSet.getSandSets()) {
+            stairmakerConditional(recipeOutput, Ingredient.of(sandSet.getSandstone()), (BlockItem)sandSet.getSandstoneStairs().asItem(), new ModLoadedCondition("biomeswevegone"), "biomeswevegone");
+            stairmakerConditional(recipeOutput, Ingredient.of(sandSet.getSmoothSandstone()), (BlockItem)sandSet.getSmoothSandstoneStairs().asItem(), new ModLoadedCondition("biomeswevegone"), "biomeswevegone");
+            chiselConditional(recipeOutput, Ingredient.of(sandSet.getSandstone()), (BlockItem)sandSet.getCutSandstone().asItem(), new ModLoadedCondition("biomeswevegone"), "biomeswevegone");
+            chiselConditional(recipeOutput, Ingredient.of(sandSet.getCutSandstone()), (BlockItem)sandSet.getChiseledSandstone().asItem(), new ModLoadedCondition("biomeswevegone"), "biomeswevegone");
+        }
+        for (BWGBlockSet blockSet : BWGBlockSet.getBlockSets()) {
+            stairmakerConditional(recipeOutput, Ingredient.of(blockSet.getBase()), (BlockItem)blockSet.getStairs().asItem(), new ModLoadedCondition("biomeswevegone"), "biomeswevegone");
+        }
+        stairmakerConditional(recipeOutput, Ingredient.of(BWGBlocks.CATTAIL_THATCH.get()), (BlockItem)BWGBlocks.CATTAIL_THATCH_STAIRS.get().asItem(), new ModLoadedCondition("biomeswevegone"), "biomeswevegone");
+        chiselConditional(recipeOutput, Ingredient.of(BWGBlocks.DACITE_SET.getBase()), (BlockItem)BWGBlocks.DACITE_BRICKS_SET.getBase().asItem(), new ModLoadedCondition("biomeswevegone"), "biomeswevegone");
+        chiselConditional(recipeOutput, Ingredient.of(BWGBlocks.DACITE_BRICKS_SET.getBase()), (BlockItem)BWGBlocks.DACITE_TILE_SET.getBase().asItem(), new ModLoadedCondition("biomeswevegone"), "biomeswevegone");
+        chiselConditional(recipeOutput, Ingredient.of(BWGBlocks.RED_ROCK_SET.getBase()), (BlockItem)BWGBlocks.RED_ROCK_BRICKS_SET.getBase().asItem(), new ModLoadedCondition("biomeswevegone"), "biomeswevegone");
+        chiselConditional(recipeOutput, Ingredient.of(BWGBlocks.PACKED_PALE_MUD.get()), (BlockItem)BWGBlocks.PALE_MUD_BRICKS_SET.getBase().asItem(), new ModLoadedCondition("biomeswevegone"), "biomeswevegone");
+
+        // === Ars Nouveau ===
         generateConditionalSawmillRecipes(recipeOutput, "ars_nouveau", "archwood", BlockRegistry.BLAZING_LOG.get(), BlockRegistry.ARCHWOOD_PLANK.get(), BlockRegistry.ARCHWOOD_STAIRS.get(), BlockRegistry.ARCHWOOD_SLABS.get(), BlockRegistry.ARCHWOOD_PPlate.get(), null, BlockRegistry.ARCHWOOD_DOOR.get(), BlockRegistry.ARCHWOOD_TRAPDOOR.get(), BlockRegistry.STRIPPED_AWLOG_RED.get(), BlockRegistry.STRIPPED_AWWOOD_RED.get(), BlockRegistry.ARCHWOOD_FENCE.get(), BlockRegistry.ARCHWOOD_FENCE_GATE.get(), null, BlockRegistry.ARCHWOOD_BUTTON.get(), null);
         sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.CASCADING_LOG.get()), BlockRegistry.ARCHWOOD_PLANK.get(), 6, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau","cascading_archwood_planks");
         sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.CASCADING_LOG.get()), BlockRegistry.STRIPPED_AWLOG_BLUE.get(), 1, 16, 0.01f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau");
@@ -477,6 +589,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.VEXING_LOG.get()), BlockRegistry.ARCHWOOD_TRAPDOOR.get(), 2, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "vexing_archwood_trapdoors");
         sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.VEXING_LOG.get()), BlockRegistry.ARCHWOOD_FENCE.get(), 4, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "vexing_archwood_fence");
         sawmillConditional(recipeOutput, Ingredient.of(BlockRegistry.VEXING_LOG.get()), BlockRegistry.ARCHWOOD_FENCE_GATE.get(), 2, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "vexing_archwood_fencegate");
+        for (String prefix : LibBlockNames.DECORATIVE_SOURCESTONE) {
+            stairmakerConditional(recipeOutput, Ingredient.of(BlockRegistry.getBlock(prefix)), (BlockItem)BlockRegistry.getBlock(prefix + "_stairs").asItem(), new ModLoadedCondition("ars_nouveau"), "ars_nouveau");
+        }
+
+        // === Ars Elemental ===
         sawmillConditional(recipeOutput, Ingredient.of(ModItems.FLASHING_ARCHWOOD_LOG.get()), BlockRegistry.ARCHWOOD_PLANK.get(), 6, 32, 0.05f, new ModLoadedCondition("ars_elemental"), "ars_elemental","flashing_archwood_planks");
         sawmillConditional(recipeOutput, Ingredient.of(ModItems.FLASHING_ARCHWOOD_LOG.get()), ModItems.FLASHING_ARCHWOOD_LOG_STRIPPED.get(), 1, 16, 0.01f, new ModLoadedCondition("ars_elemental"), "ars_elemental");
         sawmillConditional(recipeOutput, Ingredient.of(ModItems.FLASHING_ARCHWOOD_LOG.get()), ModItems.FLASHING_ARCHWOOD_STRIPPED.get(), 1, 16, 0.01f, new ModLoadedCondition("ars_elemental"), "ars_elemental");
@@ -488,11 +605,37 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         sawmillConditional(recipeOutput, Ingredient.of(ModItems.FLASHING_ARCHWOOD_LOG.get()), BlockRegistry.ARCHWOOD_FENCE.get(), 4, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "flashing_archwood_fence");
         sawmillConditional(recipeOutput, Ingredient.of(ModItems.FLASHING_ARCHWOOD_LOG.get()), BlockRegistry.ARCHWOOD_FENCE_GATE.get(), 2, 32, 0.05f, new ModLoadedCondition("ars_nouveau"), "ars_nouveau", "flashing_archwood_fencegate");
 
-        // Apotheosis
+        // === Apotheosis ===
         grinderConditional(recipeOutput, Ingredient.of(Apoth.Items.GEM.value()), 200, 0.05f, new ModLoadedCondition("apotheosis"), "apotheosis", "gem_dust")
                 .addOutput(new ItemStack(Apoth.Items.GEM_DUST, 1), 1)
                 .save(recipeOutput);
 
+        // Silent Gear
+        generateConditionalSawmillRecipes(recipeOutput, "silentgear", "netherwood", SgBlocks.NETHERWOOD_LOG.get(), SgBlocks.NETHERWOOD_PLANKS.get(), SgBlocks.NETHERWOOD_STAIRS.get(), SgBlocks.NETHERWOOD_SLAB.get(), null, null, SgBlocks.NETHERWOOD_DOOR.get(), SgBlocks.NETHERWOOD_TRAPDOOR.get(), SgBlocks.STRIPPED_NETHERWOOD_LOG.get(), SgBlocks.STRIPPED_NETHERWOOD_WOOD.get(), SgBlocks.NETHERWOOD_FENCE.get(), SgBlocks.NETHERWOOD_FENCE_GATE.get(), null, null, null);
+
+        // Occultism
+        generateConditionalSawmillRecipes(recipeOutput, "occultism", "otherworld", OccultismBlocks.OTHERWORLD_LOG.get(), OccultismBlocks.OTHERPLANKS.get(), OccultismBlocks.OTHERPLANKS_STAIRS.get(), OccultismBlocks.OTHERPLANKS_SLAB.get(), OccultismBlocks.OTHERPLANKS_PRESSURE_PLATE.get(), OccultismBlocks.OTHERPLANKS_SIGN.get(), OccultismBlocks.OTHERPLANKS_DOOR.get(), OccultismBlocks.OTHERPLANKS_TRAPDOOR.get(), OccultismBlocks.STRIPPED_OTHERWORLD_LOG.get(), OccultismBlocks.STRIPPED_OTHERWORLD_WOOD.get(), OccultismBlocks.OTHERPLANKS_FENCE.get(), OccultismBlocks.OTHERPLANKS_FENCE_GATE.get(), null, OccultismBlocks.OTHERPLANKS_BUTTON.get(), null);
+        stairmakerConditional(recipeOutput, Ingredient.of(OccultismBlocks.OTHERSTONE), (BlockItem)OccultismBlocks.OTHERSTONE_STAIRS.asItem(), new ModLoadedCondition("occultism"), "occultism");
+        stairmakerConditional(recipeOutput, Ingredient.of(OccultismBlocks.OTHERCOBBLESTONE), (BlockItem)OccultismBlocks.OTHERCOBBLESTONE_STAIRS.asItem(), new ModLoadedCondition("occultism"), "occultism");
+        stairmakerConditional(recipeOutput, Ingredient.of(OccultismBlocks.POLISHED_OTHERSTONE), (BlockItem)OccultismBlocks.POLISHED_OTHERSTONE_STAIRS.asItem(), new ModLoadedCondition("occultism"), "occultism");
+        stairmakerConditional(recipeOutput, Ingredient.of(OccultismBlocks.OTHERSTONE_BRICKS), (BlockItem)OccultismBlocks.OTHERSTONE_BRICKS_STAIRS.asItem(), new ModLoadedCondition("occultism"), "occultism");
+        stairmakerConditional(recipeOutput, Ingredient.of(OccultismBlocks.OTHERROCK), (BlockItem)OccultismBlocks.OTHERROCK_STAIRS.asItem(), new ModLoadedCondition("occultism"), "occultism");
+        stairmakerConditional(recipeOutput, Ingredient.of(OccultismBlocks.OTHERROCK_BRICKS), (BlockItem)OccultismBlocks.OTHERROCK_BRICKS_STAIRS.asItem(), new ModLoadedCondition("occultism"), "occultism");
+        stairmakerConditional(recipeOutput, Ingredient.of(OccultismBlocks.OTHERCOBBLEROCK), (BlockItem)OccultismBlocks.OTHERCOBBLEROCK_STAIRS.asItem(), new ModLoadedCondition("occultism"), "occultism");
+        stairmakerConditional(recipeOutput, Ingredient.of(OccultismBlocks.POLISHED_OTHERROCK), (BlockItem)OccultismBlocks.POLISHED_OTHERROCK_STAIRS.asItem(), new ModLoadedCondition("occultism"), "occultism");
+        chiselConditional(recipeOutput, Ingredient.of(OccultismBlocks.OTHERSTONE), (BlockItem)OccultismBlocks.OTHERSTONE_BRICKS.asItem(), new ModLoadedCondition("occultism"), "occultism");
+        chiselConditional(recipeOutput, Ingredient.of(OccultismBlocks.OTHERSTONE_BRICKS), (BlockItem)OccultismBlocks.CHISELED_OTHERSTONE_BRICKS.asItem(), new ModLoadedCondition("occultism"), "occultism");
+        chiselConditional(recipeOutput, Ingredient.of(OccultismBlocks.OTHERROCK), (BlockItem)OccultismBlocks.OTHERROCK_BRICKS.asItem(), new ModLoadedCondition("occultism"), "occultism");
+        chiselConditional(recipeOutput, Ingredient.of(OccultismBlocks.OTHERROCK_BRICKS), (BlockItem)OccultismBlocks.CHISELED_OTHERROCK_BRICKS.asItem(), new ModLoadedCondition("occultism"), "occultism");
+
+        // === Integrated Dynamics ===
+        generateConditionalSawmillRecipes(recipeOutput, "integrateddynamics", "menril", RegistryEntries.BLOCK_MENRIL_LOG.get(), RegistryEntries.BLOCK_MENRIL_PLANKS.get(), RegistryEntries.BLOCK_MENRIL_PLANKS_STAIRS.get(), null, null, null, null, null,RegistryEntries.BLOCK_MENRIL_LOG_STRIPPED.get(),RegistryEntries.BLOCK_MENRIL_WOOD_STRIPPED.get(),null,null,null,null,null);
+        sawmillConditional(recipeOutput, Ingredient.of(RegistryEntries.BLOCK_MENRIL_LOG_FILLED.get()), RegistryEntries.BLOCK_MENRIL_PLANKS.get(), 6, 32, 0.05f, new ModLoadedCondition("integrateddynamics"), "integrateddynamics","filled_menril_planks");
+        sawmillConditional(recipeOutput, Ingredient.of(RegistryEntries.BLOCK_MENRIL_LOG_FILLED.get()), RegistryEntries.BLOCK_MENRIL_PLANKS_STAIRS.get(), 6, 32, 0.05f, new ModLoadedCondition("integrateddynamics"), "integrateddynamics", "filled_menril_stairs");
+        sawmillConditional(recipeOutput, Ingredient.of(RegistryEntries.BLOCK_MENRIL_LOG_FILLED.get()), RegistryEntries.BLOCK_MENRIL_LOG_STRIPPED.get(), 1, 16, 0.01f, new ModLoadedCondition("integrateddynamics"), "integrateddynamics", "filled_menril_log_stripped");
+        sawmillConditional(recipeOutput, Ingredient.of(RegistryEntries.BLOCK_MENRIL_LOG_FILLED.get()), RegistryEntries.BLOCK_MENRIL_WOOD_STRIPPED.get(), 1, 16, 0.01f, new ModLoadedCondition("integrateddynamics"), "integrateddynamics", "filled_menril_wood_stripped");
+        chiselConditional(recipeOutput, Ingredient.of(RegistryEntries.BLOCK_CRYSTALIZED_MENRIL_BLOCK.get()), (BlockItem)RegistryEntries.BLOCK_CRYSTALIZED_MENRIL_BRICK.get().asItem(), new ModLoadedCondition("integrateddynamics"), "integrateddynamics");
+        chiselConditional(recipeOutput, Ingredient.of(RegistryEntries.BLOCK_CRYSTALIZED_CHORUS_BLOCK.get()), (BlockItem)RegistryEntries.BLOCK_CRYSTALIZED_CHORUS_BRICK.get().asItem(), new ModLoadedCondition("integrateddynamics"), "integrateddynamics");
     }
 
     private void hydrator(RecipeOutput recipeOutput, Ingredient itemInput, FluidStack fluidInput, ItemLike output, int count, int processTime, ICondition condition) {
@@ -681,7 +824,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     public static void generateConditionalSawmillRecipes(RecipeOutput consumer, String modId, String woodName, ItemLike log, ItemLike planks, ItemLike stairs, ItemLike slab, ItemLike pressurePlate, ItemLike sign, ItemLike door, ItemLike trapDoor, ItemLike strippedLog, ItemLike strippedWood, ItemLike fence, ItemLike fenceGate, ItemLike boat, ItemLike button, ItemLike ladder) {
         ICondition condition = new ModLoadedCondition(modId);
         sawmillConditional(consumer, Ingredient.of(log),planks,6,32,0.05f, condition, modId);
-        if (stairs != null) sawmillConditional(consumer, Ingredient.of(log),stairs,6,32,0.05f, condition, modId);
+        if (stairs != null) {
+            sawmillConditional(consumer, Ingredient.of(log),stairs,6,32,0.05f, condition, modId);
+            stairmakerConditional(consumer, Ingredient.of(planks), (BlockItem)stairs.asItem(), condition, modId);
+        }
         if (slab != null) sawmillConditional(consumer, Ingredient.of(log),slab,12,32,0.05f, condition, modId);
         if (pressurePlate != null) sawmillConditional(consumer, Ingredient.of(log),pressurePlate,3,32,0.05f, condition, modId);
         if (sign != null) sawmillConditional(consumer, Ingredient.of(log),sign,3,32,0.05f, condition, modId);
@@ -716,5 +862,49 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         return new GrinderRecipeBuilder(modId, input, processTime, experience, recipeName)
                 .unlockedBy("has_grinder", has(Registration.GRINDERT1_BLOCK.get()))
                 .addCondition(condition);
+    }
+
+    private void chisel(RecipeOutput recipeOutput, Ingredient input, BlockItem result, ICondition condition) {
+        chisel(recipeOutput, input, result, condition, null);
+    }
+
+    public static void chisel(RecipeOutput recipeOutput, Ingredient input, BlockItem result, ICondition condition, String recipeName) {
+        new ChiselRecipeBuilder(input, result, recipeName)
+                .unlockedBy("has_chisel", has(CHISEL_ITEM.get()))
+                .addCondition(condition)
+                .save(recipeOutput);
+    }
+
+    private void chiselConditional(RecipeOutput recipeOutput, Ingredient input, BlockItem result, ICondition condition, String modId) {
+        chiselConditional(recipeOutput, input, result, condition, modId, null);
+    }
+
+    public static void chiselConditional(RecipeOutput recipeOutput, Ingredient input, BlockItem result, ICondition condition, String modId, String recipeName) {
+        new ChiselRecipeBuilder(modId, input, result, recipeName)
+                .unlockedBy("has_chisel", has(CHISEL_ITEM.get()))
+                .addCondition(condition)
+                .save(recipeOutput);
+    }
+
+    private void stairmaker(RecipeOutput recipeOutput, Ingredient input, BlockItem result, ICondition condition) {
+        stairmaker(recipeOutput, input, result, condition, null);
+    }
+
+    public static void stairmaker(RecipeOutput recipeOutput, Ingredient input, BlockItem result, ICondition condition, String recipeName) {
+        new StairmakerRecipeBuilder(input, result, recipeName)
+                .unlockedBy("has_stairmaker", has(STAIRMAKER_ITEM.get()))
+                .addCondition(condition)
+                .save(recipeOutput);
+    }
+
+    public static void stairmakerConditional(RecipeOutput recipeOutput, Ingredient input, BlockItem result, ICondition condition, String modId) {
+        stairmakerConditional(recipeOutput, input, result, condition, modId, null);
+    }
+
+    public static void stairmakerConditional(RecipeOutput recipeOutput, Ingredient input, BlockItem result, ICondition condition, String modId, String recipeName) {
+        new StairmakerRecipeBuilder(modId, input, result, recipeName)
+                .unlockedBy("has_stairmaker", has(STAIRMAKER_ITEM.get()))
+                .addCondition(condition)
+                .save(recipeOutput);
     }
 }
