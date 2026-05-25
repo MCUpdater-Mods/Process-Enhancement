@@ -1,0 +1,16 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "biomeswevegone"
+        }
+    ],
+    "type": "processenhancement:chisel",
+    "input": {
+        "item": "biomeswevegone:packed_pale_mud"
+    },
+    "result": {
+        "count": 1,
+        "id": "biomeswevegone:pale_mud_bricks"
+    }
+}

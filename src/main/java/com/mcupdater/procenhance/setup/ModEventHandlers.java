@@ -10,7 +10,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack;
 
-@EventBusSubscriber(modid= ProcessEnhancement.MODID, bus= EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid= ProcessEnhancement.MODID)
 public class ModEventHandlers {
 
 	@SubscribeEvent
@@ -61,6 +61,7 @@ public class ModEventHandlers {
 				event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Registration.CALCITESOLIDIFIER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getItemHandler().getItemHandler(side) : blockEntity.getItemHandler().getInternalHandler());
 				event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Registration.DEEPSLATESOLIDIFIER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getItemHandler().getItemHandler(side) : blockEntity.getItemHandler().getInternalHandler());
 				event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Registration.DIORITESOLIDIFIER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getItemHandler().getItemHandler(side) : blockEntity.getItemHandler().getInternalHandler());
+				event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Registration.ENDSTONESOLIDIFIER_ENTITY.get(),(blockEntity, side) -> side != null ? blockEntity.getItemHandler().getItemHandler(side) : blockEntity.getItemHandler().getInternalHandler());
 				event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Registration.GRANITESOLIDIFIER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getItemHandler().getItemHandler(side) : blockEntity.getItemHandler().getInternalHandler());
 				event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Registration.STONESOLIDIFIER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getItemHandler().getItemHandler(side) : blockEntity.getItemHandler().getInternalHandler());
 				event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, Registration.TUFFSOLIDIFIER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getItemHandler().getItemHandler(side) : blockEntity.getItemHandler().getInternalHandler());
@@ -122,9 +123,13 @@ public class ModEventHandlers {
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.CALCITESOLIDIFIER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.DEEPSLATESOLIDIFIER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.DIORITESOLIDIFIER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
+				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.ENDSTONESOLIDIFIER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.GRANITESOLIDIFIER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.STONESOLIDIFIER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.TUFFSOLIDIFIER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
+				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.ELECTRIC_LANTERN_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
+				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.COPPER_ELECTRIC_LANTERN_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
+				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.NETHER_ELECTRIC_LANTERN_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 			}
 			{ // Fluid
 				event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, Registration.BUFFER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getFluidHandler().getFluidHandler(side) : blockEntity.getFluidHandler().getInternalHandler());

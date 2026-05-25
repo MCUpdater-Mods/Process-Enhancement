@@ -15,6 +15,7 @@ import com.mcupdater.procenhance.blocks.furnace.ElectricFurnaceScreen;
 import com.mcupdater.procenhance.blocks.generator.GeneratorScreen;
 import com.mcupdater.procenhance.blocks.grinder.GrinderScreen;
 import com.mcupdater.procenhance.blocks.hydrator.HydratorScreen;
+import com.mcupdater.procenhance.blocks.lantern.LanternScreen;
 import com.mcupdater.procenhance.blocks.lava_generator.LavaGeneratorScreen;
 import com.mcupdater.procenhance.blocks.miner.MinerScreen;
 import com.mcupdater.procenhance.blocks.planter.PlanterScreen;
@@ -26,18 +27,24 @@ import com.mcupdater.procenhance.blocks.solidifier.SolidifierScreen;
 import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterScreen;
 import com.mcupdater.procenhance.blocks.tank.TankScreen;
 import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.common.CreativeModeTabRegistry;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
-@EventBusSubscriber(value=Dist.CLIENT, modid=ProcessEnhancement.MODID, bus=EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(value=Dist.CLIENT, modid=ProcessEnhancement.MODID)
 public class ModSetup {
 
     @SubscribeEvent
     public static void buildContents(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTab() == CreativeModeTabRegistry.getTab(CreativeModeTabs.TOOLS_AND_UTILITIES.registry())) {
+            Registration.TOOLS.getEntries().stream().forEach(entry -> event.accept(entry.get()));
+        }
         if (event.getTab() == com.mcupdater.mculib.setup.MCULibRegistration.ITEM_GROUP.get()) {
             Registration.MACHINES.getEntries().stream().forEach(entry -> event.accept(entry.get()));
             Registration.BATTERIES.getEntries().stream().forEach(entry -> event.accept(entry.get()));
@@ -46,6 +53,7 @@ public class ModSetup {
             Registration.BLOCKS.getEntries().stream().forEach(entry -> event.accept(entry.get()));
             Registration.PATTERNS.getEntries().stream().forEach(entry -> event.accept(entry.get()));
             Registration.ITEMS.getEntries().stream().forEach(entry -> event.accept(entry.get()));
+            Registration.TOOLS.getEntries().stream().forEach(entry -> event.accept(entry.get()));
         }
     }
 
@@ -75,6 +83,7 @@ public class ModSetup {
         event.register(Registration.SOILMANAGER_MENU.get(), SoilManagerScreen::new);
         event.register(Registration.CONCRETEMIXER_MENU.get(), MixerScreen::new);
         event.register(Registration.SOLARGENERATOR_MENU.get(), SolarScreen::new);
+        event.register(Registration.ELECTRIC_LANTERN_MENU.get(), LanternScreen::new);
     }
 
     @SubscribeEvent

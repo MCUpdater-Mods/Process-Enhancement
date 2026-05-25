@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(modid = ProcessEnhancement.MODID,bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ProcessEnhancement.MODID)
 public class DataGenerators {
 
     @SubscribeEvent

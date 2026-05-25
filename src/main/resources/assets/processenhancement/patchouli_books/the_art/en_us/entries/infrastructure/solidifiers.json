@@ -29,7 +29,8 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "processenhancement:tuff_solidifier"
+      "recipe": "processenhancement:tuff_solidifier",
+      "recipe2": "processenhancement:endstone_solidifier"
     }
   ]
 }

@@ -1,0 +1,15 @@
+{
+  "name": "Chisel",
+  "icon": "processenhancement:chisel",
+  "category": "processenhancement:tools",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A simple tool to turn blocks in-world into other blocks"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:chisel"
+    }
+  ]
+}

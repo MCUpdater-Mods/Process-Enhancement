@@ -1,0 +1,24 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+        "C": {
+            "item": "minecraft:black_concrete"
+        },
+        "D": {
+            "tag": "c:dusts/copper"
+        },
+        "G": {
+            "item": "minecraft:glass"
+        }
+    },
+    "pattern": [
+        "CDC",
+        "GDG",
+        "CDC"
+    ],
+    "result": {
+        "count": 16,
+        "id": "processenhancement:copper_electric_lantern"
+    }
+}

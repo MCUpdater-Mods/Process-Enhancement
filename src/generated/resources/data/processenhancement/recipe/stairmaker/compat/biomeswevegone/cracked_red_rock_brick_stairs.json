@@ -1,0 +1,16 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "biomeswevegone"
+        }
+    ],
+    "type": "processenhancement:stairmaker",
+    "input": {
+        "item": "biomeswevegone:cracked_red_rock_bricks"
+    },
+    "result": {
+        "count": 1,
+        "id": "biomeswevegone:cracked_red_rock_brick_stairs"
+    }
+}

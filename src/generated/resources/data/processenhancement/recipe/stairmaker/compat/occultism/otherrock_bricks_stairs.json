@@ -1,0 +1,16 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "occultism"
+        }
+    ],
+    "type": "processenhancement:stairmaker",
+    "input": {
+        "item": "occultism:otherrock_bricks"
+    },
+    "result": {
+        "count": 1,
+        "id": "occultism:otherrock_bricks_stairs"
+    }
+}

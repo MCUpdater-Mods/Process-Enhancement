@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Automatically harvests crops in a 9x9 area behind it. Normal crops and nether wart will be fully harvested when fully grown and require replanting. Pumpkins and melons will be harvested leaving the stem intact. Cactus, sugar cane, and bamboo will be harvested one block above."
+      "text": "Automatically harvests crops in a 9x9 area behind it. Normal crops and nether wart will be fully harvested when fully grown and require replanting. Pumpkins and melons will be harvested leaving the stem intact. Cactus, sugar cane, and bamboo will be harvested one block above. Harvesting trees will collect the leaves and logs in a large area. Any items that drop nearby will also be collected."
     },
     {
       "type": "patchouli:crafting",

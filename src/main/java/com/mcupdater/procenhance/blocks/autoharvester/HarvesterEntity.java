@@ -4,6 +4,7 @@ import com.mcupdater.mculib.block.AbstractMachineBlockEntity;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.mculib.helpers.RenderHelper;
+import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.blocks.miner.BlockDistanceComparator;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
@@ -80,24 +81,25 @@ public class HarvesterEntity extends AbstractMachineBlockEntity {
         Direction facing = this.getBlockState().getValue(HarvesterBlock.FACING);
         BlockPos startPos = this.worldPosition.relative(facing.getOpposite(),9).relative(facing.getClockWise(),4);
         BlockPos endPos = this.worldPosition.relative(facing.getOpposite(),1).relative(facing.getCounterClockWise(),4);
+        List<BlockPos> tempList = new ArrayList<>();
         int y = startPos.getY();
         for (int x = Math.min(startPos.getX(),endPos.getX()); x <= Math.max(startPos.getX(), endPos.getX()); x++) {
             for (int z = Math.min(startPos.getZ(), endPos.getZ()); z <= Math.max(startPos.getZ(), endPos.getZ()); z++) {
                 BlockPos blockPos = new BlockPos(x,y,z);
                 BlockState state = level.getBlockState(blockPos);
                 if (state.getBlock() instanceof BushBlock || state.getBlock().equals(Blocks.MELON) || state.getBlock().equals(Blocks.PUMPKIN) || state.getBlock().equals(Blocks.KELP)) {
-                    harvestableBlocks.add(blockPos);
+                    tempList.add(blockPos);
                 }
                 if (state.getBlock() instanceof BambooStalkBlock || state.getBlock() instanceof SugarCaneBlock || state.getBlock() instanceof CactusBlock) {
-                    harvestableBlocks.add(blockPos.above());
+                    tempList.add(blockPos.above());
                 }
                 if (state.is(BlockTags.LOGS)) {
                     TreeSet<BlockPos> treeSet = new TreeSet<>();
-                    harvestableBlocks.addAll(walkTree(level, treeSet, blockPos, 0));
+                    tempList.addAll(walkTree(level, treeSet, blockPos, 0));
                 }
             }
         }
-        harvestableBlocks.sort(new BlockDistanceComparator(this.worldPosition));
+        harvestableBlocks.addAll(tempList.stream().distinct().sorted(new BlockDistanceComparator(this.worldPosition)).toList());
     }
 
     private Set<BlockPos> walkTree(Level level, TreeSet<BlockPos> treeSet, BlockPos blockPos, int depth) {
@@ -160,6 +162,7 @@ public class HarvesterEntity extends AbstractMachineBlockEntity {
                 }
                 // If queue is not empty, try harvesting
                 if (!this.harvestableBlocks.isEmpty()) {
+                    //ProcessEnhancement.LOGGER.info("Queue size: {}",this.harvestableBlocks.size());
                     BlockPos toHarvest = this.harvestableBlocks.removeFirst();
                     BlockState state = level.getBlockState(toHarvest);
                     if (readyToFullHarvest(state)){

@@ -1,0 +1,27 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+        "C": {
+            "item": "minecraft:copper_ingot"
+        },
+        "F": {
+            "item": "minecraft:chorus_flower"
+        },
+        "P": {
+            "item": "minecraft:iron_pickaxe"
+        },
+        "S": {
+            "item": "minecraft:end_stone"
+        }
+    },
+    "pattern": [
+        "CSC",
+        "FPF",
+        "CSC"
+    ],
+    "result": {
+        "count": 1,
+        "id": "processenhancement:endstone_solidifier"
+    }
+}

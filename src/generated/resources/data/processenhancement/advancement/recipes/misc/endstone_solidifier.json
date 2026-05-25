@@ -1,0 +1,32 @@
+{
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+        "automatic": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "minecraft:end_stone"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "has_the_recipe": {
+            "conditions": {
+                "recipe": "processenhancement:endstone_solidifier"
+            },
+            "trigger": "minecraft:recipe_unlocked"
+        }
+    },
+    "requirements": [
+        [
+            "has_the_recipe",
+            "automatic"
+        ]
+    ],
+    "rewards": {
+        "recipes": [
+            "processenhancement:endstone_solidifier"
+        ]
+    }
+}

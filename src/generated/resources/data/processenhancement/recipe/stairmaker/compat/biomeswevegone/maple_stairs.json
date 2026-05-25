@@ -1,0 +1,16 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "biomeswevegone"
+        }
+    ],
+    "type": "processenhancement:stairmaker",
+    "input": {
+        "item": "biomeswevegone:maple_planks"
+    },
+    "result": {
+        "count": 1,
+        "id": "biomeswevegone:maple_stairs"
+    }
+}
