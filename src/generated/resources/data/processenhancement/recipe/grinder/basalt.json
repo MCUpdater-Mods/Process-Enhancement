@@ -54,9 +54,9 @@
         },
         {
             "result": {
-                "type": "processenhancement:item",
+                "type": "processenhancement:tag",
                 "count": 1,
-                "id": "processenhancement:gold_dust"
+                "tag": "c:dusts/gold"
             },
             "weight": 10
         },
@@ -81,6 +81,14 @@
                 "type": "processenhancement:item",
                 "count": 1,
                 "id": "minecraft:netherite_scrap"
+            },
+            "weight": 1
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 1,
+                "tag": "c:dusts/iesnium"
             },
             "weight": 1
         }

@@ -46,27 +46,115 @@
         },
         {
             "result": {
-                "type": "processenhancement:item",
+                "type": "processenhancement:tag",
                 "count": 1,
-                "id": "processenhancement:iron_dust"
+                "tag": "c:dusts/iron"
             },
             "weight": 10
         },
         {
             "result": {
-                "type": "processenhancement:item",
+                "type": "processenhancement:tag",
                 "count": 1,
-                "id": "processenhancement:copper_dust"
+                "tag": "c:dusts/copper"
             },
             "weight": 10
         },
         {
             "result": {
-                "type": "processenhancement:item",
+                "type": "processenhancement:tag",
                 "count": 1,
-                "id": "processenhancement:gold_dust"
+                "tag": "c:dusts/gold"
             },
             "weight": 8
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 1,
+                "tag": "c:dusts/aluminum"
+            },
+            "weight": 10
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 1,
+                "tag": "c:dusts/iridium"
+            },
+            "weight": 1
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 1,
+                "tag": "c:dusts/lead"
+            },
+            "weight": 9
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 1,
+                "tag": "c:dusts/nickel"
+            },
+            "weight": 9
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 1,
+                "tag": "c:dusts/osmium"
+            },
+            "weight": 7
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 1,
+                "tag": "c:dusts/platinum"
+            },
+            "weight": 5
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 1,
+                "tag": "c:dusts/silver"
+            },
+            "weight": 8
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 1,
+                "tag": "c:dusts/tin"
+            },
+            "weight": 10
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 1,
+                "tag": "c:dusts/titanium"
+            },
+            "weight": 5
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 1,
+                "tag": "c:dusts/uranium"
+            },
+            "weight": 6
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 1,
+                "tag": "c:dusts/zinc"
+            },
+            "weight": 10
         },
         {
             "result": {

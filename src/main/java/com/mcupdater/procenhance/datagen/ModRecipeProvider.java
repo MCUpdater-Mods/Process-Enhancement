@@ -284,6 +284,13 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         sawmill(recipeOutput, Ingredient.of(Items.MANGROVE_BOAT),Blocks.MANGROVE_PLANKS,5,32,0f, null,"mangrove_boat_planks");
 
         // Grinder recipes
+        // Test recipe
+        /*
+        grinder(Ingredient.of(Blocks.OAK_LOG), 1,0f,"test")
+                .addOutput(Items.STICK.getDefaultInstance(), 1)
+                .addOutput(getTag("c", "dusts/zinc"),1,100)
+                .save(recipeOutput);
+        */
         grinder(Ingredient.of(Blocks.COBBLESTONE),200,0.01f,"cobblestone").addOutput(new ItemStack(Blocks.GRAVEL,1), 1).save(recipeOutput);
         grinder(Ingredient.of(Blocks.GRAVEL), 200, 0.01f,"gravel_noresources")
                 .addCondition(new NotCondition(new ConfigCondition()))
@@ -295,9 +302,20 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .addOutput(new ItemStack(Blocks.SAND,1), 40)
                 .addOutput(new ItemStack(Items.FLINT, 1), 20)
                 .addOutput(new ItemStack(Items.COAL, 1), 10)
-                .addOutput(new ItemStack(IRON_DUST.get(), 1), 10)
-                .addOutput(new ItemStack(COPPER_DUST.get(),1),10)
-                .addOutput(new ItemStack(GOLD_DUST.get(), 1), 8)
+                .addOutput(getTag("c","dusts/iron"), 1, 10)
+                .addOutput(getTag("c","dusts/copper"),1,10)
+                .addOutput(getTag("c","dusts/gold"), 1, 8)
+                .addOutput(getTag("c","dusts/aluminum"),1,10)
+                .addOutput(getTag("c","dusts/iridium"),1,1)
+                .addOutput(getTag("c","dusts/lead"),1,9)
+                .addOutput(getTag("c","dusts/nickel"),1,9)
+                .addOutput(getTag("c","dusts/osmium"),1,7)
+                .addOutput(getTag("c","dusts/platinum"),1,5)
+                .addOutput(getTag("c","dusts/silver"),1,8)
+                .addOutput(getTag("c","dusts/tin"),1,10)
+                .addOutput(getTag("c","dusts/titanium"),1,5)
+                .addOutput(getTag("c","dusts/uranium"),1,6)
+                .addOutput(getTag("c","dusts/zinc"),1,10)
                 .addOutput(new ItemStack(Items.REDSTONE, 1), 8)
                 .addOutput(new ItemStack(Items.LAPIS_LAZULI, 1), 8)
                 .addOutput(new ItemStack(Items.DIAMOND, 1), 2)
@@ -309,10 +327,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .addOutput(new ItemStack(Blocks.SOUL_SAND, 1), 30)
                 .addOutput(new ItemStack(Blocks.SOUL_SOIL, 1), 30)
                 .addOutput(new ItemStack(Items.QUARTZ, 1), 20)
-                .addOutput(new ItemStack(GOLD_DUST.get(), 1), 10)
+                .addOutput(getTag("c","dusts/gold"),1, 10)
                 .addOutput(new ItemStack(Items.GLOWSTONE_DUST, 1), 10)
                 .addOutput(new ItemStack(Blocks.GILDED_BLACKSTONE, 1), 5)
                 .addOutput(new ItemStack(Items.NETHERITE_SCRAP, 1), 1)
+                .addOutput(getTag("c","dusts/iesnium"),1,1)
                 .save(recipeOutput);
         grinder(Ingredient.of(Blocks.SOUL_SOIL), 200, 0.1f,"soul_soil")
                 .addOutput(new ItemStack(Blocks.WARPED_ROOTS, 1), 30)
@@ -906,5 +925,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_stairmaker", has(STAIRMAKER_ITEM.get()))
                 .addCondition(condition)
                 .save(recipeOutput);
+    }
+
+    public static TagKey<Item> getTag(String namespace, String name) {
+        return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(namespace, name));
     }
 }

@@ -1,0 +1,15 @@
+{
+  "name": "Stairmaker",
+  "icon": "processenhancement:stairmaker",
+  "category": "processenhancement:tools",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A simple tool to convert blocks into their stairs variants. Sneaking while using the tool will rotate stairs to face you and will flip them vertically if already facing you."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:stairmaker"
+    }
+  ]
+}

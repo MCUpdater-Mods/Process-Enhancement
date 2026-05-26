@@ -17,7 +17,9 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
@@ -78,8 +80,10 @@ public abstract class GrinderEntity extends AbstractMachineBlockEntity {
                     this.prizePool.clear();
                     this.maxOutput = 0;
                     for (Tuple<RecipeResult, Integer> entry : currentRecipe.value().getOutputs()) {
-                        this.prizePool.add(entry.getA().getItemStack().getItem());
-                        this.maxOutput = Math.max(this.maxOutput, entry.getA().getItemStack().getCount());
+                        if (entry.getA().getItemStack().getItem() != Items.BARRIER) {
+                            this.prizePool.add(entry.getA().getItemStack().getItem());
+                            this.maxOutput = Math.max(this.maxOutput, entry.getA().getItemStack().getCount());
+                        }
                     }
                     this.workTotal = this.currentRecipe.value().getProcessTime();
                 }
@@ -95,8 +99,10 @@ public abstract class GrinderEntity extends AbstractMachineBlockEntity {
                 List<ItemStack> prizeList = new ArrayList<>();
                 for (Tuple<RecipeResult,Integer> tuple : this.currentRecipe.value().getOutputs()) {
                     ItemStack potentialPrize = tuple.getA().getItemStack();
-                    for (int i = 0; i < tuple.getB(); i++) {
-                        prizeList.add(potentialPrize);
+                    if (potentialPrize.getItem() != Blocks.BARRIER.asItem()) {
+                        for (int i = 0; i < tuple.getB(); i++) {
+                            prizeList.add(potentialPrize);
+                        }
                     }
                 }
                 Collections.shuffle(prizeList);

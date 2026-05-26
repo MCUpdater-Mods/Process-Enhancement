@@ -2,6 +2,7 @@ package com.mcupdater.procenhance.integration;
 
 import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.recipe.GrinderRecipe;
+import com.mcupdater.procenhance.recipe.result.RecipeResult;
 import com.mcupdater.procenhance.setup.Registration;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -11,9 +12,14 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+
+import java.util.List;
 
 public class GrinderRecipeCategory implements IRecipeCategory<GrinderRecipe> {
     public static final RecipeType<GrinderRecipe> TYPE = RecipeType.create(ProcessEnhancement.MODID, "grinder", GrinderRecipe.class);
@@ -50,9 +56,9 @@ public class GrinderRecipeCategory implements IRecipeCategory<GrinderRecipe> {
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, GrinderRecipe recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 3,3).addIngredients(recipe.getIngredients().get(0));
-
-        for (int i = 0; i < recipe.getOutputs().size(); i++) {
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 32 + (i % 7 * 18), 3 + i / 7 * 18).addItemStack(recipe.getOutputs().get(i).getA().getItemStack()).addRichTooltipCallback(new GrinderRichTooltipCallback(recipe,recipe.getOutputs().get(i)));
+        List<Tuple<RecipeResult, Integer>> trimmedList = recipe.getOutputs().stream().filter(tuple -> tuple.getA().getItemStack().getItem() != Items.BARRIER).toList();
+        for (int i = 0; i < trimmedList.size(); i++) {
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 32 + (i % 7 * 18), 3 + i / 7 * 18).addItemStack(trimmedList.get(i).getA().getItemStack()).addRichTooltipCallback(new GrinderRichTooltipCallback(recipe, trimmedList.get(i)));
         }
     }
 }
