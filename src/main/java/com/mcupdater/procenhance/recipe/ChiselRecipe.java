@@ -4,6 +4,7 @@ import com.mcupdater.procenhance.setup.Registration;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.BlockItem;
@@ -11,6 +12,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.List;
 
 public class ChiselRecipe implements Recipe<SingleRecipeInput> {
 	protected final Ingredient input;
@@ -29,6 +32,10 @@ public class ChiselRecipe implements Recipe<SingleRecipeInput> {
 	@Override
 	public ItemStack assemble(SingleRecipeInput input, HolderLookup.Provider registries) {
 		return this.getResultItem(registries).copy();
+	}
+
+	public Ingredient getInput() {
+		return input;
 	}
 
 	@Override

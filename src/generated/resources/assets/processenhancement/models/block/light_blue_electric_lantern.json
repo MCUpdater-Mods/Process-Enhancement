@@ -1,0 +1,6 @@
+{
+    "parent": "processenhancement:block/electric_lantern",
+    "textures": {
+        "lamp": "minecraft:block/light_blue_glazed_terracotta"
+    }
+}

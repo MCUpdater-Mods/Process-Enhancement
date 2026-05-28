@@ -1,0 +1,24 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+        "C": {
+            "item": "minecraft:gray_concrete"
+        },
+        "D": {
+            "tag": "c:dusts/iron"
+        },
+        "G": {
+            "item": "minecraft:red_glazed_terracotta"
+        }
+    },
+    "pattern": [
+        "CDC",
+        "GDG",
+        "CDC"
+    ],
+    "result": {
+        "count": 16,
+        "id": "processenhancement:red_electric_lantern"
+    }
+}

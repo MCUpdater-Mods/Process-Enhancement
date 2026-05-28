@@ -13,6 +13,11 @@
     },
     {
       "type": "patchouli:crafting",
+      "recipe": "processenhancement:compact_solar_generator",
+      "text": "A compact solar generator that generates 1 FE/t in daylight. Perfect for use with $(l:processenhancement:infrastructure/lantern)Electric Lanterns$(/l)!"
+    },
+    {
+      "type": "patchouli:crafting",
       "recipe": "processenhancement:basic_solar_generator",
       "recipe2": "processenhancement:intermediate_solar_generator"
     },

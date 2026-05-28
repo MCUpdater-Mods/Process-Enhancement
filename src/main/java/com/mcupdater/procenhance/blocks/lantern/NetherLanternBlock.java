@@ -18,7 +18,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class NetherLanternBlock extends AbstractMachineBlock {
+public class NetherLanternBlock extends LanternBlock {
 	public static final MapCodec<NetherLanternBlock> CODEC = simpleCodec(NetherLanternBlock::new);
 
 	@Override
@@ -33,18 +33,6 @@ public class NetherLanternBlock extends AbstractMachineBlock {
 	@Override
 	public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new NetherLanternEntity(blockPos, blockState);
-	}
-
-	@Override
-	public @NotNull RenderShape getRenderShape(BlockState pState) {
-		return RenderShape.MODEL;
-	}
-
-	@Override
-	public @NotNull VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-		VoxelShape shape = Block.box(3,2,3,13,14,13);
-		shape = Shapes.or(shape, Block.box(4,1,4, 12,15, 12));
-		return shape;
 	}
 
 	@Nullable

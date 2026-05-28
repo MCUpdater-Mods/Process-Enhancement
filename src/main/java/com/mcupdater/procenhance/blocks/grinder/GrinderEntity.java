@@ -5,6 +5,7 @@ import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.mculib.inventory.MachineContainer;
 import com.mcupdater.procenhance.recipe.GrinderRecipe;
+import com.mcupdater.procenhance.recipe.RecipeHelper;
 import com.mcupdater.procenhance.recipe.result.RecipeResult;
 import com.mcupdater.procenhance.setup.Config;
 import com.mcupdater.procenhance.setup.Registration;
@@ -19,6 +20,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -73,7 +75,7 @@ public abstract class GrinderEntity extends AbstractMachineBlockEntity {
         ItemResourceHandler itemStorage = (ItemResourceHandler) this.configMap.get("items");
         ItemStack inputStack = itemStorage.getItem(0);
         if (!inputStack.isEmpty()) {
-            RecipeHolder<GrinderRecipe> recipe = this.level.getRecipeManager().getRecipeFor(Registration.GRINDER_RECIPE.get(), new MachineContainer(this), this.level).orElse(null);
+            RecipeHolder<GrinderRecipe> recipe = RecipeHelper.getGrinderRecipe(this.level, new SingleRecipeInput(this.getInventory().getItem(0)));
             if (this.currentRecipe == null || !this.currentRecipe.equals(recipe)) {
                 if (recipe != null) {
                     this.currentRecipe = recipe;

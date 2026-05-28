@@ -10,11 +10,51 @@
     {
       "type": "patchouli:crafting",
       "recipe": "processenhancement:electric_lantern",
-      "recipe2": "procesenhancement:copper_electric_lantern"
+      "recipe2": "processenhancement:copper_electric_lantern"
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "processenhancement:nether_electric_lantern"
+      "recipe": "processenhancement:nether_electric_lantern",
+      "recipe2": "processenhancement:white_electric_lantern"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:orange_electric_lantern",
+      "recipe2": "processenhancement:magenta_electric_lantern"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:light_blue_electric_lantern",
+      "recipe2": "processenhancement:yellow_electric_lantern"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:lime_electric_lantern",
+      "recipe2": "processenhancement:pink_electric_lantern"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:gray_electric_lantern",
+      "recipe2": "processenhancement:light_gray_electric_lantern"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:cyan_electric_lantern",
+      "recipe2": "processenhancement:purple_electric_lantern"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:blue_electric_lantern",
+      "recipe2": "processenhancement:brown_electric_lantern"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:green_electric_lantern",
+      "recipe2": "processenhancement:red_electric_lantern"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:black_electric_lantern"
     }
   ]
 }

@@ -43,5 +43,6 @@ public class DataGenerators {
         ModBlockTagsProvider modBlockTagsProvider = new ModBlockTagsProvider(packOutput, lookupProvider, ProcessEnhancement.MODID, existingFileHelper);
         dataGenerator.addProvider(event.includeServer(), modBlockTagsProvider);
         dataGenerator.addProvider(event.includeServer(), new ModItemTagsProvider(packOutput, lookupProvider, modBlockTagsProvider, ProcessEnhancement.MODID, existingFileHelper));
+        dataGenerator.addProvider(event.includeServer(), new ModLootModifier(packOutput, lookupProvider));
     }
 }

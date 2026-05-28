@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:smithing_transform",
+    "addition": {
+        "item": "minecraft:netherite_block"
+    },
+    "base": {
+        "item": "processenhancement:diamond_crusher"
+    },
+    "result": {
+        "count": 1,
+        "id": "processenhancement:netherite_crusher"
+    },
+    "template": {
+        "item": "minecraft:netherite_upgrade_smithing_template"
+    }
+}

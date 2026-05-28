@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "": {
+            "model": "processenhancement:block/compact_solar_generator"
+        }
+    }
+}

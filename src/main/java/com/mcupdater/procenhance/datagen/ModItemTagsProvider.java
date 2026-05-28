@@ -6,6 +6,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.common.Tags;
@@ -34,5 +35,10 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         this.tag(NETHER_DUST).add(Registration.NETHER_DUST.get());
 
         this.tag(Tags.Items.DUSTS).addTags(IRON_DUST,COPPER_DUST,GOLD_DUST,PLANT_DUST,NETHER_DUST);
+
+        this.tag(Registration.CRUSHERS_TAG).add(Registration.WOODEN_CRUSHER_ITEM.get(), Registration.STONE_CRUSHER_ITEM.get(), Registration.DIAMOND_CRUSHER_ITEM.get(), Registration.NETHERITE_CRUSHER_ITEM.get());
+
+        this.tag(ItemTags.MINING_ENCHANTABLE).addTag(Registration.CRUSHERS_TAG);
+        this.tag(ItemTags.DURABILITY_ENCHANTABLE).addTag(Registration.CRUSHERS_TAG).add(Registration.CHISEL_ITEM.get(),Registration.STAIRMAKER_ITEM.get());
     }
 }

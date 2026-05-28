@@ -1,0 +1,17 @@
+{
+    "type": "processenhancement:hydrator",
+    "fluidIngredient": {
+        "amount": 1000,
+        "id": "minecraft:water"
+    },
+    "itemIngredients": [
+        {
+            "item": "minecraft:snow_block"
+        }
+    ],
+    "processTime": 128,
+    "result": {
+        "count": 1,
+        "id": "minecraft:ice"
+    }
+}

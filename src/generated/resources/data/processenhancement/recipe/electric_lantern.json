@@ -3,7 +3,7 @@
     "category": "misc",
     "key": {
         "C": {
-            "item": "minecraft:black_concrete"
+            "item": "minecraft:gray_concrete"
         },
         "D": {
             "tag": "c:dusts/iron"

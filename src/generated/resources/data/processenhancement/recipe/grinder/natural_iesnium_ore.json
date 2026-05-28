@@ -1,0 +1,50 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "occultism"
+        }
+    ],
+    "type": "processenhancement:grinder",
+    "experience": 0.05,
+    "ingredients": [
+        {
+            "item": "occultism:iesnium_ore_natural"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 3,
+                "id": "occultism:iesnium_dust"
+            },
+            "weight": 55
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 4,
+                "id": "occultism:iesnium_dust"
+            },
+            "weight": 25
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 5,
+                "id": "occultism:iesnium_dust"
+            },
+            "weight": 18
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 6,
+                "id": "occultism:iesnium_dust"
+            },
+            "weight": 2
+        }
+    ],
+    "processTime": 200
+}

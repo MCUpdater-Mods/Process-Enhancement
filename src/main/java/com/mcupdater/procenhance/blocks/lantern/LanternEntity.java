@@ -11,6 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,6 +52,10 @@ public class LanternEntity extends AbstractMachineBlockEntity {
 
 	public LanternEntity(BlockPos blockPos, BlockState blockState) {
 		super(ELECTRIC_LANTERN_ENTITY.get(), blockPos, blockState, 1000, 5, 1, 1);
+	}
+
+	public LanternEntity(BlockEntityType<? extends LanternEntity> entityType, BlockPos blockPos, BlockState blockState) {
+		super(entityType, blockPos, blockState, 1000, 5, 1, 1);
 	}
 
 	@Override

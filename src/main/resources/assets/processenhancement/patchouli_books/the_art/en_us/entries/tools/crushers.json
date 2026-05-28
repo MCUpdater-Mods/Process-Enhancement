@@ -1,0 +1,25 @@
+{
+  "name": "Crushers",
+  "icon": "processenhancement:iron_crusher",
+  "category": "processenhancement:tools",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The crusher is a handheld version of the $(l:processenhancement:processing/grinders)Grinder$(/l)"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:wood_crusher",
+      "recipe2": "processenhancement:stone_crusher"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "processenhancement:iron_crusher",
+      "recipe2": "processenhancement:diamond_crusher"
+    },
+    {
+      "type": "patchouli:smithing",
+      "recipe": "processenhancement:smithing/netherite_crusher"
+    }
+  ]
+}

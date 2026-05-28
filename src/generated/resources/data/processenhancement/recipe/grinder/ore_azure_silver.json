@@ -1,0 +1,60 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:not",
+            "value": {
+                "type": "neoforge:tag_empty",
+                "tag": "c:ores/azure_silver"
+            }
+        },
+        {
+            "type": "neoforge:not",
+            "value": {
+                "type": "neoforge:tag_empty",
+                "tag": "c:dusts/azure_silver"
+            }
+        }
+    ],
+    "type": "processenhancement:grinder",
+    "experience": 0.05,
+    "ingredients": [
+        {
+            "tag": "c:ores/azure_silver"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 3,
+                "tag": "c:dusts/azure_silver"
+            },
+            "weight": 55
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 4,
+                "tag": "c:dusts/azure_silver"
+            },
+            "weight": 25
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 5,
+                "tag": "c:dusts/azure_silver"
+            },
+            "weight": 18
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 6,
+                "tag": "c:dusts/azure_silver"
+            },
+            "weight": 2
+        }
+    ],
+    "processTime": 200
+}

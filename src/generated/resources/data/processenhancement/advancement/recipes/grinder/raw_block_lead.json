@@ -1,0 +1,48 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:not",
+            "value": {
+                "type": "neoforge:tag_empty",
+                "tag": "c:storage_blocks/raw_lead"
+            }
+        },
+        {
+            "type": "neoforge:not",
+            "value": {
+                "type": "neoforge:tag_empty",
+                "tag": "c:dusts/lead"
+            }
+        }
+    ],
+    "criteria": {
+        "has_grinder": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:basic_grinder"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "has_the_recipe": {
+            "conditions": {
+                "recipe": "processenhancement:grinder/raw_block_lead"
+            },
+            "trigger": "minecraft:recipe_unlocked"
+        }
+    },
+    "requirements": [
+        [
+            "has_grinder",
+            "has_the_recipe"
+        ]
+    ],
+    "rewards": {
+        "recipes": [
+            "processenhancement:grinder/raw_block_lead"
+        ]
+    },
+    "sends_telemetry_event": true
+}

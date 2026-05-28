@@ -152,6 +152,11 @@ dependencies {
     // We add the full version to localRuntime, not runtimeOnly, so that we do not publish a dependency on it
     localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 
+    // Ultimine for testing
+    localRuntime "curse.maven:ftb-ultimine-forge-386134:8078515"
+    localRuntime "curse.maven:architectury-api-419699:5786327"
+    localRuntime "curse.maven:ftb-library-forge-404465:7746959"
+
     compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}:api"
     localRuntime "vazkii.patchouli:Patchouli:${patchouli_version}"
 
@@ -162,6 +167,7 @@ dependencies {
     implementation "curse.maven:oh-the-trees-youll-grow-962544:5691181"
     implementation "curse.maven:terrablender-neoforge-940057:5864140"
 
+    //Ars Nouveau
     implementation "curse.maven:ars-nouveau-401955:5995085"
     implementation "curse.maven:curios-309927:6529130"
     implementation "curse.maven:ars-elemental-561470:6006174"
@@ -187,6 +193,9 @@ dependencies {
     implementation "curse.maven:cyclops-core-232758:8006281"
     implementation "curse.maven:common-capabilities-247007:7756804"
     implementation "curse.maven:refined-storage-243076:8105115"
+
+    // Jade
+    implementation "curse.maven:jade-324717:7545219"
 
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository

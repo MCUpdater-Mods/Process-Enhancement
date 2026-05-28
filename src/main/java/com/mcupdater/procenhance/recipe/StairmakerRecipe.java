@@ -4,6 +4,7 @@ import com.mcupdater.procenhance.setup.Registration;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.BlockItem;
@@ -34,6 +35,10 @@ public class StairmakerRecipe implements Recipe<SingleRecipeInput> {
 	@Override
 	public boolean canCraftInDimensions(int width, int height) {
 		return true;
+	}
+
+	public Ingredient getInput() {
+		return input;
 	}
 
 	@Override

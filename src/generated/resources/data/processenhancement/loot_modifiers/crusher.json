@@ -1,0 +1,11 @@
+{
+    "type": "processenhancement:crusher",
+    "conditions": [
+        {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+                "items": "#processenhancement:crushers"
+            }
+        }
+    ]
+}

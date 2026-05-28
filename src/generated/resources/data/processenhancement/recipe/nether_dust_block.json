@@ -1,0 +1,37 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "ingredients": [
+        {
+            "item": "processenhancement:nether_dust"
+        },
+        {
+            "item": "processenhancement:nether_dust"
+        },
+        {
+            "item": "processenhancement:nether_dust"
+        },
+        {
+            "item": "processenhancement:nether_dust"
+        },
+        {
+            "item": "processenhancement:nether_dust"
+        },
+        {
+            "item": "processenhancement:nether_dust"
+        },
+        {
+            "item": "processenhancement:nether_dust"
+        },
+        {
+            "item": "processenhancement:nether_dust"
+        },
+        {
+            "item": "processenhancement:nether_dust"
+        }
+    ],
+    "result": {
+        "count": 1,
+        "id": "processenhancement:nether_dust_block"
+    }
+}

@@ -42,8 +42,8 @@ public class LanternBlock extends AbstractMachineBlock {
 
 	@Override
 	public @NotNull VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-		VoxelShape shape = Block.box(3,2,3,13,14,13);
-		shape = Shapes.or(shape, Block.box(4,1,4, 12,15, 12));
+		VoxelShape shape = Block.box(5,0,5,11,16,11);
+		shape = Shapes.or(shape, Block.box(3,2,3, 13,14, 13));
 		return shape;
 	}
 

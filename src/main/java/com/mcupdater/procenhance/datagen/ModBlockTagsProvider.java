@@ -34,5 +34,6 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         for (DeferredHolder<Block, ? extends Block> entry : Registration.MINERS.getEntries()) {
             this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(entry.get());
         }
+        this.tag(Registration.MINEABLE_WITH_CRUSHER).addTags(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL);
     }
 }

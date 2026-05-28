@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "redstone",
+    "key": {
+        "#": {
+            "item": "minecraft:daylight_detector"
+        },
+        "$": {
+            "item": "processenhancement:capacitor"
+        },
+        "C": {
+            "item": "minecraft:gray_concrete"
+        }
+    },
+    "pattern": [
+        "$#$",
+        "CCC"
+    ],
+    "result": {
+        "count": 4,
+        "id": "processenhancement:compact_solar_generator"
+    }
+}

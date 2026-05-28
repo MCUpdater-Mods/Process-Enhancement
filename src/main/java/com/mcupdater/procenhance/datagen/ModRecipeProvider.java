@@ -4,6 +4,8 @@ import alexthw.ars_elemental.registry.ModItems;
 import com.hollingsworth.arsnouveau.common.lib.LibBlockNames;
 import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
 import com.klikli_dev.occultism.registry.OccultismBlocks;
+import com.klikli_dev.occultism.registry.OccultismItems;
+import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.datagen.custom.*;
 import com.mcupdater.procenhance.recipe.ConfigCondition;
 import com.mcupdater.procenhance.recipe.result.ItemRecipeResult;
@@ -18,16 +20,12 @@ import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
-import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.*;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -36,9 +34,9 @@ import net.potionstudios.biomeswevegone.world.level.block.sand.BWGSandSet;
 import net.potionstudios.biomeswevegone.world.level.block.set.BWGBlockSet;
 import net.potionstudios.biomeswevegone.world.level.block.wood.BWGWoodSet;
 import net.silentchaos512.gear.setup.SgBlocks;
-import org.checkerframework.checker.units.qual.C;
 import org.cyclops.integrateddynamics.RegistryEntries;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import static com.mcupdater.procenhance.setup.Registration.*;
@@ -61,6 +59,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         upgradeMachineRecipe(recipeOutput, ADVGENERATOR_BLOCK.get(), INTERGENERATOR_BLOCK.get(), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Blocks.IRON_BLOCK));
         upgradeMachineRecipe(recipeOutput, INDGENERATOR_BLOCK.get(), ADVGENERATOR_BLOCK.get(), Ingredient.of(Items.DIAMOND), Ingredient.of(Blocks.GOLD_BLOCK));
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, COMPACTSOLARGENERATOR_BLOCK.get(),4).define('C', Ingredient.of(Items.GRAY_CONCRETE)).define('$', Ingredient.of(CAPACITOR.get())).define('#', Ingredient.of(Blocks.DAYLIGHT_DETECTOR)).pattern("$#$").pattern("CCC").unlockedBy("automatic", has(Blocks.DAYLIGHT_DETECTOR)).save(recipeOutput);
         basicMachineRecipe(recipeOutput, BASICSOLARGENERATOR_BLOCK.get(), Ingredient.of(Items.COPPER_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.DAYLIGHT_DETECTOR));
         upgradeMachineRecipe(recipeOutput, INTERSOLARGENERATOR_BLOCK.get(), BASICSOLARGENERATOR_BLOCK.get(), Ingredient.of(Items.IRON_INGOT), Ingredient.of(Blocks.COPPER_BLOCK));
         upgradeMachineRecipe(recipeOutput, ADVSOLARGENERATOR_BLOCK.get(), INTERSOLARGENERATOR_BLOCK.get(), Ingredient.of(Items.GOLD_INGOT), Ingredient.of(Blocks.IRON_BLOCK));
@@ -368,19 +367,21 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         grinder_tagged_resource(recipeOutput, "titanium", 1);
         grinder_tagged_resource(recipeOutput, "uranium", 1);
         grinder_tagged_resource(recipeOutput, "zinc", 1);
+        grinder_tagged_resource(recipeOutput, "crimson_iron", 1);
+        grinder_tagged_resource(recipeOutput, "azure_silver", 1);
         //
         /*
         grinder_oreblock(Ingredient.of(ItemTags.IRON_ORES),1, 200,0.05f, IRON_DUST_TAG, recipeOutput,"iron");
         grinder_oreblock(Ingredient.of(ItemTags.GOLD_ORES),1, 200,0.05f, GOLD_DUST_TAG, recipeOutput,"gold");
         grinder_oreblock(Ingredient.of(ItemTags.COPPER_ORES),2, 200,0.05f, COPPER_DUST_TAG, recipeOutput,"copper");
         */
-        grinder_oreblock(Ingredient.of(ItemTags.COAL_ORES), 1, 200, 0.05f, Items.COAL, recipeOutput,"coal");
-        grinder_oreblock(Ingredient.of(ItemTags.REDSTONE_ORES), 3, 200, 0.05f, Items.REDSTONE, recipeOutput,"redstone");
-        grinder_oreblock(Ingredient.of(ItemTags.LAPIS_ORES), 4, 200, 0.05f, Items.LAPIS_LAZULI, recipeOutput,"lapis");
-        grinder_oreblock(Ingredient.of(ItemTags.DIAMOND_ORES), 1, 200, 0.05f, Items.DIAMOND, recipeOutput,"diamond");
-        grinder_oreblock(Ingredient.of(ItemTags.EMERALD_ORES), 1, 200, 0.05f, Items.EMERALD, recipeOutput,"emerald");
-        grinder_oreblock(Ingredient.of(Items.NETHER_QUARTZ_ORE), 2, 200, 0.05f, Items.QUARTZ, recipeOutput,"nether_quartz");
-        grinder_oreblock(Ingredient.of(Items.ANCIENT_DEBRIS), 1, 200, 0.05f, Items.NETHERITE_SCRAP, recipeOutput,"ancient_debris");
+        grinder_oreblock(Ingredient.of(ItemTags.COAL_ORES), 1, 200, 0.05f, Items.COAL, "coal").save(recipeOutput);
+        grinder_oreblock(Ingredient.of(ItemTags.REDSTONE_ORES), 3, 200, 0.05f, Items.REDSTONE, "redstone").save(recipeOutput);
+        grinder_oreblock(Ingredient.of(ItemTags.LAPIS_ORES), 4, 200, 0.05f, Items.LAPIS_LAZULI, "lapis").save(recipeOutput);
+        grinder_oreblock(Ingredient.of(ItemTags.DIAMOND_ORES), 1, 200, 0.05f, Items.DIAMOND, "diamond").save(recipeOutput);
+        grinder_oreblock(Ingredient.of(ItemTags.EMERALD_ORES), 1, 200, 0.05f, Items.EMERALD, "emerald").save(recipeOutput);
+        grinder_oreblock(Ingredient.of(Items.NETHER_QUARTZ_ORE), 2, 200, 0.05f, Items.QUARTZ, "nether_quartz").save(recipeOutput);
+        grinder_oreblock(Ingredient.of(Items.ANCIENT_DEBRIS), 1, 200, 0.05f, Items.NETHERITE_SCRAP, "ancient_debris").save(recipeOutput);
         grinder_single(Ingredient.of(Items.DANDELION), new ItemStack(Items.YELLOW_DYE,3), 50,0.0f, recipeOutput,"dandelion");
         grinder_single(Ingredient.of(Items.POPPY), new ItemStack(Items.RED_DYE,3), 50,0.0f, recipeOutput,"poppy");
         grinder_single(Ingredient.of(Items.BLUE_ORCHID), new ItemStack(Items.LIGHT_BLUE_DYE,3), 50,0.0f, recipeOutput,"blue_orchid");
@@ -441,12 +442,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         hydrator(recipeOutput, Ingredient.of(Blocks.RED_CONCRETE_POWDER), new FluidStack(Fluids.WATER,10), Blocks.RED_CONCRETE, 1, 1, null);
         hydrator(recipeOutput, Ingredient.of(Blocks.WHITE_CONCRETE_POWDER), new FluidStack(Fluids.WATER,10), Blocks.WHITE_CONCRETE, 1, 1, null);
         hydrator(recipeOutput, Ingredient.of(Blocks.YELLOW_CONCRETE_POWDER), new FluidStack(Fluids.WATER,10), Blocks.YELLOW_CONCRETE, 1, 1, null);
+        hydrator(recipeOutput, Ingredient.of(Blocks.SNOW_BLOCK), new FluidStack(Fluids.WATER,1000), Blocks.ICE, 1, 128, null);
 
         dehydrator(recipeOutput, Ingredient.of(Blocks.MUD), new FluidStack(Fluids.WATER, 50), Blocks.CLAY, 1, 32, null,"clay");
         dehydrator(recipeOutput, Ingredient.of(Blocks.CLAY), new FluidStack(Fluids.WATER, 50), Blocks.TERRACOTTA, 1, 32, null,"terracotta");
         dehydrator(recipeOutput, Ingredient.of(Items.KELP), new FluidStack(Fluids.WATER, 10), Items.DRIED_KELP, 1, 16, null, "dried_kelp");
         dehydrator(recipeOutput, Ingredient.of(Blocks.MAGMA_BLOCK), new FluidStack(Fluids.LAVA, 250), Blocks.BLACKSTONE, 1, 64, null,"blackstone");
         dehydrator(recipeOutput, Ingredient.of(NETHER_DUST.get()), new FluidStack(Fluids.LAVA, 100), Items.BONE_MEAL, 1, 64, null, "bone_meal");
+        dehydrator(recipeOutput, Ingredient.of(NETHER_DUST_BLOCK.get()), new FluidStack(Fluids.LAVA, 1000), Items.BONE_BLOCK, 1, 512, null, "bone_block");
 
         cookOre(recipeOutput, "iron_dust", IRON_DUST_TAG, Items.IRON_INGOT, 0.7f);
         cookOre(recipeOutput, "copper_dust", COPPER_DUST_TAG, Items.COPPER_INGOT, 0.7f);
@@ -469,11 +472,40 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,Items.SLIME_BALL).requires(Items.MILK_BUCKET,1).requires(PLANT_DUST.get(),1).unlockedBy("automatic",has(PLANT_DUST.get())).save(recipeOutput);
         basicMachineRecipe(recipeOutput,HYDRATOR_BLOCK.get(),Ingredient.of(Items.COPPER_INGOT),Ingredient.of(Items.IRON_INGOT),Ingredient.of(Items.GLASS_BOTTLE));
         basicMachineRecipe(recipeOutput,DEHYDRATOR_BLOCK.get(),Ingredient.of(Items.COPPER_INGOT),Ingredient.of(Items.IRON_INGOT),Ingredient.of(Items.POINTED_DRIPSTONE));
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,ELECTRIC_LANTERN_BLOCK.get(), 16).define('C',Ingredient.of(Blocks.BLACK_CONCRETE)).define('G',Ingredient.of(Blocks.GLASS)).define('D',Ingredient.of(IRON_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.GLASS)).save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,COPPER_ELECTRIC_LANTERN_BLOCK.get(), 16).define('C',Ingredient.of(Blocks.BLACK_CONCRETE)).define('G',Ingredient.of(Blocks.GLASS)).define('D',Ingredient.of(COPPER_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.GLASS)).save(recipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,NETHER_ELECTRIC_LANTERN_BLOCK.get(), 16).define('C',Ingredient.of(Blocks.BLACK_CONCRETE)).define('G',Ingredient.of(Blocks.GLASS)).define('D',Ingredient.of(NETHER_DUST.get())).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.GLASS)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,ELECTRIC_LANTERN_BLOCK.get(), 16).define('C',Ingredient.of(Blocks.GRAY_CONCRETE)).define('G',Ingredient.of(Blocks.GLASS)).define('D',Ingredient.of(IRON_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.GLASS)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,COPPER_ELECTRIC_LANTERN_BLOCK.get(), 16).define('C',Ingredient.of(Blocks.GRAY_CONCRETE)).define('G',Ingredient.of(Blocks.GLASS)).define('D',Ingredient.of(COPPER_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.GLASS)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,NETHER_ELECTRIC_LANTERN_BLOCK.get(), 16).define('C',Ingredient.of(Blocks.GRAY_CONCRETE)).define('G',Ingredient.of(Blocks.GLASS)).define('D',Ingredient.of(NETHER_DUST.get())).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.GLASS)).save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, CHISEL_ITEM.get(),1).define('S', Ingredient.of(Items.STICK)).define('I', Ingredient.of(Items.IRON_INGOT)).pattern("SSI").unlockedBy("automatic", has(Items.IRON_INGOT)).save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, STAIRMAKER_ITEM.get(),1).define('S', Ingredient.of(Items.STICK)).define('I', Ingredient.of(Items.IRON_INGOT)).pattern("ISS").unlockedBy("automatic", has(Items.IRON_INGOT)).save(recipeOutput);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, NETHER_DUST_BLOCK.get(), 1).requires(NETHER_DUST.get(), 9).unlockedBy("automatic", has(NETHER_DUST.get())).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, WOODEN_CRUSHER_ITEM.get(),1).define('S', Ingredient.of(Items.STICK)).define('#', Ingredient.of(ItemTags.LOGS)).pattern(" ##").pattern(" ##").pattern("S  ").unlockedBy("automatic", has(ItemTags.LOGS)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, STONE_CRUSHER_ITEM.get(),1).define('S', Ingredient.of(Items.STICK)).define('#', Ingredient.of(Items.SMOOTH_STONE)).pattern(" ##").pattern(" ##").pattern("S  ").unlockedBy("automatic", has(ItemTags.LOGS)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, IRON_CRUSHER_ITEM.get(),1).define('S', Ingredient.of(Items.STICK)).define('#', Ingredient.of(Items.IRON_BLOCK)).pattern(" ##").pattern(" ##").pattern("S  ").unlockedBy("automatic", has(ItemTags.LOGS)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, DIAMOND_CRUSHER_ITEM.get(),1).define('S', Ingredient.of(Items.STICK)).define('#', Ingredient.of(Items.DIAMOND_BLOCK)).pattern(" ##").pattern(" ##").pattern("S  ").unlockedBy("automatic", has(ItemTags.LOGS)).save(recipeOutput);
+        SmithingTransformRecipeBuilder.smithing(
+                Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
+                Ingredient.of(DIAMOND_CRUSHER_ITEM.get()),
+                Ingredient.of(Items.NETHERITE_BLOCK),
+                RecipeCategory.TOOLS,NETHERITE_CRUSHER_ITEM.asItem()
+        ).unlocks("automatic", has(DIAMOND_CRUSHER_ITEM.get())).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID,"smithing/netherite_crusher"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,TERRACOTTA_LANTERN_BLOCK.get(DyeColor.BLACK), 16).define('C',Ingredient.of(Blocks.GRAY_CONCRETE)).define('G',Ingredient.of(Blocks.BLACK_GLAZED_TERRACOTTA)).define('D',Ingredient.of(IRON_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.BLACK_GLAZED_TERRACOTTA)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,TERRACOTTA_LANTERN_BLOCK.get(DyeColor.WHITE), 16).define('C',Ingredient.of(Blocks.GRAY_CONCRETE)).define('G',Ingredient.of(Blocks.WHITE_GLAZED_TERRACOTTA)).define('D',Ingredient.of(IRON_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.WHITE_GLAZED_TERRACOTTA)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,TERRACOTTA_LANTERN_BLOCK.get(DyeColor.GRAY), 16).define('C',Ingredient.of(Blocks.GRAY_CONCRETE)).define('G',Ingredient.of(Blocks.GRAY_GLAZED_TERRACOTTA)).define('D',Ingredient.of(IRON_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.GRAY_GLAZED_TERRACOTTA)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,TERRACOTTA_LANTERN_BLOCK.get(DyeColor.LIGHT_GRAY), 16).define('C',Ingredient.of(Blocks.GRAY_CONCRETE)).define('G',Ingredient.of(Blocks.LIGHT_GRAY_GLAZED_TERRACOTTA)).define('D',Ingredient.of(IRON_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.LIGHT_GRAY_GLAZED_TERRACOTTA)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,TERRACOTTA_LANTERN_BLOCK.get(DyeColor.BLUE), 16).define('C',Ingredient.of(Blocks.GRAY_CONCRETE)).define('G',Ingredient.of(Blocks.BLUE_GLAZED_TERRACOTTA)).define('D',Ingredient.of(IRON_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.BLUE_GLAZED_TERRACOTTA)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,TERRACOTTA_LANTERN_BLOCK.get(DyeColor.LIGHT_BLUE), 16).define('C',Ingredient.of(Blocks.GRAY_CONCRETE)).define('G',Ingredient.of(Blocks.LIGHT_BLUE_GLAZED_TERRACOTTA)).define('D',Ingredient.of(IRON_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.LIGHT_BLUE_GLAZED_TERRACOTTA)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,TERRACOTTA_LANTERN_BLOCK.get(DyeColor.GREEN), 16).define('C',Ingredient.of(Blocks.GRAY_CONCRETE)).define('G',Ingredient.of(Blocks.GREEN_GLAZED_TERRACOTTA)).define('D',Ingredient.of(IRON_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.GREEN_GLAZED_TERRACOTTA)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,TERRACOTTA_LANTERN_BLOCK.get(DyeColor.LIME), 16).define('C',Ingredient.of(Blocks.GRAY_CONCRETE)).define('G',Ingredient.of(Blocks.LIME_GLAZED_TERRACOTTA)).define('D',Ingredient.of(IRON_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.LIME_GLAZED_TERRACOTTA)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,TERRACOTTA_LANTERN_BLOCK.get(DyeColor.BROWN), 16).define('C',Ingredient.of(Blocks.GRAY_CONCRETE)).define('G',Ingredient.of(Blocks.BROWN_GLAZED_TERRACOTTA)).define('D',Ingredient.of(IRON_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.BROWN_GLAZED_TERRACOTTA)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,TERRACOTTA_LANTERN_BLOCK.get(DyeColor.ORANGE), 16).define('C',Ingredient.of(Blocks.GRAY_CONCRETE)).define('G',Ingredient.of(Blocks.ORANGE_GLAZED_TERRACOTTA)).define('D',Ingredient.of(IRON_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.ORANGE_GLAZED_TERRACOTTA)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,TERRACOTTA_LANTERN_BLOCK.get(DyeColor.CYAN), 16).define('C',Ingredient.of(Blocks.GRAY_CONCRETE)).define('G',Ingredient.of(Blocks.CYAN_GLAZED_TERRACOTTA)).define('D',Ingredient.of(IRON_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.CYAN_GLAZED_TERRACOTTA)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,TERRACOTTA_LANTERN_BLOCK.get(DyeColor.MAGENTA), 16).define('C',Ingredient.of(Blocks.GRAY_CONCRETE)).define('G',Ingredient.of(Blocks.MAGENTA_GLAZED_TERRACOTTA)).define('D',Ingredient.of(IRON_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.MAGENTA_GLAZED_TERRACOTTA)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,TERRACOTTA_LANTERN_BLOCK.get(DyeColor.PURPLE), 16).define('C',Ingredient.of(Blocks.GRAY_CONCRETE)).define('G',Ingredient.of(Blocks.PURPLE_GLAZED_TERRACOTTA)).define('D',Ingredient.of(IRON_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.PURPLE_GLAZED_TERRACOTTA)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,TERRACOTTA_LANTERN_BLOCK.get(DyeColor.PINK), 16).define('C',Ingredient.of(Blocks.GRAY_CONCRETE)).define('G',Ingredient.of(Blocks.PINK_GLAZED_TERRACOTTA)).define('D',Ingredient.of(IRON_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.PINK_GLAZED_TERRACOTTA)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,TERRACOTTA_LANTERN_BLOCK.get(DyeColor.RED), 16).define('C',Ingredient.of(Blocks.GRAY_CONCRETE)).define('G',Ingredient.of(Blocks.RED_GLAZED_TERRACOTTA)).define('D',Ingredient.of(IRON_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.RED_GLAZED_TERRACOTTA)).save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,TERRACOTTA_LANTERN_BLOCK.get(DyeColor.YELLOW), 16).define('C',Ingredient.of(Blocks.GRAY_CONCRETE)).define('G',Ingredient.of(Blocks.YELLOW_GLAZED_TERRACOTTA)).define('D',Ingredient.of(IRON_DUST_TAG)).pattern("CDC").pattern("GDG").pattern("CDC").unlockedBy("automatic", has(Items.YELLOW_GLAZED_TERRACOTTA)).save(recipeOutput);
+
 
         // Add chisel recipes
         chisel(recipeOutput, Ingredient.of(Blocks.STONE), (BlockItem)Blocks.STONE_BRICKS.asItem(), null);
@@ -628,6 +660,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         grinderConditional(recipeOutput, Ingredient.of(Apoth.Items.GEM.value()), 200, 0.05f, new ModLoadedCondition("apotheosis"), "apotheosis", "gem_dust")
                 .addOutput(new ItemStack(Apoth.Items.GEM_DUST, 1), 1)
                 .save(recipeOutput);
+        RecipeOutput conditionalRecipeOutput = recipeOutput.withConditions(List.of(new ModLoadedCondition("apotheosis")).toArray(new ICondition[0]));
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Apoth.Items.IRON_UPGRADE_SMITHING_TEMPLATE.value()), Ingredient.of(STONE_CRUSHER_ITEM.get()), Ingredient.of(Items.IRON_BLOCK), RecipeCategory.TOOLS, IRON_CRUSHER_ITEM.get()).unlocks("automatic", has(Apoth.Items.IRON_UPGRADE_SMITHING_TEMPLATE.value())).save(conditionalRecipeOutput,ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "smithing/compat/apotheosis/iron_crusher"));
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Apoth.Items.DIAMOND_UPGRADE_SMITHING_TEMPLATE.value()), Ingredient.of(IRON_CRUSHER_ITEM.get()), Ingredient.of(Items.DIAMOND_BLOCK), RecipeCategory.TOOLS, DIAMOND_CRUSHER_ITEM.get()).unlocks("automatic", has(Apoth.Items.IRON_UPGRADE_SMITHING_TEMPLATE.value())).save(conditionalRecipeOutput,ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "smithing/compat/apotheosis/diamond_crusher"));
 
         // Silent Gear
         generateConditionalSawmillRecipes(recipeOutput, "silentgear", "netherwood", SgBlocks.NETHERWOOD_LOG.get(), SgBlocks.NETHERWOOD_PLANKS.get(), SgBlocks.NETHERWOOD_STAIRS.get(), SgBlocks.NETHERWOOD_SLAB.get(), null, null, SgBlocks.NETHERWOOD_DOOR.get(), SgBlocks.NETHERWOOD_TRAPDOOR.get(), SgBlocks.STRIPPED_NETHERWOOD_LOG.get(), SgBlocks.STRIPPED_NETHERWOOD_WOOD.get(), SgBlocks.NETHERWOOD_FENCE.get(), SgBlocks.NETHERWOOD_FENCE_GATE.get(), null, null, null);
@@ -646,6 +681,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         chiselConditional(recipeOutput, Ingredient.of(OccultismBlocks.OTHERSTONE_BRICKS), (BlockItem)OccultismBlocks.CHISELED_OTHERSTONE_BRICKS.asItem(), new ModLoadedCondition("occultism"), "occultism");
         chiselConditional(recipeOutput, Ingredient.of(OccultismBlocks.OTHERROCK), (BlockItem)OccultismBlocks.OTHERROCK_BRICKS.asItem(), new ModLoadedCondition("occultism"), "occultism");
         chiselConditional(recipeOutput, Ingredient.of(OccultismBlocks.OTHERROCK_BRICKS), (BlockItem)OccultismBlocks.CHISELED_OTHERROCK_BRICKS.asItem(), new ModLoadedCondition("occultism"), "occultism");
+        grinder_oreblock(Ingredient.of(OccultismBlocks.IESNIUM_ORE_NATURAL.get()), 1, 200, 0.05f, OccultismItems.IESNIUM_DUST.asItem(), "natural_iesnium_ore")
+                .save(recipeOutput.withConditions(new ModLoadedCondition("occultism")));
 
         // === Integrated Dynamics ===
         generateConditionalSawmillRecipes(recipeOutput, "integrateddynamics", "menril", RegistryEntries.BLOCK_MENRIL_LOG.get(), RegistryEntries.BLOCK_MENRIL_PLANKS.get(), RegistryEntries.BLOCK_MENRIL_PLANKS_STAIRS.get(), null, null, null, null, null,RegistryEntries.BLOCK_MENRIL_LOG_STRIPPED.get(),RegistryEntries.BLOCK_MENRIL_WOOD_STRIPPED.get(),null,null,null,null,null);
@@ -676,12 +713,18 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     private void grinder_tagged_resource(RecipeOutput recipeOutput, String resourceName, int multiplier) {
         TagKey<Item> oreBlock = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "ores/" + resourceName));
         TagKey<Item> rawOre = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "raw_materials/" + resourceName));
+        TagKey<Item> rawOreBlock = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "storage_blocks/raw_" + resourceName));
         TagKey<Item> dust = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "dusts/" + resourceName));
         TagKey<Item> ingot = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "ingots/" + resourceName));
 
         grinder_oreblock(oreBlock, multiplier, 200, 0.05f, dust, recipeOutput, "ore_" + resourceName);
         grinder_raw_to_dust(recipeOutput, rawOre, dust, resourceName);
         grinder_single(ingot, dust, 1, 50, 0, recipeOutput, "ingot_" + resourceName);
+        grinder(Ingredient.of(rawOreBlock), 200, 0.05f, "raw_block_" + resourceName)
+                .addCondition(new NotCondition(new TagEmptyCondition(rawOreBlock)))
+                .addCondition(new NotCondition(new TagEmptyCondition(dust)))
+                .addOutput(dust, 18, 1)
+                .save(recipeOutput);
     }
 
     private void grinder_raw_to_dust(RecipeOutput recipeOutput, TagKey<Item> raw, TagKey<Item> dust, String resourceName) {
@@ -693,13 +736,12 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput);
     }
 
-    private void grinder_oreblock(Ingredient input, int multiplier, int processTime, float experience, Item output, RecipeOutput recipeOutput, String recipeName) {
-        grinder(input, processTime, experience, recipeName)
+    private GrinderRecipeBuilder grinder_oreblock(Ingredient input, int multiplier, int processTime, float experience, Item output, String recipeName) {
+        return grinder(input, processTime, experience, recipeName)
                 .addOutput(new ItemStack(output, 3 * multiplier), 55)
                 .addOutput(new ItemStack(output, 4 * multiplier), 25)
                 .addOutput(new ItemStack(output, 5 * multiplier), 18)
-                .addOutput(new ItemStack(output, 6 * multiplier), 2)
-                .save(recipeOutput);
+                .addOutput(new ItemStack(output, 6 * multiplier), 2);
     }
 
     private void grinder_oreblock(TagKey<Item> input, int multiplier, int processTime, float experience, TagKey<Item> output, RecipeOutput recipeOutput, String recipeName) {

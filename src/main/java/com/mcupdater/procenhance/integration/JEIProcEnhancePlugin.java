@@ -36,6 +36,8 @@ public class JEIProcEnhancePlugin implements IModPlugin {
         registration.addRecipeCategories(new GrinderRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new HydratorRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new DehydratorRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new ChiselRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new StairmakerRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
@@ -48,16 +50,27 @@ public class JEIProcEnhancePlugin implements IModPlugin {
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(Registration.SAWMILL_BLOCK.get()), SawmillRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(Registration.STONECUTTER_BLOCK.get()), RecipeTypes.STONECUTTING);
-        registration.addRecipeCatalyst(new ItemStack(Registration.GRINDERT1_BLOCK.get()), GrinderRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(Registration.GRINDERT2_BLOCK.get()), GrinderRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(Registration.GRINDERT3_BLOCK.get()), GrinderRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(Registration.GRINDERT4_BLOCK.get()), GrinderRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(Registration.FURNACET1_BLOCK.get()), RecipeTypes.SMELTING);
-        registration.addRecipeCatalyst(new ItemStack(Registration.FURNACET2_BLOCK.get()), RecipeTypes.SMELTING);
-        registration.addRecipeCatalyst(new ItemStack(Registration.FURNACET3_BLOCK.get()), RecipeTypes.SMELTING);
-        registration.addRecipeCatalyst(new ItemStack(Registration.FURNACET4_BLOCK.get()), RecipeTypes.SMELTING);
+        registration.addRecipeCatalysts(GrinderRecipeCategory.TYPE,
+                Registration.GRINDERT1_BLOCK.get(),
+                Registration.GRINDERT2_BLOCK.get(),
+                Registration.GRINDERT3_BLOCK.get(),
+                Registration.GRINDERT4_BLOCK.get(),
+                Registration.WOODEN_CRUSHER_ITEM.get(),
+                Registration.STONE_CRUSHER_ITEM.get(),
+                Registration.IRON_CRUSHER_ITEM.get(),
+                Registration.DIAMOND_CRUSHER_ITEM,
+                Registration.NETHERITE_CRUSHER_ITEM.get()
+        );
+        registration.addRecipeCatalysts(RecipeTypes.SMELTING,
+                Registration.FURNACET1_BLOCK.get(),
+                Registration.FURNACET2_BLOCK.get(),
+                Registration.FURNACET3_BLOCK.get(),
+                Registration.FURNACET4_BLOCK.get()
+        );
         registration.addRecipeCatalyst(new ItemStack(Registration.HYDRATOR_BLOCK.get()), HydratorRecipeCategory.TYPE);
         registration.addRecipeCatalyst(new ItemStack(Registration.DEHYDRATOR_BLOCK.get()), DehydratorRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(Registration.CHISEL_ITEM.asItem().getDefaultInstance(), ChiselRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(Registration.STAIRMAKER_ITEM.asItem().getDefaultInstance(), StairmakerRecipeCategory.TYPE);
     }
 
     @Override
@@ -71,10 +84,16 @@ public class JEIProcEnhancePlugin implements IModPlugin {
                 .stream().collect(ArrayList::new, (c, e) -> c.add(e.value()), ArrayList::addAll);
         List<DehydratorRecipe> dehydratorRecipes = recipeManager.getAllRecipesFor(Registration.DEHYDRATOR_RECIPE.get())
                 .stream().collect(ArrayList::new, (c, e) -> c.add(e.value()), ArrayList::addAll);
+        List<ChiselRecipe> chiselRecipes = recipeManager.getAllRecipesFor(Registration.CHISEL_RECIPE.get())
+                .stream().collect(ArrayList::new, (c, e) -> c.add(e.value()), ArrayList::addAll);
+        List<StairmakerRecipe> stairmakerRecipes = recipeManager.getAllRecipesFor(Registration.STAIRMAKER_RECIPE.get())
+                .stream().collect(ArrayList::new, (c, e) -> c.add(e.value()), ArrayList::addAll);
         registration.addRecipes(SawmillRecipeCategory.TYPE, sawmillRecipes);
         registration.addRecipes(GrinderRecipeCategory.TYPE, grinderRecipes);
         registration.addRecipes(HydratorRecipeCategory.TYPE, hydratorRecipes);
         registration.addRecipes(DehydratorRecipeCategory.TYPE, dehydratorRecipes);
+        registration.addRecipes(ChiselRecipeCategory.TYPE, chiselRecipes);
+        registration.addRecipes(StairmakerRecipeCategory.TYPE, stairmakerRecipes);
     }
 
     public static ItemStack lookupOutput(Recipe<?> recipe) {

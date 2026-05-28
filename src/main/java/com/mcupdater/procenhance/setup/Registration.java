@@ -54,7 +54,9 @@ import com.mcupdater.procenhance.blocks.tank.*;
 import com.mcupdater.procenhance.blocks.autopackager.*;
 import com.mcupdater.procenhance.items.autopackager.*;
 import com.mcupdater.procenhance.items.tools.chisel.ChiselItem;
+import com.mcupdater.procenhance.items.tools.crusher.CrusherItem;
 import com.mcupdater.procenhance.items.tools.stairmaker.StairmakerItem;
+import com.mcupdater.procenhance.loot.CrusherLootModifier;
 import com.mcupdater.procenhance.loot.functions.RetainEnchantmentsFunction;
 import com.mcupdater.procenhance.loot.functions.RetainEnergyFunction;
 import com.mcupdater.procenhance.loot.functions.RetainFluidFunction;
@@ -72,21 +74,31 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.registries.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 import static com.mcupdater.procenhance.ProcessEnhancement.MODID;
@@ -107,10 +119,24 @@ public class Registration {
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, MODID);
     public static final DeferredRegister<MapCodec<? extends ICondition>> CONDITION_CODECS = DeferredRegister.create(NeoForgeRegistries.Keys.CONDITION_CODECS, MODID);
     public static final DeferredRegister<LootItemFunctionType<?>> LOOT_FUNCTION_TYPES = DeferredRegister.create(Registries.LOOT_FUNCTION_TYPE, MODID);
+    public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> LOOT_MODIFIERS = DeferredRegister.create(NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, MODID);
     public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENTS = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, MODID);
     public static final DeferredRegister<RecipeResultType<?>> RECIPE_RESULT_TYPES = DeferredRegister.create(PERegistries.RECIPE_RESULT_TYPES, MODID);
 
     public static void init(IEventBus modEventBus) {
+        for (DyeColor color : DyeColor.values()) {
+            DeferredBlock<TerracottaLanternBlock> temp = MACHINES.register(color.getName() + "_electric_lantern", () -> new TerracottaLanternBlock(BlockBehaviour.Properties.of()
+                    .mapColor(color)
+                    .sound(SoundType.LANTERN)
+                    .strength(15.0f)
+                    .lightLevel((blockState) -> blockState.getValue(AbstractMachineBlock.ACTIVE) ? 15 : 0)
+                    .emissiveRendering((state, getter, pos) -> true)
+                    .requiresCorrectToolForDrops()
+            ));
+            TERRACOTTA_LANTERN_BLOCK.put(color,temp);
+            TERRACOTTA_LANTERN_BLOCK_ITEM.add(BLOCK_ITEMS.register(color.getName() + "_electric_lantern", () -> new BlockItem(temp.get(), new Item.Properties())));
+        }
+
         MACHINES.register(modEventBus);
         BATTERIES.register(modEventBus);
         TANKS.register(modEventBus);
@@ -126,10 +152,12 @@ public class Registration {
         RECIPE_SERIALIZERS.register(modEventBus);
         CONDITION_CODECS.register(modEventBus);
         LOOT_FUNCTION_TYPES.register(modEventBus);
+        LOOT_MODIFIERS.register(modEventBus);
         DATA_COMPONENTS.register(modEventBus);
         RECIPE_RESULT_TYPES.register(modEventBus);
     }
 
+    public static final List<String> colors = List.of("white","light_gray","gray","black","brown","red","orange","yellow","lime","green","cyan","light_blue","blue","purple","magenta","pink");
     public static final DeferredHolder<MapCodec<? extends ICondition>, MapCodec<ConfigCondition>> CONFIG_CONDITION = CONDITION_CODECS.register("config", () -> ConfigCondition.CODEC);
 
     public static final DeferredBlock<CrudeGeneratorBlock> CRUDEGENERATOR_BLOCK = MACHINES.register("crude_generator", () -> new CrudeGeneratorBlock(BlockBehaviour.Properties.of()
@@ -154,6 +182,9 @@ public class Registration {
     public static final DeferredBlock<SolarBlockT4> INDSOLARGENERATOR_BLOCK = MACHINES.register("industrial_solar_generator", () -> new SolarBlockT4(SolarBlock.defaultProperties()));
     public static final DeferredItem<Item> INDSOLARGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("industrial_solar_generator", () -> new BlockItem(INDSOLARGENERATOR_BLOCK.get(), new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SolarEntityT4>> SOLARGENERATORT4_ENTITY = BLOCK_ENTITIES.register("industrial_solar_generator", () -> BlockEntityType.Builder.of(SolarEntityT4::new, INDSOLARGENERATOR_BLOCK.get()).build(null));
+    public static final DeferredBlock<SolarBlockCompact> COMPACTSOLARGENERATOR_BLOCK = MACHINES.register("compact_solar_generator", () -> new SolarBlockCompact(SolarBlock.defaultProperties()));
+    public static final DeferredItem<Item> COMPACTSOLARGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("compact_solar_generator", () -> new BlockItem(COMPACTSOLARGENERATOR_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SolarEntityCompact>> COMPACTSOLARGENERATOR_ENTITY = BLOCK_ENTITIES.register("compact_solar_generator", () -> BlockEntityType.Builder.of(SolarEntityCompact::new, COMPACTSOLARGENERATOR_BLOCK.get()).build(null));
 
     public static final Supplier<MenuType<SolarMenu>> SOLARGENERATOR_MENU = MENUS.register("solar_generator", () -> IMenuTypeExtension.create(SolarMenu::factory));
 
@@ -531,6 +562,7 @@ public class Registration {
             .sound(SoundType.LANTERN)
             .strength(15.0f)
             .lightLevel((blockState)->blockState.getValue(AbstractMachineBlock.ACTIVE) ? 15 : 0)
+            .emissiveRendering((state, getter, pos) -> true)
             .requiresCorrectToolForDrops()
     ));
     public static final DeferredItem<Item> ELECTRIC_LANTERN_BLOCKITEM = BLOCK_ITEMS.register("electric_lantern", () -> new BlockItem(ELECTRIC_LANTERN_BLOCK.get(), new Item.Properties()));
@@ -540,6 +572,7 @@ public class Registration {
             .sound(SoundType.LANTERN)
             .strength(15.0f)
             .lightLevel((blockState)->blockState.getValue(AbstractMachineBlock.ACTIVE) ? 15 : 0)
+            .emissiveRendering((state, getter, pos) -> true)
             .requiresCorrectToolForDrops()
     ));
     public static final DeferredItem<Item> COPPER_ELECTRIC_LANTERN_BLOCKITEM = BLOCK_ITEMS.register("copper_electric_lantern", () -> new BlockItem(COPPER_ELECTRIC_LANTERN_BLOCK.get(), new Item.Properties()));
@@ -549,10 +582,14 @@ public class Registration {
             .sound(SoundType.LANTERN)
             .strength(15.0f)
             .lightLevel((blockState)->blockState.getValue(AbstractMachineBlock.ACTIVE) ? 15 : 0)
+            .emissiveRendering((state, getter, pos) -> true)
             .requiresCorrectToolForDrops()
     ));
     public static final DeferredItem<Item> NETHER_ELECTRIC_LANTERN_BLOCKITEM = BLOCK_ITEMS.register("nether_electric_lantern", () -> new BlockItem(NETHER_ELECTRIC_LANTERN_BLOCK.get(), new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<NetherLanternEntity>> NETHER_ELECTRIC_LANTERN_ENTITY = BLOCK_ENTITIES.register("nether_electric_lantern", () -> BlockEntityType.Builder.of(NetherLanternEntity::new, NETHER_ELECTRIC_LANTERN_BLOCK.get()).build(null));
+    public static final Map<DyeColor,DeferredBlock<TerracottaLanternBlock>> TERRACOTTA_LANTERN_BLOCK = new HashMap<DyeColor, DeferredBlock<TerracottaLanternBlock>>();
+    public static final List<DeferredItem<Item>> TERRACOTTA_LANTERN_BLOCK_ITEM = new ArrayList<>();
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TerracottaLanternEntity>> TERRACOTTA_LANTERN_ENTITY = BLOCK_ENTITIES.register("terracotta_electric_lantern", () -> BlockEntityType.Builder.of(TerracottaLanternEntity::new, TERRACOTTA_LANTERN_BLOCK.values().stream().map(DeferredBlock<TerracottaLanternBlock>::get).toArray(TerracottaLanternBlock[]::new)).build(null));
     public static final Supplier<MenuType<LanternMenu>> ELECTRIC_LANTERN_MENU = MENUS.register("electric_lantern", () -> IMenuTypeExtension.create(LanternMenu::factory));
 
     public static final DeferredItem<ChiselItem> CHISEL_ITEM = TOOLS.register("chisel", () -> new ChiselItem(new Item.Properties()
@@ -569,9 +606,27 @@ public class Registration {
     public static final Supplier<RecipeType<StairmakerRecipe>> STAIRMAKER_RECIPE = RECIPE_TYPES.register("stairmaker", () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(MODID, "stairmaker")));
     public static final Supplier<RecipeSerializer<StairmakerRecipe>> STAIRMAKER_SERIALIZER = RECIPE_SERIALIZERS.register("stairmaker", StairmakerRecipe.Serializer::new);
 
+    public static final DeferredItem<CrusherItem> WOODEN_CRUSHER_ITEM = TOOLS.register("wood_crusher", () -> new CrusherItem(Tiers.WOOD, new Item.Properties(), 128));
+    public static final DeferredItem<CrusherItem> STONE_CRUSHER_ITEM = TOOLS.register("stone_crusher", () -> new CrusherItem(Tiers.STONE, new Item.Properties(), 256));
+    public static final DeferredItem<CrusherItem> IRON_CRUSHER_ITEM = TOOLS.register("iron_crusher", () -> new CrusherItem(Tiers.IRON, new Item.Properties(), 512));
+    public static final DeferredItem<CrusherItem> DIAMOND_CRUSHER_ITEM = TOOLS.register("diamond_crusher", () -> new CrusherItem(Tiers.DIAMOND, new Item.Properties(), 1024));
+    public static final DeferredItem<CrusherItem> NETHERITE_CRUSHER_ITEM = TOOLS.register("netherite_crusher", () -> new CrusherItem(Tiers.NETHERITE, new Item.Properties(), 2048));
+
+    public static final DeferredBlock<Block> NETHER_DUST_BLOCK = BLOCKS.register("nether_dust_block", () -> new Block(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.NETHER)
+            .instrument(NoteBlockInstrument.BASEDRUM)
+            .strength(1.0f)
+            .sound(SoundType.SAND)
+            .lightLevel(state -> 3)
+            .emissiveRendering((state, getter, pos) -> true)
+    ));
+    public static final DeferredItem<Item> NETHER_DUST_BLOCKITEM = BLOCK_ITEMS.register("nether_dust_block", () -> new BlockItem(NETHER_DUST_BLOCK.get(), new Item.Properties()));
+
     public static final Supplier<LootItemFunctionType<? extends LootItemConditionalFunction>> RETAIN_ENCHANTMENTS = LOOT_FUNCTION_TYPES.register("retain_enchantments", () -> new LootItemFunctionType(RetainEnchantmentsFunction.CODEC));
     public static final Supplier<LootItemFunctionType<? extends LootItemConditionalFunction>> RETAIN_ENERGY = LOOT_FUNCTION_TYPES.register("retain_energy", () -> new LootItemFunctionType(RetainEnergyFunction.CODEC));
     public static final Supplier<LootItemFunctionType<? extends LootItemConditionalFunction>> RETAIN_FLUID = LOOT_FUNCTION_TYPES.register("retain_fluid", () -> new LootItemFunctionType(RetainFluidFunction.CODEC));
+
+    public static final DeferredHolder<MapCodec<? extends IGlobalLootModifier>, MapCodec<CrusherLootModifier>> CRUSHER_LOOT = LOOT_MODIFIERS.register("crusher", () -> CrusherLootModifier.CODEC);
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> STORED_ENERGY = DATA_COMPONENTS.register("energy", () -> DataComponentType.<Integer>builder().persistent(Codec.INT.orElse(0)).networkSynchronized(ByteBufCodecs.VAR_INT).build());
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<SimpleFluidContent>> STORED_FLUID = DATA_COMPONENTS.register("fluid", () -> DataComponentType.<SimpleFluidContent>builder().persistent(SimpleFluidContent.CODEC.orElse(SimpleFluidContent.EMPTY)).networkSynchronized(SimpleFluidContent.STREAM_CODEC).build());
@@ -580,6 +635,8 @@ public class Registration {
     public static final TagKey<Item> COPPER_DUST_TAG = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "dusts/copper"));
     public static final TagKey<Item> GOLD_DUST_TAG = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "dusts/gold"));
     public static final TagKey<Item> PLANT_DUST_TAG = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "dusts/plant"));
+    public static final TagKey<Item> CRUSHERS_TAG = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MODID, "crushers"));
+    public static final TagKey<Block> MINEABLE_WITH_CRUSHER = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(MODID, "mineable/crusher"));
 
     // Recipe Result Types
     public static final DeferredHolder<RecipeResultType<?>, RecipeResultType<ItemRecipeResult>> RESULT_ITEM = RECIPE_RESULT_TYPES.register("item", () -> new RecipeResultType<>(ItemRecipeResult.CODEC, ItemRecipeResult.STREAM_CODEC));

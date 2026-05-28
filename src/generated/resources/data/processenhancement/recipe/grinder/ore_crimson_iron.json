@@ -1,0 +1,60 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:not",
+            "value": {
+                "type": "neoforge:tag_empty",
+                "tag": "c:ores/crimson_iron"
+            }
+        },
+        {
+            "type": "neoforge:not",
+            "value": {
+                "type": "neoforge:tag_empty",
+                "tag": "c:dusts/crimson_iron"
+            }
+        }
+    ],
+    "type": "processenhancement:grinder",
+    "experience": 0.05,
+    "ingredients": [
+        {
+            "tag": "c:ores/crimson_iron"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 3,
+                "tag": "c:dusts/crimson_iron"
+            },
+            "weight": 55
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 4,
+                "tag": "c:dusts/crimson_iron"
+            },
+            "weight": 25
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 5,
+                "tag": "c:dusts/crimson_iron"
+            },
+            "weight": 18
+        },
+        {
+            "result": {
+                "type": "processenhancement:tag",
+                "count": 6,
+                "tag": "c:dusts/crimson_iron"
+            },
+            "weight": 2
+        }
+    ],
+    "processTime": 200
+}

@@ -1,0 +1,22 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:mod_loaded",
+            "modid": "apotheosis"
+        }
+    ],
+    "type": "minecraft:smithing_transform",
+    "addition": {
+        "item": "minecraft:iron_block"
+    },
+    "base": {
+        "item": "processenhancement:stone_crusher"
+    },
+    "result": {
+        "count": 1,
+        "id": "processenhancement:iron_crusher"
+    },
+    "template": {
+        "item": "apotheosis:iron_upgrade_smithing_template"
+    }
+}

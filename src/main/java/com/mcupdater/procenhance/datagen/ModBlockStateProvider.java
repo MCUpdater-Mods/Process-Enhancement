@@ -8,6 +8,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -88,9 +89,17 @@ public class ModBlockStateProvider extends BlockStateProvider {
         solar(Registration.ADVSOLARGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.GOLD_BLOCK,Blocks.IRON_BLOCK,Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/generator", true);
         solar(Registration.INDSOLARGENERATOR_BLOCK.get(),Blocks.COPPER_BLOCK,Blocks.DIAMOND_BLOCK,Blocks.IRON_BLOCK,Blocks.BLACK_CONCRETE, Blocks.COPPER_BLOCK, "block/generator", true);
 
+        simpleBlock(Registration.COMPACTSOLARGENERATOR_BLOCK.get(), new ModelFile.ExistingModelFile(ResourceLocation.fromNamespaceAndPath("processenhancement","block/compact_solar_generator"), this.existingFileHelper));
         simpleBlock(Registration.ELECTRIC_LANTERN_BLOCK.get(), new ModelFile.ExistingModelFile(ResourceLocation.fromNamespaceAndPath("processenhancement","block/electric_lantern"), this.existingFileHelper));
         simpleBlock(Registration.COPPER_ELECTRIC_LANTERN_BLOCK.get(), new ModelFile.ExistingModelFile(ResourceLocation.fromNamespaceAndPath("processenhancement","block/copper_electric_lantern"), this.existingFileHelper));
         simpleBlock(Registration.NETHER_ELECTRIC_LANTERN_BLOCK.get(), new ModelFile.ExistingModelFile(ResourceLocation.fromNamespaceAndPath("processenhancement","block/nether_electric_lantern"), this.existingFileHelper));
+        for (DyeColor color : DyeColor.values()) {
+            simpleBlock(Registration.TERRACOTTA_LANTERN_BLOCK.get(color).get(), models().getBuilder(BuiltInRegistries.BLOCK.getKey(Registration.TERRACOTTA_LANTERN_BLOCK.get(color).get()).getPath())
+                    .parent(new ModelFile.UncheckedModelFile("processenhancement:block/electric_lantern"))
+                    .texture("lamp", "minecraft:block/" + color.getName() + "_glazed_terracotta"));
+        }
+
+        simpleBlock(Registration.NETHER_DUST_BLOCK.get(), new ModelFile.ExistingModelFile(ResourceLocation.fromNamespaceAndPath("processenhancement","block/nether_dust_block"), this.existingFileHelper));
 
         horizontalBlock(Registration.BASICBATTERY_BLOCK.get(), (blockState -> {
             int charge = blockState.getValue(BatteryBlock.CHARGE_LEVEL);

@@ -1,0 +1,48 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "neoforge:not",
+            "value": {
+                "type": "neoforge:tag_empty",
+                "tag": "c:ores/crimson_iron"
+            }
+        },
+        {
+            "type": "neoforge:not",
+            "value": {
+                "type": "neoforge:tag_empty",
+                "tag": "c:dusts/crimson_iron"
+            }
+        }
+    ],
+    "criteria": {
+        "has_grinder": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:basic_grinder"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "has_the_recipe": {
+            "conditions": {
+                "recipe": "processenhancement:grinder/ore_crimson_iron"
+            },
+            "trigger": "minecraft:recipe_unlocked"
+        }
+    },
+    "requirements": [
+        [
+            "has_grinder",
+            "has_the_recipe"
+        ]
+    ],
+    "rewards": {
+        "recipes": [
+            "processenhancement:grinder/ore_crimson_iron"
+        ]
+    },
+    "sends_telemetry_event": true
+}

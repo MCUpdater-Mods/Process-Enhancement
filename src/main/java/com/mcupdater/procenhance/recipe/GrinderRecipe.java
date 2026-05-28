@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class GrinderRecipe implements Recipe<MachineContainer> {
+public class GrinderRecipe implements Recipe<SingleRecipeInput> {
     private final NonNullList<Ingredient> ingredients;
     private final NonNullList<Tuple<RecipeResult,Integer>> outputs;
     private final int processTime;
@@ -32,12 +32,12 @@ public class GrinderRecipe implements Recipe<MachineContainer> {
     }
 
     @Override
-    public boolean matches(@NotNull MachineContainer container, Level level) {
+    public boolean matches(@NotNull SingleRecipeInput container, Level level) {
         if (level.isClientSide()) {
             return false;
         }
 
-        return ingredients.getFirst().test(container.getItem(0));
+        return ingredients.getFirst().test(container.item());
     }
 
     @Override
@@ -46,7 +46,7 @@ public class GrinderRecipe implements Recipe<MachineContainer> {
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull MachineContainer container, HolderLookup.@NotNull Provider pRegistries) {
+    public @NotNull ItemStack assemble(@NotNull SingleRecipeInput container, HolderLookup.@NotNull Provider pRegistries) {
         return ItemStack.EMPTY;
     }
 
