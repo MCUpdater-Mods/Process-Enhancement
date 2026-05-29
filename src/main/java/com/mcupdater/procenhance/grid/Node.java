@@ -1,7 +1,13 @@
 package com.mcupdater.procenhance.grid;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -19,7 +25,13 @@ public class Node {
 		this.neighborNodes = neighborNodes;
 		this.localEndpoints = endpoints;
 		this.grid = calculateGrid();
-		this.neighborNodes.stream().forEach(node -> node.addNeighbor(this));
+		this.neighborNodes.forEach(node -> node.addNeighbor(this));
+	}
+
+	public Node(UUID nodeId) {
+		this.nodeId = nodeId;
+		this.neighborNodes = new HashSet<>();
+		this.localEndpoints = new HashSet<>();
 	}
 
 	private void addNeighbor(Node newNeighbor) {
@@ -36,11 +48,15 @@ public class Node {
 		return (this.grid.isValid() ? this.grid : null);
 	}
 
+	public void setGrid(Grid grid) {
+		this.grid = grid;
+	}
+
 	public void invalidate() {
 		GridManager.getInstance().removeNode(this);
 		if (this.neighborNodes.size() > 1) {
 			this.grid.invalidate();
-			this.neighborNodes.stream().forEach(node -> node.removeNeighbor(this));
+			this.neighborNodes.forEach(node -> node.removeNeighbor(this));
 		}
 	}
 
@@ -50,8 +66,8 @@ public class Node {
 		if (grids.isEmpty()) {
 			finalGrid = GridManager.getInstance().createGrid();
 		} else {
-			finalGrid = grids.stream().sorted(new GridSizeComparator().reversed()).findFirst().get();
-			grids.stream().forEach(foundGrid -> { if (!foundGrid.equals(finalGrid)) foundGrid.mergeInto(finalGrid); });
+			finalGrid = grids.stream().max(new GridSizeComparator()).get();
+			grids.forEach(foundGrid -> { if (!foundGrid.equals(finalGrid)) foundGrid.mergeInto(finalGrid); });
 		}
 		return finalGrid;
 	}
@@ -59,7 +75,7 @@ public class Node {
 	private void validate() {
 		if (!this.grid.isValid()) {
 			this.grid = this.grid.getReplacedBy() != null ? this.grid.getReplacedBy() : calculateGrid();
-			this.neighborNodes.stream().forEach(Node::validate);
+			this.neighborNodes.forEach(Node::validate);
 		}
 	}
 
@@ -77,6 +93,51 @@ public class Node {
 
 	public Set<Endpoint> getLocalEndpoints() {
 		return this.localEndpoints;
+	}
+
+	public static Node load(CompoundTag compound, HolderLookup.Provider registries) {
+		Node loadedNode = new Node(compound.getUUID("id"));
+		loadedNode.pos = NbtUtils.readBlockPos(compound, "pos").orElse(null);
+		loadedNode.grid = GridManager.getInstance().getGridById(NbtUtils.loadUUID(Objects.requireNonNull(compound.get("grid"))));
+		if (compound.contains("endpoints")) {
+			ListTag listEndpoints = compound.getList("endpoints", Tag.TAG_COMPOUND);
+			for (int i = 0; i < listEndpoints.size(); i++) {
+				loadedNode.localEndpoints.add(Endpoint.load(listEndpoints.getCompound(i), registries));
+			}
+		}
+		if (compound.contains("neighbors")) {
+			ListTag listNeighbors = compound.getList("neighbors", Tag.TAG_INT_ARRAY);
+			for (Tag neighborTag : listNeighbors) {
+				UUID neighborId = NbtUtils.loadUUID(neighborTag);
+				Node neighbor = GridManager.getInstance().getNodebyId(neighborId);
+				if (neighbor != null) {
+					loadedNode.neighborNodes.add(neighbor);
+					neighbor.addNeighbor(loadedNode);
+				}
+			}
+		}
+		return loadedNode;
+	}
+
+	public CompoundTag saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+		compound.putUUID("id", this.nodeId);
+		compound.put("pos", NbtUtils.writeBlockPos(this.pos));
+		compound.put("grid", NbtUtils.createUUID(grid.getGridId()));
+		if (!this.localEndpoints.isEmpty()) {
+			ListTag endpoints = new ListTag();
+			this.localEndpoints.forEach(endpoint -> endpoints.add(endpoint.save(new CompoundTag(), registries)));
+			compound.put("endpoints", endpoints);
+		}
+		if (!this.neighborNodes.isEmpty()) {
+			ListTag neighbors = new ListTag();
+			this.neighborNodes.forEach(node -> neighbors.add(NbtUtils.createUUID(node.getNodeId())));
+			compound.put("neighbors", neighbors);
+		}
+		return compound;
+	}
+
+	public UUID getNodeId() {
+		return this.nodeId;
 	}
 }
 
