@@ -8,13 +8,12 @@ import java.util.Set;
 import java.util.UUID;
 
 public class Grid {
-	private	final UUID gridId;
+	private UUID gridId;
 	private boolean valid = true;
 	private Grid replacedBy = null;
 	private final Set<Endpoint> aggregateEndpoints = new HashSet<>();
 
-	public Grid() {
-		this(UUID.randomUUID());
+	private Grid() {
 	}
 
 	public Grid(UUID gridId) {
@@ -31,6 +30,7 @@ public class Grid {
 
 	public void invalidate() {
 		valid = false;
+		GridManager.getInstance().removeGridFromMap(getGridId());
 	}
 
 	public void mergeInto(Grid grid) {
@@ -49,7 +49,6 @@ public class Grid {
 	public void rebuildEndpoints() {
 		aggregateEndpoints.clear();
 		GridManager.getInstance().getNodeSet(this).forEach(node -> aggregateEndpoints.addAll(node.getLocalEndpoints()));
-		GridManager.getInstance().setDirty();
 	}
 
 	public Set<Endpoint> getEndpoints() {
@@ -76,5 +75,10 @@ public class Grid {
 
 	public void setReplacedBy(Grid grid) {
 		this.replacedBy = grid;
+	}
+
+	@Override
+	public String toString() {
+		return this.gridId.toString();
 	}
 }

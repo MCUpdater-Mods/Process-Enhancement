@@ -1,17 +1,13 @@
-package com.mcupdater.procenhance.integration;
+package com.mcupdater.procenhance.integration.jei;
 
 import com.mcupdater.procenhance.recipe.GrinderRecipe;
 import com.mcupdater.procenhance.recipe.result.RecipeResult;
-import dev.shadowsoffire.apotheosis.Apoth;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotRichTooltipCallback;
 import mezz.jei.api.gui.ingredient.IRecipeSlotView;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Tuple;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-
-import java.util.List;
 
 public class GrinderRichTooltipCallback implements IRecipeSlotRichTooltipCallback {
     private final GrinderRecipe recipe;

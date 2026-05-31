@@ -1,8 +1,17 @@
 package com.mcupdater.procenhance.blocks.copper_wire;
 
+import com.mcupdater.procenhance.ProcessEnhancement;
+import com.mcupdater.procenhance.grid.INodeBlock;
+import com.mcupdater.procenhance.grid.INodeHolder;
+import com.mcupdater.procenhance.grid.Node;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -16,6 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -23,7 +33,9 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class CopperWireBlock extends BaseEntityBlock {
+import static net.minecraft.world.ItemInteractionResult.SUCCESS;
+
+public class CopperWireBlock extends BaseEntityBlock implements INodeBlock {
     public static final BooleanProperty NORTH = BlockStateProperties.NORTH;
     public static final BooleanProperty SOUTH = BlockStateProperties.SOUTH;
     public static final BooleanProperty EAST = BlockStateProperties.EAST;
@@ -94,7 +106,7 @@ public class CopperWireBlock extends BaseEntityBlock {
     }
 
     private boolean isSideValid(Level pLevel, BlockPos pPos, Direction side) {
-        return pLevel.getCapability(Capabilities.EnergyStorage.BLOCK , pPos.relative(side), side.getOpposite()) != null;
+        return pLevel.getBlockState(pPos.relative(side)).getBlock() instanceof INodeBlock || pLevel.getCapability(Capabilities.EnergyStorage.BLOCK , pPos.relative(side), side.getOpposite()) != null;
     }
 
     public BooleanProperty getSideProperty(Direction side) {
@@ -149,5 +161,27 @@ public class CopperWireBlock extends BaseEntityBlock {
                 wire.tick(lvl, pos);
             }
         };
+    }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (!state.getBlock().equals(newState.getBlock()) && level.getBlockEntity(pos) instanceof CopperWireEntity entity) {
+            entity.onRemove();
+        }
+        super.onRemove(state, level, pos, newState, movedByPiston);
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (stack.getItem() == Items.STICK) {
+            if (level.getBlockEntity(pos) instanceof INodeHolder holder) {
+                Node node = holder.getNode();
+                if (node != null) {
+                    ProcessEnhancement.LOGGER.debug("Node properties\n - NodeId: {}\n - Level: {}\n - pos: {}\n - GridId: {}\n - neighbors: {}\n - endpoints: {}", node.getNodeId(), node.getLevelName(), node.getPos(), node.getRawGrid().getGridId(), node.getNeighbors().size(), node.getLocalEndpoints().size());
+                }
+            }
+            return SUCCESS;
+        }
+        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 }

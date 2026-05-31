@@ -27,6 +27,9 @@ public class GameEventHandlers {
     @SubscribeEvent
     private static void serverStarted(ServerStartedEvent event) {
         ProcessEnhancement.LOGGER.info("Server started");
-        GridManager.setInstance(event.getServer().overworld().getDataStorage().computeIfAbsent(new SavedData.Factory<>(GridManager::new, GridManager::load),"pe_grid"));
+        event.getServer().overworld().getDataStorage().computeIfAbsent(new SavedData.Factory<>(GridManager::new, GridManager::load),"pe_grid");
+        GridManager.setLoaded();
+        ProcessEnhancement.serverInstance = event.getServer();
     }
+
 }

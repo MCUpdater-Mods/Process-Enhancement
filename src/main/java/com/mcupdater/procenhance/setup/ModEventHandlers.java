@@ -3,7 +3,10 @@ package com.mcupdater.procenhance.setup;
 import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.blocks.battery.BatteryBlockItem;
 import com.mcupdater.procenhance.blocks.tank.TankBlockItem;
+import com.mcupdater.procenhance.capabilities.DummyEnergyHandler;
 import com.mcupdater.procenhance.capabilities.ItemEnergyStorage;
+import com.mcupdater.procenhance.grid.GridEnergyHandler;
+import com.mcupdater.procenhance.grid.GridManager;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -71,7 +74,17 @@ public class ModEventHandlers {
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.HARVESTER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.AUTOPACKAGER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.BUFFER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
-				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.COPPERWIRE_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyResourceHandler().getEnergyHandler(side) : blockEntity.getEnergyResourceHandler().getInternalHandler());
+				//event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.COPPERWIRE_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyResourceHandler().getEnergyHandler(side) : blockEntity.getEnergyResourceHandler().getInternalHandler());
+				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.COPPERWIRE_ENTITY.get(), (blockEntity, side) -> {
+					if (side == null) {
+						return DummyEnergyHandler.INSTANCE;
+					}
+					if (GridManager.isLoaded() && blockEntity.getNode() != null) {
+						return new GridEnergyHandler(blockEntity.getNode().getGrid(), blockEntity.getLevel().dimension().location(), blockEntity.getBlockPos().relative(side));
+					} else {
+						return null;
+					}
+				});
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.BATTERYT1_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.BATTERYT2_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.BATTERYT3_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());

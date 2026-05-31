@@ -1,7 +1,7 @@
-package com.mcupdater.procenhance.integration;
+package com.mcupdater.procenhance.integration.jei;
 
 import com.mcupdater.procenhance.ProcessEnhancement;
-import com.mcupdater.procenhance.recipe.SawmillRecipe;
+import com.mcupdater.procenhance.recipe.ChiselRecipe;
 import com.mcupdater.procenhance.setup.Registration;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -17,26 +17,24 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-import static com.mcupdater.procenhance.integration.JEIProcEnhancePlugin.getLookupProvider;
-
-public class SawmillRecipeCategory implements IRecipeCategory<SawmillRecipe> {
-    public static final RecipeType<SawmillRecipe> TYPE = RecipeType.create(ProcessEnhancement.MODID, "sawmill", SawmillRecipe.class);
+public class ChiselRecipeCategory implements IRecipeCategory<ChiselRecipe> {
+    public static final RecipeType<ChiselRecipe> TYPE = RecipeType.create(ProcessEnhancement.MODID, "chisel", ChiselRecipe.class);
     public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "textures/jei/machine.png");
 
     private final IDrawable icon;
 
-    public SawmillRecipeCategory(IGuiHelper helper) {
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Registration.SAWMILL_BLOCK.get()));
+    public ChiselRecipeCategory(IGuiHelper helper) {
+        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Registration.CHISEL_ITEM.get()));
     }
 
     @Override
-    public RecipeType<SawmillRecipe> getRecipeType() {
+    public RecipeType<ChiselRecipe> getRecipeType() {
         return TYPE;
     }
 
     @Override
     public Component getTitle() {
-        return Component.translatable("block.processenhancement.sawmill");
+        return Component.translatable("item.processenhancement.chisel");
     }
 
     @Override
@@ -50,7 +48,7 @@ public class SawmillRecipeCategory implements IRecipeCategory<SawmillRecipe> {
     }
 
     @Override
-    public void draw(SawmillRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(ChiselRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         guiGraphics.blit(TEXTURE, 0,0,0,0,getWidth(), getHeight());
     }
 
@@ -60,9 +58,9 @@ public class SawmillRecipeCategory implements IRecipeCategory<SawmillRecipe> {
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, SawmillRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 17,5).addIngredients(recipe.getIngredients().get(0));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 53, 5).addItemStack(recipe.getResultItem(getLookupProvider()));
+    public void setRecipe(IRecipeLayoutBuilder builder, ChiselRecipe recipe, IFocusGroup focuses) {
+        builder.addSlot(RecipeIngredientRole.INPUT, 17,5).addIngredients(recipe.getInput());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 53, 5).addItemStack(JEIProcEnhancePlugin.lookupOutput(recipe));
     }
 
 }

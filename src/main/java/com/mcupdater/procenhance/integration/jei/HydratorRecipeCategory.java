@@ -1,7 +1,7 @@
-package com.mcupdater.procenhance.integration;
+package com.mcupdater.procenhance.integration.jei;
 
 import com.mcupdater.procenhance.ProcessEnhancement;
-import com.mcupdater.procenhance.recipe.DehydratorRecipe;
+import com.mcupdater.procenhance.recipe.HydratorRecipe;
 import com.mcupdater.procenhance.setup.Registration;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -18,24 +18,24 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-public class DehydratorRecipeCategory implements IRecipeCategory<DehydratorRecipe> {
-    public static final RecipeType<DehydratorRecipe> TYPE = RecipeType.create(ProcessEnhancement.MODID, "dehydrator", DehydratorRecipe.class);
-    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "textures/jei/dehydrator.png");
+public class HydratorRecipeCategory implements IRecipeCategory<HydratorRecipe> {
+    public static final RecipeType<HydratorRecipe> TYPE = RecipeType.create(ProcessEnhancement.MODID, "hydrator", HydratorRecipe.class);
+    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "textures/jei/hydrator.png");
 
     private final IDrawable icon;
 
-    public DehydratorRecipeCategory(IGuiHelper helper) {
+    public HydratorRecipeCategory(IGuiHelper helper) {
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Registration.HYDRATOR_BLOCK.get()));
     }
 
     @Override
-    public RecipeType<DehydratorRecipe> getRecipeType() {
+    public RecipeType<HydratorRecipe> getRecipeType() {
         return TYPE;
     }
 
     @Override
     public Component getTitle() {
-        return Component.translatable("block.processenhancement.dehydrator");
+        return Component.translatable("block.processenhancement.hydrator");
     }
 
     @Override
@@ -49,7 +49,7 @@ public class DehydratorRecipeCategory implements IRecipeCategory<DehydratorRecip
     }
 
     @Override
-    public void draw(DehydratorRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(HydratorRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         guiGraphics.blit(TEXTURE, 0,0,0,0,getWidth(), getHeight());
     }
 
@@ -59,10 +59,10 @@ public class DehydratorRecipeCategory implements IRecipeCategory<DehydratorRecip
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, DehydratorRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 10,5).addIngredients(recipe.getItemIngredients().get(0));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 46, 5).addItemStack(JEIProcEnhancePlugin.lookupOutput(recipe));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 73, 3).setFluidRenderer(1000, true,5,19).addIngredient(NeoForgeTypes.FLUID_STACK, recipe.getFluidOutput());
+    public void setRecipe(IRecipeLayoutBuilder builder, HydratorRecipe recipe, IFocusGroup focuses) {
+        builder.addSlot(RecipeIngredientRole.INPUT, 17,5).addIngredients(recipe.getItemIngredients().get(0));
+        builder.addSlot(RecipeIngredientRole.INPUT, 4, 3).setFluidRenderer(1000, true,5,19).addIngredient(NeoForgeTypes.FLUID_STACK, recipe.getFluidIngredient());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 53, 5).addItemStack(JEIProcEnhancePlugin.lookupOutput(recipe));
     }
 
 }

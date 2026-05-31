@@ -1,4 +1,4 @@
-package com.mcupdater.procenhance.integration;
+package com.mcupdater.procenhance.integration.jei;
 
 import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.recipe.StairmakerRecipe;

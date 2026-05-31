@@ -81,6 +81,7 @@
     "block.processenhancement.purple_electric_lantern": "Purple Electric Lantern",
     "block.processenhancement.magenta_electric_lantern": "Magenta Electric Lantern",
     "block.processenhancement.pink_electric_lantern": "Pink Electric Lantern",
+    "config.jade.plugin_processenhancement.grid": "Grid Info",
     "item.processenhancement.capacitor": "Capacitor",
     "item.processenhancement.chisel": "Chisel",
     "item.processenhancement.copper_dust": "Copper Dust",
