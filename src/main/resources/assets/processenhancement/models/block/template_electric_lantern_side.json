@@ -1,0 +1,46 @@
+{
+  "ambientocclusion": true,
+  "render_type": "cutout",
+  "textures": {
+    "frame": "minecraft:block/gray_concrete",
+    "particle": "#frame"
+  },
+  "elements": [
+    {
+      "from": [4, 3, 3],
+      "to": [12, 13, 4],
+      "faces": {
+        "north": {"uv": [3, 3, 11, 13], "texture": "#frame"},
+        "south": {"uv": [3, 3, 11, 13], "texture": "#frame"},
+        "east": {"uv": [3, 3, 11, 13], "texture": "#frame"},
+        "west": {"uv": [3, 3, 11, 13], "texture": "#frame"},
+        "up": {"uv": [3, 3, 11, 13], "texture": "#frame"},
+        "down": {"uv": [3, 3, 11, 13], "texture": "#frame"}
+      }
+    },
+    {
+      "from": [6, 5, 1],
+      "to": [10, 11, 3],
+      "faces": {
+        "north": {"uv": [3, 3, 11, 13], "texture": "#frame"},
+        "south": {"uv": [3, 3, 11, 13], "texture": "#frame"},
+        "east": {"uv": [3, 3, 11, 13], "texture": "#frame"},
+        "west": {"uv": [3, 3, 11, 13], "texture": "#frame"},
+        "up": {"uv": [3, 3, 11, 13], "texture": "#frame"},
+        "down": {"uv": [3, 3, 11, 13], "texture": "#frame"}
+      }
+    },
+    {
+      "from": [4, 3, 0],
+      "to": [12, 13, 1],
+      "faces": {
+        "north": {"uv": [3, 3, 11, 13], "texture": "#frame"},
+        "south": {"uv": [3, 3, 11, 13], "texture": "#frame"},
+        "east": {"uv": [3, 3, 11, 13], "texture": "#frame"},
+        "west": {"uv": [3, 3, 11, 13], "texture": "#frame"},
+        "up": {"uv": [3, 3, 11, 13], "texture": "#frame"},
+        "down": {"uv": [3, 3, 11, 13], "texture": "#frame"}
+      }
+    }
+  ]
+}

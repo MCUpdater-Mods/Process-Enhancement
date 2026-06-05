@@ -4,6 +4,7 @@ import com.mcupdater.procenhance.grid.INodeHolder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.common.Tags;
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.IBlockComponentProvider;
 import snownee.jade.api.IServerDataProvider;
@@ -17,13 +18,15 @@ public enum GridComponentProvider implements IBlockComponentProvider, IServerDat
 
 	@Override
 	public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
-		if (accessor.getServerData().contains("nodeId")) {
-			CompoundTag data = accessor.getServerData();
-			tooltip.add(Component.literal("Grid: ").append(data.getString("gridId")).append("; Size: ").append(Long.toString(data.getLong("gridSize"))));
-			tooltip.add(Component.literal("Valid: ").append(Boolean.toString(data.getBoolean("valid"))).append("; Replacement: ").append(data.getString("replacementId")));
-			tooltip.add(Component.literal("Node: ").append(data.getString("nodeId")));
-		} else {
-			tooltip.add(Component.literal("Node data missing").withColor(new Color(255,0,0).getRGB()));
+		if (accessor.getPlayer().getMainHandItem().is(Tags.Items.TOOLS_WRENCH) || accessor.getPlayer().getOffhandItem().is(Tags.Items.TOOLS_WRENCH)) {
+			if (accessor.getServerData().contains("nodeId")) {
+				CompoundTag data = accessor.getServerData();
+				tooltip.add(Component.literal("Grid: ").append(data.getString("gridId")).append("; Size: ").append(Long.toString(data.getLong("gridSize"))));
+				tooltip.add(Component.literal("Valid: ").append(Boolean.toString(data.getBoolean("valid"))).append("; Replacement: ").append(data.getString("replacementId")));
+				tooltip.add(Component.literal("Node: ").append(data.getString("nodeId")));
+			} else {
+				tooltip.add(Component.literal("Node data missing").withColor(new Color(255, 0, 0).getRGB()));
+			}
 		}
 	}
 

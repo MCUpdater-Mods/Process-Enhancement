@@ -1,0 +1,48 @@
+{
+    "background_u_index": 0,
+    "background_v_index": 0,
+    "category": "processing",
+    "description": "book.processenhancement.art_of_processing.processing.industrial_furnace.description",
+    "hide_while_locked": false,
+    "icon": {
+        "item": "processenhancement:industrial_furnace"
+    },
+    "name": "book.processenhancement.art_of_processing.processing.industrial_furnace.name",
+    "pages": [
+        {
+            "type": "modonomicon:spotlight",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "item": {
+                "item": "processenhancement:industrial_furnace"
+            },
+            "text": "book.processenhancement.art_of_processing.processing.industrial_furnace.intro.text",
+            "title": ""
+        },
+        {
+            "type": "modonomicon:crafting_recipe",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "recipe_id_1": "processenhancement:industrial_furnace",
+            "text": "book.processenhancement.art_of_processing.processing.industrial_furnace.recipe.text",
+            "title1": "",
+            "title2": ""
+        }
+    ],
+    "parents": [
+        {
+            "draw_arrow": true,
+            "entry": "processing/advanced_furnace",
+            "line_enabled": true,
+            "line_reversed": false
+        }
+    ],
+    "show_when_any_parent_unlocked": false,
+    "sort_number": 3,
+    "x": 0,
+    "y": -4
+}

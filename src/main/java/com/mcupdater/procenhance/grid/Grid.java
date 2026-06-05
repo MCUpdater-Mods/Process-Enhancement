@@ -1,7 +1,11 @@
 package com.mcupdater.procenhance.grid;
 
+import com.mcupdater.procenhance.ProcessEnhancement;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -29,6 +33,9 @@ public class Grid {
 	}
 
 	public void invalidate() {
+		GridManager.getInstance().getNodeSet(this).stream().forEach(node -> {
+			ProcessEnhancement.serverInstance.getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(node.getLevelName()))).invalidateCapabilities(node.getPos());
+		});
 		valid = false;
 		GridManager.getInstance().removeGridFromMap(getGridId());
 	}

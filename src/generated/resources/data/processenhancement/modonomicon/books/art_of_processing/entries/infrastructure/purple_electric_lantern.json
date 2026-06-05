@@ -1,0 +1,40 @@
+{
+    "background_u_index": 0,
+    "background_v_index": 0,
+    "category": "infrastructure",
+    "description": "book.processenhancement.art_of_processing.infrastructure.purple_electric_lantern.description",
+    "hide_while_locked": false,
+    "icon": {
+        "item": "processenhancement:purple_electric_lantern"
+    },
+    "name": "book.processenhancement.art_of_processing.infrastructure.purple_electric_lantern.name",
+    "pages": [
+        {
+            "type": "modonomicon:spotlight",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "item": {
+                "item": "processenhancement:purple_electric_lantern"
+            },
+            "text": "book.processenhancement.art_of_processing.infrastructure.purple_electric_lantern.intro.text",
+            "title": ""
+        },
+        {
+            "type": "modonomicon:crafting_recipe",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "recipe_id_1": "processenhancement:purple_electric_lantern",
+            "text": "book.processenhancement.art_of_processing.infrastructure.purple_electric_lantern.recipe.text",
+            "title1": "",
+            "title2": ""
+        }
+    ],
+    "show_when_any_parent_unlocked": false,
+    "sort_number": 26,
+    "x": 2,
+    "y": 1
+}

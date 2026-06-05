@@ -165,9 +165,10 @@ public class CopperWireBlock extends BaseEntityBlock implements INodeBlock {
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.getBlock().equals(newState.getBlock()) && level.getBlockEntity(pos) instanceof CopperWireEntity entity) {
+        if (!state.getBlock().equals(newState.getBlock()) && level.getBlockEntity(pos) instanceof INodeHolder entity) {
             entity.onRemove();
         }
+        level.invalidateCapabilities(pos);
         super.onRemove(state, level, pos, newState, movedByPiston);
     }
 

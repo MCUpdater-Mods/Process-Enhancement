@@ -65,7 +65,7 @@ public class PlanterEntity extends AbstractMachineBlockEntity {
 	public PlanterEntity(BlockPos blockPos, BlockState blockState) {
 		super(PLANTER_ENTITY.get(), blockPos, blockState, Config.PLANTER_ENERGY_PER_TICK.get() * 1000, Integer.MAX_VALUE, Config.PLANTER_ENERGY_PER_TICK.get(), 1);
 		int[] slots = IntStream.rangeClosed(0,8).toArray();
-		itemResourceHandler = new ItemResourceHandler(this.level, 18, slots, slots, IntStream.empty().toArray(), this::stillValid);
+		itemResourceHandler = new ItemResourceHandler(this.level, 18, slots, slots, IntStream.empty().toArray(), this::stillValid, 18);
 		itemResourceHandler.setInsertFunction(this::validateStack);
 		this.configMap.put("items", itemResourceHandler);
 	}

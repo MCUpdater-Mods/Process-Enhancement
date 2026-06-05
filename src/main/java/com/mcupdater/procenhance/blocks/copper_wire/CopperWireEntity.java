@@ -36,16 +36,7 @@ public class CopperWireEntity extends BlockEntity implements INodeHolder {
 
     @Override
     public Node getNode() {
-        Node retrieved = null;
-        if (GridManager.getInstance() != null) {
-            retrieved = GridManager.getInstance().getNodeById(this.nodeId);
-        } else {
-            ProcessEnhancement.LOGGER.warn("GridManager not available");
-        }
-	    if (retrieved == null) {
-		    ProcessEnhancement.LOGGER.error("Retrieved Node is null!");
-	    }
-        return retrieved;
+        return GridManager.getNode(this.nodeId);
     }
 
     @Override
@@ -146,6 +137,7 @@ public class CopperWireEntity extends BlockEntity implements INodeHolder {
 //            this.setChanged();
     }
 
+    @Override
     public void onRemove() {
         if (this.nodeId != null) {
             Node node = GridManager.getInstance().getNodeById(this.nodeId);

@@ -1,0 +1,6 @@
+{
+    "parent": "processenhancement:block/template_electric_lantern",
+    "textures": {
+        "lamp": "processenhancement:block/nether_lamp"
+    }
+}

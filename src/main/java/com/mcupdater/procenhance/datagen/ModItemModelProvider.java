@@ -8,6 +8,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.WallBlock;
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -23,7 +24,11 @@ public class ModItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         for (DeferredHolder<Item, ? extends Item> entry : Registration.BLOCK_ITEMS.getEntries()) {
             if (entry.get() instanceof BlockItem blockItem) {
-                block(blockItem);
+                if (blockItem.getBlock() instanceof WallBlock) {
+                    wall(blockItem);
+                } else {
+                    block(blockItem);
+                }
             } else {
                 simpleItem(entry.get());
             }
@@ -41,6 +46,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         for (DeferredHolder<Item, ? extends Item> entry : Registration.TOOLS.getEntries()) {
             simpleItem(entry.get());
         }
+        for (DeferredHolder<Item, ? extends Item> entry : Registration.HIDDEN_ITEMS.getEntries()) {
+            simpleItem(entry.get());
+        }
     }
 
     protected ItemModelBuilder simpleItem(Item item) {
@@ -49,5 +57,9 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     protected ItemModelBuilder block(BlockItem blockItem) {
         return withExistingParent(BuiltInRegistries.ITEM.getKey(blockItem).getPath(),modid + ":block/" + BuiltInRegistries.BLOCK.getKey(blockItem.getBlock()).getPath());
+    }
+
+    protected ItemModelBuilder wall(BlockItem blockItem) {
+        return withExistingParent(BuiltInRegistries.ITEM.getKey(blockItem).getPath(), modid + ":block/" + BuiltInRegistries.BLOCK.getKey(blockItem.getBlock()).getPath() + "_inventory");
     }
 }

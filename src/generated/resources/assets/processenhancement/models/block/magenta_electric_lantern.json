@@ -1,5 +1,5 @@
 {
-    "parent": "processenhancement:block/electric_lantern",
+    "parent": "processenhancement:block/template_electric_lantern",
     "textures": {
         "lamp": "minecraft:block/magenta_glazed_terracotta"
     }

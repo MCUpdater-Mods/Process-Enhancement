@@ -1,0 +1,10 @@
+{
+    "type": "minecraft:stonecutting",
+    "ingredient": {
+        "item": "processenhancement:concealed_wire"
+    },
+    "result": {
+        "count": 1,
+        "id": "processenhancement:concealed_wire_wall"
+    }
+}

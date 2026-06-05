@@ -1,0 +1,32 @@
+{
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+        "has_concealed_wire": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:concealed_wire"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "has_the_recipe": {
+            "conditions": {
+                "recipe": "minecraft:concealed_wire_wall_from_concealed_wire_stonecutting"
+            },
+            "trigger": "minecraft:recipe_unlocked"
+        }
+    },
+    "requirements": [
+        [
+            "has_the_recipe",
+            "has_concealed_wire"
+        ]
+    ],
+    "rewards": {
+        "recipes": [
+            "minecraft:concealed_wire_wall_from_concealed_wire_stonecutting"
+        ]
+    }
+}

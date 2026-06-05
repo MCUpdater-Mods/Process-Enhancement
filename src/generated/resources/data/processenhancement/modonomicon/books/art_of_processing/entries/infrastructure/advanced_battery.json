@@ -1,0 +1,48 @@
+{
+    "background_u_index": 0,
+    "background_v_index": 0,
+    "category": "infrastructure",
+    "description": "book.processenhancement.art_of_processing.infrastructure.advanced_battery.description",
+    "hide_while_locked": false,
+    "icon": {
+        "item": "processenhancement:advanced_battery"
+    },
+    "name": "book.processenhancement.art_of_processing.infrastructure.advanced_battery.name",
+    "pages": [
+        {
+            "type": "modonomicon:spotlight",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "item": {
+                "item": "processenhancement:advanced_battery"
+            },
+            "text": "book.processenhancement.art_of_processing.infrastructure.advanced_battery.intro.text",
+            "title": ""
+        },
+        {
+            "type": "modonomicon:crafting_recipe",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "recipe_id_1": "processenhancement:battery_upgrade/advanced_battery",
+            "text": "book.processenhancement.art_of_processing.infrastructure.advanced_battery.recipe.text",
+            "title1": "",
+            "title2": ""
+        }
+    ],
+    "parents": [
+        {
+            "draw_arrow": true,
+            "entry": "infrastructure/intermediate_battery",
+            "line_enabled": true,
+            "line_reversed": false
+        }
+    ],
+    "show_when_any_parent_unlocked": false,
+    "sort_number": 2,
+    "x": -2,
+    "y": -4
+}

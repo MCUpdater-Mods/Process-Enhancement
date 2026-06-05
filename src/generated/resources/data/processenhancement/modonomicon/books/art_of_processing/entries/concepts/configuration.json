@@ -1,0 +1,28 @@
+{
+    "background_u_index": 0,
+    "background_v_index": 0,
+    "category": "concepts",
+    "description": "book.processenhancement.art_of_processing.concepts.configuration.description",
+    "hide_while_locked": false,
+    "icon": {
+        "item": "minecraft:book"
+    },
+    "name": "book.processenhancement.art_of_processing.concepts.configuration.name",
+    "pages": [
+        {
+            "type": "modonomicon:text",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "show_title_separator": true,
+            "text": "book.processenhancement.art_of_processing.concepts.configuration.intro.text",
+            "title": "book.processenhancement.art_of_processing.concepts.configuration.intro.title",
+            "use_markdown_in_title": false
+        }
+    ],
+    "show_when_any_parent_unlocked": false,
+    "sort_number": 0,
+    "x": -2,
+    "y": -2
+}

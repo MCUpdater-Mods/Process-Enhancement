@@ -2,7 +2,7 @@
   "neoforge:conditions": [
     {
       "type": "neoforge:item_exists",
-      "item": "patchouli:guide_book"
+      "item": "modonomicon:modonomicon"
     }
   ],
   "type": "minecraft:crafting_shapeless",
@@ -15,9 +15,9 @@
     }
   ],
   "result": {
-    "id": "patchouli:guide_book",
+    "id": "modonomicon:modonomicon",
     "components": {
-      "patchouli:book": "processenhancement:the_art"
+      "modonomicon:book_id": "processenhancement:art_of_processing"
     }
   }
 }

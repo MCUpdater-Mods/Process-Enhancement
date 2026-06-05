@@ -1,0 +1,48 @@
+{
+    "background_u_index": 0,
+    "background_v_index": 0,
+    "category": "tools",
+    "description": "book.processenhancement.art_of_processing.tools.netherite_crusher.description",
+    "hide_while_locked": false,
+    "icon": {
+        "item": "processenhancement:netherite_crusher"
+    },
+    "name": "book.processenhancement.art_of_processing.tools.netherite_crusher.name",
+    "pages": [
+        {
+            "type": "modonomicon:spotlight",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "item": {
+                "item": "processenhancement:netherite_crusher"
+            },
+            "text": "book.processenhancement.art_of_processing.tools.netherite_crusher.intro.text",
+            "title": ""
+        },
+        {
+            "type": "modonomicon:smithing_recipe",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "recipe_id_1": "processenhancement:smithing/netherite_crusher",
+            "text": "book.processenhancement.art_of_processing.tools.netherite_crusher.recipe.text",
+            "title1": "",
+            "title2": ""
+        }
+    ],
+    "parents": [
+        {
+            "draw_arrow": true,
+            "entry": "tools/diamond_crusher",
+            "line_enabled": true,
+            "line_reversed": false
+        }
+    ],
+    "show_when_any_parent_unlocked": false,
+    "sort_number": 4,
+    "x": 4,
+    "y": -1
+}

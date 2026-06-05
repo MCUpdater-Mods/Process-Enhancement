@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "": {
+            "model": "processenhancement:block/concealed_wire"
+        }
+    }
+}

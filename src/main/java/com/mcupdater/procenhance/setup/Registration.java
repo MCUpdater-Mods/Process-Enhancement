@@ -9,6 +9,10 @@ import com.mcupdater.procenhance.blocks.biogenerator.*;
 import com.mcupdater.procenhance.blocks.buffer.BufferBlock;
 import com.mcupdater.procenhance.blocks.buffer.BufferEntity;
 import com.mcupdater.procenhance.blocks.buffer.BufferMenu;
+import com.mcupdater.procenhance.blocks.concealed_wire.ConcealedWireBlock;
+import com.mcupdater.procenhance.blocks.concealed_wire.ConcealedWireEntity;
+import com.mcupdater.procenhance.blocks.concealed_wire.ConcealedWireWallBlock;
+import com.mcupdater.procenhance.blocks.concealed_wire.ConcealedWireWallEntity;
 import com.mcupdater.procenhance.blocks.concrete_mixer.MixerBlock;
 import com.mcupdater.procenhance.blocks.concrete_mixer.MixerEntity;
 import com.mcupdater.procenhance.blocks.concrete_mixer.MixerMenu;
@@ -80,7 +84,6 @@ import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -111,6 +114,7 @@ public class Registration {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MODID);
     public static final DeferredRegister.Items BLOCK_ITEMS = DeferredRegister.createItems(MODID);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
+    public static final DeferredRegister.Items HIDDEN_ITEMS = DeferredRegister.createItems(MODID);
     public static final DeferredRegister.Items PATTERNS = DeferredRegister.createItems(MODID);
     public static final DeferredRegister.Items TOOLS = DeferredRegister.createItems(MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, MODID);
@@ -130,7 +134,7 @@ public class Registration {
                     .sound(SoundType.LANTERN)
                     .strength(15.0f)
                     .lightLevel((blockState) -> blockState.getValue(AbstractMachineBlock.ACTIVE) ? 15 : 0)
-                    .emissiveRendering((state, getter, pos) -> true)
+                    .emissiveRendering((state, getter, pos) -> state.getValue(LanternBlock.ACTIVE))
                     .requiresCorrectToolForDrops()
             ));
             TERRACOTTA_LANTERN_BLOCK.put(color,temp);
@@ -144,6 +148,7 @@ public class Registration {
         BLOCKS.register(modEventBus);
         BLOCK_ITEMS.register(modEventBus);
         ITEMS.register(modEventBus);
+        HIDDEN_ITEMS.register(modEventBus);
         PATTERNS.register(modEventBus);
         TOOLS.register(modEventBus);
         BLOCK_ENTITIES.register(modEventBus);
@@ -170,81 +175,81 @@ public class Registration {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CrudeGeneratorEntity>> CRUDEGENERATOR_ENTITY = BLOCK_ENTITIES.register("crude_generator", () -> BlockEntityType.Builder.of(CrudeGeneratorEntity::new, CRUDEGENERATOR_BLOCK.get()).build(null));
     public static final Supplier<MenuType<CrudeGeneratorMenu>> CRUDEGENERATOR_MENU = MENUS.register("crude_generator", () -> IMenuTypeExtension.create(CrudeGeneratorMenu::factory));
 
-    public static final DeferredBlock<SolarBlockT1> BASICSOLARGENERATOR_BLOCK = MACHINES.register("basic_solar_generator", () -> new SolarBlockT1(SolarBlock.defaultProperties()));
-    public static final DeferredItem<Item> BASICSOLARGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("basic_solar_generator", () -> new BlockItem(BASICSOLARGENERATOR_BLOCK.get(), new Item.Properties()));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SolarEntityT1>> SOLARGENERATORT1_ENTITY = BLOCK_ENTITIES.register("basic_solar_generator", () -> BlockEntityType.Builder.of(SolarEntityT1::new, BASICSOLARGENERATOR_BLOCK.get()).build(null));
-    public static final DeferredBlock<SolarBlockT2> INTERSOLARGENERATOR_BLOCK = MACHINES.register("intermediate_solar_generator", () -> new SolarBlockT2(SolarBlock.defaultProperties()));
-    public static final DeferredItem<Item> INTERSOLARGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("intermediate_solar_generator", () -> new BlockItem(INTERSOLARGENERATOR_BLOCK.get(), new Item.Properties()));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SolarEntityT2>> SOLARGENERATORT2_ENTITY = BLOCK_ENTITIES.register("intermediate_solar_generator", () -> BlockEntityType.Builder.of(SolarEntityT2::new, INTERSOLARGENERATOR_BLOCK.get()).build(null));
-    public static final DeferredBlock<SolarBlockT3> ADVSOLARGENERATOR_BLOCK = MACHINES.register("advanced_solar_generator", () -> new SolarBlockT3(SolarBlock.defaultProperties()));
-    public static final DeferredItem<Item> ADVSOLARGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("advanced_solar_generator", () -> new BlockItem(ADVSOLARGENERATOR_BLOCK.get(), new Item.Properties()));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SolarEntityT3>> SOLARGENERATORT3_ENTITY = BLOCK_ENTITIES.register("advanced_solar_generator", () -> BlockEntityType.Builder.of(SolarEntityT3::new, ADVSOLARGENERATOR_BLOCK.get()).build(null));
-    public static final DeferredBlock<SolarBlockT4> INDSOLARGENERATOR_BLOCK = MACHINES.register("industrial_solar_generator", () -> new SolarBlockT4(SolarBlock.defaultProperties()));
-    public static final DeferredItem<Item> INDSOLARGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("industrial_solar_generator", () -> new BlockItem(INDSOLARGENERATOR_BLOCK.get(), new Item.Properties()));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SolarEntityT4>> SOLARGENERATORT4_ENTITY = BLOCK_ENTITIES.register("industrial_solar_generator", () -> BlockEntityType.Builder.of(SolarEntityT4::new, INDSOLARGENERATOR_BLOCK.get()).build(null));
+    public static final DeferredBlock<SolarBlockT1> SOLARGENERATORT1_BLOCK = MACHINES.register("basic_solar_generator", () -> new SolarBlockT1(SolarBlock.defaultProperties()));
+    public static final DeferredItem<Item> SOLARGENERATORT1_BLOCKITEM = BLOCK_ITEMS.register("basic_solar_generator", () -> new BlockItem(SOLARGENERATORT1_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SolarEntityT1>> SOLARGENERATORT1_ENTITY = BLOCK_ENTITIES.register("basic_solar_generator", () -> BlockEntityType.Builder.of(SolarEntityT1::new, SOLARGENERATORT1_BLOCK.get()).build(null));
+    public static final DeferredBlock<SolarBlockT2> SOLARGENERATORT2_BLOCK = MACHINES.register("intermediate_solar_generator", () -> new SolarBlockT2(SolarBlock.defaultProperties()));
+    public static final DeferredItem<Item> SOLARGENERATORT2_BLOCKITEM = BLOCK_ITEMS.register("intermediate_solar_generator", () -> new BlockItem(SOLARGENERATORT2_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SolarEntityT2>> SOLARGENERATORT2_ENTITY = BLOCK_ENTITIES.register("intermediate_solar_generator", () -> BlockEntityType.Builder.of(SolarEntityT2::new, SOLARGENERATORT2_BLOCK.get()).build(null));
+    public static final DeferredBlock<SolarBlockT3> SOLARGENERATORT3_BLOCK = MACHINES.register("advanced_solar_generator", () -> new SolarBlockT3(SolarBlock.defaultProperties()));
+    public static final DeferredItem<Item> SOLARGENERATORT3_BLOCKITEM = BLOCK_ITEMS.register("advanced_solar_generator", () -> new BlockItem(SOLARGENERATORT3_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SolarEntityT3>> SOLARGENERATORT3_ENTITY = BLOCK_ENTITIES.register("advanced_solar_generator", () -> BlockEntityType.Builder.of(SolarEntityT3::new, SOLARGENERATORT3_BLOCK.get()).build(null));
+    public static final DeferredBlock<SolarBlockT4> SOLARGENERATORT4_BLOCK = MACHINES.register("industrial_solar_generator", () -> new SolarBlockT4(SolarBlock.defaultProperties()));
+    public static final DeferredItem<Item> SOLARGENERATORT4_BLOCKITEM = BLOCK_ITEMS.register("industrial_solar_generator", () -> new BlockItem(SOLARGENERATORT4_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SolarEntityT4>> SOLARGENERATORT4_ENTITY = BLOCK_ENTITIES.register("industrial_solar_generator", () -> BlockEntityType.Builder.of(SolarEntityT4::new, SOLARGENERATORT4_BLOCK.get()).build(null));
     public static final DeferredBlock<SolarBlockCompact> COMPACTSOLARGENERATOR_BLOCK = MACHINES.register("compact_solar_generator", () -> new SolarBlockCompact(SolarBlock.defaultProperties()));
     public static final DeferredItem<Item> COMPACTSOLARGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("compact_solar_generator", () -> new BlockItem(COMPACTSOLARGENERATOR_BLOCK.get(), new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SolarEntityCompact>> COMPACTSOLARGENERATOR_ENTITY = BLOCK_ENTITIES.register("compact_solar_generator", () -> BlockEntityType.Builder.of(SolarEntityCompact::new, COMPACTSOLARGENERATOR_BLOCK.get()).build(null));
 
     public static final Supplier<MenuType<SolarMenu>> SOLARGENERATOR_MENU = MENUS.register("solar_generator", () -> IMenuTypeExtension.create(SolarMenu::factory));
 
-    public static final DeferredBlock<GeneratorBlockT1> BASICGENERATOR_BLOCK = MACHINES.register("basic_generator", () -> new GeneratorBlockT1(GeneratorBlock.defaultProperties()));
-    public static final DeferredItem<Item> BASICGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("basic_generator", () -> new BlockItem(BASICGENERATOR_BLOCK.get(), new Item.Properties()));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GeneratorEntityT1>> GENERATORT1_ENTITY = BLOCK_ENTITIES.register("basic_generator", () -> BlockEntityType.Builder.of(GeneratorEntityT1::new, BASICGENERATOR_BLOCK.get()).build(null));
-    public static final DeferredBlock<GeneratorBlockT2> INTERGENERATOR_BLOCK = MACHINES.register("intermediate_generator", () -> new GeneratorBlockT2(GeneratorBlock.defaultProperties()));
-    public static final DeferredItem<Item> INTERGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("intermediate_generator", () -> new BlockItem(INTERGENERATOR_BLOCK.get(), new Item.Properties()));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GeneratorEntityT2>> GENERATORT2_ENTITY = BLOCK_ENTITIES.register("intermediate_generator", () -> BlockEntityType.Builder.of(GeneratorEntityT2::new, INTERGENERATOR_BLOCK.get()).build(null));
-    public static final DeferredBlock<GeneratorBlockT3> ADVGENERATOR_BLOCK = MACHINES.register("advanced_generator", () -> new GeneratorBlockT3(GeneratorBlock.defaultProperties()));
-    public static final DeferredItem<Item> ADVGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("advanced_generator", () -> new BlockItem(ADVGENERATOR_BLOCK.get(), new Item.Properties()));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GeneratorEntityT3>> GENERATORT3_ENTITY = BLOCK_ENTITIES.register("advanced_generator", () -> BlockEntityType.Builder.of(GeneratorEntityT3::new, ADVGENERATOR_BLOCK.get()).build(null));
-    public static final DeferredBlock<GeneratorBlockT4> INDGENERATOR_BLOCK = MACHINES.register("industrial_generator", () -> new GeneratorBlockT4(GeneratorBlock.defaultProperties()));
-    public static final DeferredItem<Item> INDGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("industrial_generator", () -> new BlockItem(INDGENERATOR_BLOCK.get(), new Item.Properties()));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GeneratorEntityT4>> GENERATORT4_ENTITY = BLOCK_ENTITIES.register("industrial_generator", () -> BlockEntityType.Builder.of(GeneratorEntityT4::new, INDGENERATOR_BLOCK.get()).build(null));
+    public static final DeferredBlock<GeneratorBlockT1> GENERATORT1_BLOCK = MACHINES.register("basic_generator", () -> new GeneratorBlockT1(GeneratorBlock.defaultProperties()));
+    public static final DeferredItem<Item> GENERATORT1_BLOCKITEM = BLOCK_ITEMS.register("basic_generator", () -> new BlockItem(GENERATORT1_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GeneratorEntityT1>> GENERATORT1_ENTITY = BLOCK_ENTITIES.register("basic_generator", () -> BlockEntityType.Builder.of(GeneratorEntityT1::new, GENERATORT1_BLOCK.get()).build(null));
+    public static final DeferredBlock<GeneratorBlockT2> GENERATORT2_BLOCK = MACHINES.register("intermediate_generator", () -> new GeneratorBlockT2(GeneratorBlock.defaultProperties()));
+    public static final DeferredItem<Item> GENERATORT2_BLOCKITEM = BLOCK_ITEMS.register("intermediate_generator", () -> new BlockItem(GENERATORT2_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GeneratorEntityT2>> GENERATORT2_ENTITY = BLOCK_ENTITIES.register("intermediate_generator", () -> BlockEntityType.Builder.of(GeneratorEntityT2::new, GENERATORT2_BLOCK.get()).build(null));
+    public static final DeferredBlock<GeneratorBlockT3> GENERATORT3_BLOCK = MACHINES.register("advanced_generator", () -> new GeneratorBlockT3(GeneratorBlock.defaultProperties()));
+    public static final DeferredItem<Item> GENERATORT3_BLOCKITEM = BLOCK_ITEMS.register("advanced_generator", () -> new BlockItem(GENERATORT3_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GeneratorEntityT3>> GENERATORT3_ENTITY = BLOCK_ENTITIES.register("advanced_generator", () -> BlockEntityType.Builder.of(GeneratorEntityT3::new, GENERATORT3_BLOCK.get()).build(null));
+    public static final DeferredBlock<GeneratorBlockT4> GENERATORT4_BLOCK = MACHINES.register("industrial_generator", () -> new GeneratorBlockT4(GeneratorBlock.defaultProperties()));
+    public static final DeferredItem<Item> GENERATORT4_BLOCKITEM = BLOCK_ITEMS.register("industrial_generator", () -> new BlockItem(GENERATORT4_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<GeneratorEntityT4>> GENERATORT4_ENTITY = BLOCK_ENTITIES.register("industrial_generator", () -> BlockEntityType.Builder.of(GeneratorEntityT4::new, GENERATORT4_BLOCK.get()).build(null));
 
     public static final Supplier<MenuType<GeneratorMenu>> GENERATOR_MENU = MENUS.register("generator", () -> IMenuTypeExtension.create(GeneratorMenu::factory));
 
-    public static final DeferredBlock<LavaGeneratorBlockT1> BASICLAVAGENERATOR_BLOCK = MACHINES.register("basic_lava_generator", () -> new LavaGeneratorBlockT1(LavaGeneratorBlock.defaultProperties()));
-    public static final DeferredItem<Item> BASICLAVALGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("basic_lava_generator", () -> new BlockItem(BASICLAVAGENERATOR_BLOCK.get(), new Item.Properties()));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LavaGeneratorEntityT1>> LAVAGENERATORT1_ENTITY = BLOCK_ENTITIES.register("basic_lava_generator", () -> BlockEntityType.Builder.of(LavaGeneratorEntityT1::new, BASICLAVAGENERATOR_BLOCK.get()).build(null));
-    public static final DeferredBlock<LavaGeneratorBlockT2> INTERLAVAGENERATOR_BLOCK = MACHINES.register("intermediate_lava_generator", () -> new LavaGeneratorBlockT2(LavaGeneratorBlock.defaultProperties()));
-    public static final DeferredItem<Item> INTERLAVAGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("intermediate_lava_generator", () -> new BlockItem(INTERLAVAGENERATOR_BLOCK.get(), new Item.Properties()));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LavaGeneratorEntityT2>> LAVAGENERATORT2_ENTITY = BLOCK_ENTITIES.register("intermediate_lava_generator", () -> BlockEntityType.Builder.of(LavaGeneratorEntityT2::new, INTERLAVAGENERATOR_BLOCK.get()).build(null));
-    public static final DeferredBlock<LavaGeneratorBlockT3> ADVLAVAGENERATOR_BLOCK = MACHINES.register("advanced_lava_generator", () -> new LavaGeneratorBlockT3(LavaGeneratorBlock.defaultProperties()));
-    public static final DeferredItem<Item> ADVLAVAGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("advanced_lava_generator", () -> new BlockItem(ADVLAVAGENERATOR_BLOCK.get(), new Item.Properties()));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LavaGeneratorEntityT3>> LAVAGENERATORT3_ENTITY = BLOCK_ENTITIES.register("advanced_lava_generator", () -> BlockEntityType.Builder.of(LavaGeneratorEntityT3::new, ADVLAVAGENERATOR_BLOCK.get()).build(null));
-    public static final DeferredBlock<LavaGeneratorBlockT4> INDLAVAGENERATOR_BLOCK = MACHINES.register("industrial_lava_generator", () -> new LavaGeneratorBlockT4(LavaGeneratorBlock.defaultProperties()));
-    public static final DeferredItem<Item> INDLAVAGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("industrial_lava_generator", () -> new BlockItem(INDLAVAGENERATOR_BLOCK.get(), new Item.Properties()));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LavaGeneratorEntityT4>> LAVAGENERATORT4_ENTITY = BLOCK_ENTITIES.register("industrial_lava_generator", () -> BlockEntityType.Builder.of(LavaGeneratorEntityT4::new, INDLAVAGENERATOR_BLOCK.get()).build(null));
+    public static final DeferredBlock<LavaGeneratorBlockT1> LAVAGENERATORT1_BLOCK = MACHINES.register("basic_lava_generator", () -> new LavaGeneratorBlockT1(LavaGeneratorBlock.defaultProperties()));
+    public static final DeferredItem<Item> LAVAGENERATORT1_BLOCKITEM = BLOCK_ITEMS.register("basic_lava_generator", () -> new BlockItem(LAVAGENERATORT1_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LavaGeneratorEntityT1>> LAVAGENERATORT1_ENTITY = BLOCK_ENTITIES.register("basic_lava_generator", () -> BlockEntityType.Builder.of(LavaGeneratorEntityT1::new, LAVAGENERATORT1_BLOCK.get()).build(null));
+    public static final DeferredBlock<LavaGeneratorBlockT2> LAVAGENERATORT2_BLOCK = MACHINES.register("intermediate_lava_generator", () -> new LavaGeneratorBlockT2(LavaGeneratorBlock.defaultProperties()));
+    public static final DeferredItem<Item> LAVAGENERATORT2_BLOCKITEM = BLOCK_ITEMS.register("intermediate_lava_generator", () -> new BlockItem(LAVAGENERATORT2_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LavaGeneratorEntityT2>> LAVAGENERATORT2_ENTITY = BLOCK_ENTITIES.register("intermediate_lava_generator", () -> BlockEntityType.Builder.of(LavaGeneratorEntityT2::new, LAVAGENERATORT2_BLOCK.get()).build(null));
+    public static final DeferredBlock<LavaGeneratorBlockT3> LAVAGENERATORT3_BLOCK = MACHINES.register("advanced_lava_generator", () -> new LavaGeneratorBlockT3(LavaGeneratorBlock.defaultProperties()));
+    public static final DeferredItem<Item> LAVAGENERATORT3_BLOCKITEM = BLOCK_ITEMS.register("advanced_lava_generator", () -> new BlockItem(LAVAGENERATORT3_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LavaGeneratorEntityT3>> LAVAGENERATORT3_ENTITY = BLOCK_ENTITIES.register("advanced_lava_generator", () -> BlockEntityType.Builder.of(LavaGeneratorEntityT3::new, LAVAGENERATORT3_BLOCK.get()).build(null));
+    public static final DeferredBlock<LavaGeneratorBlockT4> LAVAGENERATORT4_BLOCK = MACHINES.register("industrial_lava_generator", () -> new LavaGeneratorBlockT4(LavaGeneratorBlock.defaultProperties()));
+    public static final DeferredItem<Item> LAVAGENERATORT4_BLOCKITEM = BLOCK_ITEMS.register("industrial_lava_generator", () -> new BlockItem(LAVAGENERATORT4_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LavaGeneratorEntityT4>> LAVAGENERATORT4_ENTITY = BLOCK_ENTITIES.register("industrial_lava_generator", () -> BlockEntityType.Builder.of(LavaGeneratorEntityT4::new, LAVAGENERATORT4_BLOCK.get()).build(null));
 
     public static final Supplier<MenuType<LavaGeneratorMenu>> LAVAGENERATOR_MENU = MENUS.register("lava_generator", () -> IMenuTypeExtension.create(LavaGeneratorMenu::factory));
 
-    public static final DeferredBlock<BiogeneratorBlockT1> BASICBIOGENERATOR_BLOCK = MACHINES.register("basic_biogenerator", () -> new BiogeneratorBlockT1(BiogeneratorBlock.defaultProperties()));
-    public static final DeferredItem<Item> BASICBIOLGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("basic_biogenerator", () -> new BlockItem(BASICBIOGENERATOR_BLOCK.get(), new Item.Properties()));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BiogeneratorEntityT1>> BIOGENERATORT1_ENTITY = BLOCK_ENTITIES.register("basic_biogenerator", () -> BlockEntityType.Builder.of(BiogeneratorEntityT1::new, BASICBIOGENERATOR_BLOCK.get()).build(null));
-    public static final DeferredBlock<BiogeneratorBlockT2> INTERBIOGENERATOR_BLOCK = MACHINES.register("intermediate_biogenerator", () -> new BiogeneratorBlockT2(BiogeneratorBlock.defaultProperties()));
-    public static final DeferredItem<Item> INTERBIOGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("intermediate_biogenerator", () -> new BlockItem(INTERBIOGENERATOR_BLOCK.get(), new Item.Properties()));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BiogeneratorEntityT2>> BIOGENERATORT2_ENTITY = BLOCK_ENTITIES.register("intermediate_biogenerator", () -> BlockEntityType.Builder.of(BiogeneratorEntityT2::new, INTERBIOGENERATOR_BLOCK.get()).build(null));
-    public static final DeferredBlock<BiogeneratorBlockT3> ADVBIOGENERATOR_BLOCK = MACHINES.register("advanced_biogenerator", () -> new BiogeneratorBlockT3(BiogeneratorBlock.defaultProperties()));
-    public static final DeferredItem<Item> ADVBIOGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("advanced_biogenerator", () -> new BlockItem(ADVBIOGENERATOR_BLOCK.get(), new Item.Properties()));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BiogeneratorEntityT3>> BIOGENERATORT3_ENTITY = BLOCK_ENTITIES.register("advanced_biogenerator", () -> BlockEntityType.Builder.of(BiogeneratorEntityT3::new, ADVBIOGENERATOR_BLOCK.get()).build(null));
-    public static final DeferredBlock<BiogeneratorBlockT4> INDBIOGENERATOR_BLOCK = MACHINES.register("industrial_biogenerator", () -> new BiogeneratorBlockT4(BiogeneratorBlock.defaultProperties()));
-    public static final DeferredItem<Item> INDBIOGENERATOR_BLOCKITEM = BLOCK_ITEMS.register("industrial_biogenerator", () -> new BlockItem(INDBIOGENERATOR_BLOCK.get(), new Item.Properties()));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BiogeneratorEntityT4>> BIOGENERATORT4_ENTITY = BLOCK_ENTITIES.register("industrial_biogenerator", () -> BlockEntityType.Builder.of(BiogeneratorEntityT4::new, INDBIOGENERATOR_BLOCK.get()).build(null));
+    public static final DeferredBlock<BiogeneratorBlockT1> BIOGENERATORT1_BLOCK = MACHINES.register("basic_biogenerator", () -> new BiogeneratorBlockT1(BiogeneratorBlock.defaultProperties()));
+    public static final DeferredItem<Item> BIOGENERATORT1_BLOCKITEM = BLOCK_ITEMS.register("basic_biogenerator", () -> new BlockItem(BIOGENERATORT1_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BiogeneratorEntityT1>> BIOGENERATORT1_ENTITY = BLOCK_ENTITIES.register("basic_biogenerator", () -> BlockEntityType.Builder.of(BiogeneratorEntityT1::new, BIOGENERATORT1_BLOCK.get()).build(null));
+    public static final DeferredBlock<BiogeneratorBlockT2> BIOGENERATORT2_BLOCK = MACHINES.register("intermediate_biogenerator", () -> new BiogeneratorBlockT2(BiogeneratorBlock.defaultProperties()));
+    public static final DeferredItem<Item> BIOGENERATORT2_BLOCKITEM = BLOCK_ITEMS.register("intermediate_biogenerator", () -> new BlockItem(BIOGENERATORT2_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BiogeneratorEntityT2>> BIOGENERATORT2_ENTITY = BLOCK_ENTITIES.register("intermediate_biogenerator", () -> BlockEntityType.Builder.of(BiogeneratorEntityT2::new, BIOGENERATORT2_BLOCK.get()).build(null));
+    public static final DeferredBlock<BiogeneratorBlockT3> BIOGENERATORT3_BLOCK = MACHINES.register("advanced_biogenerator", () -> new BiogeneratorBlockT3(BiogeneratorBlock.defaultProperties()));
+    public static final DeferredItem<Item> BIOGENERATORT3_BLOCKITEM = BLOCK_ITEMS.register("advanced_biogenerator", () -> new BlockItem(BIOGENERATORT3_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BiogeneratorEntityT3>> BIOGENERATORT3_ENTITY = BLOCK_ENTITIES.register("advanced_biogenerator", () -> BlockEntityType.Builder.of(BiogeneratorEntityT3::new, BIOGENERATORT3_BLOCK.get()).build(null));
+    public static final DeferredBlock<BiogeneratorBlockT4> BIOGENERATORT4_BLOCK = MACHINES.register("industrial_biogenerator", () -> new BiogeneratorBlockT4(BiogeneratorBlock.defaultProperties()));
+    public static final DeferredItem<Item> BIOGENERATORT4_BLOCKITEM = BLOCK_ITEMS.register("industrial_biogenerator", () -> new BlockItem(BIOGENERATORT4_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BiogeneratorEntityT4>> BIOGENERATORT4_ENTITY = BLOCK_ENTITIES.register("industrial_biogenerator", () -> BlockEntityType.Builder.of(BiogeneratorEntityT4::new, BIOGENERATORT4_BLOCK.get()).build(null));
 
     public static final Supplier<MenuType<BiogeneratorMenu>> BIOGENERATOR_MENU = MENUS.register("biogenerator", () -> IMenuTypeExtension.create(BiogeneratorMenu::factory));
 
-    public static final DeferredBlock<BatteryBlockT1> BASICBATTERY_BLOCK = BATTERIES.register("basic_battery", () -> new BatteryBlockT1(BatteryBlock.defaultProperties()));
-    public static final DeferredItem<Item> BATTERYT1_ITEM = BLOCK_ITEMS.register("basic_battery", () -> new BatteryBlockItem(BASICBATTERY_BLOCK.get(), new Item.Properties(), 10000));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BatteryEntityT1>> BATTERYT1_ENTITY = BLOCK_ENTITIES.register("basic_battery", () -> BlockEntityType.Builder.of(BatteryEntityT1::new, BASICBATTERY_BLOCK.get()).build(null) );
-    public static final DeferredBlock<BatteryBlockT2> INTBATTERY_BLOCK = BATTERIES.register("intermediate_battery",() -> new BatteryBlockT2(BatteryBlock.defaultProperties()));
-    public static final DeferredItem<Item> BATTERYT2_ITEM = BLOCK_ITEMS.register("intermediate_battery", () -> new BatteryBlockItem(INTBATTERY_BLOCK.get(), new Item.Properties(), 20000));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BatteryEntityT2>> BATTERYT2_ENTITY = BLOCK_ENTITIES.register("intermediate_battery", () -> BlockEntityType.Builder.of(BatteryEntityT2::new, INTBATTERY_BLOCK.get()).build(null) );
-    public static final DeferredBlock<BatteryBlockT3> ADVBATTERY_BLOCK = BATTERIES.register("advanced_battery", () -> new BatteryBlockT3(BatteryBlock.defaultProperties()));
-    public static final DeferredItem<Item> BATTERYT3_ITEM = BLOCK_ITEMS.register("advanced_battery", () -> new BatteryBlockItem(ADVBATTERY_BLOCK.get(), new Item.Properties(),40000));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BatteryEntityT3>> BATTERYT3_ENTITY = BLOCK_ENTITIES.register("advanced_battery", () -> BlockEntityType.Builder.of(BatteryEntityT3::new, ADVBATTERY_BLOCK.get()).build(null) );
-    public static final DeferredBlock<BatteryBlockT4> INDBATTERY_BLOCK = BATTERIES.register("industrial_battery",() -> new BatteryBlockT4(BatteryBlock.defaultProperties()));
-    public static final DeferredItem<Item> BATTERYT4_ITEM = BLOCK_ITEMS.register("industrial_battery", () -> new BatteryBlockItem(INDBATTERY_BLOCK.get(), new Item.Properties(), 80000));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BatteryEntityT4>> BATTERYT4_ENTITY = BLOCK_ENTITIES.register("industrial_battery", () -> BlockEntityType.Builder.of(BatteryEntityT4::new, INDBATTERY_BLOCK.get()).build(null) );
+    public static final DeferredBlock<BatteryBlockT1> BATTERYT1_BLOCK = BATTERIES.register("basic_battery", () -> new BatteryBlockT1(BatteryBlock.defaultProperties()));
+    public static final DeferredItem<Item> BATTERYT1_ITEM = BLOCK_ITEMS.register("basic_battery", () -> new BatteryBlockItem(BATTERYT1_BLOCK.get(), new Item.Properties(), 10000));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BatteryEntityT1>> BATTERYT1_ENTITY = BLOCK_ENTITIES.register("basic_battery", () -> BlockEntityType.Builder.of(BatteryEntityT1::new, BATTERYT1_BLOCK.get()).build(null) );
+    public static final DeferredBlock<BatteryBlockT2> BATTERYT2_BLOCK = BATTERIES.register("intermediate_battery",() -> new BatteryBlockT2(BatteryBlock.defaultProperties()));
+    public static final DeferredItem<Item> BATTERYT2_ITEM = BLOCK_ITEMS.register("intermediate_battery", () -> new BatteryBlockItem(BATTERYT2_BLOCK.get(), new Item.Properties(), 20000));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BatteryEntityT2>> BATTERYT2_ENTITY = BLOCK_ENTITIES.register("intermediate_battery", () -> BlockEntityType.Builder.of(BatteryEntityT2::new, BATTERYT2_BLOCK.get()).build(null) );
+    public static final DeferredBlock<BatteryBlockT3> BATTERYT3_BLOCK = BATTERIES.register("advanced_battery", () -> new BatteryBlockT3(BatteryBlock.defaultProperties()));
+    public static final DeferredItem<Item> BATTERYT3_ITEM = BLOCK_ITEMS.register("advanced_battery", () -> new BatteryBlockItem(BATTERYT3_BLOCK.get(), new Item.Properties(),40000));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BatteryEntityT3>> BATTERYT3_ENTITY = BLOCK_ENTITIES.register("advanced_battery", () -> BlockEntityType.Builder.of(BatteryEntityT3::new, BATTERYT3_BLOCK.get()).build(null) );
+    public static final DeferredBlock<BatteryBlockT4> BATTERYT4_BLOCK = BATTERIES.register("industrial_battery",() -> new BatteryBlockT4(BatteryBlock.defaultProperties()));
+    public static final DeferredItem<Item> BATTERYT4_ITEM = BLOCK_ITEMS.register("industrial_battery", () -> new BatteryBlockItem(BATTERYT4_BLOCK.get(), new Item.Properties(), 80000));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BatteryEntityT4>> BATTERYT4_ENTITY = BLOCK_ENTITIES.register("industrial_battery", () -> BlockEntityType.Builder.of(BatteryEntityT4::new, BATTERYT4_BLOCK.get()).build(null) );
     public static final Supplier<MenuType<BatteryMenu>> BATTERY_MENU = MENUS.register("battery", () -> IMenuTypeExtension.create(BatteryMenu::factory));
     public static final Supplier<RecipeSerializer<BatteryUpgradeRecipe>> BATTERYUPGRADE_SERIALIZER = RECIPE_SERIALIZERS.register("battery_upgrade", BatteryUpgradeRecipe.Serializer::new);
 
@@ -309,6 +314,25 @@ public class Registration {
     ));
     public static final DeferredItem<Item> COPPERWIRE_BLOCKITEM = BLOCK_ITEMS.register("copper_wire", () -> new BlockItem(COPPERWIRE_BLOCK.get(), new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CopperWireEntity>> COPPERWIRE_ENTITY = BLOCK_ENTITIES.register("copper_wire", ()-> BlockEntityType.Builder.of(CopperWireEntity::new, COPPERWIRE_BLOCK.get()).build(null));
+    public static final DeferredBlock<ConcealedWireBlock> CONCEALEDWIRE_BLOCK = BLOCKS.register("concealed_wire", () -> new ConcealedWireBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.METAL)
+            .sound(SoundType.METAL)
+            .strength(1.5f)
+            .noOcclusion()
+            .isValidSpawn((blockState,blockGetter,blockPos,entityType) -> false)
+    ));
+    public static final DeferredItem<Item> CONCEALEDWIRE_BLOCKITEM = BLOCK_ITEMS.register("concealed_wire", () -> new BlockItem(CONCEALEDWIRE_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ConcealedWireEntity>> CONCEALEDWIRE_ENTITY = BLOCK_ENTITIES.register("concealed_wire", ()-> BlockEntityType.Builder.of(ConcealedWireEntity::new, CONCEALEDWIRE_BLOCK.get()).build(null));
+    public static final DeferredBlock<ConcealedWireWallBlock> CONCEALEDWIRE_WALL_BLOCK = BLOCKS.register("concealed_wire_wall", () -> new ConcealedWireWallBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.METAL)
+            .sound(SoundType.METAL)
+            .strength(1.5f)
+            .noOcclusion()
+            .isValidSpawn((blockState,blockGetter,blockPos,entityType) -> false)
+    ));
+    public static final DeferredItem<Item> CONCEALEDWIRE_WALL_BLOCKITEM = BLOCK_ITEMS.register("concealed_wire_wall", () -> new BlockItem(CONCEALEDWIRE_WALL_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ConcealedWireWallEntity>> CONCEALEDWIRE_WALL_ENTITY = BLOCK_ENTITIES.register("concealed_wire_wall", ()-> BlockEntityType.Builder.of(ConcealedWireWallEntity::new, CONCEALEDWIRE_WALL_BLOCK.get()).build(null));
+
 
     public static final DeferredBlock<BufferBlock> BUFFER_BLOCK = MACHINES.register("buffer", () -> new BufferBlock(BlockBehaviour.Properties.of()
             .mapColor(MapColor.METAL)
@@ -562,17 +586,16 @@ public class Registration {
             .sound(SoundType.LANTERN)
             .strength(15.0f)
             .lightLevel((blockState)->blockState.getValue(AbstractMachineBlock.ACTIVE) ? 15 : 0)
-            .emissiveRendering((state, getter, pos) -> true)
+            .emissiveRendering((state, getter, pos) -> state.getValue(LanternBlock.ACTIVE))
             .requiresCorrectToolForDrops()
     ));
     public static final DeferredItem<Item> ELECTRIC_LANTERN_BLOCKITEM = BLOCK_ITEMS.register("electric_lantern", () -> new BlockItem(ELECTRIC_LANTERN_BLOCK.get(), new Item.Properties()));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LanternEntity>> ELECTRIC_LANTERN_ENTITY = BLOCK_ENTITIES.register("electric_lantern", () -> BlockEntityType.Builder.of(LanternEntity::new, ELECTRIC_LANTERN_BLOCK.get()).build(null));
     public static final DeferredBlock<CopperLanternBlock> COPPER_ELECTRIC_LANTERN_BLOCK = MACHINES.register("copper_electric_lantern", () -> new CopperLanternBlock(BlockBehaviour.Properties.of()
             .mapColor(MapColor.COLOR_LIGHT_GREEN)
             .sound(SoundType.LANTERN)
             .strength(15.0f)
             .lightLevel((blockState)->blockState.getValue(AbstractMachineBlock.ACTIVE) ? 15 : 0)
-            .emissiveRendering((state, getter, pos) -> true)
+            .emissiveRendering((state, getter, pos) -> state.getValue(LanternBlock.ACTIVE))
             .requiresCorrectToolForDrops()
     ));
     public static final DeferredItem<Item> COPPER_ELECTRIC_LANTERN_BLOCKITEM = BLOCK_ITEMS.register("copper_electric_lantern", () -> new BlockItem(COPPER_ELECTRIC_LANTERN_BLOCK.get(), new Item.Properties()));
@@ -582,11 +605,21 @@ public class Registration {
             .sound(SoundType.LANTERN)
             .strength(15.0f)
             .lightLevel((blockState)->blockState.getValue(AbstractMachineBlock.ACTIVE) ? 15 : 0)
-            .emissiveRendering((state, getter, pos) -> true)
+            .emissiveRendering((state, getter, pos) -> state.getValue(LanternBlock.ACTIVE))
             .requiresCorrectToolForDrops()
     ));
     public static final DeferredItem<Item> NETHER_ELECTRIC_LANTERN_BLOCKITEM = BLOCK_ITEMS.register("nether_electric_lantern", () -> new BlockItem(NETHER_ELECTRIC_LANTERN_BLOCK.get(), new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<NetherLanternEntity>> NETHER_ELECTRIC_LANTERN_ENTITY = BLOCK_ENTITIES.register("nether_electric_lantern", () -> BlockEntityType.Builder.of(NetherLanternEntity::new, NETHER_ELECTRIC_LANTERN_BLOCK.get()).build(null));
+    public static final DeferredBlock<LanternBlock> PRIDE_ELECTRIC_LANTERN_BLOCK = MACHINES.register("pride_electric_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.COLOR_PURPLE)
+            .sound(SoundType.LANTERN)
+            .strength(15.0f)
+            .lightLevel((blockState)->blockState.getValue(AbstractMachineBlock.ACTIVE) ? 15 : 0)
+            .emissiveRendering((state, getter, pos) -> state.getValue(LanternBlock.ACTIVE))
+            .requiresCorrectToolForDrops()
+    ));
+    public static final DeferredItem<Item> PRIDE_ELECTRIC_LANTERN_BLOCKITEM = BLOCK_ITEMS.register("pride_electric_lantern", () -> new BlockItem(PRIDE_ELECTRIC_LANTERN_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LanternEntity>> ELECTRIC_LANTERN_ENTITY = BLOCK_ENTITIES.register("electric_lantern", () -> BlockEntityType.Builder.of(LanternEntity::new, ELECTRIC_LANTERN_BLOCK.get(), PRIDE_ELECTRIC_LANTERN_BLOCK.get()).build(null));
     public static final Map<DyeColor,DeferredBlock<TerracottaLanternBlock>> TERRACOTTA_LANTERN_BLOCK = new HashMap<DyeColor, DeferredBlock<TerracottaLanternBlock>>();
     public static final List<DeferredItem<Item>> TERRACOTTA_LANTERN_BLOCK_ITEM = new ArrayList<>();
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TerracottaLanternEntity>> TERRACOTTA_LANTERN_ENTITY = BLOCK_ENTITIES.register("terracotta_electric_lantern", () -> BlockEntityType.Builder.of(TerracottaLanternEntity::new, TERRACOTTA_LANTERN_BLOCK.values().stream().map(DeferredBlock<TerracottaLanternBlock>::get).toArray(TerracottaLanternBlock[]::new)).build(null));
@@ -611,6 +644,11 @@ public class Registration {
     public static final DeferredItem<CrusherItem> IRON_CRUSHER_ITEM = TOOLS.register("iron_crusher", () -> new CrusherItem(Tiers.IRON, new Item.Properties(), 512));
     public static final DeferredItem<CrusherItem> DIAMOND_CRUSHER_ITEM = TOOLS.register("diamond_crusher", () -> new CrusherItem(Tiers.DIAMOND, new Item.Properties(), 1024));
     public static final DeferredItem<CrusherItem> NETHERITE_CRUSHER_ITEM = TOOLS.register("netherite_crusher", () -> new CrusherItem(Tiers.NETHERITE, new Item.Properties(), 2048));
+    public static final DeferredItem<Item> WRENCH_ITEM = TOOLS.register("wrench", () -> new Item(new Item.Properties()
+            .stacksTo(1)
+    ));
+
+    public static final DeferredItem<Item> BOOK = HIDDEN_ITEMS.register("book", () -> new Item(new Item.Properties().stacksTo(1)));
 
     public static final DeferredBlock<Block> NETHER_DUST_BLOCK = BLOCKS.register("nether_dust_block", () -> new Block(BlockBehaviour.Properties.of()
             .mapColor(MapColor.NETHER)
@@ -637,6 +675,7 @@ public class Registration {
     public static final TagKey<Item> PLANT_DUST_TAG = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "dusts/plant"));
     public static final TagKey<Item> CRUSHERS_TAG = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MODID, "crushers"));
     public static final TagKey<Block> MINEABLE_WITH_CRUSHER = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(MODID, "mineable/crusher"));
+    public static final TagKey<Block> HEAT_SOURCES = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(MODID, "heat_source"));
 
     // Recipe Result Types
     public static final DeferredHolder<RecipeResultType<?>, RecipeResultType<ItemRecipeResult>> RESULT_ITEM = RECIPE_RESULT_TYPES.register("item", () -> new RecipeResultType<>(ItemRecipeResult.CODEC, ItemRecipeResult.STREAM_CODEC));

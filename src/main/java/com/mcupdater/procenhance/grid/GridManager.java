@@ -1,14 +1,20 @@
 package com.mcupdater.procenhance.grid;
 
 import com.mcupdater.procenhance.ProcessEnhancement;
+import com.mcupdater.procenhance.blocks.copper_wire.CopperWireEntity;
+import com.mcupdater.procenhance.capabilities.DummyEnergyHandler;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.saveddata.SavedData;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -28,6 +34,19 @@ public class GridManager extends SavedData {
 
 	public GridManager(Set<Grid> loadedGrids, Set<Node> loadedNodes) {
 		setInstance(this);
+	}
+
+	public static Node getNode(UUID nodeId) {
+		Node retrieved = null;
+		if (GridManager.getInstance() != null) {
+			retrieved = GridManager.getInstance().getNodeById(nodeId);
+		} else {
+			ProcessEnhancement.LOGGER.warn("GridManager not available");
+		}
+		if (retrieved == null) {
+			ProcessEnhancement.LOGGER.error("Retrieved Node is null!");
+		}
+		return retrieved;
 	}
 
 	public Grid createGrid() {
@@ -78,7 +97,7 @@ public class GridManager extends SavedData {
 	public static GridManager load(CompoundTag compoundTag, HolderLookup.Provider provider) {
 		ProcessEnhancement.LOGGER.info("GridManager load");
 		new GridManager();
-		ProcessEnhancement.LOGGER.debug("Tag data: {}",compoundTag.toString());
+		//ProcessEnhancement.LOGGER.debug("Tag data: {}",compoundTag.toString());
 		Set<Grid> loadedGrids = new HashSet<>();
 		if (compoundTag.contains("grids")) {
 			ListTag gridsTag = compoundTag.getList("grids", Tag.TAG_COMPOUND);
@@ -116,36 +135,36 @@ public class GridManager extends SavedData {
 				}
 			});
 		} else {
-			ProcessEnhancement.LOGGER.debug("Grid {} not found in map",grid.getGridId());
+			//ProcessEnhancement.LOGGER.debug("Grid {} not found in map",grid.getGridId());
 		}
 		return nodeSet;
 	}
 
 	public void removeNode(Node node) {
-		ProcessEnhancement.LOGGER.info("Removing node: {}",node.getNodeId());
+		//ProcessEnhancement.LOGGER.info("Removing node: {}",node.getNodeId());
 		Grid grid = node.getRawGrid();
 		if (grid != null) {
 			this.nodeMap.get(grid.getGridId()).remove(node.getNodeId());
 		} else {
-			ProcessEnhancement.LOGGER.debug("Null grid!");
+			//ProcessEnhancement.LOGGER.debug("Null grid!");
 		}
 		this.nodes.remove(node);
 		this.setDirty();
 	}
 
 	public void addNode(Node node, Boolean loading) {
-		ProcessEnhancement.LOGGER.debug("Before: Nodes size: {}", this.nodes.size());
-		this.nodes.forEach(temp -> ProcessEnhancement.LOGGER.debug(" - id: {}; grid: {}",temp.getNodeId(),temp.getRawGrid().getGridId()));
+		//ProcessEnhancement.LOGGER.debug("Before: Nodes size: {}", this.nodes.size());
+		//this.nodes.forEach(temp -> ProcessEnhancement.LOGGER.debug(" - id: {}; grid: {}",temp.getNodeId(),temp.getRawGrid().getGridId()));
 		if (node.getGrid() != null) {
 			this.grids.add(node.getGrid());
 		} else {
-			ProcessEnhancement.LOGGER.warn("Load failure! Node {}", node.getNodeId());
+			//ProcessEnhancement.LOGGER.warn("Load failure! Node {}", node.getNodeId());
 		}
 		this.nodes.add(node);
-		ProcessEnhancement.LOGGER.debug("After: Nodes size: {}", this.nodes.size());
-		this.nodes.forEach(temp -> ProcessEnhancement.LOGGER.debug(" - id: {}; grid: {}",temp.getNodeId(),temp.getRawGrid().getGridId()));
+		//ProcessEnhancement.LOGGER.debug("After: Nodes size: {}", this.nodes.size());
+		//this.nodes.forEach(temp -> ProcessEnhancement.LOGGER.debug(" - id: {}; grid: {}",temp.getNodeId(),temp.getRawGrid().getGridId()));
 		this.nodeMap.computeIfAbsent(node.getGrid().getGridId(), k -> new HashSet<>()).add(node.getNodeId());
-		ProcessEnhancement.LOGGER.debug("Map size: {}", node.getGrid(), this.nodeMap.size());
+		//ProcessEnhancement.LOGGER.debug("Map size: {}", node.getGrid(), this.nodeMap.size());
 		this.nodeMap.forEach((key, value) -> ProcessEnhancement.LOGGER.debug(" - Grid: {}; Nodes: {}",key,value.size()));
 		if (!loading) this.setDirty();
 	}
@@ -166,11 +185,13 @@ public class GridManager extends SavedData {
 		Node result = this.nodes.stream().filter(node -> node.getNodeId().equals(nodeId)).findFirst().orElse(null);
 		if (result == null) {
 			ProcessEnhancement.LOGGER.warn("Node {} not found",nodeId);
+			/*
 			StackTraceElement[] stack = Thread.currentThread().getStackTrace();
 
 			for (int i = 1; i < Math.min(11, stack.length); i++) {
 				ProcessEnhancement.LOGGER.debug(stack[i].toString());
 			}
+			 */
 		}
 		return result;
 	}
@@ -184,12 +205,12 @@ public class GridManager extends SavedData {
 	}
 
 	public void reassignOrphaned(UUID gridId) {
-		ProcessEnhancement.LOGGER.debug("Grid {} invalid.  Reassigning orphans", gridId);
+		//ProcessEnhancement.LOGGER.debug("Grid {} invalid.  Reassigning orphans", gridId);
 		Set<UUID> orphanedNodes = this.nodes.stream().filter(node -> node.getRawGrid().equals(gridId)).map(node -> node.getNodeId()).collect(Collectors.toSet());
-		ProcessEnhancement.LOGGER.debug(" - Orphan count: {}",orphanedNodes.size());
+		//ProcessEnhancement.LOGGER.debug(" - Orphan count: {}",orphanedNodes.size());
 		orphanedNodes.stream().forEach(nodeId -> {
 			this.getNodeById(nodeId).validate();
-			ProcessEnhancement.LOGGER.debug(" - Node: {} has new Grid: {}",nodeId, this.getNodeById(nodeId).getGrid());
+			//ProcessEnhancement.LOGGER.debug(" - Node: {} has new Grid: {}",nodeId, this.getNodeById(nodeId).getGrid());
 		});
 	}
 
@@ -212,5 +233,16 @@ public class GridManager extends SavedData {
 	public void changeGrid(@NotNull UUID nodeId, @NotNull UUID oldGrid, @NotNull UUID newGrid) {
 		this.nodeMap.computeIfAbsent(oldGrid, k -> new HashSet<>()).remove(nodeId);
 		this.nodeMap.computeIfAbsent(newGrid, k -> new HashSet<>()).add(nodeId);
+	}
+
+	public static IEnergyStorage getEnergyHandler(BlockEntity blockEntity, @Nullable Direction side) {
+		if (side == null) {
+			return DummyEnergyHandler.INSTANCE;
+		}
+		if (GridManager.isLoaded() && ((INodeHolder) blockEntity).getNode() != null) {
+			return new GridEnergyHandler(((INodeHolder) blockEntity).getNode().getGrid(), blockEntity.getLevel().dimension().location(), blockEntity.getBlockPos().relative(side));
+		} else {
+			return null;
+		}
 	}
 }

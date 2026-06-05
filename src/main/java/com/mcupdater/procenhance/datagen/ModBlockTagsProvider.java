@@ -5,6 +5,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -35,5 +36,8 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
             this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(entry.get());
         }
         this.tag(Registration.MINEABLE_WITH_CRUSHER).addTags(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_SHOVEL);
+        this.tag(BlockTags.WALLS).add(Registration.CONCEALEDWIRE_WALL_BLOCK.get());
+
+        this.tag(Registration.HEAT_SOURCES).add(Blocks.CAMPFIRE,Blocks.SOUL_CAMPFIRE,Blocks.FIRE,Blocks.SOUL_FIRE,Blocks.LAVA);
     }
 }

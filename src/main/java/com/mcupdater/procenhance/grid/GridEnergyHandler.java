@@ -28,6 +28,9 @@ public class GridEnergyHandler implements IEnergyStorage {
 	@Override
 	public int receiveEnergy(int toReceive, boolean simulate) {
 		int availablePower = toReceive;
+		if (this.grid == null) {
+			return 0;  // Grid invalid, reject energy
+		}
 		Set<Endpoint> sinks = this.grid.getEndpoints().stream().filter(endpoint -> endpoint.type() == Endpoint.Type.SINK && !(levelId.toString().equals(endpoint.levelId()) && source.equals(endpoint.blockPos()))).collect(Collectors.toSet());
 		Set<Endpoint> storages = this.grid.getEndpoints().stream().filter(endpoint -> endpoint.type() == Endpoint.Type.STORAGE && !(levelId.toString().equals(endpoint.levelId()) && source.equals(endpoint.blockPos()))).collect(Collectors.toSet());
 		for (Endpoint endpoint : sinks) {

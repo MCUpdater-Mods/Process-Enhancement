@@ -74,17 +74,9 @@ public class ModEventHandlers {
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.HARVESTER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.AUTOPACKAGER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.BUFFER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
-				//event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.COPPERWIRE_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyResourceHandler().getEnergyHandler(side) : blockEntity.getEnergyResourceHandler().getInternalHandler());
-				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.COPPERWIRE_ENTITY.get(), (blockEntity, side) -> {
-					if (side == null) {
-						return DummyEnergyHandler.INSTANCE;
-					}
-					if (GridManager.isLoaded() && blockEntity.getNode() != null) {
-						return new GridEnergyHandler(blockEntity.getNode().getGrid(), blockEntity.getLevel().dimension().location(), blockEntity.getBlockPos().relative(side));
-					} else {
-						return null;
-					}
-				});
+				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.COPPERWIRE_ENTITY.get(), GridManager::getEnergyHandler);
+				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.CONCEALEDWIRE_ENTITY.get(), GridManager::getEnergyHandler);
+				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.CONCEALEDWIRE_WALL_ENTITY.get(), GridManager::getEnergyHandler);
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.BATTERYT1_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.BATTERYT2_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.BATTERYT3_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());

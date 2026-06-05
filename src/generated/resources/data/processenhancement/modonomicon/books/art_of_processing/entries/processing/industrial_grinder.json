@@ -1,0 +1,48 @@
+{
+    "background_u_index": 0,
+    "background_v_index": 0,
+    "category": "processing",
+    "description": "book.processenhancement.art_of_processing.processing.industrial_grinder.description",
+    "hide_while_locked": false,
+    "icon": {
+        "item": "processenhancement:industrial_grinder"
+    },
+    "name": "book.processenhancement.art_of_processing.processing.industrial_grinder.name",
+    "pages": [
+        {
+            "type": "modonomicon:spotlight",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "item": {
+                "item": "processenhancement:industrial_grinder"
+            },
+            "text": "book.processenhancement.art_of_processing.processing.industrial_grinder.intro.text",
+            "title": ""
+        },
+        {
+            "type": "modonomicon:crafting_recipe",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "recipe_id_1": "processenhancement:industrial_grinder",
+            "text": "book.processenhancement.art_of_processing.processing.industrial_grinder.recipe.text",
+            "title1": "",
+            "title2": ""
+        }
+    ],
+    "parents": [
+        {
+            "draw_arrow": true,
+            "entry": "processing/advanced_grinder",
+            "line_enabled": true,
+            "line_reversed": false
+        }
+    ],
+    "show_when_any_parent_unlocked": false,
+    "sort_number": 7,
+    "x": 0,
+    "y": -2
+}

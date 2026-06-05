@@ -8,6 +8,7 @@ import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.mculib.inventory.InputOutputSettings;
 import com.mcupdater.mculib.inventory.SideSetting;
 import com.mcupdater.procenhance.setup.Config;
+import com.mcupdater.procenhance.setup.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -26,24 +27,19 @@ import java.util.List;
 import static com.mcupdater.procenhance.setup.Registration.CRUDEGENERATOR_ENTITY;
 
 public class CrudeGeneratorEntity extends AbstractConfigurableBlockEntity implements IMachineGuiProvider {
-    private List<Block> validSources = Arrays.asList(Blocks.LAVA,Blocks.FIRE,Blocks.SOUL_FIRE,Blocks.CAMPFIRE,Blocks.SOUL_CAMPFIRE);
 
     public CrudeGeneratorEntity(BlockPos blockPos, BlockState blockState) {
         super(CRUDEGENERATOR_ENTITY.get(), blockPos, blockState);
         EnergyResourceHandler energyResourceHandler = new EnergyResourceHandler(this.level, 50000, Integer.MAX_VALUE, false);
-        for (Direction side : Direction.values()) {
-            InputOutputSettings ioSetting = energyResourceHandler.getIOSettings(side);
-            ioSetting.setInputSetting(SideSetting.DISABLED);
-            energyResourceHandler.updateIOSettings(side, ioSetting);
-        }
+        Arrays.stream(Direction.values()).sequential().forEach(side -> energyResourceHandler.updateIOSettings(side, new InputOutputSettings(SideSetting.DISABLED, side.getOpposite(), SideSetting.AUTOMATED, side.getOpposite(), (byte) 0)));
         this.configMap.put("power", energyResourceHandler);
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pBlockState) {
         EnergyResourceHandler energyStorage = (EnergyResourceHandler) this.configMap.get("power");
         if (!this.level.isClientSide) {
-            Block blockBelow = this.level.getBlockState(this.worldPosition.below()).getBlock();
-            if (validSources.contains(blockBelow)) {
+            BlockState blockBelow = this.level.getBlockState(this.worldPosition.below());
+            if (blockBelow.is(Registration.HEAT_SOURCES)) {
                 int added = energyStorage.getInternalHandler().receiveEnergy(Config.CRUDE_GENERATOR_PER_TICK.get(), false);
                 if (added > 0) {
                     boolean currentState = pBlockState.getValue((AbstractMachineBlock.ACTIVE));

@@ -1,0 +1,40 @@
+{
+    "background_u_index": 0,
+    "background_v_index": 0,
+    "category": "infrastructure",
+    "description": "book.processenhancement.art_of_processing.infrastructure.tuff_solidifier.description",
+    "hide_while_locked": false,
+    "icon": {
+        "item": "processenhancement:tuff_solidifier"
+    },
+    "name": "book.processenhancement.art_of_processing.infrastructure.tuff_solidifier.name",
+    "pages": [
+        {
+            "type": "modonomicon:spotlight",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "item": {
+                "item": "processenhancement:tuff_solidifier"
+            },
+            "text": "book.processenhancement.art_of_processing.infrastructure.tuff_solidifier.intro.text",
+            "title": ""
+        },
+        {
+            "type": "modonomicon:crafting_recipe",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "recipe_id_1": "processenhancement:tuff_solidifier",
+            "text": "book.processenhancement.art_of_processing.infrastructure.tuff_solidifier.recipe.text",
+            "title1": "",
+            "title2": ""
+        }
+    ],
+    "show_when_any_parent_unlocked": false,
+    "sort_number": 41,
+    "x": 5,
+    "y": 2
+}

@@ -1,0 +1,48 @@
+{
+    "background_u_index": 0,
+    "background_v_index": 0,
+    "category": "generation",
+    "description": "book.processenhancement.art_of_processing.generation.generatort3.description",
+    "hide_while_locked": false,
+    "icon": {
+        "item": "processenhancement:advanced_generator"
+    },
+    "name": "book.processenhancement.art_of_processing.generation.generatort3.name",
+    "pages": [
+        {
+            "type": "modonomicon:spotlight",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "item": {
+                "item": "processenhancement:advanced_generator"
+            },
+            "text": "book.processenhancement.art_of_processing.generation.generatort3.intro.text",
+            "title": ""
+        },
+        {
+            "type": "modonomicon:crafting_recipe",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "recipe_id_1": "processenhancement:advanced_generator",
+            "text": "book.processenhancement.art_of_processing.generation.generatort3.recipe.text",
+            "title1": "",
+            "title2": ""
+        }
+    ],
+    "parents": [
+        {
+            "draw_arrow": true,
+            "entry": "generation/generatort2",
+            "line_enabled": true,
+            "line_reversed": false
+        }
+    ],
+    "show_when_any_parent_unlocked": false,
+    "sort_number": 3,
+    "x": 1,
+    "y": -3
+}

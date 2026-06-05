@@ -1,0 +1,37 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "category": "redstone",
+    "ingredients": [
+        {
+            "item": "processenhancement:copper_wire"
+        },
+        {
+            "item": "processenhancement:copper_wire"
+        },
+        {
+            "item": "processenhancement:copper_wire"
+        },
+        {
+            "item": "processenhancement:copper_wire"
+        },
+        {
+            "item": "processenhancement:copper_wire"
+        },
+        {
+            "item": "processenhancement:copper_wire"
+        },
+        {
+            "item": "processenhancement:copper_wire"
+        },
+        {
+            "item": "processenhancement:copper_wire"
+        },
+        {
+            "item": "minecraft:white_concrete_powder"
+        }
+    ],
+    "result": {
+        "count": 8,
+        "id": "processenhancement:concealed_wire"
+    }
+}
