@@ -1,0 +1,30 @@
+{
+    "background_u_index": 0,
+    "background_v_index": 0,
+    "category": "items",
+    "description": "book.processenhancement.art_of_processing.items.gunpowder.description",
+    "hide_while_locked": false,
+    "icon": {
+        "item": "minecraft:gunpowder"
+    },
+    "name": "book.processenhancement.art_of_processing.items.gunpowder.name",
+    "pages": [
+        {
+            "type": "modonomicon:spotlight",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "item": {
+                "count": 1,
+                "item": "minecraft:gunpowder"
+            },
+            "text": "book.processenhancement.art_of_processing.items.gunpowder.intro.text",
+            "title": "book.processenhancement.art_of_processing.items.gunpowder.intro.title"
+        }
+    ],
+    "show_when_any_parent_unlocked": false,
+    "sort_number": 2,
+    "x": -1,
+    "y": 1
+}

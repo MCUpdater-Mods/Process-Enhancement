@@ -5,13 +5,17 @@ import com.mcupdater.procenhance.recipe.RecipeHelper;
 import com.mcupdater.procenhance.recipe.result.RecipeResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.Holder;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -61,7 +65,17 @@ public class CrusherLootModifier extends LootModifier {
 			}
 		}
 		Collections.shuffle(prizeList);
-		replacedLoot.add(prizeList.get(context.getLevel().getRandom().nextInt(prizeList.size())));
+		int rolls = 1;
+		if (prizeList.size()>1) {
+			ItemStack tool = context.getParam(LootContextParams.TOOL);
+			Object2IntMap.Entry<Holder<Enchantment>> fortune = tool.getTagEnchantments().entrySet().stream().filter(x -> x.getKey().is(Enchantments.FORTUNE)).findFirst().orElse(null);
+			if (fortune != null) {
+				rolls += fortune.getIntValue();
+			}
+		}
+		for (int roll = 0; roll < rolls; roll++) {
+			replacedLoot.add(prizeList.get(context.getLevel().getRandom().nextInt(prizeList.size())));
+		}
 		return replacedLoot;
 	}
 

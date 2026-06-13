@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "key": {
+        "B": {
+            "item": "minecraft:brick"
+        },
+        "I": {
+            "item": "minecraft:copper_ingot"
+        }
+    },
+    "pattern": [
+        " I ",
+        " BI",
+        "B  "
+    ],
+    "result": {
+        "count": 1,
+        "id": "processenhancement:wrench"
+    }
+}

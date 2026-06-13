@@ -1,6 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"render_type": "cutout",
+	"parent": "block/orientable",
 	"textures": {
 		"0": "minecraft:block/copper_block",
 		"particle": "minecraft:block/copper_block"

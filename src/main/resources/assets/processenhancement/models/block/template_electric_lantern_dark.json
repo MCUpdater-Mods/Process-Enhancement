@@ -1,0 +1,18 @@
+{
+  "render_type": "translucent",
+  "textures": {
+    "glass": "processenhancement:block/darken"
+  },
+  "elements": [
+    {
+      "from": [ 3.999, 2.999, 3.999 ],
+      "to": [ 12.001, 13.001, 12.001 ],
+      "faces": {
+        "north": { "texture": "#glass"},
+        "south": { "texture": "#glass"},
+        "east": { "texture": "#glass"},
+        "west": { "texture": "#glass"}
+      }
+    }
+  ]
+}

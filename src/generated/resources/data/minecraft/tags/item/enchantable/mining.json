@@ -1,5 +1,9 @@
 {
     "values": [
-        "#processenhancement:crushers"
+        "#processenhancement:crushers",
+        "processenhancement:basic_miner",
+        "processenhancement:intermediate_miner",
+        "processenhancement:advanced_miner",
+        "processenhancement:industrial_miner"
     ]
 }

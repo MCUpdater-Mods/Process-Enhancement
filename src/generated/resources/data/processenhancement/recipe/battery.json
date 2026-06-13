@@ -1,0 +1,24 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "key": {
+        "C": {
+            "item": "processenhancement:capacitor"
+        },
+        "D": {
+            "tag": "c:dusts/copper"
+        },
+        "I": {
+            "item": "minecraft:iron_ingot"
+        }
+    },
+    "pattern": [
+        "IDI",
+        "ICI",
+        "IDI"
+    ],
+    "result": {
+        "count": 1,
+        "id": "processenhancement:battery"
+    }
+}

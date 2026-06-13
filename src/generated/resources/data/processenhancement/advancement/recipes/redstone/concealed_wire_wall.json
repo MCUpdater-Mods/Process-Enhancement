@@ -1,0 +1,32 @@
+{
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+        "automatic": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:concealed_wire"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "has_the_recipe": {
+            "conditions": {
+                "recipe": "processenhancement:concealed_wire_wall"
+            },
+            "trigger": "minecraft:recipe_unlocked"
+        }
+    },
+    "requirements": [
+        [
+            "has_the_recipe",
+            "automatic"
+        ]
+    ],
+    "rewards": {
+        "recipes": [
+            "processenhancement:concealed_wire_wall"
+        ]
+    }
+}

@@ -5,7 +5,10 @@ import com.mcupdater.mculib.block.IMachineGuiProvider;
 import com.mcupdater.mculib.capabilities.EnergyResourceHandler;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
+import com.mcupdater.mculib.inventory.InputOutputSettings;
+import com.mcupdater.mculib.inventory.SideSetting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -20,6 +23,8 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
+
 public abstract class BatteryEntity extends AbstractConfigurableBlockEntity implements IMachineGuiProvider {
     public ContainerData data = new SimpleContainerData(0);
 
@@ -29,7 +34,8 @@ public abstract class BatteryEntity extends AbstractConfigurableBlockEntity impl
 
     protected void setup(int transferRate) {
         EnergyResourceHandler energyResourceHandler = new EnergyResourceHandler(this.level, 50 * transferRate, transferRate, false);
-        ItemResourceHandler itemResourceHandler = new ItemResourceHandler(this.level, 1, new int[]{0}, new int[]{0}, new int[]{0}, this::stillValid);
+        Arrays.stream(Direction.values()).sequential().forEach(side -> energyResourceHandler.updateIOSettings(side, new InputOutputSettings(SideSetting.PASSIVE, side.getOpposite(), SideSetting.AUTOMATED, side.getOpposite(), (byte) 0)));
+        ItemResourceHandler itemResourceHandler = new ItemResourceHandler(this.level, 1, new int[]{0}, new int[]{0}, new int[]{0}, this::stillValid, 1);
         itemResourceHandler.setInsertFunction(this::canPlaceItem);
         itemResourceHandler.setExtractFunction(this::canTakeItem);
         this.configMap.put("power", energyResourceHandler);

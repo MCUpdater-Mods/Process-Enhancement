@@ -24,6 +24,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
+
 import static com.mcupdater.procenhance.setup.Registration.*;
 
 public abstract class BiogeneratorEntity extends AbstractConfigurableBlockEntity implements IMachineGuiProvider {
@@ -81,11 +83,7 @@ public abstract class BiogeneratorEntity extends AbstractConfigurableBlockEntity
     protected void setup(int energyPerTick) {
         this.energyPerTick = energyPerTick;
         EnergyResourceHandler energyResourceHandler = new EnergyResourceHandler(this.level, energyPerTick * 10000, Integer.MAX_VALUE, false);
-        for (Direction side : Direction.values()) {
-            InputOutputSettings ioSetting = energyResourceHandler.getIOSettings(side);
-            ioSetting.setInputSetting(SideSetting.DISABLED);
-            energyResourceHandler.updateIOSettings(side, ioSetting);
-        }
+        Arrays.stream(Direction.values()).sequential().forEach(side -> energyResourceHandler.updateIOSettings(side, new InputOutputSettings(SideSetting.DISABLED, side.getOpposite(), SideSetting.AUTOMATED, side.getOpposite(), (byte) 0)));
         ItemResourceHandler itemResourceHandler = new ItemResourceHandler(this.level, 3, new int[]{0,1,2}, new int[]{0,1,2}, new int[]{}, this::stillValid);
         itemResourceHandler.setInsertFunction(this::canPlaceItem);
         this.configMap.put("power", energyResourceHandler);

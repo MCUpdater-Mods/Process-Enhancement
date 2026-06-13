@@ -1,0 +1,95 @@
+{
+    "background_u_index": 0,
+    "background_v_index": 0,
+    "category": "items",
+    "description": "book.processenhancement.art_of_processing.items.dusts.description",
+    "hide_while_locked": false,
+    "icon": {
+        "item": "processenhancement:iron_dust"
+    },
+    "name": "book.processenhancement.art_of_processing.items.dusts.name",
+    "pages": [
+        {
+            "type": "modonomicon:spotlight",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "item": {
+                "count": 1,
+                "item": "processenhancement:copper_dust"
+            },
+            "text": "book.processenhancement.art_of_processing.items.dusts.copper_dust.text",
+            "title": "book.processenhancement.art_of_processing.items.dusts.copper_dust.title"
+        },
+        {
+            "type": "modonomicon:spotlight",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "item": {
+                "count": 1,
+                "item": "processenhancement:iron_dust"
+            },
+            "text": "book.processenhancement.art_of_processing.items.dusts.iron_dust.text",
+            "title": "book.processenhancement.art_of_processing.items.dusts.iron_dust.title"
+        },
+        {
+            "type": "modonomicon:spotlight",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "item": {
+                "count": 1,
+                "item": "processenhancement:gold_dust"
+            },
+            "text": "book.processenhancement.art_of_processing.items.dusts.gold_dust.text",
+            "title": "book.processenhancement.art_of_processing.items.dusts.gold_dust.title"
+        },
+        {
+            "type": "modonomicon:spotlight",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "item": {
+                "count": 1,
+                "item": "processenhancement:plant_dust"
+            },
+            "text": "book.processenhancement.art_of_processing.items.dusts.plant_dust.text",
+            "title": "book.processenhancement.art_of_processing.items.dusts.plant_dust.title"
+        },
+        {
+            "type": "modonomicon:spotlight",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "item": {
+                "count": 1,
+                "item": "processenhancement:nether_dust"
+            },
+            "text": "book.processenhancement.art_of_processing.items.dusts.nether_dust.text",
+            "title": "book.processenhancement.art_of_processing.items.dusts.nether_dust.title"
+        },
+        {
+            "type": "modonomicon:spotlight",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "item": {
+                "count": 1,
+                "item": "processenhancement:nether_dust_block"
+            },
+            "text": "book.processenhancement.art_of_processing.items.dusts.nether_dust_block.text",
+            "title": "book.processenhancement.art_of_processing.items.dusts.nether_dust_block.title"
+        }
+    ],
+    "show_when_any_parent_unlocked": false,
+    "sort_number": 1,
+    "x": 1,
+    "y": -1
+}

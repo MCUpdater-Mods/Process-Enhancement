@@ -4,7 +4,6 @@ import com.mcupdater.mculib.block.AbstractMachineBlockEntity;
 import com.mcupdater.mculib.capabilities.ItemResourceHandler;
 import com.mcupdater.mculib.helpers.DataHelper;
 import com.mcupdater.mculib.helpers.RenderHelper;
-import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.blocks.miner.BlockDistanceComparator;
 import com.mcupdater.procenhance.setup.Config;
 import net.minecraft.core.BlockPos;
@@ -31,6 +30,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -140,7 +140,7 @@ public class HarvesterEntity extends AbstractMachineBlockEntity {
                             break;
                         }
                     }
-                    if (success = true) {
+                    if (success) {
                         break;
                     }
                     internalBuffer.remove(stack);
@@ -187,31 +187,6 @@ public class HarvesterEntity extends AbstractMachineBlockEntity {
                 tick--;
                 return true;
             }
-            /*
-            if (!itemResourceHandler.getItem(0).isEmpty() && itemResourceHandler.getItem(1).isEmpty()) {
-                this.workProgress++;
-                if (this.workProgress >= this.workTotal) {
-                    ItemStack inputStack = itemResourceHandler.getItem(0);
-                    for (int patSlot = 2; patSlot < itemResourceHandler.getContainerSize(); patSlot++) {
-                        ItemStack patternStack = itemResourceHandler.getItem(patSlot);
-                        if (patternStack.getItem() instanceof AbstractPatternItem pattern) {
-                            ItemStack result = pattern.doCraft(inputStack, this.level);
-                            if (result != ItemStack.EMPTY) {
-                                itemResourceHandler.setItem(1, result);
-                                this.workProgress = 0;
-                                return true;
-                            }
-                        }
-                    }
-                    itemResourceHandler.setItem(1, itemResourceHandler.getItem(0).split(itemResourceHandler.getItem(0).getCount()));
-                } else {
-                    return true;
-                }
-            } else {
-                workProgress = 0;
-                return false;
-            }
-             */
         }
         return false;
     }
@@ -238,7 +213,7 @@ public class HarvesterEntity extends AbstractMachineBlockEntity {
 
     @Nullable
     @Override
-    public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
+    public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory inventory, @NotNull Player player) {
         return new HarvesterMenu(windowId, this.level, this.worldPosition, inventory, player, this.data, DataHelper.getAdjacentNames(this.level, this.worldPosition));
     }
 

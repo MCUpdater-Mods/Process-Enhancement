@@ -1,0 +1,138 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"parent": "block/orientable",
+	"render_type": "translucent",
+	"textures": {
+		"frame": "minecraft:block/gray_concrete",
+		"lamp": "processenhancement:block/lamp",
+		"particle": "minecraft:block/gray_concrete"
+	},
+	"elements": [
+		{
+			"name": "lamp",
+			"from": [4, 3, 4],
+			"to": [12, 13, 12],
+			"faces": {
+				"north": {"uv": [3, 3, 11, 13], "texture": "#lamp"},
+				"east": {"uv": [3, 3, 11, 13], "texture": "#lamp"},
+				"south": {"uv": [3, 3, 11, 13], "texture": "#lamp"},
+				"west": {"uv": [3, 3, 11, 13], "texture": "#lamp"}
+			}
+		},
+		{
+			"name": "corner",
+			"from": [3, 3, 3],
+			"to": [4, 13, 4],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 12], "texture": "#frame"},
+				"east": {"uv": [0, 0, 2, 12], "texture": "#frame"},
+				"south": {"uv": [0, 0, 2, 12], "texture": "#frame"},
+				"west": {"uv": [0, 0, 2, 12], "texture": "#frame"},
+				"up": {"uv": [0, 0, 2, 12], "texture": "#frame"},
+				"down": {"uv": [0, 0, 2, 12], "texture": "#frame"}
+			}
+		},
+		{
+			"name": "corner",
+			"from": [3, 3, 12],
+			"to": [4, 13, 13],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 12], "texture": "#frame"},
+				"east": {"uv": [0, 0, 2, 12], "texture": "#frame"},
+				"south": {"uv": [0, 0, 2, 12], "texture": "#frame"},
+				"west": {"uv": [0, 0, 2, 12], "texture": "#frame"},
+				"up": {"uv": [0, 0, 2, 12], "texture": "#frame"},
+				"down": {"uv": [0, 0, 2, 12], "texture": "#frame"}
+			}
+		},
+		{
+			"name": "corner",
+			"from": [12, 3, 3],
+			"to": [13, 13, 4],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 12], "texture": "#frame"},
+				"east": {"uv": [0, 0, 2, 12], "texture": "#frame"},
+				"south": {"uv": [0, 0, 2, 12], "texture": "#frame"},
+				"west": {"uv": [0, 0, 2, 12], "texture": "#frame"},
+				"up": {"uv": [0, 0, 2, 12], "texture": "#frame"},
+				"down": {"uv": [0, 0, 2, 12], "texture": "#frame"}
+			}
+		},
+		{
+			"name": "corner",
+			"from": [12, 3, 12],
+			"to": [13, 13, 13],
+			"faces": {
+				"north": {"uv": [0, 0, 2, 12], "texture": "#frame"},
+				"east": {"uv": [0, 0, 2, 12], "texture": "#frame"},
+				"south": {"uv": [0, 0, 2, 12], "texture": "#frame"},
+				"west": {"uv": [0, 0, 2, 12], "texture": "#frame"},
+				"up": {"uv": [0, 0, 2, 12], "texture": "#frame"},
+				"down": {"uv": [0, 0, 2, 12], "texture": "#frame"}
+			}
+		},
+		{
+			"name": "top",
+			"from": [3, 13, 3],
+			"to": [13, 14, 13],
+			"faces": {
+				"north": {"uv": [3, 1, 12, 2], "texture": "#frame"},
+				"east": {"uv": [3, 1, 12, 2], "texture": "#frame"},
+				"south": {"uv": [3, 1, 12, 2], "texture": "#frame"},
+				"west": {"uv": [3, 1, 12, 2], "texture": "#frame"},
+				"up": {"uv": [3, 3, 12, 12], "texture": "#frame"},
+				"down": {"uv": [3, 3, 12, 12], "texture": "#frame"}
+			}
+		},
+		{
+			"name": "bottom",
+			"from": [3, 2, 3],
+			"to": [13, 3, 13],
+			"faces": {
+				"north": {"uv": [3, 13, 12, 14], "texture": "#frame"},
+				"east": {"uv": [3, 13, 12, 14], "texture": "#frame"},
+				"south": {"uv": [3, 13, 12, 14], "texture": "#frame"},
+				"west": {"uv": [3, 13, 12, 14], "texture": "#frame"},
+				"up": {"uv": [3, 3, 12, 12], "texture": "#frame"},
+				"down": {"uv": [3, 3, 12, 12], "texture": "#frame"}
+			}
+		},
+		{
+			"from": [5, 0, 5],
+			"to": [11, 2, 11],
+			"faces": {
+				"north": {"uv": [2, 0, 8, 2], "texture": "#frame"},
+				"east": {"uv": [3, 0, 9, 2], "texture": "#frame"},
+				"south": {"uv": [0, 0, 6, 2], "texture": "#frame"},
+				"west": {"uv": [0, 0, 6, 2], "texture": "#frame"},
+				"up": {"uv": [0, 0, 6, 6], "texture": "#frame", "cullface": "up"},
+				"down": {"uv": [0, 3, 6, 9], "texture": "#frame", "cullface": "down"}
+			}
+		},
+		{
+			"from": [5, 14, 5],
+			"to": [11, 16, 11],
+			"faces": {
+				"north": {"uv": [2, 14, 8, 16], "texture": "#frame"},
+				"east": {"uv": [3, 14, 9, 16], "texture": "#frame"},
+				"south": {"uv": [0, 14, 6, 16], "texture": "#frame"},
+				"west": {"uv": [0, 14, 6, 16], "texture": "#frame"},
+				"up": {"uv": [0, 0, 6, 6], "texture": "#frame"},
+				"down": {"uv": [0, 3, 6, 9], "texture": "#frame"}
+			}
+		}
+	],
+	"groups": [
+		0,
+		{
+			"name": "frame",
+			"origin": [8, 8, 8],
+			"scope": 0,
+			"color": 0,
+			"children": [1, 2, 3, 4, 5, 6]
+		},
+		7,
+		8
+	]
+}

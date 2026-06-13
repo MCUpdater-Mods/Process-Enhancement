@@ -29,6 +29,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public abstract class LavaGeneratorEntity extends AbstractConfigurableBlockEntity implements IMachineGuiProvider {
@@ -73,11 +74,7 @@ public abstract class LavaGeneratorEntity extends AbstractConfigurableBlockEntit
     protected void setup(int energyPerTick) {
         this.energyPerTick = energyPerTick;
         EnergyResourceHandler energyResourceHandler = new EnergyResourceHandler(this.level, energyPerTick * 10000, Integer.MAX_VALUE, false);
-        for (Direction side : Direction.values()) {
-            InputOutputSettings ioSetting = energyResourceHandler.getIOSettings(side);
-            ioSetting.setInputSetting(SideSetting.DISABLED);
-            energyResourceHandler.updateIOSettings(side, ioSetting);
-        }
+        Arrays.stream(Direction.values()).sequential().forEach(side -> energyResourceHandler.updateIOSettings(side, new InputOutputSettings(SideSetting.DISABLED, side.getOpposite(), SideSetting.AUTOMATED, side.getOpposite(), (byte) 0)));
         ItemResourceHandler itemResourceHandler = new ItemResourceHandler(this.level, 2, new int[]{0,1}, new int[]{0}, new int[]{1}, this::stillValid);
         itemResourceHandler.setInsertFunction(this::canPlaceItem);
         FluidResourceHandler fluidResourceHandler = new FluidResourceHandler(this.level, this::stillValid);

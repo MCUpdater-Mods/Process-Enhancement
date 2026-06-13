@@ -1,7 +1,52 @@
 {
-    "variants": {
-        "": {
-            "model": "processenhancement:block/nether_electric_lantern"
+    "multipart": [
+        {
+            "apply": {
+                "model": "processenhancement:block/nether_electric_lantern"
+            }
+        },
+        {
+            "apply": {
+                "model": "processenhancement:block/template_electric_lantern_dark"
+            },
+            "when": {
+                "lit": "false"
+            }
+        },
+        {
+            "apply": {
+                "model": "processenhancement:block/template_electric_lantern_side"
+            },
+            "when": {
+                "north": "true"
+            }
+        },
+        {
+            "apply": {
+                "model": "processenhancement:block/template_electric_lantern_side",
+                "y": 180
+            },
+            "when": {
+                "south": "true"
+            }
+        },
+        {
+            "apply": {
+                "model": "processenhancement:block/template_electric_lantern_side",
+                "y": 270
+            },
+            "when": {
+                "west": "true"
+            }
+        },
+        {
+            "apply": {
+                "model": "processenhancement:block/template_electric_lantern_side",
+                "y": 90
+            },
+            "when": {
+                "east": "true"
+            }
         }
-    }
+    ]
 }

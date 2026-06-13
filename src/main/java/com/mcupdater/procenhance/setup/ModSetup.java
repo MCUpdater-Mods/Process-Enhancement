@@ -1,5 +1,6 @@
 package com.mcupdater.procenhance.setup;
 
+import com.mcupdater.mculib.setup.MCULibRegistration;
 import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.blocks.autoharvester.HarvesterScreen;
 import com.mcupdater.procenhance.blocks.autopackager.PackagerScreen;
@@ -45,7 +46,7 @@ public class ModSetup {
         if (event.getTab() == CreativeModeTabRegistry.getTab(CreativeModeTabs.TOOLS_AND_UTILITIES.registry())) {
             Registration.TOOLS.getEntries().stream().forEach(entry -> event.accept(entry.get()));
         }
-        if (event.getTab() == com.mcupdater.mculib.setup.MCULibRegistration.ITEM_GROUP.get()) {
+        if (event.getTab() == MCULibRegistration.ITEM_GROUP.get()) {
             Registration.MACHINES.getEntries().stream().forEach(entry -> event.accept(entry.get()));
             Registration.BATTERIES.getEntries().stream().forEach(entry -> event.accept(entry.get()));
             Registration.TANKS.getEntries().stream().forEach(entry -> event.accept(entry.get()));

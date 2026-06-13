@@ -1,0 +1,8 @@
+{
+    "values": [
+        "processenhancement:basic_miner",
+        "processenhancement:intermediate_miner",
+        "processenhancement:advanced_miner",
+        "processenhancement:industrial_miner"
+    ]
+}

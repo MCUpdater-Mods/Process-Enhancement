@@ -4,6 +4,7 @@ import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.blocks.battery.BatteryBlockItem;
 import com.mcupdater.procenhance.blocks.tank.TankBlockItem;
 import com.mcupdater.procenhance.capabilities.ItemEnergyStorage;
+import com.mcupdater.procenhance.grid.GridManager;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -71,7 +72,9 @@ public class ModEventHandlers {
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.HARVESTER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.AUTOPACKAGER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.BUFFER_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
-				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.COPPERWIRE_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyResourceHandler().getEnergyHandler(side) : blockEntity.getEnergyResourceHandler().getInternalHandler());
+				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.COPPERWIRE_ENTITY.get(), GridManager::getEnergyHandler);
+				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.CONCEALEDWIRE_ENTITY.get(), GridManager::getEnergyHandler);
+				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.CONCEALEDWIRE_WALL_ENTITY.get(), GridManager::getEnergyHandler);
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.BATTERYT1_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.BATTERYT2_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
 				event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, Registration.BATTERYT3_ENTITY.get(), (blockEntity, side) -> side != null ? blockEntity.getEnergyStorage().getEnergyHandler(side) : blockEntity.getEnergyStorage().getInternalHandler());
@@ -162,6 +165,10 @@ public class ModEventHandlers {
 						Registration.BATTERYT2_ITEM.get(),
 						Registration.BATTERYT3_ITEM.get(),
 						Registration.BATTERYT4_ITEM.get()
+				);
+				event.registerItem(Capabilities.EnergyStorage.ITEM, (stack, unused) ->
+						new ItemEnergyStorage(stack, 250000, 5000),
+						Registration.BATTERY_ITEM.get()
 				);
 			}
 			{ // Fluid

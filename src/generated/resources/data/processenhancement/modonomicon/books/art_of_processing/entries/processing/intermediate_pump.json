@@ -1,0 +1,48 @@
+{
+    "background_u_index": 0,
+    "background_v_index": 0,
+    "category": "processing",
+    "description": "book.processenhancement.art_of_processing.processing.intermediate_pump.description",
+    "hide_while_locked": false,
+    "icon": {
+        "item": "processenhancement:intermediate_pump"
+    },
+    "name": "book.processenhancement.art_of_processing.processing.intermediate_pump.name",
+    "pages": [
+        {
+            "type": "modonomicon:spotlight",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "item": {
+                "item": "processenhancement:intermediate_pump"
+            },
+            "text": "book.processenhancement.art_of_processing.processing.intermediate_pump.intro.text",
+            "title": ""
+        },
+        {
+            "type": "modonomicon:crafting_recipe",
+            "anchor": "",
+            "condition": {
+                "type": "modonomicon:none"
+            },
+            "recipe_id_1": "processenhancement:intermediate_pump",
+            "text": "book.processenhancement.art_of_processing.processing.intermediate_pump.recipe.text",
+            "title1": "",
+            "title2": ""
+        }
+    ],
+    "parents": [
+        {
+            "draw_arrow": true,
+            "entry": "processing/basic_pump",
+            "line_enabled": true,
+            "line_reversed": false
+        }
+    ],
+    "show_when_any_parent_unlocked": false,
+    "sort_number": 13,
+    "x": -4,
+    "y": 2
+}
