@@ -1,0 +1,89 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "processenhancement:config"
+        }
+    ],
+    "type": "processenhancement:grinder",
+    "experience": 0.1,
+    "ingredients": [
+        {
+            "tag": "minecraft:leaves"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:stick"
+            },
+            "weight": 30
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:oak_sapling"
+            },
+            "weight": 1
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:birch_sapling"
+            },
+            "weight": 1
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:spruce_sapling"
+            },
+            "weight": 1
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:jungle_sapling"
+            },
+            "weight": 1
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:acacia_sapling"
+            },
+            "weight": 1
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:dark_oak_sapling"
+            },
+            "weight": 1
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:mangrove_propagule"
+            },
+            "weight": 1
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:cherry_sapling"
+            },
+            "weight": 1
+        }
+    ],
+    "processTime": 200
+}

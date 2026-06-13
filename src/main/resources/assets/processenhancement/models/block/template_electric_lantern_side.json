@@ -1,6 +1,6 @@
 {
   "ambientocclusion": true,
-  "render_type": "cutout",
+  "render_type": "translucent",
   "textures": {
     "frame": "minecraft:block/gray_concrete",
     "particle": "#frame"

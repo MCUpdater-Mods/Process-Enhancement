@@ -2,6 +2,8 @@
     "values": [
         "processenhancement:wood_crusher",
         "processenhancement:stone_crusher",
+        "processenhancement:copper_crusher",
+        "processenhancement:iron_crusher",
         "processenhancement:diamond_crusher",
         "processenhancement:netherite_crusher"
     ]

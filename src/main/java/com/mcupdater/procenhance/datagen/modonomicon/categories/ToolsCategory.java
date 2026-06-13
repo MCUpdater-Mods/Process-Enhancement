@@ -19,7 +19,7 @@ public class ToolsCategory extends CategoryProvider {
 	protected String[] generateEntryMap() {
 		return new String[]{
 				"1-2-3-4-5",
-				"---------",
+				"---6-----",
 				"-A--B--C-"
 		};
 	}
@@ -29,6 +29,8 @@ public class ToolsCategory extends CategoryProvider {
 		BookEntryModel woodencrusher = this.add(new SingleRecipeEntryProvider(this, Registration.WOODEN_CRUSHER_ITEM.get(), "wood_crusher", "Wooden Crusher", "Breaks blocks in the world to produce the same output as the Grinder", "", "Resources from the world", "").generate('1'));
 		BookEntryModel stonecrusher = this.add(new SingleRecipeEntryProvider(this, Registration.STONE_CRUSHER_ITEM.get(), "stone_crusher", "Stone Crusher", "Breaks blocks in the world to produce the same output as the Grinder", "", "Probably should make a Grinder soon", "").generate('2'));
 		stonecrusher.addParent(parent(woodencrusher));
+		BookEntryModel coppercrusher = this.add(new SingleRecipeEntryProvider(this, Registration.COPPER_CRUSHER_ITEM.get(), "copper_crusher", "Copper Crusher", "Breaks blocks in the world to produce the same output as the Grinder", "", "A little cheaper than iron", "").generate('6'));
+		coppercrusher.addParent(parent(stonecrusher));
 		BookEntryModel ironcrusher = this.add(new SingleRecipeEntryProvider(this, Registration.IRON_CRUSHER_ITEM.get(), "iron_crusher", "Iron Crusher", "Breaks blocks in the world to produce the same output as the Grinder", "", "I guess keep digging...", "").generate('3'));
 		ironcrusher.addParent(parent(stonecrusher));
 		BookEntryModel diamondcrusher = this.add(new SingleRecipeEntryProvider(this, Registration.DIAMOND_CRUSHER_ITEM.get(), "diamond_crusher", "Diamond Crusher", "Breaks blocks in the world to produce the same output as the Grinder", "", "Still doing it by hand?", "").generate('4'));

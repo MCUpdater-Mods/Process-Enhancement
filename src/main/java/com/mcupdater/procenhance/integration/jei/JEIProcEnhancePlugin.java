@@ -57,6 +57,7 @@ public class JEIProcEnhancePlugin implements IModPlugin {
                 Registration.GRINDERT4_BLOCK.get(),
                 Registration.WOODEN_CRUSHER_ITEM.get(),
                 Registration.STONE_CRUSHER_ITEM.get(),
+                Registration.COPPER_CRUSHER_ITEM.get(),
                 Registration.IRON_CRUSHER_ITEM.get(),
                 Registration.DIAMOND_CRUSHER_ITEM,
                 Registration.NETHERITE_CRUSHER_ITEM.get()

@@ -3,9 +3,7 @@ package com.mcupdater.procenhance.setup;
 import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.blocks.battery.BatteryBlockItem;
 import com.mcupdater.procenhance.blocks.tank.TankBlockItem;
-import com.mcupdater.procenhance.capabilities.DummyEnergyHandler;
 import com.mcupdater.procenhance.capabilities.ItemEnergyStorage;
-import com.mcupdater.procenhance.grid.GridEnergyHandler;
 import com.mcupdater.procenhance.grid.GridManager;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -167,6 +165,10 @@ public class ModEventHandlers {
 						Registration.BATTERYT2_ITEM.get(),
 						Registration.BATTERYT3_ITEM.get(),
 						Registration.BATTERYT4_ITEM.get()
+				);
+				event.registerItem(Capabilities.EnergyStorage.ITEM, (stack, unused) ->
+						new ItemEnergyStorage(stack, 250000, 5000),
+						Registration.BATTERY_ITEM.get()
 				);
 			}
 			{ // Fluid

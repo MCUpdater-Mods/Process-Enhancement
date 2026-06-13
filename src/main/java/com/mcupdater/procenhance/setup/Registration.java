@@ -57,6 +57,7 @@ import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterMenu;
 import com.mcupdater.procenhance.blocks.tank.*;
 import com.mcupdater.procenhance.blocks.autopackager.*;
 import com.mcupdater.procenhance.items.autopackager.*;
+import com.mcupdater.procenhance.items.battery.BatteryItem;
 import com.mcupdater.procenhance.items.tools.chisel.ChiselItem;
 import com.mcupdater.procenhance.items.tools.crusher.CrusherItem;
 import com.mcupdater.procenhance.items.tools.stairmaker.StairmakerItem;
@@ -641,12 +642,14 @@ public class Registration {
 
     public static final DeferredItem<CrusherItem> WOODEN_CRUSHER_ITEM = TOOLS.register("wood_crusher", () -> new CrusherItem(Tiers.WOOD, new Item.Properties(), 128));
     public static final DeferredItem<CrusherItem> STONE_CRUSHER_ITEM = TOOLS.register("stone_crusher", () -> new CrusherItem(Tiers.STONE, new Item.Properties(), 256));
+    public static final DeferredItem<CrusherItem> COPPER_CRUSHER_ITEM = TOOLS.register("copper_crusher", () -> new CrusherItem(Tiers.IRON, new Item.Properties(), 384));
     public static final DeferredItem<CrusherItem> IRON_CRUSHER_ITEM = TOOLS.register("iron_crusher", () -> new CrusherItem(Tiers.IRON, new Item.Properties(), 512));
     public static final DeferredItem<CrusherItem> DIAMOND_CRUSHER_ITEM = TOOLS.register("diamond_crusher", () -> new CrusherItem(Tiers.DIAMOND, new Item.Properties(), 1024));
     public static final DeferredItem<CrusherItem> NETHERITE_CRUSHER_ITEM = TOOLS.register("netherite_crusher", () -> new CrusherItem(Tiers.NETHERITE, new Item.Properties(), 2048));
     public static final DeferredItem<Item> WRENCH_ITEM = TOOLS.register("wrench", () -> new Item(new Item.Properties()
             .stacksTo(1)
     ));
+    public static final DeferredItem<BatteryItem> BATTERY_ITEM = ITEMS.register("battery", () -> new BatteryItem(new Item.Properties().stacksTo(1)));
 
     public static final DeferredItem<Item> BOOK = HIDDEN_ITEMS.register("book", () -> new Item(new Item.Properties().stacksTo(1)));
 

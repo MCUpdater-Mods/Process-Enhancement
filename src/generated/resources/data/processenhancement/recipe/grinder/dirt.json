@@ -1,0 +1,65 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "processenhancement:config"
+        }
+    ],
+    "type": "processenhancement:grinder",
+    "experience": 0.1,
+    "ingredients": [
+        {
+            "item": "minecraft:dirt"
+        }
+    ],
+    "outputs": [
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:wheat_seeds"
+            },
+            "weight": 1
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:potato"
+            },
+            "weight": 1
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:carrot"
+            },
+            "weight": 1
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:beetroot_seeds"
+            },
+            "weight": 1
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:pumpkin_seeds"
+            },
+            "weight": 1
+        },
+        {
+            "result": {
+                "type": "processenhancement:item",
+                "count": 1,
+                "id": "minecraft:melon_seeds"
+            },
+            "weight": 1
+        }
+    ],
+    "processTime": 200
+}

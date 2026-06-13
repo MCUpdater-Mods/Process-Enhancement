@@ -1,0 +1,21 @@
+{
+    "neoforge:conditions": [
+        {
+            "type": "processenhancement:config"
+        }
+    ],
+    "type": "minecraft:crafting_shapeless",
+    "category": "building",
+    "ingredients": [
+        {
+            "tag": "minecraft:dirt"
+        },
+        {
+            "item": "minecraft:wheat_seeds"
+        }
+    ],
+    "result": {
+        "count": 1,
+        "id": "minecraft:grass_block"
+    }
+}

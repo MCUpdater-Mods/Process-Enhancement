@@ -95,6 +95,7 @@ public class ModLanguageProvider extends AbstractModonomiconLanguageProvider {
 		this.add(Registration.PRIDE_ELECTRIC_LANTERN_BLOCK.get(), "Pride Electric Lantern");
 
 		// Items
+		this.add(Registration.BATTERY_ITEM.get(), "Battery");
 		this.add(Registration.CAPACITOR.get(), "Capacitor");
 		this.add(Registration.CHISEL_ITEM.get(), "Chisel");
 		this.add(Registration.COPPER_DUST.get(), "Copper Dust");
@@ -106,6 +107,7 @@ public class ModLanguageProvider extends AbstractModonomiconLanguageProvider {
 		this.add(Registration.WRENCH_ITEM.get(), "Wrench");
 		this.add(Registration.WOODEN_CRUSHER_ITEM.get(), "Wooden Crusher");
 		this.add(Registration.STONE_CRUSHER_ITEM.get(), "Stone Crusher");
+		this.add(Registration.COPPER_CRUSHER_ITEM.get(), "Copper Crusher");
 		this.add(Registration.IRON_CRUSHER_ITEM.get(), "Iron Crusher");
 		this.add(Registration.DIAMOND_CRUSHER_ITEM.get(), "Diamond Crusher");
 		this.add(Registration.NETHERITE_CRUSHER_ITEM.get(), "Netherite Crusher");
@@ -120,7 +122,9 @@ public class ModLanguageProvider extends AbstractModonomiconLanguageProvider {
 		this.add(Registration.SLATE_WALL.get(), "Pattern Slate: Wall");
 
 		// Config
+		this.add("block.processenhancement.grinder", "Grinder / Crusher");
 		this.add("config.jade.plugin_processenhancement.grid", "Grid Info");
+		this.add("curios.identifier.battery", "Battery");
 		this.add("message.energy", "Energy:");
 		this.add("processenhancement.configuration.AutoHarvesterEnergyUse", "AutoHarvester");
 		this.add("processenhancement.configuration.AutoPackagerEnergyUse", "AutoPackager");

@@ -24,4 +24,9 @@ public class CrusherItem extends DiggerItem {
 	public int getMaxDamage(ItemStack stack) {
 		return this.maxDurability;
 	}
+
+	@Override
+	public boolean canPerformAction(ItemStack stack, net.neoforged.neoforge.common.ItemAbility itemAbility) {
+		return net.neoforged.neoforge.common.ItemAbilities.DEFAULT_PICKAXE_ACTIONS.contains(itemAbility);
+	}
 }
