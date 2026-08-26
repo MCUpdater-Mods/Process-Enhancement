@@ -1,0 +1,28 @@
+{
+    "criteria": {
+        "tick": {
+            "trigger": "minecraft:tick"
+        }
+    },
+    "display": {
+        "announce_to_chat": false,
+        "background": "minecraft:textures/block/bricks.png",
+        "description": {
+            "translate": "processenhancement.advancement.root.description"
+        },
+        "icon": {
+            "count": 1,
+            "id": "processenhancement:basic_generator"
+        },
+        "show_toast": false,
+        "title": {
+            "translate": "processenhancement.advancement.root.title"
+        }
+    },
+    "requirements": [
+        [
+            "tick"
+        ]
+    ],
+    "sends_telemetry_event": true
+}

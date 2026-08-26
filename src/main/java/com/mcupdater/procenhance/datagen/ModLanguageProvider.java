@@ -126,6 +126,12 @@ public class ModLanguageProvider extends AbstractModonomiconLanguageProvider {
 		this.add("config.jade.plugin_processenhancement.grid", "Grid Info");
 		this.add("curios.identifier.battery", "Battery");
 		this.add("message.energy", "Energy:");
+		this.add("processenhancement.advancement.root.title","Process Enhancement");
+		this.add("processenhancement.advancement.root.description","Machinery makes it better!");
+		this.add("processenhancement.advancement.some_copper.title", "Some Copper");
+		this.add("processenhancement.advancement.some_copper.description", "Most machinery will require a good amount of copper");
+		this.add("processenhancement.advancement.zen.title", "Zen");
+		this.add("processenhancement.advancement.zen.description", "One with everything");
 		this.add("processenhancement.configuration.AutoHarvesterEnergyUse", "AutoHarvester");
 		this.add("processenhancement.configuration.AutoPackagerEnergyUse", "AutoPackager");
 		this.add("processenhancement.configuration.BasicBiogeneratorProduction", "Biogenerator");

@@ -3,6 +3,7 @@ package com.mcupdater.procenhance.datagen;
 import com.klikli_dev.modonomicon.api.datagen.LanguageProviderCache;
 import com.klikli_dev.modonomicon.api.datagen.NeoBookProvider;
 import com.mcupdater.procenhance.ProcessEnhancement;
+import com.mcupdater.procenhance.datagen.loot.ModAdvancementLootSubProvider;
 import com.mcupdater.procenhance.datagen.loot.ModBlockLootSubProvider;
 import com.mcupdater.procenhance.datagen.modonomicon.ModBookProvider;
 import net.minecraft.core.HolderLookup;
@@ -39,7 +40,8 @@ public class DataGenerators {
                         output,
                         Set.of(),
                         List.of(
-                                new LootTableProvider.SubProviderEntry(ModBlockLootSubProvider::new, LootContextParamSets.BLOCK)
+                                new LootTableProvider.SubProviderEntry(ModBlockLootSubProvider::new, LootContextParamSets.BLOCK),
+                                new LootTableProvider.SubProviderEntry(ModAdvancementLootSubProvider::new, LootContextParamSets.ADVANCEMENT_REWARD)
                         ),
                         lookupProvider
                 ));
@@ -51,5 +53,6 @@ public class DataGenerators {
         dataGenerator.addProvider(event.includeServer(), new ModLootModifier(packOutput, lookupProvider));
         dataGenerator.addProvider(event.includeServer(), NeoBookProvider.of(event, new ModBookProvider(ProcessEnhancement.MODID, enUsCache)));
         dataGenerator.addProvider(event.includeServer() || event.includeClient(), new ModLanguageProvider(packOutput, "en_us", enUsCache));
+        dataGenerator.addProvider(event.includeServer() || event.includeClient(), new ModAdvancementProvider(packOutput, lookupProvider, existingFileHelper));
     }
 }

@@ -4,10 +4,8 @@ import com.klikli_dev.modonomicon.api.datagen.ModonomiconLanguageProvider;
 import com.klikli_dev.modonomicon.api.datagen.SingleBookSubProvider;
 import com.klikli_dev.modonomicon.api.datagen.book.BookModel;
 import com.mcupdater.mculib.setup.MCULibRegistration;
-import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.datagen.modonomicon.categories.*;
 import com.mcupdater.procenhance.setup.Registration;
-import net.minecraft.resources.ResourceLocation;
 
 public class ModBookProvider extends SingleBookSubProvider {
 	public static final String ID = "art_of_processing";
@@ -45,9 +43,8 @@ public class ModBookProvider extends SingleBookSubProvider {
 	@Override
 	protected BookModel additionalSetup(BookModel book) {
 		return super.additionalSetup(book)
+				.withGenerateBookItem(false)
 				.withCustomBookItem(Registration.BOOK.getId())
-				.withGenerateBookItem(true)
-				.withModel(ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "book"))
 				.withCreativeTab(MCULibRegistration.ITEM_GROUP.getId())
 				.withAutoAddReadConditions(true);
 	}

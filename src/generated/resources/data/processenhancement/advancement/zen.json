@@ -1,0 +1,1234 @@
+{
+    "parent": "processenhancement:copper",
+    "criteria": {
+        "ResourceKey[minecraft:block / processenhancement:advanced_battery]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:advanced_battery"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:advanced_biogenerator]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:advanced_biogenerator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:advanced_furnace]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:advanced_furnace"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:advanced_generator]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:advanced_generator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:advanced_grinder]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:advanced_grinder"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:advanced_lava_generator]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:advanced_lava_generator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:advanced_miner]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:advanced_miner"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:advanced_pump]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:advanced_pump"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:advanced_solar_generator]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:advanced_solar_generator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:advanced_tank]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:advanced_tank"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:andesite_solidifier]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:andesite_solidifier"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:autoharvester]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:autoharvester"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:autopackager]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:autopackager"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:basalt_solidifier]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:basalt_solidifier"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:basic_battery]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:basic_battery"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:basic_biogenerator]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:basic_biogenerator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:basic_furnace]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:basic_furnace"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:basic_generator]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:basic_generator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:basic_grinder]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:basic_grinder"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:basic_lava_generator]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:basic_lava_generator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:basic_miner]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:basic_miner"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:basic_pump]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:basic_pump"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:basic_solar_generator]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:basic_solar_generator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:basic_tank]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:basic_tank"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:black_electric_lantern]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:black_electric_lantern"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:blue_electric_lantern]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:blue_electric_lantern"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:brown_electric_lantern]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:brown_electric_lantern"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:buffer]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:buffer"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:calcite_solidifier]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:calcite_solidifier"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:cobblestone_solidifier]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:cobblestone_solidifier"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:compact_solar_generator]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:compact_solar_generator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:concrete_mixer]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:concrete_mixer"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:copper_electric_lantern]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:copper_electric_lantern"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:crude_generator]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:crude_generator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:cyan_electric_lantern]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:cyan_electric_lantern"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:deconstructor]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:deconstructor"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:deepslate_solidifier]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:deepslate_solidifier"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:dehydrator]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:dehydrator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:diorite_solidifier]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:diorite_solidifier"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:disenchanter]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:disenchanter"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:electric_lantern]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:electric_lantern"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:endstone_solidifier]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:endstone_solidifier"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:granite_solidifier]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:granite_solidifier"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:gray_electric_lantern]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:gray_electric_lantern"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:green_electric_lantern]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:green_electric_lantern"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:hydrator]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:hydrator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:industrial_battery]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:industrial_battery"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:industrial_biogenerator]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:industrial_biogenerator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:industrial_furnace]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:industrial_furnace"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:industrial_generator]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:industrial_generator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:industrial_grinder]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:industrial_grinder"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:industrial_lava_generator]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:industrial_lava_generator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:industrial_miner]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:industrial_miner"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:industrial_pump]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:industrial_pump"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:industrial_solar_generator]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:industrial_solar_generator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:industrial_tank]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:industrial_tank"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:intermediate_battery]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:intermediate_battery"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:intermediate_biogenerator]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:intermediate_biogenerator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:intermediate_furnace]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:intermediate_furnace"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:intermediate_generator]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:intermediate_generator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:intermediate_grinder]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:intermediate_grinder"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:intermediate_lava_generator]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:intermediate_lava_generator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:intermediate_miner]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:intermediate_miner"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:intermediate_pump]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:intermediate_pump"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:intermediate_solar_generator]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:intermediate_solar_generator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:intermediate_tank]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:intermediate_tank"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:light_blue_electric_lantern]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:light_blue_electric_lantern"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:light_gray_electric_lantern]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:light_gray_electric_lantern"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:lime_electric_lantern]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:lime_electric_lantern"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:magenta_electric_lantern]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:magenta_electric_lantern"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:nether_electric_lantern]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:nether_electric_lantern"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:orange_electric_lantern]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:orange_electric_lantern"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:pink_electric_lantern]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:pink_electric_lantern"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:planter]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:planter"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:pride_electric_lantern]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:pride_electric_lantern"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:purple_electric_lantern]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:purple_electric_lantern"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:red_electric_lantern]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:red_electric_lantern"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:sawmill]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:sawmill"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:soilmanager]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:soilmanager"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:stone_solidifier]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:stone_solidifier"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:stonecutter]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:stonecutter"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:tuff_solidifier]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:tuff_solidifier"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:white_electric_lantern]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:white_electric_lantern"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:block / processenhancement:yellow_electric_lantern]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:yellow_electric_lantern"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:item / processenhancement:chisel]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:chisel"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:item / processenhancement:copper_crusher]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:copper_crusher"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:item / processenhancement:diamond_crusher]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:diamond_crusher"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:item / processenhancement:iron_crusher]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:iron_crusher"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:item / processenhancement:netherite_crusher]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:netherite_crusher"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:item / processenhancement:stairmaker]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:stairmaker"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:item / processenhancement:stone_crusher]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:stone_crusher"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:item / processenhancement:wood_crusher]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:wood_crusher"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        },
+        "ResourceKey[minecraft:item / processenhancement:wrench]": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:wrench"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        }
+    },
+    "display": {
+        "description": {
+            "translate": "processenhancement.advancement.zen.description"
+        },
+        "frame": "challenge",
+        "hidden": true,
+        "icon": {
+            "count": 1,
+            "id": "mculib:mculib"
+        },
+        "title": {
+            "translate": "processenhancement.advancement.zen.title"
+        }
+    },
+    "requirements": [
+        [
+            "ResourceKey[minecraft:block / processenhancement:crude_generator]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:basic_solar_generator]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:intermediate_solar_generator]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:advanced_solar_generator]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:industrial_solar_generator]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:compact_solar_generator]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:basic_generator]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:intermediate_generator]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:advanced_generator]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:industrial_generator]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:basic_lava_generator]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:intermediate_lava_generator]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:advanced_lava_generator]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:industrial_lava_generator]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:basic_biogenerator]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:intermediate_biogenerator]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:advanced_biogenerator]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:industrial_biogenerator]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:basic_furnace]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:intermediate_furnace]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:advanced_furnace]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:industrial_furnace]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:sawmill]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:basic_grinder]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:intermediate_grinder]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:advanced_grinder]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:industrial_grinder]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:stonecutter]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:buffer]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:basic_pump]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:intermediate_pump]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:advanced_pump]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:industrial_pump]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:disenchanter]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:deconstructor]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:cobblestone_solidifier]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:basalt_solidifier]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:andesite_solidifier]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:calcite_solidifier]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:diorite_solidifier]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:granite_solidifier]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:stone_solidifier]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:deepslate_solidifier]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:tuff_solidifier]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:endstone_solidifier]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:autopackager]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:hydrator]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:dehydrator]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:autoharvester]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:planter]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:soilmanager]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:concrete_mixer]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:electric_lantern]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:copper_electric_lantern]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:nether_electric_lantern]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:pride_electric_lantern]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:white_electric_lantern]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:orange_electric_lantern]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:magenta_electric_lantern]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:light_blue_electric_lantern]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:yellow_electric_lantern]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:lime_electric_lantern]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:pink_electric_lantern]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:gray_electric_lantern]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:light_gray_electric_lantern]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:cyan_electric_lantern]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:purple_electric_lantern]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:blue_electric_lantern]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:brown_electric_lantern]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:green_electric_lantern]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:red_electric_lantern]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:black_electric_lantern]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:basic_battery]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:intermediate_battery]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:advanced_battery]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:industrial_battery]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:basic_tank]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:intermediate_tank]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:advanced_tank]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:industrial_tank]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:basic_miner]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:intermediate_miner]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:advanced_miner]"
+        ],
+        [
+            "ResourceKey[minecraft:block / processenhancement:industrial_miner]"
+        ],
+        [
+            "ResourceKey[minecraft:item / processenhancement:chisel]"
+        ],
+        [
+            "ResourceKey[minecraft:item / processenhancement:stairmaker]"
+        ],
+        [
+            "ResourceKey[minecraft:item / processenhancement:wood_crusher]"
+        ],
+        [
+            "ResourceKey[minecraft:item / processenhancement:stone_crusher]"
+        ],
+        [
+            "ResourceKey[minecraft:item / processenhancement:copper_crusher]"
+        ],
+        [
+            "ResourceKey[minecraft:item / processenhancement:iron_crusher]"
+        ],
+        [
+            "ResourceKey[minecraft:item / processenhancement:diamond_crusher]"
+        ],
+        [
+            "ResourceKey[minecraft:item / processenhancement:netherite_crusher]"
+        ],
+        [
+            "ResourceKey[minecraft:item / processenhancement:wrench]"
+        ]
+    ],
+    "rewards": {
+        "experience": 500
+    },
+    "sends_telemetry_event": true
+}

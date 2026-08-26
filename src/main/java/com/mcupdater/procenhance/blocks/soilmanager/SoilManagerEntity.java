@@ -101,17 +101,20 @@ public class SoilManagerEntity extends AbstractMachineBlockEntity {
 						RenderHelper.sendParticles((ServerLevel) this.level, ParticleTypes.SPLASH, current.getX()+0.5D, current.getY(), current.getZ()+0.5D, 3, 0,0,0,0);
 					}
 				}
-				if (level.getBlockState(current).isRandomlyTicking() && dataFertilizer.get(0) > 0) {
+				if (level.getBlockState(current).isRandomlyTicking()) {
+					doneWork = true;
+					level.getBlockState(current).randomTick((ServerLevel) this.level, current, this.level.getRandom());
+					if (dataFertilizer.get(0) > 0) {
 						level.getBlockState(current).randomTick((ServerLevel) this.level, current, this.level.getRandom());
 						dataFertilizer.set(0, dataFertilizer.get(0)-1);
 						RenderHelper.sendParticles((ServerLevel) this.level, ParticleTypes.HAPPY_VILLAGER, current.getX()+0.5D, current.getY()+0.5D, current.getZ()+0.5D, 5, 0,0,0,0);
-						doneWork = true;
+					}
 				}
 				tick += 5;
 				return doneWork;
 			} else if (tick > 0) {
 				tick--;
-				return doneWork;
+				return false;
 			} else {
 				tick++;
 				return false;

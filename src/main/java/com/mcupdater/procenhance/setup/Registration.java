@@ -1,5 +1,6 @@
 package com.mcupdater.procenhance.setup;
 
+import com.klikli_dev.modonomicon.registry.DataComponentRegistry;
 import com.mcupdater.mculib.block.AbstractMachineBlock;
 import com.mcupdater.procenhance.blocks.autoharvester.HarvesterBlock;
 import com.mcupdater.procenhance.blocks.autoharvester.HarvesterEntity;
@@ -56,6 +57,7 @@ import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterEntity;
 import com.mcupdater.procenhance.blocks.stonecutter.ElectricStonecutterMenu;
 import com.mcupdater.procenhance.blocks.tank.*;
 import com.mcupdater.procenhance.blocks.autopackager.*;
+import com.mcupdater.procenhance.items.GuideBookItem;
 import com.mcupdater.procenhance.items.autopackager.*;
 import com.mcupdater.procenhance.items.battery.BatteryItem;
 import com.mcupdater.procenhance.items.tools.chisel.ChiselItem;
@@ -75,6 +77,7 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.MenuType;
@@ -90,6 +93,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.neoforged.bus.api.IEventBus;
@@ -621,7 +625,7 @@ public class Registration {
     ));
     public static final DeferredItem<Item> PRIDE_ELECTRIC_LANTERN_BLOCKITEM = BLOCK_ITEMS.register("pride_electric_lantern", () -> new BlockItem(PRIDE_ELECTRIC_LANTERN_BLOCK.get(), new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LanternEntity>> ELECTRIC_LANTERN_ENTITY = BLOCK_ENTITIES.register("electric_lantern", () -> BlockEntityType.Builder.of(LanternEntity::new, ELECTRIC_LANTERN_BLOCK.get(), PRIDE_ELECTRIC_LANTERN_BLOCK.get()).build(null));
-    public static final Map<DyeColor,DeferredBlock<TerracottaLanternBlock>> TERRACOTTA_LANTERN_BLOCK = new HashMap<DyeColor, DeferredBlock<TerracottaLanternBlock>>();
+    public static final Map<DyeColor,DeferredBlock<TerracottaLanternBlock>> TERRACOTTA_LANTERN_BLOCK = new HashMap<>();
     public static final List<DeferredItem<Item>> TERRACOTTA_LANTERN_BLOCK_ITEM = new ArrayList<>();
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TerracottaLanternEntity>> TERRACOTTA_LANTERN_ENTITY = BLOCK_ENTITIES.register("terracotta_electric_lantern", () -> BlockEntityType.Builder.of(TerracottaLanternEntity::new, TERRACOTTA_LANTERN_BLOCK.values().stream().map(DeferredBlock<TerracottaLanternBlock>::get).toArray(TerracottaLanternBlock[]::new)).build(null));
     public static final Supplier<MenuType<LanternMenu>> ELECTRIC_LANTERN_MENU = MENUS.register("electric_lantern", () -> IMenuTypeExtension.create(LanternMenu::factory));
@@ -651,7 +655,7 @@ public class Registration {
     ));
     public static final DeferredItem<BatteryItem> BATTERY_ITEM = ITEMS.register("battery", () -> new BatteryItem(new Item.Properties().stacksTo(1)));
 
-    public static final DeferredItem<Item> BOOK = HIDDEN_ITEMS.register("book", () -> new Item(new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<Item> BOOK = ITEMS.register("book", () -> new GuideBookItem(new Item.Properties().stacksTo(1).component(DataComponentRegistry.BOOK_ID, GuideBookItem.ART_OF_PROCESSING)));
 
     public static final DeferredBlock<Block> NETHER_DUST_BLOCK = BLOCKS.register("nether_dust_block", () -> new Block(BlockBehaviour.Properties.of()
             .mapColor(MapColor.NETHER)
@@ -663,9 +667,9 @@ public class Registration {
     ));
     public static final DeferredItem<Item> NETHER_DUST_BLOCKITEM = BLOCK_ITEMS.register("nether_dust_block", () -> new BlockItem(NETHER_DUST_BLOCK.get(), new Item.Properties()));
 
-    public static final Supplier<LootItemFunctionType<? extends LootItemConditionalFunction>> RETAIN_ENCHANTMENTS = LOOT_FUNCTION_TYPES.register("retain_enchantments", () -> new LootItemFunctionType(RetainEnchantmentsFunction.CODEC));
-    public static final Supplier<LootItemFunctionType<? extends LootItemConditionalFunction>> RETAIN_ENERGY = LOOT_FUNCTION_TYPES.register("retain_energy", () -> new LootItemFunctionType(RetainEnergyFunction.CODEC));
-    public static final Supplier<LootItemFunctionType<? extends LootItemConditionalFunction>> RETAIN_FLUID = LOOT_FUNCTION_TYPES.register("retain_fluid", () -> new LootItemFunctionType(RetainFluidFunction.CODEC));
+    public static final Supplier<LootItemFunctionType<? extends LootItemConditionalFunction>> RETAIN_ENCHANTMENTS = LOOT_FUNCTION_TYPES.register("retain_enchantments", () -> new LootItemFunctionType<>(RetainEnchantmentsFunction.CODEC));
+    public static final Supplier<LootItemFunctionType<? extends LootItemConditionalFunction>> RETAIN_ENERGY = LOOT_FUNCTION_TYPES.register("retain_energy", () -> new LootItemFunctionType<>(RetainEnergyFunction.CODEC));
+    public static final Supplier<LootItemFunctionType<? extends LootItemConditionalFunction>> RETAIN_FLUID = LOOT_FUNCTION_TYPES.register("retain_fluid", () -> new LootItemFunctionType<>(RetainFluidFunction.CODEC));
 
     public static final DeferredHolder<MapCodec<? extends IGlobalLootModifier>, MapCodec<CrusherLootModifier>> CRUSHER_LOOT = LOOT_MODIFIERS.register("crusher", () -> CrusherLootModifier.CODEC);
 
@@ -683,4 +687,7 @@ public class Registration {
     // Recipe Result Types
     public static final DeferredHolder<RecipeResultType<?>, RecipeResultType<ItemRecipeResult>> RESULT_ITEM = RECIPE_RESULT_TYPES.register("item", () -> new RecipeResultType<>(ItemRecipeResult.CODEC, ItemRecipeResult.STREAM_CODEC));
     public static final DeferredHolder<RecipeResultType<?>, RecipeResultType<TagRecipeResult>> RESULT_TAG = RECIPE_RESULT_TYPES.register("tag", () -> new RecipeResultType<>(TagRecipeResult.CODEC, TagRecipeResult.STREAM_CODEC));
+
+    // Loot Tables
+    public static final ResourceKey<LootTable> ADVANCEMENT_COPPER = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(MODID, "advancement/copper"));
 }

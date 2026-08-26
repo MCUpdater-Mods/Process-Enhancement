@@ -1,0 +1,38 @@
+{
+    "parent": "processenhancement:root",
+    "criteria": {
+        "ingot": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "minecraft:copper_ingot"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        }
+    },
+    "display": {
+        "description": {
+            "translate": "processenhancement.advancement.some_copper.description"
+        },
+        "icon": {
+            "count": 1,
+            "id": "minecraft:copper_ingot"
+        },
+        "title": {
+            "translate": "processenhancement.advancement.some_copper.title"
+        }
+    },
+    "requirements": [
+        [
+            "ingot"
+        ]
+    ],
+    "rewards": {
+        "loot": [
+            "processenhancement:advancement/copper"
+        ]
+    },
+    "sends_telemetry_event": true
+}

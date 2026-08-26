@@ -1,0 +1,34 @@
+{
+    "parent": "processenhancement:grindert3",
+    "criteria": {
+        "item": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:industrial_grinder"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        }
+    },
+    "display": {
+        "description": {
+            "translate": "book.processenhancement.art_of_processing.processing.grindert4.description"
+        },
+        "frame": "goal",
+        "icon": {
+            "count": 1,
+            "id": "processenhancement:industrial_grinder"
+        },
+        "title": {
+            "translate": "book.processenhancement.art_of_processing.processing.grindert4.name"
+        }
+    },
+    "requirements": [
+        [
+            "item"
+        ]
+    ],
+    "sends_telemetry_event": true
+}

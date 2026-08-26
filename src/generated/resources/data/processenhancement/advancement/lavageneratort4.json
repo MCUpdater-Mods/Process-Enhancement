@@ -1,0 +1,34 @@
+{
+    "parent": "processenhancement:lavageneratort3",
+    "criteria": {
+        "item": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:industrial_lava_generator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        }
+    },
+    "display": {
+        "description": {
+            "translate": "book.processenhancement.art_of_processing.generation.lavageneratort4.description"
+        },
+        "frame": "goal",
+        "icon": {
+            "count": 1,
+            "id": "processenhancement:industrial_lava_generator"
+        },
+        "title": {
+            "translate": "book.processenhancement.art_of_processing.generation.lavageneratort4.name"
+        }
+    },
+    "requirements": [
+        [
+            "item"
+        ]
+    ],
+    "sends_telemetry_event": true
+}

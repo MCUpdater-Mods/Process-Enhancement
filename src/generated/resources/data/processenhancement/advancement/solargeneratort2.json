@@ -1,0 +1,33 @@
+{
+    "parent": "processenhancement:solargeneratort1",
+    "criteria": {
+        "item": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": "processenhancement:intermediate_solar_generator"
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        }
+    },
+    "display": {
+        "description": {
+            "translate": "book.processenhancement.art_of_processing.generation.solargeneratort2.description"
+        },
+        "icon": {
+            "count": 1,
+            "id": "processenhancement:intermediate_solar_generator"
+        },
+        "title": {
+            "translate": "book.processenhancement.art_of_processing.generation.solargeneratort2.name"
+        }
+    },
+    "requirements": [
+        [
+            "item"
+        ]
+    ],
+    "sends_telemetry_event": true
+}

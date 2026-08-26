@@ -6,6 +6,7 @@ import com.klikli_dev.modonomicon.api.datagen.EntryProvider;
 import com.klikli_dev.modonomicon.api.datagen.SingleBookSubProvider;
 import com.klikli_dev.modonomicon.api.datagen.book.BookIconModel;
 import com.klikli_dev.modonomicon.api.datagen.book.page.BookSpotlightPageModel;
+import com.mcupdater.procenhance.ProcessEnhancement;
 import com.mcupdater.procenhance.datagen.modonomicon.content.items.DustsEntryProvider;
 import com.mcupdater.procenhance.datagen.modonomicon.template.SingleRecipeEntryProvider;
 import com.mcupdater.procenhance.setup.Registration;
@@ -24,7 +25,7 @@ public class ItemsCategory extends CategoryProvider {
 	protected String[] generateEntryMap() {
 		return new String[]{
 				"1-2",
-				"---",
+				"-5-",
 				"3-4"
 		};
 	}
@@ -72,6 +73,7 @@ public class ItemsCategory extends CategoryProvider {
 			}
 		}.generate('3'));
 		this.add(new SingleRecipeEntryProvider(this, Items.SLIME_BALL, "slime_ball", "Slime Ball", "A way to make slime balls without finding and killing slimes", "", "A sticky situation", ResourceLocation.withDefaultNamespace("slime_ball")).generate('4'));
+		this.add(new SingleRecipeEntryProvider(this, Registration.BATTERY_ITEM.get(), "battery", "Battery", "An easily portable battery that will automatically recharge items in your inventory.\\\n\\\nConveniently sits in its own Curios slot.", "", "Power on the go", ResourceLocation.fromNamespaceAndPath(ProcessEnhancement.MODID, "battery")).generate('5'));
 
 	}
 

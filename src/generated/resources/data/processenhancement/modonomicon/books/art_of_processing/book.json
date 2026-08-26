@@ -28,7 +28,7 @@
     "display_mode": "node",
     "font": "modonomicon:default",
     "frame_texture": "modonomicon:textures/gui/book_frame.png",
-    "generate_book_item": true,
+    "generate_book_item": false,
     "left_frame_overlay": {
         "frame_height": 70,
         "frame_width": 7,
@@ -38,7 +38,7 @@
         "texture_height": 256,
         "texture_width": 256
     },
-    "model": "processenhancement:book",
+    "model": "modonomicon:modonomicon_purple",
     "name": "book.processenhancement.art_of_processing.name",
     "page_display_mode": "double_page",
     "read_all_button_y_offset": 0,
