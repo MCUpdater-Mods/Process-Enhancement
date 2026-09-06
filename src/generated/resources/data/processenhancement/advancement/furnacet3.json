@@ -14,14 +14,14 @@
     },
     "display": {
         "description": {
-            "translate": "book.processenhancement.art_of_processing.processing.furnacet3.description"
+            "translate": "book.processenhancement.art_of_processing.processing.advanced_furnace.description"
         },
         "icon": {
             "count": 1,
             "id": "processenhancement:advanced_furnace"
         },
         "title": {
-            "translate": "book.processenhancement.art_of_processing.processing.furnacet3.name"
+            "translate": "book.processenhancement.art_of_processing.processing.advanced_furnace.name"
         }
     },
     "requirements": [

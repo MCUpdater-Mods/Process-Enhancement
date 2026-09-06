@@ -14,14 +14,14 @@
     },
     "display": {
         "description": {
-            "translate": "book.processenhancement.art_of_processing.processing.grindert3.description"
+            "translate": "book.processenhancement.art_of_processing.processing.advanced_grinder.description"
         },
         "icon": {
             "count": 1,
             "id": "processenhancement:advanced_grinder"
         },
         "title": {
-            "translate": "book.processenhancement.art_of_processing.processing.grindert3.name"
+            "translate": "book.processenhancement.art_of_processing.processing.advanced_grinder.name"
         }
     },
     "requirements": [

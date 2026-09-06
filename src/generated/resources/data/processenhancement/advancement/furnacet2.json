@@ -14,14 +14,14 @@
     },
     "display": {
         "description": {
-            "translate": "book.processenhancement.art_of_processing.processing.furnacet2.description"
+            "translate": "book.processenhancement.art_of_processing.processing.intermediate_furnace.description"
         },
         "icon": {
             "count": 1,
             "id": "processenhancement:intermediate_furnace"
         },
         "title": {
-            "translate": "book.processenhancement.art_of_processing.processing.furnacet2.name"
+            "translate": "book.processenhancement.art_of_processing.processing.intermediate_furnace.name"
         }
     },
     "requirements": [

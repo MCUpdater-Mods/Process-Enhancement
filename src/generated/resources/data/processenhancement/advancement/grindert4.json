@@ -14,7 +14,7 @@
     },
     "display": {
         "description": {
-            "translate": "book.processenhancement.art_of_processing.processing.grindert4.description"
+            "translate": "book.processenhancement.art_of_processing.processing.industrial_grinder.description"
         },
         "frame": "goal",
         "icon": {
@@ -22,7 +22,7 @@
             "id": "processenhancement:industrial_grinder"
         },
         "title": {
-            "translate": "book.processenhancement.art_of_processing.processing.grindert4.name"
+            "translate": "book.processenhancement.art_of_processing.processing.industrial_grinder.name"
         }
     },
     "requirements": [

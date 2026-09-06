@@ -14,7 +14,7 @@
     },
     "display": {
         "description": {
-            "translate": "book.processenhancement.art_of_processing.processing.furnacet4.description"
+            "translate": "book.processenhancement.art_of_processing.processing.industrial_furnace.description"
         },
         "frame": "goal",
         "icon": {
@@ -22,7 +22,7 @@
             "id": "processenhancement:industrial_furnace"
         },
         "title": {
-            "translate": "book.processenhancement.art_of_processing.processing.furnacet4.name"
+            "translate": "book.processenhancement.art_of_processing.processing.industrial_furnace.name"
         }
     },
     "requirements": [
