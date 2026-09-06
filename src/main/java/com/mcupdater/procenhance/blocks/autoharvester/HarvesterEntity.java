@@ -118,8 +118,9 @@ public class HarvesterEntity extends AbstractMachineBlockEntity {
     @Override
     protected boolean performWork() {
         if (!level.isClientSide()) {
+            Direction facing =  this.getBlockState().getValue(HarvesterBlock.FACING);
             // Collect floating items in the harvest area (i.e. bamboo and sugar cane above the broken block and saplings from leaf decay) and add to the collection buffer
-            List<ItemEntity> items = level.getEntitiesOfClass(ItemEntity.class, AABB.encapsulatingFullBlocks(worldPosition.below(2).east(11).north(11), worldPosition.west(11).south(11).above(2)), EntitySelector.ENTITY_STILL_ALIVE);
+            List<ItemEntity> items = level.getEntitiesOfClass(ItemEntity.class, AABB.encapsulatingFullBlocks(worldPosition.below(2).relative(facing.getOpposite(),11).relative(facing.getCounterClockWise(),7), worldPosition.relative(facing,2).relative(facing.getClockWise(),7).above(2)), EntitySelector.ENTITY_STILL_ALIVE);
             for (ItemEntity item : items) {
                 this.internalBuffer.add(item.getItem().copy());
                 RenderHelper.sendParticles((ServerLevel) level, ParticleTypes.ENCHANT, item.getX(), item.getY(), item.getZ(), 3,0,0, 0, 0);
