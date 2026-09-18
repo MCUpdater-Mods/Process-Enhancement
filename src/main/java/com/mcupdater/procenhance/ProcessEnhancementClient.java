@@ -1,6 +1,5 @@
 package com.mcupdater.procenhance;
 
-import com.mcupdater.procenhance.integration.PatchouliConfig;
 import com.mcupdater.procenhance.render.ConcealedWireRenderer;
 import com.mcupdater.procenhance.render.ConcealedWireWallRenderer;
 import com.mcupdater.procenhance.setup.Registration;
@@ -10,14 +9,12 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
-import net.neoforged.neoforge.common.NeoForge;
 
 @Mod(value = ProcessEnhancement.MODID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = ProcessEnhancement.MODID, value=Dist.CLIENT)
